@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+  <title></title>
+</head>
+
+<body>
+  <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
+  <div class="container-fluid py-5" layout:fragment="page-content"
+    sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+      <a class="btn btn-primary" th:href="@{/ganado/tipo-ganado/agregar}">Crear un nuevo registro</a>
+    </div>
+    <div th:if="${tipoDeGanados != null and !tipoDeGanados.empty}">
+      <table class="table">
+        <thead class="table-dark">
+          <th>Nombre del tipo de ganado</th>
+          <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+            Editar
+          </th>
+          <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+            Dar baja
+          </th>
+          <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+            Eliminar
+          </th>
+        </thead>
+        <tr th:each="tipoDeGanado : ${tipoDeGanados}">
+          <td th:text="${tipoDeGanado.nombreTipoGanado}">
+            Mostrar Nombre del tipo de ganado
+          </td>
+          <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+            <a class="btn btn-warning"
+              th:href="@{/ganado/tipo-ganado/editar/} + ${tipoDeGanado.idTipoGanado}">Editar</a>
+          </td>
+          <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+            <a type="submit" class="btn btn-danger"
+              th:href="@{/ganado/tipo-ganado/baja(idTipoGanado=${tipoDeGanado.idTipoGanado})}">
+              Dar baja
+            </a>
+          </td>
+          <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+            <a type="submit" class="btn btn-danger"
+              th:href="@{/ganado/tipo-ganado/eliminar(idTipoGanado=${tipoDeGanado.idTipoGanado})}">
+              Eliminar </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div th:if="${tipoDeGanados == null or tipoDeGanados.empty}">
+      <h1>Listado tipo de ganado</h1>
+    </div>
+  </div>
+</body>
+
+</html>

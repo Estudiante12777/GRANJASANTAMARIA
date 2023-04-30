@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <div class="container-fluid py-5" layout:fragment="page-content">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Categoria de ganado</h5>
+                        <p class="card-text">
+                            Esta es la seccion categoria de ganado
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tipo de ganado</h5>
+                        <p class="card-text">
+                            Esta es la seccion tipo de ganado
+                        </p>
+                        <form method="get" th:action="@{/ganado/tipo-ganado/lista}">
+                            <a class="btn btn-primary" href="#" onclick="this.parentNode.submit();">Entrar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <div class="container-fluid py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+                <div class="card">
+                    <div class="card-header text-center">Datos del tipo de ganado</div>
+                    <div class="card-body">
+                        <form th:action="@{/ganado/tipo-ganado/guardar}" method="post" th:object="${tipoGanado}">
+                            <input type="hidden" name="idTipoGanado" th:field="*{idTipoGanado}" />
+                            <div class="mb-3">
+                                <label class="form-label" for="nombreTipoGanado">Nombre del tipo de ganado:</label>
+                                <input class="form-control form-control-lg" type="text" required name="nombreTipoGanado"
+                                    th:field="*{nombreTipoGanado}" />
+                                <span th:if="${#fields.hasErrors('nombreTipoGanado')}" class="text-danger"
+                                    th:errors="*{nombreTipoGanado}">Error nombre tipo de ganado</span>
+                            </div>
+                            <input type="hidden" name="estadoTipoGanado" th:field="*{estadoTipoGanado}">
+                            <div class="d-grid gap-2">
+                                <input class="btn btn-secondary text-center mx-auto" type="submit" name="guardar"
+                                    value="Guardar" />
+                            </div>
+                            <div class="d-grid gap-2">
+                                <a class="btn btn-primary text-center mx-auto"
+                                    th:href="@{/ganado/tipo-ganado/lista}">Regresar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
