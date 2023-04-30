@@ -9,8 +9,8 @@ import lombok.Data;
  *
  * @author gerso
  */
-@Entity
 @Data
+@Entity
 @Table(name = "rol")
 public class Rol implements Serializable {
 
@@ -22,4 +22,5 @@ public class Rol implements Serializable {
 
     @NotEmpty
     private String nombre;
+    
 }

@@ -10,21 +10,25 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ *
+ * @author gerso
+ */
 @Data
 @Entity
-@Table(name = "tipo_ganado")
-public class TipoGanado implements Serializable {
+@Table(name = "categoria_ganado")
+public class CategoriaGanado implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idTipoGanado;
+    private Long idCategoriaGanado;
 
     @NotEmpty
-    private String nombreTipoGanado;
-    
+    private String nombreCategoriaGanado;
+
     @NotNull
-    private boolean estadoTipoGanado; 
-    
+    private boolean estadoCategoriaGanado;
+
 }

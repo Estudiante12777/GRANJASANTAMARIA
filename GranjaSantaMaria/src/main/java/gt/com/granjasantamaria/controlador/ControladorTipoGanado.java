@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -19,7 +18,7 @@ public class ControladorTipoGanado {
 
     @GetMapping("/ganado/tipo-ganado/lista")
     public String listaTipoGanado(Model model) {
-        var tipoDeGanados = tipoGanadoService.listadoTiposDeGanado();
+        var tipoDeGanados = tipoGanadoService.listadoTiposGanado();
         model.addAttribute("tipoDeGanados", tipoDeGanados);
         return "/pages/ganado/tipo-ganado/tipo-ganado";
     }
@@ -57,4 +56,5 @@ public class ControladorTipoGanado {
         tipoGanadoService.darBajaTipoGanado(tipoGando);
         return "redirect:/ganado/tipo-ganado/lista";
     }
+    
 }

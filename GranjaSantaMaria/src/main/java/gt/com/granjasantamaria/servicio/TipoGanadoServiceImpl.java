@@ -19,7 +19,7 @@ public class TipoGanadoServiceImpl implements TipoGanadoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TipoGanado> listadoTiposDeGanado() {
+    public List<TipoGanado> listadoTiposGanado() {
         return tipoGanadoDao.findByEstadoTipoGanadoTrue();
     }
 
@@ -41,7 +41,7 @@ public class TipoGanadoServiceImpl implements TipoGanadoService {
     public TipoGanado encontrarTipoGanado(TipoGanado tipoGanado) {
         return tipoGanadoDao.findById(tipoGanado.getIdTipoGanado()).orElse(null);
     }
-    
+
     @Override
     @Transactional
     public void darBajaTipoGanado(TipoGanado tipoGanado) {
@@ -51,4 +51,9 @@ public class TipoGanadoServiceImpl implements TipoGanadoService {
             tipoGanadoDao.save(tipoGanadoExistente);
         }
     }
+
 }
+
+
+
+

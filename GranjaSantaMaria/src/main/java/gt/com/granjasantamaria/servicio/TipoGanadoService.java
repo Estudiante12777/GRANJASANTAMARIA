@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface TipoGanadoService {
 
-    // CONTRATO -- METODOS A IMPLEMENTAR 
-    public List<TipoGanado> listadoTiposDeGanado();
+    // METODOS A IMPLEMENTAR 
+    public List<TipoGanado> listadoTiposGanado();
 
     public void guardarTipoGanado(TipoGanado tipoGanado);
 

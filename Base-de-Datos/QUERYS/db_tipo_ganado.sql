@@ -10,3 +10,4 @@ DELETE FROM ganado WHERE id_tipo_ganado IN (SELECT id_tipo_ganado FROM tipo_gana
 DELETE FROM tipo_ganado;
 
 ALTER TABLE tipo_ganado AUTO_INCREMENT = 1;
+DESCRIBE tipo_ganado;

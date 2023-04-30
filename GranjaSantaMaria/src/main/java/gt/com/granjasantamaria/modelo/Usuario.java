@@ -10,8 +10,8 @@ import lombok.Data;
  *
  * @author gerso
  */
-@Entity
 @Data
+@Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
@@ -30,4 +30,5 @@ public class Usuario implements Serializable {
     @OneToMany
     @JoinColumn(name = "id_usuario")
     private List<Rol> roles;
+
 }
