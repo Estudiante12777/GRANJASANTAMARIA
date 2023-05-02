@@ -33,25 +33,25 @@ CREATE TABLE tipo_ganado(
     estado_tipo_ganado TINYINT NOT NULL
 ); 
 
-CREATE TABLE ganado(
-	id_ganado INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    nombre_ganado VARCHAR(100) NOT NULL UNIQUE, 
-    peso VARCHAR(50) NOT NULL,
-    fotografia VARCHAR(255) NOT NULL,
-    fecha_ingreso_granja DATE,
+CREATE TABLE ganado (
+    id_ganado INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nombre_ganado VARCHAR(100) NOT NULL UNIQUE,
+    peso DOUBLE NOT NULL,
+    fecha_ingreso_granja DATE NOT NULL,
     id_tipo_ganado INT NOT NULL,
     id_categoria_ganado INT NOT NULL,
     estado_ganado TINYINT NOT NULL,
-    CONSTRAINT fk_ganado_tipo_ganado FOREIGN KEY (id_tipo_ganado) REFERENCES tipo_ganado (id_tipo_ganado), 
+    CONSTRAINT fk_ganado_tipo_ganado FOREIGN KEY (id_tipo_ganado) REFERENCES tipo_ganado (id_tipo_ganado),
     CONSTRAINT fk_ganado_categoria_ganado FOREIGN KEY (id_categoria_ganado) REFERENCES categoria_ganado (id_categoria_ganado)
-); 
+);
+
 
 DROP TABLE ganado; 
 DROP TABLE tipo_ganado; 
 DROP TABLE categoria_ganado; 
 
-
 /*
 	OTROS QUERYS
+        fotografia_path VARCHAR(255) NOT NULL
 */
 SHOW TABLES; 

@@ -14,23 +14,27 @@
                 <div class="card">
                     <div class="card-header text-center">Datos del categoria de ganado</div>
                     <div class="card-body">
-                        <form th:action="@{/ganado/categoria-ganado/guardar}" method="post" th:object="${categoriaGanado}">
+                        <form th:action="@{/modulo-ganado/categoria-ganado/guardar}" method="post"
+                            th:object="${categoriaGanado}">
                             <input type="hidden" name="idCategoriaGanado" th:field="*{idCategoriaGanado}" />
                             <div class="mb-3">
-                                <label class="form-label" for="nombreCategoriaGanado">Nombre del categoria de ganado:</label>
-                                <input class="form-control form-control-lg" type="text" required name="nombreCategoriaGanado"
-                                    th:field="*{nombreCategoriaGanado}" />
+                                <label class="form-label" for="nombreCategoriaGanado">Nombre del categoria de
+                                    ganado:</label>
+                                <input class="form-control form-control-lg" type="text" required
+                                    name="nombreCategoriaGanado" th:field="*{nombreCategoriaGanado}" />
                                 <span th:if="${#fields.hasErrors('nombreCategoriaGanado')}" class="text-danger"
                                     th:errors="*{nombreCategoriaGanado}">Error nombre categoria de ganado</span>
                             </div>
                             <input type="hidden" name="estadoCategoriaGanado" th:field="*{estadoCategoriaGanado}">
-                            <div class="d-grid gap-2">
-                                <input class="btn btn-secondary text-center mx-auto" type="submit" name="guardar"
-                                    value="Guardar" />
-                            </div>
-                            <div class="d-grid gap-2">
-                                <a class="btn btn-primary text-center mx-auto"
-                                    th:href="@{/ganado/categoria-ganado/lista}">Regresar</a>
+                            <div class="row">
+                                <div class="col-sm-3 mb-3">
+                                    <a class="btn btn-primary text-center mx-auto"
+                                        th:href="@{/modulo-ganado/categoria-ganado/lista}">Regresar</a>
+                                </div>
+                                <div class="col-sm-3 mb-3">
+                                    <input class="btn btn-success text-center mx-auto" type="submit" name="guardar"
+                                        value="Guardar" />
+                                </div>
                             </div>
                         </form>
                     </div>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
+    <div class="container-fluid py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
+            <a class="btn btn-success" th:href="@{/modulo-ganado/ganado/agregar}">Crear un nuevo registro</a>
+        </div>
+        <div th:if="${ganados != null and !ganados.empty}">
+            <table class="table">
+                <thead class="table-dark">
+                    <th>Nombre</th>
+                    <th>Peso en kilos</th>
+                    <th>Fecha ingreso de la granja</th>
+                    <th>Tipo de ganado</th>
+                    <th>Categoria de ganado</th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                        Editar
+                    </th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                        Dar baja
+                    </th>
+                    <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
+                </thead>
+                <tr th:each="ganado : ${ganados}">
+                    <td th:text="${ganado.nombreGanado}">
+                        Mostrar Nombre del tipo de ganado
+                    </td>
+                    <td th:text="${ganado.peso}">
+                        Mostrar Nombre del tipo de ganado
+                    </td>
+                    <td th:text="${ganado.fechaIngresoGranja}">
+                        Mostrar Nombre del tipo de ganado
+                    </td>
+                    <td th:text="${ganado.tipoGanado.nombreTipoGanado}">
+                        Mostrar Nombre de la categoria de ganado
+                    </td>                    
+                    <td th:text="${ganado.categoriaGanado.nombreCategoriaGanado}">
+                        Mostrar Nombre de la categoria de ganado
+                    </td>                    
+                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                        <a class="btn btn-warning"
+                            th:href="@{/modulo-ganado/ganado/editar/} + ${ganado.idGanado}">Editar</a>
+                    </td>
+                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                        <a type="submit" class="btn btn-danger"
+                            th:href="@{/modulo-ganado/ganado/baja(idGanado=${ganado.idGanado})}">
+                            Dar baja
+                        </a>
+                    </td>
+                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                        <a type="submit" class="btn btn-danger"
+                            th:href="@{/modulo-ganado/ganado/eliminar(idGanado=${ganado.idGanado})}">
+                            Eliminar
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${ganados == null or ganados.empty}">
+            <h1>Listado del ganado</h1>
+        </div>
+    </div>
+</body>
+
+</html>

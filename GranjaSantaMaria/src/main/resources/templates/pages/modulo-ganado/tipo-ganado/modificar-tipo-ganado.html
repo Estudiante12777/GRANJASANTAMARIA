@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header text-center">Datos del tipo de ganado</div>
                     <div class="card-body">
-                        <form th:action="@{/ganado/tipo-ganado/guardar}" method="post" th:object="${tipoGanado}">
+                        <form th:action="@{/modulo-ganado/tipo-ganado/guardar}" method="post" th:object="${tipoGanado}">
                             <input type="hidden" name="idTipoGanado" th:field="*{idTipoGanado}" />
                             <div class="mb-3">
                                 <label class="form-label" for="nombreTipoGanado">Nombre del tipo de ganado:</label>
@@ -24,13 +24,15 @@
                                     th:errors="*{nombreTipoGanado}">Error nombre tipo de ganado</span>
                             </div>
                             <input type="hidden" name="estadoTipoGanado" th:field="*{estadoTipoGanado}">
-                            <div class="d-grid gap-2">
-                                <input class="btn btn-secondary text-center mx-auto" type="submit" name="guardar"
-                                    value="Guardar" />
-                            </div>
-                            <div class="d-grid gap-2">
-                                <a class="btn btn-primary text-center mx-auto"
-                                    th:href="@{/ganado/tipo-ganado/lista}">Regresar</a>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <a class="btn btn-primary text-center mx-auto"
+                                        th:href="@{/modulo-ganado/tipo-ganado/lista}">Regresar</a>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="btn btn-success text-center mx-auto" type="submit" name="guardar"
+                                        value="Guardar" />
+                                </div>
                             </div>
                         </form>
                     </div>

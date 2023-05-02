@@ -10,51 +10,55 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ *
+ * @author gerso
+ */
 @Controller
 public class ControladorTipoGanado {
 
     @Autowired
     private TipoGanadoService tipoGanadoService;
 
-    @GetMapping("/ganado/tipo-ganado/lista")
+    @GetMapping("/modulo-ganado/tipo-ganado/lista")
     public String listaTipoGanado(Model model) {
         var tipoDeGanados = tipoGanadoService.listadoTiposGanado();
         model.addAttribute("tipoDeGanados", tipoDeGanados);
-        return "/pages/ganado/tipo-ganado/tipo-ganado";
+        return "/pages/modulo-ganado/tipo-ganado/tipo-ganado";
     }
 
-    @GetMapping("/ganado/tipo-ganado/agregar")
+    @GetMapping("/modulo-ganado/tipo-ganado/agregar")
     public String agregarTipoGanado(TipoGanado tipoGanado) {
-        return "/pages/ganado/tipo-ganado/modificar-tipo-ganado";
+        return "/pages/modulo-ganado/tipo-ganado/modificar-tipo-ganado";
     }
 
-    @PostMapping("/ganado/tipo-ganado/guardar")
+    @PostMapping("/modulo-ganado/tipo-ganado/guardar")
     public String guardarTipoGanado(@Valid TipoGanado tipoGanado, Errors errores) throws Exception {
         if (errores.hasErrors()) {
             throw new Exception("Error no puede estar vacio el campo");
         } else {
             tipoGanadoService.guardarTipoGanado(tipoGanado);
-            return "redirect:/ganado/tipo-ganado/lista";
+            return "redirect:/modulo-ganado/tipo-ganado/lista";
         }
     }
 
-    @GetMapping("/ganado/tipo-ganado/editar/{idTipoGanado}")
+    @GetMapping("/modulo-ganado/tipo-ganado/editar/{idTipoGanado}")
     public String editarTipoGando(TipoGanado tipoGanado, Model model) {
         tipoGanado = tipoGanadoService.encontrarTipoGanado(tipoGanado);
         model.addAttribute("tipoGanado", tipoGanado);
-        return "/pages/ganado/tipo-ganado/modificar-tipo-ganado";
+        return "/pages/modulo-ganado/tipo-ganado/modificar-tipo-ganado";
     }
 
-    @GetMapping("/ganado/tipo-ganado/eliminar")
+    @GetMapping("/modulo-ganado/tipo-ganado/eliminar")
     public String eliminarTipoGanado(TipoGanado tipoGando) {
         tipoGanadoService.eliminarTipoGanado(tipoGando);
-        return "redirect:/ganado/tipo-ganado/lista";
+        return "redirect:/modulo-ganado/tipo-ganado/lista";
     }
 
-    @GetMapping("/ganado/tipo-ganado/baja")
+    @GetMapping("/modulo-ganado/tipo-ganado/baja")
     public String darBajaTipoGanado(TipoGanado tipoGando) {
         tipoGanadoService.darBajaTipoGanado(tipoGando);
-        return "redirect:/ganado/tipo-ganado/lista";
+        return "redirect:/modulo-ganado/tipo-ganado/lista";
     }
-    
+
 }

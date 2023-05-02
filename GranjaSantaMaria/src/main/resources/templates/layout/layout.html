@@ -2,90 +2,91 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head th:fragment="head">
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Granja Santa Maria</title>
-  <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
-  <!-- Core theme CSS (includes Bootstrap)-->
-  <link th:href="@{/css/styles.css}" rel="stylesheet" />
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-  <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}" />
-  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
-  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-  <script>
-    //OCULTA LA OPCION DE CERRAR SESION
-    $(document).ready(function () {
-      $("#navbarDropdown").on("click", function () {
-        $(".dropdown-menu").toggle();
-      });
-      $(".navbar-toggler-icon").on("click", function () {
-        $("#navbarSupportedContent").toggle();
-      });
-    });
-  </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Granja Santa Maria</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}" />
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script>
+        //OCULTA LA OPCION DE CERRAR SESION
+        $(document).ready(function () {
+            $("#navbarDropdown").on("click", function () {
+                $(".dropdown-menu").toggle();
+            });
+            $(".navbar-toggler-icon").on("click", function () {
+                $("#navbarSupportedContent").toggle();
+            });
+        });
+    </script>
 </head>
 
 <body>
-  <div class="d-flex" id="wrapper">
-    <!-- Sidebar-->
-    <div class="border-end bg-white" id="sidebar-wrapper">
-      <div class="sidebar-heading border-bottom bg-light">
-        Granja Santa Maria
-      </div>
-      <div class="list-group list-group-flush">
-        <form method="get" th:action="@{/ganado}">
-          <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
-            onclick="this.parentNode.submit();">Ganado</a>
-        </form>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light">
+                Granja Santa Maria
+            </div>
+            <div class="list-group list-group-flush">
+                <form method="get" th:action="@{/modulo-ganado}">
+                    <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
+                        onclick="this.parentNode.submit();">Ganado</a>
+                </form>
 
-        <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#!">
-          Produccion de lacteos
-        </a>
-      </div>
-    </div>
-    <!-- Page content wrapper-->
-    <div id="page-content-wrapper">
-      <!-- Top navigation-->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <div class="container-fluid">
-          <button class="btn btn-primary" id="sidebarToggle">
-            Barra de navegacion
-          </button>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">Opciones</a>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                  <form method="post" th:action="@{/logout}">
-                    <a class="dropdown-item" href="#" onclick="this.parentNode.submit();">Cerrar Sesion</a>
-                  </form>
-                </div>
-              </li>
-            </ul>
-          </div>
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#!">
+                    Produccion de lacteos
+                </a>
+            </div>
         </div>
-      </nav>
-      <!-- Page content-->
-      <div class="container-fluid" layout:fragment="page-content"></div>
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle">
+                        Barra de navegacion
+                    </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opciones</a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <form method="post" th:action="@{/logout}">
+                                        <a class="dropdown-item" href="#" onclick="this.parentNode.submit();">Cerrar
+                                            Sesion</a>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Page content-->
+            <div class="container-fluid" layout:fragment="page-content"></div>
+        </div>
     </div>
-  </div>
-  <!-- Bootstrap core JS-->
-  <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-  <!-- Core theme JS-->
-  <script th:src="@{/js/scripts.js}"></script>
+    <!-- Bootstrap core JS-->
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <!-- Core theme JS-->
+    <script th:src="@{/js/scripts.js}"></script>
 
-  <!--OTRO SCRIPTS PARA PAGINAS-->
-  <th:block layout:fragment="page-scripts"> </th:block>
+    <!--OTRO SCRIPTS PARA PAGINAS-->
+    <th:block layout:fragment="page-scripts"> </th:block>
 </body>
 
 </html>

@@ -10,8 +10,8 @@
     <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-            <a class="btn btn-primary" th:href="@{/ganado/categoria-ganado/agregar}">Crear un nuevo registro</a>
+        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
+            <a class="btn btn-success" th:href="@{/modulo-ganado/categoria-ganado/agregar}">Crear un nuevo registro</a>
         </div>
         <div th:if="${categoriaDeGanados != null and !categoriaDeGanados.empty}">
             <table class="table">
@@ -33,17 +33,17 @@
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <a class="btn btn-warning"
-                            th:href="@{/ganado/categoria-ganado/editar/} + ${categoriaDeGanado.idCategoriaGanado}">Editar</a>
+                            th:href="@{/modulo-ganado/categoria-ganado/editar/} + ${categoriaDeGanado.idCategoriaGanado}">Editar</a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <a type="submit" class="btn btn-danger"
-                            th:href="@{/ganado/categoria-ganado/baja(idCategoriaGanado=${categoriaDeGanado.idCategoriaGanado})}">
+                            th:href="@{/modulo-ganado/categoria-ganado/baja(idCategoriaGanado=${categoriaDeGanado.idCategoriaGanado})}">
                             Dar baja
                         </a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <a type="submit" class="btn btn-danger"
-                            th:href="@{/ganado/categoria-ganado/eliminar(idCategoriaGanado=${categoriaDeGanado.idCategoriaGanado})}">
+                            th:href="@{/modulo-ganado/categoria-ganado/eliminar(idCategoriaGanado=${categoriaDeGanado.idCategoriaGanado})}">
                             Eliminar </a>
                     </td>
                 </tr>
