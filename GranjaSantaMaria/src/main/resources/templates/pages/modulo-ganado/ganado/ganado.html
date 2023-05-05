@@ -31,20 +31,19 @@
                 </thead>
                 <tr th:each="ganado : ${ganados}">
                     <td th:text="${ganado.nombreGanado}">
-                        Mostrar Nombre del tipo de ganado
+                        Mostrar Nombre de ganado
                     </td>
                     <td th:text="${ganado.peso}">
-                        Mostrar Nombre del tipo de ganado
+                        Mostrar peso del ganado
                     </td>
-                    <td th:text="${ganado.fechaIngresoGranja}">
-                        Mostrar Nombre del tipo de ganado
-                    </td>
+                    <td th:text="${ganado.fechaIngresoGranja}">Mostrar fecha de ingreso a la granja</td>
+
                     <td th:text="${ganado.tipoGanado.nombreTipoGanado}">
-                        Mostrar Nombre de la categoria de ganado
-                    </td>                    
+                        Mostrar Nombre de tipo de ganado
+                    </td>
                     <td th:text="${ganado.categoriaGanado.nombreCategoriaGanado}">
                         Mostrar Nombre de la categoria de ganado
-                    </td>                    
+                    </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <a class="btn btn-warning"
                             th:href="@{/modulo-ganado/ganado/editar/} + ${ganado.idGanado}">Editar</a>

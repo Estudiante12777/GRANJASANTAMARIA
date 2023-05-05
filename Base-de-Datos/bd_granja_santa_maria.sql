@@ -45,7 +45,6 @@ CREATE TABLE ganado (
     CONSTRAINT fk_ganado_categoria_ganado FOREIGN KEY (id_categoria_ganado) REFERENCES categoria_ganado (id_categoria_ganado)
 );
 
-
 DROP TABLE ganado; 
 DROP TABLE tipo_ganado; 
 DROP TABLE categoria_ganado; 
