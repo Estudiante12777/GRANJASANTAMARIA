@@ -6,10 +6,6 @@ import gt.com.granjasantamaria.modelo.TipoGanado;
 import gt.com.granjasantamaria.servicio.CategoriaGanadoService;
 import gt.com.granjasantamaria.servicio.GanadoService;
 import gt.com.granjasantamaria.servicio.TipoGanadoService;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +32,20 @@ public class ControladorGanado {
     private CategoriaGanadoService categoriaGanadoService;
 
     @GetMapping("/modulo-ganado/ganado/lista")
-    public String listaGanados(Model model) {
-        var ganados = ganadoService.listadoGanados();
+    public String listaGanado(Model model) {
+        var ganados = ganadoService.listadoGanado();
         model.addAttribute("ganados", ganados);
         return "/pages/modulo-ganado/ganado/ganado";
     }
 
     @GetMapping("/modulo-ganado/ganado/agregar")
-    public String agregarGanado(Ganado ganado) {
+    public String agregarGanado(Ganado ganado, Model model) {
+        List<TipoGanado> listaTiposGanados = tipoGanadoService.listadoTiposGanado();
+        model.addAttribute("listaTiposGanados", listaTiposGanados);
+
+        List<CategoriaGanado> listaCategorias = categoriaGanadoService.listaCategoriasGanado();
+        model.addAttribute("listaCategorias", listaCategorias);
+
         return "/pages/modulo-ganado/ganado/modificar-ganado";
     }
 

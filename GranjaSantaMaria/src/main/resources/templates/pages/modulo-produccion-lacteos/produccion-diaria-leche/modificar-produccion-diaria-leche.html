@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <div class="container-fluid py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+                <div class="card">
+                    <div class="card-header text-center">Datos de la produccion diaria de la leche</div>
+                    <div class="card-body">
+                        <form th:action="@{/modulo-produccion-lacteos/produccion-diaria-leche/guardar}" method="post"
+                            th:object="${produccionDiariaLeche}">
+                            <input type="hidden" name="idProduccionDiariaLeche" th:field="*{idProduccionDiariaLeche}" />
+                            <div class="mb-3">
+                                <label class="form-label" for="fechaProduccionLeche">Fecha de la produccion de
+                                    leche:</label>
+                                <input class="form-control form-control-lg" type="date" required
+                                    name="fechaProduccionLeche" th:field="*{fechaProduccionLeche}" />
+                                <span th:if="${#fields.hasErrors('fechaProduccionLeche')}" class="text-danger"
+                                    th:errors="*{fechaProduccionLeche}">Error fecha de la produccion de leche</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="produccionManianaLeche">Produccion de leche en la
+                                    Mañana,
+                                    litros
+                                </label>
+                                <input type="number" class="form-control form-control-lg" required
+                                    name="produccionManianaLeche" th:field="*{produccionManianaLeche}">
+                                <span th:if="${#fields.hasErrors('produccionManianaLeche')}" class="text-danger"
+                                    th:errors="*{produccionManianaLeche}">Error produccion de leche en la Mañana</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="produccionTardeLeche">Produccion de leche en la tarde,
+                                    litros
+                                </label>
+                                <input type="number" class="form-control form-control-lg" required
+                                    name="produccionTardeLeche" th:field="*{produccionTardeLeche}">
+                                <span th:if="${#fields.hasErrors('produccionTardeLeche')}" class="text-danger"
+                                    th:errors="*{produccionTardeLeche}">Error produccion de leche en la tarde</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="ganado.nombreGanado">Nombre de la vaca:</label>
+                                <div class="col-sm-8">
+                                    <select th:field="*{ganado.idGanado}" name="ganado.nombreGanado" required
+                                        class="form-control">
+                                        <option th:each="ganado : ${listaGanados}" th:value="${ganado.idGanado}"
+                                            th:text="${ganado.nombreGanado}"></option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('ganado.nombreGanado')}" class="text-danger"
+                                        th:errors="*{ganado.nombreGanado}">Error
+                                        Tipo de ganado</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="estadoProduccionDiariaLeche"
+                                th:field="*{estadoProduccionDiariaLeche}" />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <a class="btn btn-primary text-center mx-auto"
+                                        th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/lista}">Regresar</a>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="btn btn-success text-center mx-auto" type="submit" name="guardar"
+                                        value="Guardar" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,9 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.GanadoDao;
-import gt.com.granjasantamaria.modelo.CategoriaGanado;
 import gt.com.granjasantamaria.modelo.Ganado;
-import gt.com.granjasantamaria.modelo.TipoGanado;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +19,7 @@ public class GanadoServiceImpl implements GanadoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Ganado> listadoGanados() {
+    public List<Ganado> listadoGanado() {
         return ganadoDao.findByEstadoGanadoTrue();
     }
 

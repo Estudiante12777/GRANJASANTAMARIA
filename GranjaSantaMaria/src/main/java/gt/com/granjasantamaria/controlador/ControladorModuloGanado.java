@@ -1,7 +1,6 @@
 package gt.com.granjasantamaria.controlador;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ControladorModuloGanado {
 
     @GetMapping("/modulo-ganado")
-    public String ganado(Model model) {
+    public String ganado() {
         return "/pages/modulo-ganado/modulo-ganado";
     }
 }
