@@ -50,7 +50,7 @@ public class ControladorProduccionDiaraLeche {
         }
     }
 
-    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/editar/{idGanado}")
+    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/editar/{idProduccionDiariaLeche}")
     public String editarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         List<Ganado> listaGanados = ganadoService.listadoGanado();
         model.addAttribute("listaGanados", listaGanados);

@@ -55,6 +55,14 @@ CREATE TABLE produccion_diaria_leche(
     CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado)
 ); 
 
+CREATE TABLE total_produccion_leche(
+	id_total_produccion_leche INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    fecha_produccion DATE NOT NULL,
+    total_produccion_maniana DOUBLE NOT NULL, 
+    total_produccion_tarde DOUBLE NOT NULL, 
+    total_produccion_diaria DOUBLE
+); 
+
 DROP TABLE produccion_diaria_leche;
 DROP TABLE ganado; 
 DROP TABLE tipo_ganado; 

@@ -2,6 +2,7 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.ProduccionDiariaLecheDao;
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,9 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     @Override
     @Transactional(readOnly = true)
     public List<ProduccionDiariaLeche> listaProduccionDiariaLeche() {
-        return produccionDiariaLecheDao.findByEstadoProduccionDiariaLecheTrue();
+        LocalDate fechaActual = LocalDate.now();
+        java.sql.Date fechaActualSql = java.sql.Date.valueOf(fechaActual);
+        return produccionDiariaLecheDao.findByFechaProduccionLecheAndEstadoProduccionDiariaLecheTrue(fechaActualSql);
     }
 
     @Override

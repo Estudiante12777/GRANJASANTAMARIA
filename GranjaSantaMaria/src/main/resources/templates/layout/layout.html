@@ -33,8 +33,11 @@
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-white" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-light">
-                Granja Santa Maria
+            <div class="list-group list-group-flush">
+                <form method="get" th:action="@{/}">
+                    <a class="list-group-item list-group-item-action list-group-item-ligth p-3" href="#"
+                        onclick="this.parentNode.submit();">Granja Santa Maria</a>
+                </form>
             </div>
             <div class="list-group list-group-flush">
                 <form method="get" th:action="@{/modulo-ganado}">

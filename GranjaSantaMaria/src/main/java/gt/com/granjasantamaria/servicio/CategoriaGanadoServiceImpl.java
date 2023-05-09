@@ -13,21 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class CategoriaGanadoServiceImpl implements CategoriaGanadoService {
-    
+
     @Autowired
-    private CategoriaGanadoDao categoriaGanadoDao; 
+    private CategoriaGanadoDao categoriaGanadoDao;
 
     @Override
     @Transactional(readOnly = true)
     public List<CategoriaGanado> listaCategoriasGanado() {
-        return categoriaGanadoDao.findByEstadoCategoriaGanadoTrue(); 
+        return categoriaGanadoDao.findByEstadoCategoriaGanadoTrue();
     }
 
     @Override
     @Transactional
     public void guardarCategoriaGanado(CategoriaGanado categoriaGanado) {
         categoriaGanado.setEstadoCategoriaGanado(true);
-        categoriaGanadoDao.save(categoriaGanado); 
+        categoriaGanadoDao.save(categoriaGanado);
     }
 
     @Override
@@ -51,5 +51,5 @@ public class CategoriaGanadoServiceImpl implements CategoriaGanadoService {
             categoriaGanadoDao.save(categoriaGanadoExistente);
         }
     }
-    
+
 }
