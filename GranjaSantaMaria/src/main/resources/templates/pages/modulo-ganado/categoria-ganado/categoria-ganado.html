@@ -11,7 +11,7 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-success" th:href="@{/modulo-ganado/categoria-ganado/agregar}">Crear un nuevo registro</a>
+            <a class="btn btn-success" th:href="@{/modulo-ganado/categoria-ganado/agregar}">+ Crear un nuevo registro</a>
         </div>
         <div th:if="${categoriaDeGanados != null and !categoriaDeGanados.empty}">
             <table class="table">

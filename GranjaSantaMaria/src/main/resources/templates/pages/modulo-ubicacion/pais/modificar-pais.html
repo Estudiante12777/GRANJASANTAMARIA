@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <div class="container-fluid py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+                <div class="card">
+                    <div class="card-header text-center">Datos del pais</div>
+                    <div class="card-body">
+                        <form th:action="@{/modulo-ubicacion/pais/guardar}" method="post" th:object="${pais}">
+                            <input type="hidden" name="idPais" th:field="*{idPais}" />
+                            <div class="mb-3">
+                                <label class="form-label" for="nombrePais">Nombre del pais:</label>
+                                <input class="form-control form-control-lg" type="text" required name="nombrePais"
+                                    th:field="*{nombrePais}" />
+                                <span th:if="${#fields.hasErrors('nombrePais')}" class="text-danger"
+                                    th:errors="*{nombrePais}">Error nombre del pais</span>
+                            </div>
+                            <input type="hidden" name="estadoPais" th:field="*{estadoPais}">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <a class="btn btn-primary text-center mx-auto"
+                                        th:href="@{/modulo-ubicacion/pais/lista}">Regresar</a>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="btn btn-success text-center mx-auto" type="submit" name="guardar"
+                                        value="Guardar" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

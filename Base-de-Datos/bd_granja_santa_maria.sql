@@ -63,10 +63,52 @@ CREATE TABLE total_produccion_leche(
     total_produccion_diaria DOUBLE
 ); 
 
+/*
+	TABLAS PARA PERSONAS
+*/
+
+CREATE TABLE cliente(
+	id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    nombre_cliente VARCHAR(50) NOT NULL, 
+    apellido_cliente VARCHAR(50) NOT NULL, 
+    direccion_cliente VARCHAR(100) NOT NULL
+); 
+
+/*
+	TABLAS PARA UBICACIONES
+*/
+
+CREATE TABLE pais(
+	id_pais INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    nombre_pais VARCHAR(100) NOT NULL UNIQUE, 
+    estado_pais TINYINT NOT NULL
+); 
+
+CREATE TABLE departamento(
+	id_departamento INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    nombre_departamento VARCHAR(100) NOT NULL UNIQUE, 
+    id_pais INT NOT NULL,
+    estado_departamento TINYINT NOT NULL,
+    CONSTRAINT fk_departamento_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais)
+); 
+
+CREATE TABLE municipio(
+	id_municipio INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    nombre_municipio VARCHAR(100) NOT NULL,
+    id_departamento INT NOT NULL, 
+    estado_municipio TINYINT NOT NULL,
+    CONSTRAINT fk_municipio_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento)
+); 
+
+/*
+	OTROS QUERYS
+*/
+
 DROP TABLE produccion_diaria_leche;
 DROP TABLE ganado; 
 DROP TABLE tipo_ganado; 
 DROP TABLE categoria_ganado; 
+DROP TABLE pais;
 
 /*
 	OTROS QUERYS
