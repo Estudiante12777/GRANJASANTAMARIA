@@ -1,13 +1,12 @@
 package gt.com.granjasantamaria.controlador;
 
-import gt.com.granjasantamaria.modelo.CategoriaGanado;
 import gt.com.granjasantamaria.modelo.Pais;
 import gt.com.granjasantamaria.servicio.PaisService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -34,8 +33,8 @@ public class ControladorPais {
     }
 
     @PostMapping("/modulo-ubicacion/pais/guardar")
-    public String guardarPais(@Valid Pais pais, Errors errores) throws Exception {
-        if (errores.hasErrors()) {
+    public String guardarPais(@Valid Pais pais, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacio el campo");
         } else {
             paisService.guardarPais(pais);

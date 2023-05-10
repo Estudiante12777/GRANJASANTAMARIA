@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -19,18 +20,21 @@ import lombok.Data;
 @Entity
 @Table(name = "departamento")
 public class Departamento implements Serializable {
-    
-    private static final long serialVersionUID = 1L; 
-    
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDepartamento; 
-    
+    private Long idDepartamento;
+
     @NotEmpty
-    private String nombreDepartamento; 
-    
+    private String nombreDepartamento;
+
     @ManyToOne
     @JoinColumn(name = "id_pais")
-    private Pais pais; 
-    
+    private Pais pais;
+
+    @NotNull
+    private boolean estadoDepartamento;
+
 }

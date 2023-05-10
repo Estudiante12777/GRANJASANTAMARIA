@@ -6,7 +6,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -33,8 +33,8 @@ public class ControladorCategoriaGanado {
     }
 
     @PostMapping("/modulo-ganado/categoria-ganado/guardar")
-    public String guardarCategoriaGanado(@Valid CategoriaGanado categoriaGanado, Errors errores) throws Exception {
-        if (errores.hasErrors()) {
+    public String guardarCategoriaGanado(@Valid CategoriaGanado categoriaGanado, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacio el campo");
         } else {
             categoriaGanadoService.guardarCategoriaGanado(categoriaGanado);
