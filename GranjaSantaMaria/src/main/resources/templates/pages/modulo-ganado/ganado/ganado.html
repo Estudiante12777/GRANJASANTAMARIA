@@ -11,7 +11,8 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-success" th:href="@{/modulo-ganado/ganado/agregar}">+ Crear un nuevo registro</a>
+            <a class="btn btn-outline-success" th:href="@{/modulo-ganado/ganado/agregar}"><i class="fa-solid fa-plus"></i> Crear
+                nuevo registro</a>
         </div>
         <div th:if="${ganados != null and !ganados.empty}">
             <table class="table">
@@ -45,22 +46,25 @@
                         Mostrar Nombre de la categoria de ganado
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <a class="btn btn-warning"
-                            th:href="@{/modulo-ganado/ganado/editar/} + ${ganado.idGanado}">Editar</a>
+                        <a class="btn btn-outline-warning" th:href="@{/modulo-ganado/ganado/editar/} + ${ganado.idGanado}"><i
+                                class="fa-sharp fa-solid fa-pencil"></i></a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
+                        <a type="submit" class="btn btn-outline-danger"
                             th:href="@{/modulo-ganado/ganado/baja(idGanado=${ganado.idGanado})}">
-                            Dar baja
+                            <i class="fa-sharp fa-solid fa-ban"></i>
                         </a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
+                        <a type="submit" class="btn btn-outline-danger"
                             th:href="@{/modulo-ganado/ganado/eliminar(idGanado=${ganado.idGanado})}">
-                            Eliminar
+                            <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
                 </tr>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
             </table>
         </div>
         <div th:if="${ganados == null or ganados.empty}">

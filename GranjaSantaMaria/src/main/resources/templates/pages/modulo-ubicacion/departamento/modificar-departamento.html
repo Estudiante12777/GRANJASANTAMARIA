@@ -7,28 +7,28 @@
 </head>
 
 <body>
-    <div class="container-fluid py-5" layout:fragment="page-content"
+    <div class="container py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div class="row justify-content-center">
             <div class="col-md-6 col-sm-8 col-12">
-                <div class="card">
-                    <div class="card-header text-center">Datos del departamento</div>
+                <div class="card bg-light text-dark">
                     <div class="card-body">
+                        <h5 class="card-title text-center">Departamento</h5>
                         <form th:action="@{/modulo-ubicacion/departamento/guardar}" method="post"
                             th:object="${departamento}">
                             <input type="hidden" name="idDepartamento" th:field="*{idDepartamento}" />
                             <div class="mb-3">
-                                <label class="form-label" for="nombreDepartamento">Departamento:</label>
+                                <label class="form-label form-label-lg" for="nombreDepartamento">Departamento:</label>
                                 <input class="form-control form-control-lg" type="text" required
                                     name="nombreDepartamento" th:field="*{nombreDepartamento}" />
                                 <span th:if="${#fields.hasErrors('nombreDepartamento')}" class="text-danger"
                                     th:errors="*{nombreDepartamento}">Error nombre del pais</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="pais.nombrePais">Pais:</label>
+                                <label class="form-label form-label-lg" for="pais.nombrePais">Pais:</label>
                                 <div class="col-sm-8">
                                     <select th:field="*{pais.idPais}" name="pais.nombrePais" required
-                                        class="form-control">
+                                        class="form-select form-select-lg">
                                         <option th:each="pais : ${listadoPaises}" th:value="${pais.idPais}"
                                             th:text="${pais.nombrePais}"></option>
                                     </select>
@@ -39,12 +39,12 @@
                             </div>
                             <input type="hidden" name="estadoDepartamento" th:field="*{estadoDepartamento}">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <a class="btn btn-primary text-center mx-auto"
+                                <div class="col-sm-6">
+                                    <a class="btn btn-outline-primary btn-lg btn-bloc"
                                         th:href="@{/modulo-ubicacion/departamento/lista}">Regresar</a>
                                 </div>
-                                <div class="col-sm-3">
-                                    <input class="btn btn-success text-center mx-auto" type="submit" name="guardar"
+                                <div class="col-sm-6">
+                                    <input class="btn btn-outline-success btn-lg btn-bloc" type="submit" name="guardar"
                                         value="Guardar" />
                                 </div>
                             </div>

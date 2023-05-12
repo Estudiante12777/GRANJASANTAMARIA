@@ -41,8 +41,8 @@ CREATE TABLE ganado (
     id_tipo_ganado INT NOT NULL,
     id_categoria_ganado INT NOT NULL,
     estado_ganado TINYINT NOT NULL,
-    CONSTRAINT fk_ganado_tipo_ganado FOREIGN KEY (id_tipo_ganado) REFERENCES tipo_ganado (id_tipo_ganado),
-    CONSTRAINT fk_ganado_categoria_ganado FOREIGN KEY (id_categoria_ganado) REFERENCES categoria_ganado (id_categoria_ganado)
+    CONSTRAINT fk_ganado_tipo_ganado FOREIGN KEY (id_tipo_ganado) REFERENCES tipo_ganado (id_tipo_ganado) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_ganado_categoria_ganado FOREIGN KEY (id_categoria_ganado) REFERENCES categoria_ganado (id_categoria_ganado) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE produccion_diaria_leche(
@@ -52,7 +52,7 @@ CREATE TABLE produccion_diaria_leche(
     produccion_tarde_leche DOUBLE NOT NULL, 
     id_ganado INT NOT NULL,
     estado_produccion_diaria_leche TINYINT NOT NULL,
-    CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado)
+    CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
 CREATE TABLE total_produccion_leche(
@@ -89,7 +89,7 @@ CREATE TABLE departamento(
     nombre_departamento VARCHAR(100) NOT NULL UNIQUE, 
     id_pais INT NOT NULL,
     estado_departamento TINYINT NOT NULL,
-    CONSTRAINT fk_departamento_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais)
+    CONSTRAINT fk_departamento_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
 CREATE TABLE municipio(
@@ -97,21 +97,5 @@ CREATE TABLE municipio(
     nombre_municipio VARCHAR(100) NOT NULL,
     id_departamento INT NOT NULL, 
     estado_municipio TINYINT NOT NULL,
-    CONSTRAINT fk_municipio_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento)
+    CONSTRAINT fk_municipio_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
-
-/*
-	OTROS QUERYS
-*/
-
-DROP TABLE produccion_diaria_leche;
-DROP TABLE ganado; 
-DROP TABLE tipo_ganado; 
-DROP TABLE categoria_ganado; 
-DROP TABLE pais;
-
-/*
-	OTROS QUERYS
-        fotografia_path VARCHAR(255) NOT NULL
-*/
-SHOW TABLES; 

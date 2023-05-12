@@ -11,14 +11,14 @@
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div class="row justify-content-center">
             <div class="col-md-6 col-sm-8 col-12">
-                <div class="card">
-                    <div class="card-header text-center">Datos del categoria de ganado</div>
+                <div class="card bg-light text-dark">
                     <div class="card-body">
+                        <h5 class="card-title text-center">Categoria ganado</h5>
                         <form th:action="@{/modulo-ganado/categoria-ganado/guardar}" method="post"
                             th:object="${categoriaGanado}">
                             <input type="hidden" name="idCategoriaGanado" th:field="*{idCategoriaGanado}" />
                             <div class="mb-3">
-                                <label class="form-label" for="nombreCategoriaGanado">Nombre del categoria de
+                                <label class="form-label form-label-lg" for="nombreCategoriaGanado">Nombre categoria
                                     ganado:</label>
                                 <input class="form-control form-control-lg" type="text" required
                                     name="nombreCategoriaGanado" th:field="*{nombreCategoriaGanado}" />
@@ -27,13 +27,13 @@
                             </div>
                             <input type="hidden" name="estadoCategoriaGanado" th:field="*{estadoCategoriaGanado}">
                             <div class="row">
-                                <div class="col-sm-3 mb-3">
-                                    <a class="btn btn-primary text-center mx-auto"
+                                <div class="col-sm-6 mb-3">
+                                    <a class="btn btn-outline-primary btn-light btn-block"
                                         th:href="@{/modulo-ganado/categoria-ganado/lista}">Regresar</a>
                                 </div>
-                                <div class="col-sm-3 mb-3">
-                                    <input class="btn btn-success text-center mx-auto" type="submit" name="guardar"
-                                        value="Guardar" />
+                                <div class="col-sm-6 mb-3">
+                                    <input class="btn btn-outline-success btn-light btn-block" type="submit"
+                                        name="guardar" value="Guardar" />
                                 </div>
                             </div>
                         </form>

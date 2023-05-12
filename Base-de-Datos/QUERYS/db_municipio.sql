@@ -1,3 +1,3 @@
 SELECT * FROM granja_santa_maria.municipio;
 
-ALTER TABLE granja_santa_maria.municipio AUTO_INCREMENT = 1;
+UPDATE granja_santa_maria.municipio SET estado_municipio = 1 WHERE id_municipio = 7; 

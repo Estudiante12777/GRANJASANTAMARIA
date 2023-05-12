@@ -11,9 +11,8 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-success" th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/agregar}">+ Crear
-                un
-                nuevo registro</a>
+            <a class="btn btn-outline-success" th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/agregar}"><i
+                    class="fa-solid fa-plus"></i> Crear nuevo registro</a>
         </div>
         <div th:if="${produccionDiariaLeches != null and !produccionDiariaLeches.empty}">
             <table class="table">
@@ -43,32 +42,36 @@
                         Mostrar Nombre del ganado
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <a class="btn btn-warning"
-                            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/editar/} + ${produccionDiariaLeche.idProduccionDiariaLeche}">Editar</a>
+                        <a class="btn btn-outline-warning"
+                            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/editar/} + ${produccionDiariaLeche.idProduccionDiariaLeche}"><i
+                                class="fa-sharp fa-solid fa-pencil"></i></a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
-                            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/baja(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
-                            Dar baja
+                        <a type="submit" class="btn btn-outline-danger"
+                            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/baja(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}"><i
+                                class="fa-sharp fa-solid fa-ban"></i>
                         </a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
-                            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/eliminar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
-                            Eliminar
+                        <a type="submit" class="btn btn-outline-danger"
+                            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/eliminar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}"><i
+                                class="fa-solid fa-trash"></i></a>
                         </a>
                     </td>
                 </tr>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
             </table>
             <div>
-                <a class="btn btn-success text-left" href="#">
+                <a class="btn btn-outline-success text-left" href="#">
                     Total de produccion de leche en la mañana
                 </a>
-                <a class="btn btn-success text-left" href="#">
+                <a class="btn btn-outline-success text-left" href="#">
                     Total de produccion en tarde la tarde
                 </a>
 
-                <a class="btn btn-success text-left" href="#">
+                <a class="btn btn-outline-success text-left" href="#">
                     Total de produccion diaria
                 </a>
             </div>

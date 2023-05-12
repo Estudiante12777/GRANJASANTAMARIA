@@ -11,27 +11,28 @@
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div class="row justify-content-center">
             <div class="col-md-6 col-sm-8 col-12">
-                <div class="card">
-                    <div class="card-header text-center">Datos del ganado</div>
+                <div class="card bg-light text-dark">
                     <div class="card-body">
+                        <h5 class="card-title text-center"></h5>
                         <form th:action="@{/modulo-ganado/ganado/guardar}" method="post" th:object="${ganado}">
                             <input type="hidden" name="idGanado" th:field="*{idGanado}" />
                             <div class="mb-3">
-                                <label class="form-label" for="nombreGanado">Nombre:</label>
+                                <label class="form-label form-label-lg" for="nombreGanado">Nombre:</label>
                                 <input class="form-control form-control-lg" type="text" required name="nombreGanado"
                                     th:field="*{nombreGanado}" />
                                 <span th:if="${#fields.hasErrors('nombreGanado')}" class="text-danger"
                                     th:errors="*{nombreGanado}">Error nombre del ganado</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="peso">Peso en kilos:</label>
-                                <input class="form-control form-control-lg" type="number" required name="peso"
-                                    th:field="*{peso}" />
+                                <label class="form-label form-label-lg" for="peso">Peso en kilos:</label>
+                                <input class="form-control form-control-lg" type="number" step="0.01" required
+                                    name="peso" th:field="*{peso}" />
                                 <span th:if="${#fields.hasErrors('peso')}" class="text-danger" th:errors="*{peso}">Error
                                     peso del ganado</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="fechaIngresoGranja">Fecha de ingreso a la granja:</label>
+                                <label class="form-label form-label-lg" for="fechaIngresoGranja">Fecha de ingreso a la
+                                    granja:</label>
                                 <input class="form-control form-control-lg" type="date" required
                                     name="fechaIngresoGranja" th:field="*{fechaIngresoGranja}" />
                                 <span th:if="${#fields.hasErrors('fechaIngresoGranja')}" class="text-danger"
@@ -39,10 +40,11 @@
                                     Fecha de ingreso a la granja</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="tipoGanado.nombreTipoGanado">Tipo de Ganado:</label>
+                                <label class="form-label form-label-lg" for="tipoGanado.nombreTipoGanado">Tipo de
+                                    Ganado:</label>
                                 <div class="col-sm-8">
                                     <select th:field="*{tipoGanado.idTipoGanado}" name="tipoGanado.nombreTipoGanado"
-                                        required class="form-control">
+                                        required class="form-select form-select-lg">
                                         <option th:each="tipoGanado : ${listaTiposGanados}"
                                             th:value="${tipoGanado.idTipoGanado}"
                                             th:text="${tipoGanado.nombreTipoGanado}"></option>
@@ -53,11 +55,13 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="categoriaGanado.nombreCategoriaGanado">Categoria de
+                                <label class="form-label form-label-lg"
+                                    for="categoriaGanado.nombreCategoriaGanado">Categoria de
                                     Ganado:</label>
                                 <div class="col-sm-8">
                                     <select th:field="*{categoriaGanado.idCategoriaGanado}"
-                                        name="categoriaGanado.nombreCategoriaGanado" required class="form-control">
+                                        name="categoriaGanado.nombreCategoriaGanado" required
+                                        class="form-select form-select-lg">
                                         <option th:each="categoriaGanado : ${listaCategorias}"
                                             th:value="${categoriaGanado.idCategoriaGanado}"
                                             th:text="${categoriaGanado.nombreCategoriaGanado}"></option>
@@ -70,12 +74,12 @@
 
                             <input type="hidden" name="estadoGanado" th:field="*{estadoGanado}">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <a class="btn btn-primary text-center mx-auto"
+                                <div class="col-sm-6 mb-3">
+                                    <a class="btn btn-primary btn-lg btn-block"
                                         th:href="@{/modulo-ganado/ganado/lista}">Regresar</a>
                                 </div>
-                                <div class="col-sm-3">
-                                    <input class="btn btn-success text-center mx-auto" type="submit" name="guardar"
+                                <div class="col-sm-6 mb-3">
+                                    <input class="btn btn-success btn-lg btn-block" type="submit" name="guardar"
                                         value="Guardar" />
                                 </div>
                             </div>

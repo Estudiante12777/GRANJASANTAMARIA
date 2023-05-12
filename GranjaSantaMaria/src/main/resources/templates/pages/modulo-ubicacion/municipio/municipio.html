@@ -4,6 +4,7 @@
 
 <head th:replace="layout/layout :: head">
     <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -11,8 +12,8 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-success" th:href="@{/modulo-ubicacion/municipio/agregar}">+ Crear un nuevo
-                registro</a>
+            <a class="btn btn-outline-success" th:href="@{/modulo-ubicacion/municipio/agregar}"><i
+                    class="fa-solid fa-plus"></i> Crear nuevo registro</a>
         </div>
         <div th:if="${municipios != null and !municipios.empty}">
             <table class="table">
@@ -35,22 +36,24 @@
                         Mostrar nombre del Departamento
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <a class="btn btn-warning"
-                            th:href="@{/modulo-ubicacion/municipio/editar/} + ${municipio.idMunicipio}">Editar</a>
+                        <a class="btn btn-outline-warning"
+                            th:href="@{/modulo-ubicacion/municipio/editar/} + ${municipio.idMunicipio}"><i
+                                class="fa-sharp fa-solid fa-pencil"></i></a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
-                            th:href="@{/modulo-ubicacion/municipio/baja(idMunicipio=${municipio.idMunicipio})}">
-                            Dar baja
-                        </a>
+                        <a type="submit" class="btn btn-outline-danger btn-dar-baja"
+                            th:href="@{/modulo-ubicacion/municipio/baja(idMunicipio=${municipio.idMunicipio})}"><i
+                                class="fa-sharp fa-solid fa-ban"></i></a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
-                            th:href="@{/modulo-ubicacion/municipio/eliminar(idMunicipio=${municipio.idMunicipio})}">
-                            Eliminar
-                        </a>
+                        <a type="submit" class="btn btn-outline-danger btn-eliminar"
+                            th:href="@{/modulo-ubicacion/municipio/eliminar(idMunicipio=${municipio.idMunicipio})}"><i
+                                class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
             </table>
         </div>
         <div th:if="${municipios == null or municipios.empty}">

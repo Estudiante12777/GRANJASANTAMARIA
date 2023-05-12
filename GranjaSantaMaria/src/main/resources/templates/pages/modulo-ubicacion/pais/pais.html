@@ -11,7 +11,8 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-success" th:href="@{/modulo-ubicacion/pais/agregar}">+ Crear un nuevo registro</a>
+            <a class="btn btn-outline-success" th:href="@{/modulo-ubicacion/pais/agregar}"><i
+                    class="fa-solid fa-plus"></i> Crear nuevo registro</a>
         </div>
         <div th:if="${paises != null and !paises.empty}">
             <table class="table">
@@ -20,33 +21,33 @@
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Editar
                     </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
-                        Dar baja
-                    </th>
-                    <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        Eliminar
-                    </th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
+                    <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
                 </thead>
                 <tr th:each="pais : ${paises}">
                     <td th:text="${pais.nombrePais}">
                         Mostrar Nombre del tipo de ganado
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <a class="btn btn-warning"
-                            th:href="@{/modulo-ubicacion/pais/editar/} + ${pais.idPais}">Editar</a>
+                        <a class="btn btn-outline-warning"
+                            th:href="@{/modulo-ubicacion/pais/editar/} + ${pais.idPais}"><i
+                                class="fa-sharp fa-solid fa-pencil"></i></a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
-                            th:href="@{/modulo-ubicacion/pais/baja(idPais=${pais.idPais})}">
-                            Dar baja
+                        <a type="submit" class="btn btn-outline-danger"
+                            th:href="@{/modulo-ubicacion/pais/baja(idPais=${pais.idPais})}"><i
+                                class="fa-sharp fa-solid fa-ban"></i>
                         </a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <a type="submit" class="btn btn-danger"
-                            th:href="@{/modulo-ubicacion/pais/eliminar(idPais=${pais.idPais})}">
-                            Eliminar </a>
+                        <a type="submit" class="btn btn-outline-danger"
+                            th:href="@{/modulo-ubicacion/pais/eliminar(idPais=${pais.idPais})}"><i
+                                class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
             </table>
         </div>
         <div th:if="${paises == null or paises.empty}">
