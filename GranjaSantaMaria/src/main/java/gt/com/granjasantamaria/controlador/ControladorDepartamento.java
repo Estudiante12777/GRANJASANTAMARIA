@@ -27,7 +27,7 @@ public class ControladorDepartamento {
     private PaisService paisService;
 
     @GetMapping("/modulo-ubicacion/departamento/lista")
-    public String listaDepartamento(Model model) {
+    public String listadoDepartamentos(Model model) {
         var departamentos = departamentoService.listadoDepartamento();
         model.addAttribute("departamentos", departamentos);
         return "/pages/modulo-ubicacion/departamento/departamento";

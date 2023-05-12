@@ -1,6 +1,4 @@
-USE granja_santa_maria; 
+SELECT * FROM granja_santa_maria.departamento; 
 
-SELECT * FROM departamento;
+ALTER TABLE granja_santa_maria.departamento AUTO_INCREMENT = 1;
 
-SELECT d.nombre_departamento, p.nombre_pais
-FROM departamento d, pais p;
