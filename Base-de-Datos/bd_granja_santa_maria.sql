@@ -45,6 +45,9 @@ CREATE TABLE ganado (
     CONSTRAINT fk_ganado_categoria_ganado FOREIGN KEY (id_categoria_ganado) REFERENCES categoria_ganado (id_categoria_ganado) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+/*
+	TABLAS PARA PRODUCCION DE LACTEOS 
+*/
 CREATE TABLE produccion_diaria_leche(
 	id_produccion_diaria_leche INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
     fecha_produccion_leche DATE NOT NUll, 
@@ -71,7 +74,14 @@ CREATE TABLE cliente(
 	id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
     nombre_cliente VARCHAR(50) NOT NULL, 
     apellido_cliente VARCHAR(50) NOT NULL, 
-    direccion_cliente VARCHAR(100) NOT NULL
+    direccion_cliente VARCHAR(100) NOT NULL,
+    id_pais INT NOT NULL,
+    id_departamento INT NOT NULL,
+    id_municipio INT NOT NULL, 
+    estado_cliente TINYINT NOT NULL,
+    CONSTRAINT fk_cliente_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_cliente_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_cliente_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
 /*
@@ -80,13 +90,13 @@ CREATE TABLE cliente(
 
 CREATE TABLE pais(
 	id_pais INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    nombre_pais VARCHAR(100) NOT NULL UNIQUE, 
+    nombre_pais VARCHAR(50) NOT NULL UNIQUE, 
     estado_pais TINYINT NOT NULL
 ); 
 
 CREATE TABLE departamento(
 	id_departamento INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    nombre_departamento VARCHAR(100) NOT NULL UNIQUE, 
+    nombre_departamento VARCHAR(50) NOT NULL UNIQUE, 
     id_pais INT NOT NULL,
     estado_departamento TINYINT NOT NULL,
     CONSTRAINT fk_departamento_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais) ON DELETE CASCADE ON UPDATE CASCADE
@@ -94,8 +104,15 @@ CREATE TABLE departamento(
 
 CREATE TABLE municipio(
 	id_municipio INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    nombre_municipio VARCHAR(100) NOT NULL,
+    nombre_municipio VARCHAR(50) NOT NULL,
     id_departamento INT NOT NULL, 
+    id_pais INT NOT NULL,
     estado_municipio TINYINT NOT NULL,
-    CONSTRAINT fk_municipio_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_municipio_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_municipio_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
+
+/*
+	OTROS SCRIPTS
+*/
+SHOW TABLES; 

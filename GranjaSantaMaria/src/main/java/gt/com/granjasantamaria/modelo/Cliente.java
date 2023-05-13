@@ -18,27 +18,37 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "Municipio")
-public class Municipio implements Serializable {
+@Table(name = "cliente")
+public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idMunicipio;
+    private Long idCliente;
 
     @NotEmpty
-    private String nombreMunicipio;
+    private String nombreCliente;
+
+    @NotEmpty
+    private String apellidoCliente;
+
+    @NotEmpty
+    private String direccionCliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pais")
+    private Pais pais;
 
     @ManyToOne
     @JoinColumn(name = "id_departamento")
     private Departamento departamento;
 
     @ManyToOne
-    @JoinColumn(name = "id_pais")
-    private Pais pais;
+    @JoinColumn(name = "id_municipio")
+    private Municipio municipio;
 
     @NotNull
-    private boolean estadoMunicipio;
+    private boolean estadoCliente;
 
 }

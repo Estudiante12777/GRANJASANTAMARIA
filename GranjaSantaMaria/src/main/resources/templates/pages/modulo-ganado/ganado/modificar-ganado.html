@@ -75,12 +75,13 @@
                             <input type="hidden" name="estadoGanado" th:field="*{estadoGanado}">
                             <div class="row">
                                 <div class="col-sm-6 mb-3">
-                                    <a class="btn btn-primary btn-lg btn-block"
-                                        th:href="@{/modulo-ganado/ganado/lista}">Regresar</a>
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        th:href="@{/modulo-ganado/ganado/lista}"><i
+                                            class="fa-solid fa-arrow-left"></i></a>
                                 </div>
                                 <div class="col-sm-6 mb-3">
-                                    <input class="btn btn-success btn-lg btn-block" type="submit" name="guardar"
-                                        value="Guardar" />
+                                    <button class="btn btn-outline-success btn-lg btn-block" type="submit"
+                                        name="guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                                 </div>
                             </div>
                         </form>

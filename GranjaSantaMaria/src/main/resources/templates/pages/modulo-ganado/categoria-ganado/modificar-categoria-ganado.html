@@ -11,7 +11,7 @@
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div class="row justify-content-center">
             <div class="col-md-6 col-sm-8 col-12">
-                <div class="card bg-light text-dark">
+                <div class="card bg-lg text-dark">
                     <div class="card-body">
                         <h5 class="card-title text-center">Categoria ganado</h5>
                         <form th:action="@{/modulo-ganado/categoria-ganado/guardar}" method="post"
@@ -28,12 +28,13 @@
                             <input type="hidden" name="estadoCategoriaGanado" th:field="*{estadoCategoriaGanado}">
                             <div class="row">
                                 <div class="col-sm-6 mb-3">
-                                    <a class="btn btn-outline-primary btn-light btn-block"
-                                        th:href="@{/modulo-ganado/categoria-ganado/lista}">Regresar</a>
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        th:href="@{/modulo-ganado/categoria-ganado/lista}"><i
+                                            class="fa-solid fa-arrow-left"></i></a>
                                 </div>
                                 <div class="col-sm-6 mb-3">
-                                    <input class="btn btn-outline-success btn-light btn-block" type="submit"
-                                        name="guardar" value="Guardar" />
+                                    <button class="btn btn-outline-success btn-lg btn-block" type="submit"
+                                        name="guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
                                 </div>
                             </div>
                         </form>

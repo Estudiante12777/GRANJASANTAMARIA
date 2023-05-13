@@ -2,8 +2,10 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.Departamento;
 import gt.com.granjasantamaria.modelo.Municipio;
+import gt.com.granjasantamaria.modelo.Pais;
 import gt.com.granjasantamaria.servicio.DepartamentoService;
 import gt.com.granjasantamaria.servicio.MunicipioService;
+import gt.com.granjasantamaria.servicio.PaisService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class ControladorMunicipio {
     @Autowired
     private DepartamentoService departamentoService;
 
+    @Autowired
+    private PaisService paisService;
+
     @GetMapping("/modulo-ubicacion/municipio/lista")
     public String listadoMunicipios(Model model) {
         var municipios = municipioService.listadoMunicipios();
@@ -37,6 +42,8 @@ public class ControladorMunicipio {
     public String agregarMunicipio(Municipio municipio, Model model) {
         List<Departamento> listadoDepartamentos = departamentoService.listadoDepartamento();
         model.addAttribute("listadoDepartamentos", listadoDepartamentos);
+        List<Pais> listadoPaises = paisService.listadoPais();
+        model.addAttribute("listadoPaises", listadoPaises);
         return "/pages/modulo-ubicacion/municipio/modificar-municipio";
     }
 
@@ -54,7 +61,8 @@ public class ControladorMunicipio {
     public String editarMunicipio(Municipio municipio, Model model) {
         List<Departamento> listadoDepartamentos = departamentoService.listadoDepartamento();
         model.addAttribute("listadoDepartamentos", listadoDepartamentos);
-
+        List<Pais> listadoPaises = paisService.listadoPais();
+        model.addAttribute("listadoPaises", listadoPaises);
         municipio = municipioService.encontrarMunicipio(municipio);
         model.addAttribute("municipio", municipio);
         return "/pages/modulo-ubicacion/municipio/modificar-municipio";

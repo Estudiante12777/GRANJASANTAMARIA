@@ -2,43 +2,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Granja Santa Maria</title>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-  <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}" />
-  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
-  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Granja Santa Maria</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.4.0/css/all.min.css}" />
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/1.16.1/dist/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
-<body class="mb-3 py-5">
-  <!-- FORMULARIO DE INICIO DE SESION -->
-  <div class="row justify-content-center">
-    <div class="col-md-6 col-sm-8 col-12">
-      <div class="card">
-        <div class="card-header text-center">Granja Santa Maria</div>
-        <div class="card-body">
-          <form method="post" th:action="@{/login}">
-            <div class="mb-3">
-              <label for="username" class="form-label">Usuario:</label>
-              <input type="text" name="username" id="username" placeholder="Ingrese su nombre de usuario"
-                class="form-control form-control-lg" required />
+<body>
+    <div class="container py-5">
+        <!-- FORMULARIO DE INICIO DE SESION -->
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+                <div class="card bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Inicio de sesion</h5>
+                        <form method="post" th:action="@{/login}">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Usuario:</label>
+                                <input type="text" name="username" id="username"
+                                    placeholder="Ingrese su nombre de usuario" class="form-control form-control-lg"
+                                    required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña:</label>
+                                <input type="password" name="password" id="password" placeholder="Ingrese su contraseña"
+                                    class="form-control form-control-lg" required />
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-outline-primary btn-lg btn-block mx-auto">
+                                    Iniciar Sesion
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña:</label>
-              <input type="password" name="password" id="password" placeholder="Ingrese su contraseña"
-                class="form-control form-control-lg" required />
-            </div>
-            <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-primary text-center mx-auto">
-                Iniciar Sesion
-              </button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 </body>
 
 </html>

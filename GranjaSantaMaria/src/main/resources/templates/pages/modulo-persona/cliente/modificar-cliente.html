@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <div class="container py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+                <div class="card bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Cliente</h5>
+                        <form th:action="@{/modulo-persona/cliente/guardar}" method="post" th:object="${cliente}">
+                            <input type="hidden" name="idCliente" th:field="*{idCliente}" />
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg" for="nombreCliente">Nombre cliente:</label>
+                                <input class="form-control form-control-lg" type="text" required name="nombreCliente"
+                                    th:field="*{nombreCliente}" />
+                                <span th:if="${#fields.hasErrors('nombreCliente')}" class="text-danger"
+                                    th:errors="*{nombreCliente}">Error nombre del cliente</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg" for="apellidoCliente">Apellido cliente:</label>
+                                <input class="form-control form-control-lg" type="text" required name="apellidoCliente"
+                                    th:field="*{apellidoCliente}" />
+                                <span th:if="${#fields.hasErrors('apellidoCliente')}" class="text-danger"
+                                    th:errors="*{apellidoCliente}">Error apellido del cliente</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg" for="direccionCliente">Direccion
+                                    cliente:</label>
+                                <input class="form-control form-control-lg" type="text" required name="direccionCliente"
+                                    th:field="*{direccionCliente}" />
+                                <span th:if="${#fields.hasErrors('direccionCliente')}" class="text-danger"
+                                    th:errors="*{direccionCliente}">Error direccion del cliente</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg" for="pais.nombrePais">Pais:</label>
+                                <div class="col-sm-8">
+                                    <select th:field="*{pais.idPais}" name="pais.nombrePais" required
+                                        class="form-select form-select-lg">
+                                        <option th:each="pais : ${listadoPaises}" th:value="${pais.idPais}"
+                                            th:text="${pais.nombrePais}">
+                                        </option>
+                                        </option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('pais.nombrePais')}" class="text-danger"
+                                        th:errors="*{pais.nombrePais}">Error
+                                        Pais</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg"
+                                    for="departamento.nombreDepartamento">Departamento:</label>
+                                <div class="col-sm-8">
+                                    <select th:field="*{departamento.idDepartamento}"
+                                        name="departamento.nombreDepartamento" required
+                                        class="form-select form-select-lg">
+                                        <option th:each="departamento : ${listadoDepartamentos}"
+                                            th:value="${departamento.idDepartamento}"
+                                            th:text="${departamento.nombreDepartamento}">
+                                        </option>
+                                        </option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('departamento.nombreDepartamento')}"
+                                        class="text-danger" th:errors="*{departamento.nombreDepartamento}">Error
+                                        Departamento</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg"
+                                    for="municipio.nombreMunicipio">Municipio:</label>
+                                <div class="col-sm-8">
+                                    <select th:field="*{municipio.idMunicipio}" name="municipio.nombreMunicipio"
+                                        required class="form-select form-select-lg">
+                                        <option th:each="municipio : ${listadoMunicipios}"
+                                            th:value="${municipio.idMunicipio}" th:text="${municipio.nombreMunicipio}">
+                                        </option>
+                                        </option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('municipio.nombreMunicipio')}" class="text-danger"
+                                        th:errors="*{municipio.nombreMunicipio}">Error
+                                        Municipio</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="estadoCliente" th:field="*{estadoCliente}">
+                            <div class="row">
+                                <div class="col-sm-6 mb-3">
+                                    <a class="btn btn-outline-primary btn-lg btn-block"
+                                        th:href="@{/modulo-persona/cliente/lista}"><i
+                                            class="fa-solid fa-arrow-left"></i></a>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <button class="btn btn-outline-success btn-lg btn-block icon" type="submit"
+                                        name="guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

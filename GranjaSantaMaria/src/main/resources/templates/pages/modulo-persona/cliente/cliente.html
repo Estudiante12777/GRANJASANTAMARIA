@@ -12,46 +12,56 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-outline-success" th:href="@{/modulo-ubicacion/municipio/agregar}"><i
+            <a class="btn btn-outline-success" th:href="@{/modulo-persona/cliente/agregar}"><i
                     class="fa-solid fa-plus"></i> Crear nuevo registro</a>
         </div>
-        <div th:if="${municipios != null and !municipios.empty}">
+        <div th:if="${clientes != null and !clientes.empty}">
             <table class="table">
                 <thead class="table-dark">
-                    <th>Municipio</th>
-                    <th>Departamento al que pertenece</th>
+                    <th>Nombre cliente</th>
+                    <th>Apellido Cliente</th>
+                    <th>Direccion Cliente</th>
                     <th>Pais al que pertenece</th>
+                    <th>Departamento al que pertenece</th>
+                    <th>Municipio al que pertenece</th>
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Editar
                     </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
-                        Dar baja
-                    </th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
                     <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
                 </thead>
-                <tr th:each="municipio : ${municipios}">
-                    <td th:text="${municipio.nombreMunicipio}">
-                        Mostrar Nombre del Municipio
+                <tr th:each="cliente : ${clientes}">
+                    <td th:text="${cliente.nombreCliente}">
+                        Mostrar Nombre del Cliente
                     </td>
-                    <td th:text="${municipio.departamento.nombreDepartamento}">
+                    <td th:text="${cliente.apellidoCliente}">
+                        Mostrar Apellido del Cliente
+                    </td>
+                    <td th:text="${cliente.direccionCliente}">
+                        Mostrar Direccion del Cliente
+                    </td>
+                    <td th:text="${cliente.pais.nombrePais}">
+                        Mostrar nombre del Pais
+                    </td>
+                    <td th:text="${cliente.departamento.nombreDepartamento}">
                         Mostrar nombre del Departamento
                     </td>
-                    <td th:text="${municipio.pais.nombrePais}">
-                        Mostrar nombre del Pais
+                    <td th:text="${cliente.municipio.nombreMunicipio}">
+                        Mostrar nombre del Municipio
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <a class="btn btn-outline-warning"
-                            th:href="@{/modulo-ubicacion/municipio/editar/} + ${municipio.idMunicipio}"><i
+                            th:href="@{/modulo-persona/cliente/editar/} + ${cliente.idCliente}"><i
                                 class="fa-sharp fa-solid fa-pencil"></i></a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <a type="submit" class="btn btn-outline-danger btn-dar-baja"
-                            th:href="@{/modulo-ubicacion/municipio/baja(idMunicipio=${municipio.idMunicipio})}"><i
+                            th:href="@{/modulo-persona/cliente/baja(idCliente=${cliente.idCliente})}"><i
                                 class="fa-sharp fa-solid fa-ban"></i></a>
                     </td>
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <a type="submit" class="btn btn-outline-danger btn-eliminar"
-                            th:href="@{/modulo-ubicacion/municipio/eliminar(idMunicipio=${municipio.idMunicipio})}"><i
+                            th:href="@{/modulo-persona/cliente/eliminar(idCliente=${cliente.idCliente})}"><i
                                 class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
@@ -60,8 +70,8 @@
                 </tfoot>
             </table>
         </div>
-        <div th:if="${municipios == null or municipios.empty}">
-            <h1>Municipios</h1>
+        <div th:if="${clientes == null or clientes.empty}">
+            <h1>clientes</h1>
         </div>
     </div>
 </body>
