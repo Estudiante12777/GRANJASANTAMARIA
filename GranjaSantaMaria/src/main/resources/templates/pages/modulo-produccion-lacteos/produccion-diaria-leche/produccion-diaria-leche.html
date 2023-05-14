@@ -11,15 +11,18 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-outline-success" th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/agregar}"><i
-                    class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+            <a class="btn btn-outline-success"
+                th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/agregar}"><i class="fa-solid fa-plus"></i>
+                Crear nuevo registro</a>
+            <a class="btn btn-outline-primary" th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche}">
+                Ver total produccion leche al dia</a>
         </div>
         <div th:if="${produccionDiariaLeches != null and !produccionDiariaLeches.empty}">
             <table class="table">
                 <thead class="table-dark">
                     <th>Fecha de produccion</th>
-                    <th>Produccion en la mañana</th>
-                    <th>Produccion en la tarde</th>
+                    <th>Produccion en el dia - litros</th>
+                    <th>Produccion en la tarde - litros</th>
                     <th>Nombre de la vaca</th>
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Editar
@@ -63,21 +66,9 @@
                     <tr></tr>
                 </tfoot>
             </table>
-            <div>
-                <a class="btn btn-outline-success text-left" href="#">
-                    Total de produccion de leche en la mañana
-                </a>
-                <a class="btn btn-outline-success text-left" href="#">
-                    Total de produccion en tarde la tarde
-                </a>
-
-                <a class="btn btn-outline-success text-left" href="#">
-                    Total de produccion diaria
-                </a>
-            </div>
         </div>
         <div th:if="${produccionDiariaLeches == null or produccionDiariaLeches.empty}">
-            <h1>Listado de la produccion diaria de leche</h1>
+            <h1>Solo se muestran los registros de produccion diaria de este dia!</h1>
         </div>
     </div>
 </body>

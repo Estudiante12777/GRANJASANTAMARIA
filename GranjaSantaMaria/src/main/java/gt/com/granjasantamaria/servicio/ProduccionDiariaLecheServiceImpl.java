@@ -27,6 +27,14 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<ProduccionDiariaLeche> listaTotalProduccionDiariaLeche() {
+        LocalDate fechaActual = LocalDate.now();
+        java.sql.Date fechaActualSql = java.sql.Date.valueOf(fechaActual);
+        return produccionDiariaLecheDao.findByFechaProduccionLecheAndEstadoProduccionDiariaLecheTrue(fechaActualSql);
+    }
+
+    @Override
     public void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         produccionDiariaLeche.setEstadoProduccionDiariaLeche(true);
         produccionDiariaLecheDao.save(produccionDiariaLeche);

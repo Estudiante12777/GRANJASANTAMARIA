@@ -2,14 +2,8 @@ package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
 import java.sql.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import lombok.Data;
 
 /**
@@ -28,19 +22,25 @@ public class ProduccionDiariaLeche implements Serializable {
     private Long idProduccionDiariaLeche;
 
     @NotNull
+    @Column(name = "fecha_produccion_leche")
     private Date fechaProduccionLeche;
 
     @NotNull
+    @Column(name = "produccion_maniana_leche")
+    @DecimalMin(value = "0.0", message = "La producción de la tarde debe ser mayor o igual a cero")
     private Double produccionManianaLeche;
 
     @NotNull
+    @Column(name = "produccion_tarde_leche")
+    @DecimalMin(value = "0.0", message = "La producción de la tarde debe ser mayor o igual a cero")
     private Double produccionTardeLeche;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ganado")
     private Ganado ganado;
 
     @NotNull
+    @Column(name = "estado_produccion_diaria_leche")
     private boolean estadoProduccionDiariaLeche;
 
 }

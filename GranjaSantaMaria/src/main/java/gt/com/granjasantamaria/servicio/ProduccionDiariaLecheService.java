@@ -10,6 +10,8 @@ import java.util.List;
 public interface ProduccionDiariaLecheService {
 
     public List<ProduccionDiariaLeche> listaProduccionDiariaLeche();
+    
+    public List<ProduccionDiariaLeche> listaTotalProduccionDiariaLeche();
 
     public void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 

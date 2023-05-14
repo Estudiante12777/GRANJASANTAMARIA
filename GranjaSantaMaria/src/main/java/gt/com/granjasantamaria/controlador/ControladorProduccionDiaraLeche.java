@@ -33,6 +33,13 @@ public class ControladorProduccionDiaraLeche {
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/produccion-diaria-leche";
     }
 
+    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche")
+    public String listaTotalProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
+        var produccionDiariaLeches = produccionDiariaLecheService.listaProduccionDiariaLeche();
+        model.addAttribute("produccionDiariaLeches", produccionDiariaLeches);
+        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche";
+    }
+
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")
     public String agregarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         List<Ganado> listaGanados = ganadoService.listadoGanado();
