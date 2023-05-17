@@ -1,7 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
-import gt.com.granjasantamaria.dao.PaisDao;
-import gt.com.granjasantamaria.modelo.Pais;
+import gt.com.granjasantamaria.dao.*;
+import gt.com.granjasantamaria.modelo.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

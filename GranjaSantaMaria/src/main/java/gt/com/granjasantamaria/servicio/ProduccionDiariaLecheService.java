@@ -1,7 +1,6 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
