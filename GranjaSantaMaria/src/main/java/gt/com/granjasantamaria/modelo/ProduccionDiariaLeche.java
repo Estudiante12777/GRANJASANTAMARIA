@@ -29,7 +29,7 @@ public class ProduccionDiariaLeche implements Serializable {
 
     @NotNull
     @Column(name = "produccion_maniana_leche", nullable = false)
-    @DecimalMin(value = "0.0", message = "La producción de la tarde debe ser mayor o igual a cero")
+    @DecimalMin(value = "0.0", message = "La producción de la maniana debe ser mayor o igual a cero")
     private Double produccionManianaLeche;
 
     @NotNull

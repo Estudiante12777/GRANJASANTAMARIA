@@ -1,10 +1,11 @@
 package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -27,11 +28,13 @@ public class Ganado implements Serializable {
 
     @NotNull
     @Column(name = "peso", nullable = false)
+    @DecimalMin(value = "0.0", message = "El peso del ganado debe ser mayor o igual a cero")
     private double peso;
 
     @NotNull
-    @Column(name = "fecha_ingreso_granja")
-    private Date fechaIngresoGranja;
+    @Column(name = "fecha_ingreso_granja", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaIngresoGranja;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_ganado")
