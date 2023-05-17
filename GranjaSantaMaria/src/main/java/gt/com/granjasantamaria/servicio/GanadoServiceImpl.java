@@ -20,7 +20,7 @@ public class GanadoServiceImpl implements GanadoService {
     @Override
     @Transactional(readOnly = true)
     public List<Ganado> listadoGanado() {
-        return ganadoDao.findByEstadoGanadoTrue();
+        return ganadoDao.findByEstadoGanadoIsTrue();
     }
 
     @Override

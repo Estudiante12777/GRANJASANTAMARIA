@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author gerso
  */
-public interface PaisDao extends JpaRepository<Pais, Long>{
-    
-    List<Pais> findByEstadoPaisTrue(); 
-    
+public interface PaisDao extends JpaRepository<Pais, Long> {
+
+    List<Pais> findByEstadoPaisIsTrue();
+
 }

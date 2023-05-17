@@ -18,7 +18,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public List<Cliente> listadoClientes() {
-        return clienteDao.findByEstadoClienteTrue();
+        return clienteDao.findByEstadoClienteIsTrue();
     }
 
     @Override

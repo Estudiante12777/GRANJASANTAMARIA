@@ -20,7 +20,7 @@ public class PaisServiceImpl implements PaisService {
     @Override
     @Transactional(readOnly = true)
     public List<Pais> listadoPais() {
-        return paisDao.findByEstadoPaisTrue();
+        return paisDao.findByEstadoPaisIsTrue();
     }
 
     @Override

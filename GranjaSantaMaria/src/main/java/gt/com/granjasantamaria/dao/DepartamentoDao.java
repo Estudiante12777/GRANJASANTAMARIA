@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface DepartamentoDao extends JpaRepository<Departamento, Long> {
 
-    List<Departamento> findByEstadoDepartamentoTrue();
+    List<Departamento> findByEstadoDepartamentoIsTrue();
 
 }

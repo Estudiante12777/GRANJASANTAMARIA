@@ -20,7 +20,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     @Override
     @Transactional(readOnly = true)
     public List<Departamento> listadoDepartamento() {
-        return departamentoDao.findByEstadoDepartamentoTrue();
+        return departamentoDao.findByEstadoDepartamentoIsTrue();
     }
 
     @Override

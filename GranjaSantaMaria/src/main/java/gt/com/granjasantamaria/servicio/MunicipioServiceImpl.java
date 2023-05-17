@@ -20,7 +20,7 @@ public class MunicipioServiceImpl implements MunicipioService {
     @Override
     @Transactional(readOnly = true)
     public List<Municipio> listadoMunicipios() {
-        return municipioDao.findByEstadoMunicipioTrue();
+        return municipioDao.findByEstadoMunicipioIsTrue();
     }
 
     @Override

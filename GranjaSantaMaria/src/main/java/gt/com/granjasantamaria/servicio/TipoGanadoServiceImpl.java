@@ -20,7 +20,7 @@ public class TipoGanadoServiceImpl implements TipoGanadoService {
     @Override
     @Transactional(readOnly = true)
     public List<TipoGanado> listadoTiposGanado() {
-        return tipoGanadoDao.findByEstadoTipoGanadoTrue();
+        return tipoGanadoDao.findByEstadoTipoGanadoIsTrue();
     }
 
     @Override
@@ -53,7 +53,3 @@ public class TipoGanadoServiceImpl implements TipoGanadoService {
     }
 
 }
-
-
-
-

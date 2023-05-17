@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface TipoGanadoDao extends JpaRepository<TipoGanado, Long> {
 
-    List<TipoGanado> findByEstadoTipoGanadoTrue();
+    List<TipoGanado> findByEstadoTipoGanadoIsTrue();
 
 }

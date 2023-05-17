@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MunicipioDao extends JpaRepository<Municipio, Long> {
 
-    List<Municipio> findByEstadoMunicipioTrue();
+    List<Municipio> findByEstadoMunicipioIsTrue();
 
 }

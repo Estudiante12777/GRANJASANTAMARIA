@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface GanadoDao extends JpaRepository<Ganado, Long> {
 
-    List<Ganado> findByEstadoGanadoTrue();
+    List<Ganado> findByEstadoGanadoIsTrue();
 
 }
