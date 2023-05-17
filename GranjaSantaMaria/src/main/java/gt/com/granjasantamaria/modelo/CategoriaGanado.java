@@ -1,13 +1,8 @@
 package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import lombok.Data;
 
 /**
@@ -25,10 +20,12 @@ public class CategoriaGanado implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCategoriaGanado;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "nombre_categoria_ganado", nullable = false)
     private String nombreCategoriaGanado;
 
     @NotNull
+    @Column(name = "estado_categoria_ganado", nullable = false)
     private boolean estadoCategoriaGanado;
 
 }

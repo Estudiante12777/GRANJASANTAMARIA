@@ -2,7 +2,7 @@ package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import lombok.Data;
 
 /**
@@ -20,7 +20,8 @@ public class Rol implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRol;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-    
+
 }

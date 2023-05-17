@@ -8,10 +8,10 @@
 
 <body>
     <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container py-2" layout:fragment="page-content"
+    <div class="container-fluid py-2" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="fs-1 text-center mb-3">
-            <label>Este es el total de la produccion de leche al día</label>
+            <label>Este es el total de la produccion de leche en el día</label>
         </div>
         <div th:if="${produccionDiariaLeches != null and !produccionDiariaLeches.empty}">
             <table class="table">

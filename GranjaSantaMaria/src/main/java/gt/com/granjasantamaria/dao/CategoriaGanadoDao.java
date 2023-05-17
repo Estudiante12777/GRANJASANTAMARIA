@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CategoriaGanadoDao extends JpaRepository<CategoriaGanado, Long>{
     
-    List<CategoriaGanado> findByEstadoCategoriaGanadoTrue(); 
+    List<CategoriaGanado> findByEstadoCategoriaGanadoIsTrue(); 
     
 }

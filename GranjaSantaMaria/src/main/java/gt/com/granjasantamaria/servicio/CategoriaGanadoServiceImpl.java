@@ -20,7 +20,7 @@ public class CategoriaGanadoServiceImpl implements CategoriaGanadoService {
     @Override
     @Transactional(readOnly = true)
     public List<CategoriaGanado> listaCategoriasGanado() {
-        return categoriaGanadoDao.findByEstadoCategoriaGanadoTrue();
+        return categoriaGanadoDao.findByEstadoCategoriaGanadoIsTrue();
     }
 
     @Override

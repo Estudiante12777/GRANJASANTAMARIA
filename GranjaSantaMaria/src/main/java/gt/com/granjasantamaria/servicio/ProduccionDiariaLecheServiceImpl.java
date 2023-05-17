@@ -20,18 +20,21 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProduccionDiariaLeche> listaProduccionDiariaLeche() {
+    public List<ProduccionDiariaLeche> obtenerListaProduccionDiariaLeche() {
         LocalDate fechaActual = LocalDate.now();
-        java.sql.Date fechaActualSql = java.sql.Date.valueOf(fechaActual);
-        return produccionDiariaLecheDao.findByFechaProduccionLecheAndEstadoProduccionDiariaLecheTrue(fechaActualSql);
+        return produccionDiariaLecheDao.findByFechaProduccionLecheAndEstadoProduccionDiariaLecheIsTrue(fechaActual);
+    }
+
+    @Override
+    public List<ProduccionDiariaLeche> obtenerListaTotalProduccionLeche() {
+        return produccionDiariaLecheDao.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProduccionDiariaLeche> listaTotalProduccionDiariaLeche() {
+    public List<ProduccionDiariaLeche> obtenerListaTotalProduccionDiariaLeche() {
         LocalDate fechaActual = LocalDate.now();
-        java.sql.Date fechaActualSql = java.sql.Date.valueOf(fechaActual);
-        return produccionDiariaLecheDao.findByFechaProduccionLecheAndEstadoProduccionDiariaLecheTrue(fechaActualSql);
+        return produccionDiariaLecheDao.findByFechaProduccionLecheAndEstadoProduccionDiariaLecheIsTrue(fechaActual);
     }
 
     @Override
@@ -51,7 +54,12 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
-    public void darBajaProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
+    public List<ProduccionDiariaLeche> encontrarTotalProduccionFecha(LocalDate fechaInicio, LocalDate fechaFin) {
+        return produccionDiariaLecheDao.findByFechaProduccionLecheBetween(fechaInicio, fechaFin);
+    }
+
+    @Override
+    public void darDeBajaProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         ProduccionDiariaLeche produccionDiariaLecheExistente = produccionDiariaLecheDao.findById(produccionDiariaLeche.getIdProduccionDiariaLeche()).orElse(null);
         if (produccionDiariaLecheExistente != null) {
             produccionDiariaLecheExistente.setEstadoProduccionDiariaLeche(false);

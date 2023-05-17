@@ -1,14 +1,7 @@
 package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -27,28 +20,32 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "nombre_cliente", nullable = false)
     private String nombreCliente;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "apellido_cliente", nullable = false)
     private String apellidoCliente;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "direccion_cliente", nullable = false)
     private String direccionCliente;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pais")
     private Pais pais;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_departamento")
     private Departamento departamento;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_municipio")
     private Municipio municipio;
 
     @NotNull
+    @Column(name = "estado_cliente", nullable = false)
     private boolean estadoCliente;
 
 }

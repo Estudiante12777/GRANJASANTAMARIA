@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head th:fragment="head">
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -24,6 +24,15 @@
             });
             $(".navbar-toggler-icon").on("click", function () {
                 $("#navbarSupportedContent").toggle();
+            });
+            // Seleccionar el elemento del botón y el elemento de la barra de navegación con jQuery
+            var sidebarToggle = $("#sidebarToggle");
+            var sidebar = $("#sidebar");
+
+            // Agregar un evento de clic al botón con el método on
+            sidebarToggle.on("click", function () {
+                // Mostrar u ocultar la barra de navegación con el método toggle
+                sidebar.toggle();
             });
         });
     </script>

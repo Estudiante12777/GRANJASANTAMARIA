@@ -1,14 +1,7 @@
 package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -27,18 +20,20 @@ public class Municipio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMunicipio;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "nombre_municipio", nullable = false)
     private String nombreMunicipio;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_departamento")
     private Departamento departamento;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pais")
     private Pais pais;
 
     @NotNull
+    @Column(name = "estado_municipio", nullable = false)
     private boolean estadoMunicipio;
 
 }

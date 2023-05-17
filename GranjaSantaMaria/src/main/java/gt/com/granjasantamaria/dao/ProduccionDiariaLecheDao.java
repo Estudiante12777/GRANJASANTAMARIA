@@ -1,7 +1,7 @@
 package gt.com.granjasantamaria.dao;
 
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,8 +11,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ProduccionDiariaLecheDao extends JpaRepository<ProduccionDiariaLeche, Long> {
 
-    List<ProduccionDiariaLeche> findByEstadoProduccionDiariaLecheTrue();
-    
-    List<ProduccionDiariaLeche> findByFechaProduccionLecheAndEstadoProduccionDiariaLecheTrue(Date fechaProduccionLeche);
+    List<ProduccionDiariaLeche> findByEstadoProduccionDiariaLecheIsTrue();
+
+    List<ProduccionDiariaLeche> findByFechaProduccionLecheAndEstadoProduccionDiariaLecheIsTrue(LocalDate fechaProduccionLeche);
+
+    List<ProduccionDiariaLeche> findByFechaProduccionLecheBetween(LocalDate fechaInicio, LocalDate fechaFin);
 
 }

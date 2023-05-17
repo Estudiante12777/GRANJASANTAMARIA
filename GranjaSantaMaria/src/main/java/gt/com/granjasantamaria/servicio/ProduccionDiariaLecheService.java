@@ -1,6 +1,8 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -9,16 +11,20 @@ import java.util.List;
  */
 public interface ProduccionDiariaLecheService {
 
-    public List<ProduccionDiariaLeche> listaProduccionDiariaLeche();
-    
-    public List<ProduccionDiariaLeche> listaTotalProduccionDiariaLeche();
+    List<ProduccionDiariaLeche> obtenerListaProduccionDiariaLeche();
 
-    public void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
+    List<ProduccionDiariaLeche> obtenerListaTotalProduccionLeche();
 
-    public void eliminarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
+    List<ProduccionDiariaLeche> obtenerListaTotalProduccionDiariaLeche();
 
-    public ProduccionDiariaLeche encontrarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
+    void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 
-    public void darBajaProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
+    void eliminarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
+
+    ProduccionDiariaLeche encontrarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
+
+    List<ProduccionDiariaLeche> encontrarTotalProduccionFecha(LocalDate fechaInicio, LocalDate fechaFin);
+
+    void darDeBajaProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 
 }

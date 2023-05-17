@@ -3,7 +3,7 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import lombok.Data;
 
 /**
@@ -21,13 +21,15 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @NotEmpty
+    @NotNull
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
     private List<Rol> roles;
 
