@@ -34,3 +34,4 @@ CREATE TABLE ganado (
 /*
 	OTROS SCRIPTS
 */
+SELECT * FROM categoria_ganado;
