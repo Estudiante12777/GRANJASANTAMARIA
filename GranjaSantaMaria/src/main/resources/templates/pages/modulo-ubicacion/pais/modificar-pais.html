@@ -14,7 +14,8 @@
                 <div class="card bg-light text-dark">
                     <div class="card-body">
                         <h5 class="card-title text-center">Pais</h5>
-                        <form th:action="@{/modulo-ubicacion/pais/guardar}" method="post" th:object="${pais}">
+                        <form th:action="@{/modulo-ubicacion/pais/guardar}" method="post" th:object="${pais}"
+                            id="guardarFormulario">
                             <input type="hidden" name="idPais" th:field="*{idPais}" />
                             <div class="mb-3">
                                 <label class="form-label form-label-lg" for="nombrePais">Nombre del pais:</label>
@@ -30,9 +31,39 @@
                                         th:href="@{/modulo-ubicacion/pais/lista}"><i
                                             class="fa-solid fa-arrow-left"></i></a>
                                 </div>
-                                <div class="col-sm-6">
-                                    <button class="btn btn-outline-success btn-lg btn-block" type="submit"
-                                        name="guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                                <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                                    class="col-sm-6 mb-3">
+                                    <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                                        data-bs-toggle="modal" data-bs-target="#guardarModal">
+                                        <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                    </button>
+                                    <div class="modal fade" id="guardarModal" tabindex="-1"
+                                        aria-labelledby="guardarModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
+                                                        ganado</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Estás seguro de que deseas guardar esta categoría de ganado?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <!-- Este es el botón que realiza la acción de guardar -->
+                                                    <button type="submit" class="btn btn-success" name="guardar">
+                                                        Guardar
+                                                    </button>
+                                                    <!-- Este es el botón que cierra el modal -->
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -41,6 +72,28 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        /* Generar ID único para el modal de guardar */
+
+        // Obtén el botón de guardar
+        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+
+        // Obtén el atributo 'data-bs-target' del botón
+        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+
+        // Obtén el atributo 'id' del botón
+        var modalIdGuardar = guardarButton.getAttribute("id");
+
+        // Crea un identificador único para el modal de guardar
+        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modalGuardar = document.querySelector(targetGuardarModalId);
+        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+    </script>
 </body>
 
 </html>
