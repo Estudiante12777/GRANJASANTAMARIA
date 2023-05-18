@@ -26,9 +26,6 @@ public class ControladorCliente {
     @Autowired
     private DepartamentoService departamentoService;
 
-    @Autowired
-    private PaisService paisService;
-
     @GetMapping("/modulo-persona/cliente/lista")
     public String listadoClientes(Model model) {
         var clientes = clienteService.listadoClientes();
@@ -42,8 +39,6 @@ public class ControladorCliente {
         model.addAttribute("listadoMunicipios", listadoMunicipios);
         List<Departamento> listadoDepartamentos = departamentoService.listadoDepartamento();
         model.addAttribute("listadoDepartamentos", listadoDepartamentos);
-        List<Pais> listadoPaises = paisService.listadoPais();
-        model.addAttribute("listadoPaises", listadoPaises);
         return "/pages/modulo-persona/cliente/modificar-cliente";
     }
 
@@ -63,8 +58,6 @@ public class ControladorCliente {
         model.addAttribute("listadoMunicipios", listadoMunicipios);
         List<Departamento> listadoDepartamentos = departamentoService.listadoDepartamento();
         model.addAttribute("listadoDepartamentos", listadoDepartamentos);
-        List<Pais> listadoPaises = paisService.listadoPais();
-        model.addAttribute("listadoPaises", listadoPaises);
         cliente = clienteService.encontrarCliente(cliente);
         model.addAttribute("cliente", cliente);
         return "/pages/modulo-persona/cliente/modificar-cliente";

@@ -29,12 +29,12 @@ public class Cliente implements Serializable {
     private String apellidoCliente;
 
     @NotNull
+    @Column(name = "telefono", nullable = false)
+    private String telefono;
+
+    @NotNull
     @Column(name = "direccion_cliente", nullable = false)
     private String direccionCliente;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pais")
-    private Pais pais;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_departamento")

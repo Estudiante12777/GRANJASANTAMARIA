@@ -62,14 +62,13 @@ CREATE TABLE cliente(
 	id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
     nombre_cliente VARCHAR(50) NOT NULL, 
     apellido_cliente VARCHAR(50) NOT NULL, 
+    telefono VARCHAR(15) NOT NULL,
     direccion_cliente VARCHAR(100) NOT NULL,
-    id_pais INT NOT NULL,
-    id_departamento INT NOT NULL,
     id_municipio INT NOT NULL, 
+    id_departamento INT NOT NULL,
     estado_cliente TINYINT NOT NULL,
-    CONSTRAINT fk_cliente_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_cliente_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_cliente_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_cliente_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_cliente_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 ****************************************************************************************************
 ****************************************************************************************************

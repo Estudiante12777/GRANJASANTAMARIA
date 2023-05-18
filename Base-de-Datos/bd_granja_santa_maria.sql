@@ -29,7 +29,7 @@ CREATE TABLE ganado (
     estado_ganado TINYINT NOT NULL,
     CONSTRAINT fk_ganado_tipo_ganado FOREIGN KEY (id_tipo_ganado) REFERENCES tipo_ganado (id_tipo_ganado) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_ganado_categoria_ganado FOREIGN KEY (id_categoria_ganado) REFERENCES categoria_ganado (id_categoria_ganado) ON DELETE CASCADE ON UPDATE CASCADE
-);
+); 
 
 /*
 	OTROS SCRIPTS
