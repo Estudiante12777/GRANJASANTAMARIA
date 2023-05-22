@@ -68,7 +68,7 @@ public class ControladorProduccionDiaraLeche {
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")
     public String agregarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        List<Ganado> listaGanados = ganadoService.listadoGanado();
+        List<Ganado> listaGanados = ganadoService.listadoGanados();
         model.addAttribute("listaGanados", listaGanados);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
     }
@@ -76,7 +76,7 @@ public class ControladorProduccionDiaraLeche {
     @PostMapping("/modulo-produccion-lacteos/produccion-diaria-leche/guardar")
     public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ProduccionDiariaLeche produccionDiariaLeche, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<Ganado> listaGanados = ganadoService.listadoGanado();
+            List<Ganado> listaGanados = ganadoService.listadoGanados();
             model.addAttribute("listaGanados", listaGanados);
             return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
         }
@@ -86,7 +86,7 @@ public class ControladorProduccionDiaraLeche {
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         } catch (Exception e) {
             model.addAttribute("error", "Error al guardar la producción diaria de leche.");
-            List<Ganado> listaGanados = ganadoService.listadoGanado();
+            List<Ganado> listaGanados = ganadoService.listadoGanados();
             model.addAttribute("listaGanados", listaGanados);
             return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
         }
@@ -94,7 +94,7 @@ public class ControladorProduccionDiaraLeche {
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/editar/{idProduccionDiariaLeche}")
     public String editarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        List<Ganado> listaGanados = ganadoService.listadoGanado();
+        List<Ganado> listaGanados = ganadoService.listadoGanados();
         model.addAttribute("listaGanados", listaGanados);
 
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);

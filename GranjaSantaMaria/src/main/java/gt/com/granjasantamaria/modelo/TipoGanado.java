@@ -21,7 +21,7 @@ public class TipoGanado implements Serializable {
     private String nombreTipoGanado;
 
     @NotNull
-    @Column(name = "estado_tipo_ganado")
+    @Column(name = "estado_tipo_ganado", nullable = false)
     private boolean estadoTipoGanado;
 
 }

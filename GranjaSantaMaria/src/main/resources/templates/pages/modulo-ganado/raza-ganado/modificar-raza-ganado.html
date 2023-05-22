@@ -13,23 +13,22 @@
             <div class="col-md-6 col-sm-8 col-12">
                 <div class="card bg-lg text-dark">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Categoria ganado</h5>
-                        <form th:action="@{/modulo-ganado/categoria-ganado/guardar}" method="post"
-                            th:object="${categoriaGanado}" id="guardarFormulario">
-                            <input type="hidden" name="idCategoriaGanado" th:field="*{idCategoriaGanado}" />
+                        <h5 class="card-title text-center">Informacion sobre la raza del ganado</h5>
+                        <form th:action="@{/modulo-ganado/raza-ganado/guardar}" method="post" th:object="${razaGanado}"
+                            id="guardarFormulario">
+                            <input type="hidden" name="idRazaGanado" th:field="*{idRazaGanado}" />
                             <div class="mb-3">
-                                <label class="form-label form-label-lg" for="nombreCategoriaGanado">Nombre categoria
-                                    ganado:</label>
-                                <input class="form-control form-control-lg" type="text" required
-                                    name="nombreCategoriaGanado" th:field="*{nombreCategoriaGanado}" />
-                                <span th:if="${#fields.hasErrors('nombreCategoriaGanado')}" class="text-danger"
-                                    th:errors="*{nombreCategoriaGanado}">Error nombre categoria de ganado</span>
+                                <label class="form-label form-label-lg" for="nombreRazaGanado">Nombre:</label>
+                                <input class="form-control form-control-lg" type="text" required name="nombreRazaGanado"
+                                    th:field="*{nombreRazaGanado}" />
+                                <span th:if="${#fields.hasErrors('nombreRazaGanado')}" class="text-danger"
+                                    th:errors="*{nombreRazaGanado}">Error en el nombre</span>
                             </div>
-                            <input type="hidden" name="estadoCategoriaGanado" th:field="*{estadoCategoriaGanado}">
+                            <input type="hidden" name="estadoRazaGando" th:field="*{estadoRazaGando}">
                             <div class="row">
                                 <div class="col-sm-6 mb-3">
                                     <a class="btn btn-outline-primary btn-lg btn-block"
-                                        th:href="@{/modulo-ganado/categoria-ganado/lista}"><i
+                                        th:href="@{/modulo-ganado/raza-ganado/lista}"><i
                                             class="fa-solid fa-arrow-left"></i></a>
                                 </div>
                                 <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
@@ -43,13 +42,13 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
+                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar raza de
                                                         ganado</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>¿Estás seguro de que deseas guardar esta categoría de ganado?</p>
+                                                    <p>¿Estás seguro de que deseas guardar esta raza de ganado?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <!-- Este es el botón que realiza la acción de guardar -->

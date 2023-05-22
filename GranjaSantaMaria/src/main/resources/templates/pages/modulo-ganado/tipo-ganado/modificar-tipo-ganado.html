@@ -13,17 +13,16 @@
             <div class="col-md-6 col-sm-8 col-12">
                 <div class="card bg-light text-dark">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Tipo ganado</h5>
+                        <h5 class="card-title text-center">Informacion sobre el tipo ganado</h5>
                         <form th:action="@{/modulo-ganado/tipo-ganado/guardar}" method="post" th:object="${tipoGanado}"
                             id="guardarFormulario">
                             <input type="hidden" name="idTipoGanado" th:field="*{idTipoGanado}" />
                             <div class="mb-3">
-                                <label class="form-label form-label-lg" for="nombreTipoGanado">Nombre tipo
-                                    ganado:</label>
+                                <label class="form-label form-label-lg" for="nombreTipoGanado">Nombre:</label>
                                 <input class="form-control form-control-lg" type="text" required name="nombreTipoGanado"
                                     th:field="*{nombreTipoGanado}" />
                                 <span th:if="${#fields.hasErrors('nombreTipoGanado')}" class="text-danger"
-                                    th:errors="*{nombreTipoGanado}">Error nombre tipo de ganado</span>
+                                    th:errors="*{nombreTipoGanado}">Error nombre</span>
                             </div>
                             <input type="hidden" name="estadoTipoGanado" th:field="*{estadoTipoGanado}">
                             <div class="row">
@@ -43,13 +42,13 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
+                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar tipo de
                                                         ganado</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>¿Estás seguro de que deseas guardar esta categoría de ganado?</p>
+                                                    <p>¿Estás seguro de que deseas guardar este tipo de ganado?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <!-- Este es el botón que realiza la acción de guardar -->

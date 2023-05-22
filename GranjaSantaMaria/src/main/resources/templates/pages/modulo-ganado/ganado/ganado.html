@@ -8,8 +8,9 @@
 
 <body>
     <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-5" layout:fragment="page-content"
+    <div class="container-fluid py-3" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <h5 class="text-center">Ganados</h5>
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
             <a class="btn btn-outline-success" th:href="@{/modulo-ganado/ganado/agregar}"><i
                     class="fa-solid fa-plus"></i> Crear
@@ -35,16 +36,16 @@
                     <td th:text="${ganado.nombreGanado}">
                         Mostrar Nombre de ganado
                     </td>
-                    <td th:text="${ganado.peso}">
+                    <td th:text="${ganado.pesoGanado}">
                         Mostrar peso del ganado
                     </td>
-                    <td th:text="${ganado.fechaIngresoGranja}">Mostrar fecha de ingreso a la granja</td>
+                    <td th:text="${ganado.fechaIngresoGanado}">Mostrar fecha de ingreso del ganado</td>
 
                     <td th:text="${ganado.tipoGanado.nombreTipoGanado}">
                         Mostrar Nombre de tipo de ganado
                     </td>
-                    <td th:text="${ganado.categoriaGanado.nombreCategoriaGanado}">
-                        Mostrar Nombre de la categoria de ganado
+                    <td th:text="${ganado.razaGanado.nombreRazaGanado}">
+                        Mostrar Nombre de la raza de ganado
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <!-- Botón para abrir el modal de edición -->
@@ -59,7 +60,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" th:id="'editModalLabel_' + ${ganado.idGanado}">
-                                            ¿Estás seguro de que deseas editar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas editar este ganado?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -90,13 +91,13 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" th:id="'bajaModalLabel_' + ${ganado.idGanado}">
-                                            ¿Estás seguro de que deseas dar de baja esta categoría de ganado?
+                                            ¿Estás seguro de que deseas dar de baja este ganado?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-footer">
-                                        <!-- Enlace para dar de baja la categoría de ganado -->
+                                        <!-- Enlace para dar de baja el ganado -->
                                         <a class="btn btn-danger"
                                             th:href="@{/modulo-ganado/ganado/baja(idGanado=${ganado.idGanado})}">Sí,
                                             dar de baja</a>
@@ -121,13 +122,13 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" th:id="'deleteModalLabel_' + ${ganado.idGanado}">
-                                            ¿Estás seguro de que deseas eliminar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas eliminar este ganado?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-footer">
-                                        <!-- Enlace para eliminar la categoría de ganado -->
+                                        <!-- Enlace para eliminar el ganado -->
                                         <a class="btn btn-danger"
                                             th:href="@{/modulo-ganado/ganado/eliminar(idGanado=${ganado.idGanado})}">Sí,
                                             eliminar</a>
@@ -140,13 +141,11 @@
                         </div>
                     </td>
                 </tr>
-                <tfoot>
-                    <tr></tr>
-                </tfoot>
+                <tfoot></tfoot>
             </table>
         </div>
         <div th:if="${ganados == null or ganados.empty}">
-            <h1>Listado del ganado</h1>
+            <h1>La lista de ganados esta vacia</h1>
         </div>
     </div>
     <script th:inline="javascript">

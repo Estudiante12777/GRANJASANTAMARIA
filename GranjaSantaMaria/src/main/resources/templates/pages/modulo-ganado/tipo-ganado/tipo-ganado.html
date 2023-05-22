@@ -8,8 +8,9 @@
 
 <body>
     <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-5" layout:fragment="page-content"
+    <div class="container py-3" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <h5 class="text-center">Tipos de ganado</h5>
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
             <a class="btn btn-outline-success" th:href="@{/modulo-ganado/tipo-ganado/agregar}"><i
                     class="fa-solid fa-plus"></i>
@@ -18,22 +19,22 @@
         <div th:if="${tipoDeGanados != null and !tipoDeGanados.empty}">
             <table class="table">
                 <thead class="table-dark">
-                    <th>Nombre del tipo de ganado</th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <th class="col-sm-9">Tipo</th>
+                    <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Editar
                     </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                    <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
                         Dar baja
                     </th>
-                    <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <th class="col-sm-1" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         Eliminar
                     </th>
                 </thead>
                 <tr th:each="tipoDeGanado : ${tipoDeGanados}">
-                    <td th:text="${tipoDeGanado.nombreTipoGanado}">
+                    <td class="col-sm-9" th:text="${tipoDeGanado.nombreTipoGanado}">
                         Mostrar Nombre del tipo de ganado
                     </td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <!-- Botón para abrir el modal de edición -->
                         <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                             th:data-bs-target="'#editModal_' + ${tipoDeGanado.idTipoGanado}">
@@ -48,7 +49,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title"
                                             th:id="'editModalLabel_' + ${tipoDeGanado.idTipoGanado}">
-                                            ¿Estás seguro de que deseas editar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas editar este tipo de ganado?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -66,7 +67,7 @@
                             </div>
                         </div>
                     </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <td class="col-sm-1" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <!-- Botón para abrir el modal de dar baja -->
                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                             th:data-bs-target="'#bajaModal_' + ${tipoDeGanado.idTipoGanado}">
@@ -81,7 +82,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title"
                                             th:id="'bajaModalLabel_' + ${tipoDeGanado.idTipoGanado}">
-                                            ¿Estás seguro de que deseas dar de baja esta categoría de ganado?
+                                            ¿Estás seguro de que deseas dar de baja este tipo de ganado?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -99,7 +100,7 @@
                             </div>
                         </div>
                     </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <td class="col-sm-1" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <!-- Botón para abrir el modal de eliminar -->
                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                             th:data-bs-target="'#deleteModal_' + ${tipoDeGanado.idTipoGanado}">
@@ -114,7 +115,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title"
                                             th:id="'deleteModalLabel_' + ${tipoDeGanado.idTipoGanado}">
-                                            ¿Estás seguro de que deseas eliminar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas eliminar este tipo de ganado?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -133,13 +134,11 @@
                         </div>
                     </td>
                 </tr>
-                <tfoot>
-                    <tr></tr>
-                </tfoot>
+                <tfoot></tfoot>
             </table>
         </div>
         <div th:if="${tipoDeGanados == null or tipoDeGanados.empty}">
-            <h1>Listado tipo de ganado</h1>
+            <h1>La lista de tipos de ganado esta vacia</h1>
         </div>
     </div>
     <script th:inline="javascript">

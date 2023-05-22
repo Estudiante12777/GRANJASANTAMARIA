@@ -24,30 +24,28 @@ public class ControladorGanado {
     private TipoGanadoService tipoGanadoService;
 
     @Autowired
-    private CategoriaGanadoService categoriaGanadoService;
+    private RazaGanadoService razaGanadoService;
 
     @GetMapping("/modulo-ganado/ganado/lista")
-    public String listaGanado(Model model) {
-        var ganados = ganadoService.listadoGanado();
+    public String listadoGanados(Model model) {
+        var ganados = ganadoService.listadoGanados();
         model.addAttribute("ganados", ganados);
         return "/pages/modulo-ganado/ganado/ganado";
     }
 
     @GetMapping("/modulo-ganado/ganado/agregar")
     public String agregarGanado(Ganado ganado, Model model) {
-        List<TipoGanado> listaTiposGanados = tipoGanadoService.listadoTiposGanado();
-        model.addAttribute("listaTiposGanados", listaTiposGanados);
-
-        List<CategoriaGanado> listaCategorias = categoriaGanadoService.listaCategoriasGanado();
-        model.addAttribute("listaCategorias", listaCategorias);
-
+        List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado();
+        model.addAttribute("listaTiposGanado", listaTiposGanado);
+        List<RazaGanado> listaRazasGanado = razaGanadoService.listadoRazasGanado();
+        model.addAttribute("listaRazasGanado", listaRazasGanado);
         return "/pages/modulo-ganado/ganado/modificar-ganado";
     }
 
     @PostMapping("/modulo-ganado/ganado/guardar")
-    public String guardarGanado(@Valid Ganado ganado, BindingResult bindingResult) throws Exception {
+    public String guardarGanado(@Valid Ganado ganado, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
-            throw new Exception("Error, no puede estar vacio el campo");
+            throw new Exception("Error, no puede estar vacío el campo");
         } else {
             ganadoService.guardarGanado(ganado);
             return "redirect:/modulo-ganado/ganado/lista";
@@ -56,12 +54,10 @@ public class ControladorGanado {
 
     @GetMapping("/modulo-ganado/ganado/editar/{idGanado}")
     public String editarGanado(Ganado ganado, Model model) {
-        List<TipoGanado> listaTiposGanados = tipoGanadoService.listadoTiposGanado();
-        model.addAttribute("listaTiposGanados", listaTiposGanados);
-
-        List<CategoriaGanado> listaCategorias = categoriaGanadoService.listaCategoriasGanado();
-        model.addAttribute("listaCategorias", listaCategorias);
-
+        List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado();
+        model.addAttribute("listaTiposGanado", listaTiposGanado);
+        List<RazaGanado> listaRazasGanado = razaGanadoService.listadoRazasGanado();
+        model.addAttribute("listaRazasGanado", listaRazasGanado);
         ganado = ganadoService.encontrarGanado(ganado);
         model.addAttribute("ganado", ganado);
         return "/pages/modulo-ganado/ganado/modificar-ganado";

@@ -11,21 +11,21 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "categoria_ganado")
-public class CategoriaGanado implements Serializable {
+@Table(name = "raza_ganado")
+public class RazaGanado implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCategoriaGanado;
+    private Long idRazaGanado;
 
     @NotNull
-    @Column(name = "nombre_categoria_ganado", nullable = false)
-    private String nombreCategoriaGanado;
+    @Column(name = "nombre_raza_ganado", nullable = false)
+    private String nombreRazaGanado;
 
     @NotNull
-    @Column(name = "estado_categoria_ganado", nullable = false)
-    private boolean estadoCategoriaGanado;
+    @Column(name = "estado_raza_ganado", nullable = false)
+    private boolean estadoRazaGando;
 
 }

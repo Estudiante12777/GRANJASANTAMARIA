@@ -13,7 +13,7 @@
             <div class="col-md-6 col-sm-8 col-12">
                 <div class="card bg-light text-dark">
                     <div class="card-body">
-                        <h5 class="card-title text-center"></h5>
+                        <h5 class="card-title text-center">Inforarmacion sobre el ganado</h5>
                         <form th:action="@{/modulo-ganado/ganado/guardar}" method="post" th:object="${ganado}"
                             id="guardarFormulario">
                             <input type="hidden" name="idGanado" th:field="*{idGanado}" />
@@ -25,28 +25,28 @@
                                     th:errors="*{nombreGanado}">Error nombre del ganado</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label form-label-lg" for="peso">Peso en kilos:</label>
+                                <label class="form-label form-label-lg" for="pesoGanado">Peso en kilos:</label>
                                 <input class="form-control form-control-lg" type="number" step="0.01" required
-                                    name="peso" th:field="*{peso}" />
-                                <span th:if="${#fields.hasErrors('peso')}" class="text-danger" th:errors="*{peso}">Error
-                                    peso del ganado</span>
+                                    name="pesoGanado" th:field="*{pesoGanado}" />
+                                <span th:if="${#fields.hasErrors('pesoGanado')}" class="text-danger"
+                                    th:errors="*{pesoGanado}">Error
+                                    pesoGanado del ganado</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label form-label-lg" for="fechaIngresoGranja">Fecha de ingreso a la
+                                <label class="form-label form-label-lg" for="fechaIngresoGanado">Fecha de ingreso a la
                                     granja:</label>
                                 <input class="form-control form-control-lg" type="date" required
-                                    name="fechaIngresoGranja" th:field="*{fechaIngresoGranja}" />
-                                <span th:if="${#fields.hasErrors('fechaIngresoGranja')}" class="text-danger"
-                                    th:errors="*{fechaIngresoGranja}">Error
+                                    name="fechaIngresoGanado" th:field="*{fechaIngresoGanado}" />
+                                <span th:if="${#fields.hasErrors('fechaIngresoGanado')}" class="text-danger"
+                                    th:errors="*{fechaIngresoGanado}">Error
                                     Fecha de ingreso a la granja</span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label form-label-lg" for="tipoGanado.nombreTipoGanado">Tipo de
-                                    Ganado:</label>
+                                <label class="form-label form-label-lg" for="tipoGanado.nombreTipoGanado">Tipo:</label>
                                 <div class="col-sm-8">
                                     <select th:field="*{tipoGanado.idTipoGanado}" name="tipoGanado.nombreTipoGanado"
                                         required class="form-select form-select-lg">
-                                        <option th:each="tipoGanado : ${listaTiposGanados}"
+                                        <option th:each="tipoGanado : ${listaTiposGanado}"
                                             th:value="${tipoGanado.idTipoGanado}"
                                             th:text="${tipoGanado.nombreTipoGanado}"></option>
                                     </select>
@@ -56,20 +56,17 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label form-label-lg"
-                                    for="categoriaGanado.nombreCategoriaGanado">Categoria de
-                                    Ganado:</label>
+                                <label class="form-label form-label-lg" for="razaGanado.nombreRazaGanado">Raza:</label>
                                 <div class="col-sm-8">
-                                    <select th:field="*{categoriaGanado.idCategoriaGanado}"
-                                        name="categoriaGanado.nombreCategoriaGanado" required
-                                        class="form-select form-select-lg">
-                                        <option th:each="categoriaGanado : ${listaCategorias}"
-                                            th:value="${categoriaGanado.idCategoriaGanado}"
-                                            th:text="${categoriaGanado.nombreCategoriaGanado}"></option>
+                                    <select th:field="*{razaGanado.idRazaGanado}" name="razaGanado.nombreRazaGanado"
+                                        required class="form-select form-select-lg">
+                                        <option th:each="razaGanado : ${listaRazasGanado}"
+                                            th:value="${razaGanado.idRazaGanado}"
+                                            th:text="${razaGanado.nombreRazaGanado}"></option>
                                     </select>
-                                    <span th:if="${#fields.hasErrors('categoriaGanado.nombreCategoriaGanado')}"
-                                        class="text-danger" th:errors="*{categoriaGanado.nombreCategoriaGanado}">Error
-                                        Categoria ganado</span>
+                                    <span th:if="${#fields.hasErrors('razaGanado.nombreRazaGanado')}"
+                                        class="text-danger" th:errors="*{razaGanado.nombreRazaGanado}">Error
+                                        Raza ganado</span>
                                 </div>
                             </div>
                             <input type="hidden" name="estadoGanado" th:field="*{estadoGanado}">
@@ -90,13 +87,12 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
-                                                        ganado</h5>
+                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar ganado</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>¿Estás seguro de que deseas guardar esta categoría de ganado?</p>
+                                                    <p>¿Estás seguro de que deseas guardar este ganado?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <!-- Este es el botón que realiza la acción de guardar -->

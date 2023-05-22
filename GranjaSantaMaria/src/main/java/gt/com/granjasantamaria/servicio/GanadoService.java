@@ -10,7 +10,7 @@ import java.util.List;
 public interface GanadoService {
 
     // METODOS A IMPLEMENTAR
-    public List<Ganado> listadoGanado();
+    public List<Ganado> listadoGanados();
 
     public void guardarGanado(Ganado ganado);
 

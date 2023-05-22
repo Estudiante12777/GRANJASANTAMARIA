@@ -23,26 +23,26 @@ public class Ganado implements Serializable {
     private Long idGanado;
 
     @NotNull
-    @Column(name = "nombre_ganado")
+    @Column(name = "nombre_ganado", nullable = false)
     private String nombreGanado;
 
     @NotNull
-    @Column(name = "peso", nullable = false)
+    @Column(name = "peso_ganado", nullable = false)
     @DecimalMin(value = "0.0", message = "El peso del ganado debe ser mayor o igual a cero")
-    private double peso;
+    private double pesoGanado;
 
     @NotNull
-    @Column(name = "fecha_ingreso_granja", nullable = false)
+    @Column(name = "fecha_ingreso_ganado", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaIngresoGranja;
+    private LocalDate fechaIngresoGanado;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tipo_ganado")
     private TipoGanado tipoGanado;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_categoria_ganado")
-    private CategoriaGanado categoriaGanado;
+    @JoinColumn(name = "id_raza_ganado")
+    private RazaGanado razaGanado;
 
     @NotNull
     @Column(name = "estado_ganado", nullable = false)
