@@ -2,13 +2,17 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+import java.io.File;
 import java.util.List;
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -25,6 +29,9 @@ public class ControladorGanado {
 
     @Autowired
     private RazaGanadoService razaGanadoService;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @GetMapping("/modulo-ganado/ganado/lista")
     public String listadoGanados(Model model) {
@@ -43,7 +50,7 @@ public class ControladorGanado {
     }
 
     @PostMapping("/modulo-ganado/ganado/guardar")
-    public String guardarGanado(@Valid Ganado ganado, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarGanado(@Valid Ganado ganado, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
@@ -53,7 +60,8 @@ public class ControladorGanado {
     }
 
     @GetMapping("/modulo-ganado/ganado/editar/{idGanado}")
-    public String editarGanado(Ganado ganado, Model model) {
+    public String editarGanado(Ganado ganado, Model model
+    ) {
         List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado();
         model.addAttribute("listaTiposGanado", listaTiposGanado);
         List<RazaGanado> listaRazasGanado = razaGanadoService.listadoRazasGanado();
@@ -64,13 +72,15 @@ public class ControladorGanado {
     }
 
     @GetMapping("/modulo-ganado/ganado/eliminar")
-    public String eliminarGanado(Ganado ganado) {
+    public String eliminarGanado(Ganado ganado
+    ) {
         ganadoService.eliminarGanado(ganado);
         return "redirect:/modulo-ganado/ganado/lista";
     }
 
     @GetMapping("/modulo-ganado/ganado/baja")
-    public String darBajaGanado(Ganado ganado) {
+    public String darBajaGanado(Ganado ganado
+    ) {
         ganadoService.darBajaGanado(ganado);
         return "redirect:/modulo-ganado/ganado/lista";
     }
