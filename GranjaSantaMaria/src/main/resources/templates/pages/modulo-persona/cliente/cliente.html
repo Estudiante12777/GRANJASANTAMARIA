@@ -37,7 +37,7 @@
                     <td th:text="${cliente.apellidoCliente}">
                         Mostrar Apellido del Cliente
                     </td>
-                    <td th:text="${cliente.telefono}">
+                    <td th:text="${cliente.telefonoCliente}">
                         Mostrar Telefono del Cliente
                     </td>
                     <td th:text="${cliente.direccionCliente}">
@@ -62,7 +62,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" th:id="'editModalLabel_' + ${cliente.idCliente}">
-                                            ¿Estás seguro de que deseas editar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas editar este cliente?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -93,7 +93,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" th:id="'bajaModalLabel_' + ${cliente.idCliente}">
-                                            ¿Estás seguro de que deseas dar de baja esta categoría de ganado?
+                                            ¿Estás seguro de que deseas dar de baja este cliente?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -124,7 +124,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" th:id="'deleteModalLabel_' + ${cliente.idCliente}">
-                                            ¿Estás seguro de que deseas eliminar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas eliminar este cliente?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -143,13 +143,11 @@
                         </div>
                     </td>
                 </tr>
-                <tfoot>
-                    <tr></tr>
-                </tfoot>
+                <tfoot></tfoot>
             </table>
         </div>
         <div th:if="${clientes == null or clientes.empty}">
-            <h1>clientes</h1>
+            <h1>La lista de clientes esta vacia</h1>
         </div>
     </div>
     <script th:inline="javascript">

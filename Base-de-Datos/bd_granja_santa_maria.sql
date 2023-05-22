@@ -22,7 +22,7 @@ CREATE TABLE cliente(
 	id_cliente INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
     nombre_cliente VARCHAR(50) NOT NULL, 
     apellido_cliente VARCHAR(50) NOT NULL, 
-    telefono VARCHAR(15) NOT NULL,
+    telefono_cliente VARCHAR(15) NOT NULL,
     direccion_cliente VARCHAR(100) NOT NULL,
     id_municipio INT NOT NULL, 
     id_departamento INT NOT NULL,
@@ -88,6 +88,7 @@ CREATE TABLE produccion_diaria_leche(
     estado_produccion_diaria_leche TINYINT NOT NULL,
     CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 /*
 	OTROS SCRIPTS

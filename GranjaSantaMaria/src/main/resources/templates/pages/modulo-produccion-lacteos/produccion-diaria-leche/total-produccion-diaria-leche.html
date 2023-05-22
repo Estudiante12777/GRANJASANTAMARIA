@@ -13,7 +13,7 @@
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="fs-1 text-center mb-3">
             <label>Este es el total de la produccion de leche en el día</label>
         </div>
-        <div th:if="${produccionDiariaLeches != null and !produccionDiariaLeches.empty}">
+        <div th:if="${listaTotalProduccionDiariaLeche != null and !listaTotalProduccionDiariaLeche.empty}">
             <table class="table">
                 <thead class="table-dark">
                     <th>Nombre de la vaca</th>
@@ -22,7 +22,7 @@
                     <th>Total diario vaca</th>
                     <th>Fecha de produccion</th>
                 </thead>
-                <tr th:each="produccionDiariaLeche : ${produccionDiariaLeches}">
+                <tr th:each="produccionDiariaLeche : ${listaTotalProduccionDiariaLeche}">
                     <td th:text="${produccionDiariaLeche.ganado.nombreGanado}">
                         Mostrar Nombre del ganado
                     </td>
@@ -43,7 +43,7 @@
                             <td>Total:</td>
                             <td></td>
                             <td></td>
-                            <td th:text="${#aggregates.sum(produccionDiariaLeches.![produccionManianaLeche +
+                            <td th:text="${#aggregates.sum(listaTotalProduccionDiariaLeche.![produccionManianaLeche +
                             produccionTardeLeche])}"></td>
                             <td></td>
                         </tr>
@@ -58,7 +58,7 @@
                         class="fa-solid fa-arrow-left"></i></a>
             </div>
         </div>
-        <div th:if="${produccionDiariaLeches == null or produccionDiariaLeches.empty}">
+        <div th:if="${listaTotalProduccionDiariaLeche == null or listaTotalProduccionDiariaLeche.empty}">
             <h1>Se muestra el total de produccion diaria de leche</h1>
         </div>
     </div>

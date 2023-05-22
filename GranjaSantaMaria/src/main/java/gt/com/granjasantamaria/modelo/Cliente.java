@@ -29,8 +29,8 @@ public class Cliente implements Serializable {
     private String apellidoCliente;
 
     @NotNull
-    @Column(name = "telefono", nullable = false)
-    private String telefono;
+    @Column(name = "telefono_cliente", nullable = false)
+    private String telefonoCliente;
 
     @NotNull
     @Column(name = "direccion_cliente", nullable = false)
