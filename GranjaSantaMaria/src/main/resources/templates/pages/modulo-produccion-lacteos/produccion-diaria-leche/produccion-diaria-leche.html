@@ -32,6 +32,9 @@
                     <th>Produccion en la tarde - litros</th>
                     <th>Nombre de la vaca</th>
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                        Alimentar Becerro
+                    </th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Editar
                     </th>
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR',)">
@@ -52,6 +55,43 @@
                         Mostrar Nombre del ganado
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                        <!-- Botón para abrir el modal de alimentacion becerro -->
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            th:data-bs-target="'#alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                            data-id="${produccionDiariaLeche.idProduccionDiariaLeche}">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <!-- Modal de alimentacion becerro -->
+                        <div class="modal fade"
+                            th:id="'alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                            tabindex="-1"
+                            th:attr="aria-labelledby='alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"
+                                            th:id="'alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
+                                            ¿Estás seguro de que deseas agregar un registro de alimentacion becerro?
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- Enlace para ir al formulario de edición -->
+                                        <a class="btn btn-primary"
+                                            th:href="@{/modulo-ganado/alimentacion-becerro/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                            Sí, quiero agregar
+                                        </a>
+                                        <!-- Botón para cerrar el modal -->
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                            cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <!-- Botón para abrir el modal de edición -->
                         <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                             th:data-bs-target="'#editModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
@@ -67,7 +107,8 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title"
                                             th:id="'editModalLabel_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
-                                            ¿Estás seguro de que deseas editar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas editar este registro de produccion diaria de
+                                            leche?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -101,7 +142,8 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title"
                                             th:id="'bajaModalLabel_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
-                                            ¿Estás seguro de que deseas dar de baja esta categoría de ganado?
+                                            ¿Estás seguro de que deseas dar de baja este registro de produccion diaria
+                                            de leche?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -135,7 +177,8 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title"
                                             th:id="'deleteModalLabel_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
-                                            ¿Estás seguro de que deseas eliminar esta categoría de ganado?
+                                            ¿Estás seguro de que deseas eliminar este registro de produccion diaria de
+                                            leche?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -161,6 +204,29 @@
             <h1>Solo se muestran los registros de produccion diaria de este dia!</h1>
         </div>
     </div>
+    <script th:inline="javascript">
+        /* Generar ID único para cada modal */
+        /* Inserta este código antes de cerrar la etiqueta </body> */
+
+        /* Obtén todos los botones de edición */
+        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+
+        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+        editButtons.forEach(function (button) {
+            var targetModalId = button.getAttribute("data-bs-target");
+            var modalId = button.getAttribute("th:data-bs-target");
+
+            // Crea un identificador único para el modal de edición
+            var uniqueModalId = "alimentacionModal_" + modalId.replace("#alimentacionModal_", "");
+
+            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+            var modal = document.querySelector(targetModalId);
+            modal.setAttribute("id", uniqueModalId);
+        });
+    </script>
     <script th:inline="javascript">
         /* Generar ID único para cada modal */
         /* Inserta este código antes de cerrar la etiqueta </body> */

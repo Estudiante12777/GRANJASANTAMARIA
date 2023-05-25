@@ -26,6 +26,7 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProduccionDiariaLeche> obtenerListaTotalProduccionLeche() {
         return produccionDiariaLecheDao.findAll();
     }
