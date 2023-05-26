@@ -28,8 +28,8 @@ public class ControladorProveedor {
 
     @GetMapping("/modulo-persona/proveedor/lista")
     public String obtenerListadoProveedores(Model model) {
-        var listadoProveedores = proveedorService.obtenerListadoProveedores();
-        model.addAttribute("listadoProveedores", listadoProveedores);
+        var proveedores = proveedorService.obtenerListadoProveedores();
+        model.addAttribute("proveedores", proveedores);
         return "/pages/modulo-persona/proveedor/proveedor";
     }
 
