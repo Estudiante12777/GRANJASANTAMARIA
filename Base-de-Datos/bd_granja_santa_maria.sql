@@ -30,6 +30,18 @@ CREATE TABLE cliente(
     CONSTRAINT fk_cliente_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_cliente_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE proveedor(
+	id_proveedor INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    nombre_proveedor VARCHAR(50) NOT NULL, 
+    apellido_proveedor VARCHAR(50) NOT NULL, 
+    telefono_proveedor VARCHAR(15) NOT NULL, 
+    direccion_proveedor VARCHAR(100) NOT NULL, 
+    id_municipio INT NOT NULL, 
+    id_departamento INT NOT NULL, 
+    estado_proveedor TINYINT NOT NULL, 
+    CONSTRAINT fk_proveedor_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_proveedor_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
+); 
 
 /* TABLAS PARA UBICACIONES */
 CREATE TABLE pais(
@@ -76,16 +88,6 @@ CREATE TABLE ganado (
     CONSTRAINT fk_ganado_tipo_ganado FOREIGN KEY (id_tipo_ganado) REFERENCES tipo_ganado (id_tipo_ganado) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_ganado_raza_ganado FOREIGN KEY (id_raza_ganado) REFERENCES raza_ganado (id_raza_ganado) ON DELETE CASCADE ON UPDATE CASCADE
 );
-/* TABLAS PARA PRODUCCION DE LACTEOS */
-CREATE TABLE produccion_diaria_leche(
-	id_produccion_diaria_leche INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    fecha_produccion_leche DATE NOT NUll, 
-    produccion_maniana_leche DOUBLE NOT NULL, 
-    produccion_tarde_leche DOUBLE NOT NULL, 
-    id_ganado INT NOT NULL,
-    estado_produccion_diaria_leche TINYINT NOT NULL,
-    CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE
-);
 CREATE TABLE alimentacion_becerro(
 	id_alimentacion_becerro INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
     id_ganado INT NOT NULL,
@@ -97,13 +99,17 @@ CREATE TABLE alimentacion_becerro(
     CONSTRAINT fk_alimentacion_becerro_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_alimentacion_becerro_produccion_diaria_leche FOREIGN KEY (id_produccion_diaria_leche) REFERENCES produccion_diaria_leche (id_produccion_diaria_leche) ON DELETE CASCADE ON UPDATE CASCADE
 );
+/* TABLAS PARA PRODUCCION DE LACTEOS */
+CREATE TABLE produccion_diaria_leche(
+	id_produccion_diaria_leche INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    fecha_produccion_leche DATE NOT NUll, 
+    produccion_maniana_leche DOUBLE NOT NULL, 
+    produccion_tarde_leche DOUBLE NOT NULL, 
+    id_ganado INT NOT NULL,
+    estado_produccion_diaria_leche TINYINT NOT NULL,
+    CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 /*
 	OTROS SCRIPTS
 */
-SELECT g.nombre_ganado AS nombre_becerro, a.fecha_alimentacion_becerro, a.cantidad_mañana_alimentacion, a.cantidad_tarde_alimentacion, gm.nombre_ganado AS nombre_madre
-FROM alimentacion_becerro AS a
-INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche
-INNER JOIN ganado AS g ON g.id_ganado = a.id_ganado
-INNER JOIN ganado AS gm ON gm.id_ganado = p.id_ganado
-WHERE a.id_alimentacion_becerro = 1;
