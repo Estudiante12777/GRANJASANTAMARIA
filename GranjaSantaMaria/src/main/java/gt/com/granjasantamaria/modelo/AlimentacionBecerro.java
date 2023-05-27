@@ -32,7 +32,7 @@ public class AlimentacionBecerro implements Serializable {
     private LocalDate fechaAlimentacionBecerro;
 
     @NotNull
-    @Column(name = "cantidad_mañana_alimentacion", nullable = false)
+    @Column(name = "cantidad_maniana_alimentacion", nullable = false)
     @DecimalMin(value = "0.0", message = "La alimentacion de la maniana debe ser mayor o igual a cero")
     private Double cantidadManianaAlimentacion;
 

@@ -3,8 +3,7 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 import javax.persistence.Query;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class ControladorAlimentacionBecerro {
     @GetMapping("/modulo-ganado/alimentacion-becerro/lista")
     public String obtenerListadoAlimentacionBecerros(Model model) {
         String sqlQuery = "SELECT g.nombre_ganado AS nombre_becerro, a.fecha_alimentacion_becerro, "
-                + "a.cantidad_mañana_alimentacion, a.cantidad_tarde_alimentacion, gm.nombre_ganado AS nombre_madre "
+                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, gm.nombre_ganado AS nombre_madre "
                 + "FROM alimentacion_becerro AS a "
                 + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
                 + "INNER JOIN ganado AS g ON g.id_ganado = a.id_ganado "

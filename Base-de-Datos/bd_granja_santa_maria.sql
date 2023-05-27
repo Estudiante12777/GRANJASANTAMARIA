@@ -92,7 +92,7 @@ CREATE TABLE alimentacion_becerro(
 	id_alimentacion_becerro INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
     id_ganado INT NOT NULL,
     fecha_alimentacion_becerro DATE NOT NULL,
-	cantidad_mañana_alimentacion DOUBLE NOT NULL,
+	cantidad_maniana_alimentacion DOUBLE NOT NULL,
 	cantidad_tarde_alimentacion DOUBLE NOT NULL,
 	id_produccion_diaria_leche INT NOT NULL,
 	estado_alimentacion_becerro TINYINT NOT NULL,
@@ -109,7 +109,40 @@ CREATE TABLE produccion_diaria_leche(
     estado_produccion_diaria_leche TINYINT NOT NULL,
     CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
+/*TABLAS PARA VENTAS*/
+CREATE TABLE producto(
+	id_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    nombre_producto VARCHAR(50) NOT NULL ,
+    descripcion_producto VARCHAR(75) NOT NULL, 
+    estado_producto TINYINT NOT NULL
+); 
+CREATE TABLE medida_producto(
+  id_medida_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  nombre_medida_producto VARCHAR(50) NOT NULL, 
+  estado_medida_producto TINYINT NOT NULL
+);
+CREATE TABLE contenedor_producto(
+  id_contenedor_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  nombre_contenedor_producto VARCHAR(50) NOT NULL, 
+  estado_contenedor_producto TINYINT NOT NULL
+);
+CREATE TABLE descripcion_producto(
+  id_descripcion_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  nombre_descripcion_producto VARCHAR(50) NOT NULL, 
+  estado_descripcion_producto TINYINT NOT NULL
+);
+CREATE TABLE detalle_producto(
+  id_detalle_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id_producto INT NOT NULL,
+  id_medida_producto INT NOT NULL,
+  id_contenedor_producto INT NOT NULL,
+  id_descripcion_producto INT NOT NULL,
+  estado_detalle_producto INT NOT NULL,
+  CONSTRAINT fk_detalle_producto_producto FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
+  CONSTRAINT fk_detalle_producto_medida_producto FOREIGN KEY (id_medida_producto) REFERENCES medida_producto(id_medida_producto),
+  CONSTRAINT fk_detalle_producto_contenedor_producto FOREIGN KEY (id_contenedor_producto) REFERENCES contenedor_producto(id_contenedor_producto),
+  CONSTRAINT fk_detalle_producto_descripcion_producto FOREIGN KEY (id_descripcion_producto) REFERENCES descripcion_producto(id_descripcion_producto)
+);
 /*
 	OTROS SCRIPTS
 */

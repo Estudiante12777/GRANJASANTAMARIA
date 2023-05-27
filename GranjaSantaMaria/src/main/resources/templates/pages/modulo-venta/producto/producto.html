@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
+    <div class="container-fluid py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
+            <h3 class="text-center">Productos</h3>
+            <a class="btn btn-outline-success" th:href="@{/modulo-venta/producto/agregar}"><i
+                    class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+        </div>
+        <div th:if="${productos != null and !productos.empty}">
+            <table class="table">
+                <thead class="table-dark">
+                    <th class="col-sm-3">Nombre</th>
+                    <th class="col-sm-6">descripcion</th>
+                    <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                        Editar
+                    </th>
+                    <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
+                    <th class="col-sm-1" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
+                </thead>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.nombreProducto}">
+                        Mostrar Nombre del productos
+                    </td>
+                    <td th:text="${producto.descripcionProducto}">
+                        Mostrar descripcion del productos
+                    </td>
+                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                        <!-- Botón para abrir el modal de edición -->
+                        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#editModal_' + ${producto.idProducto}">
+                            <i class="fa-sharp fa-solid fa-pencil"></i>
+                        </button>
+                        <!-- Modal de edición -->
+                        <div class="modal fade" th:id="'editModal_' + ${producto.idProducto}" tabindex="-1"
+                            th:attr="aria-labelledby='editModalLabel_' + ${producto.idProducto}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" th:id="'editModalLabel_' + ${producto.idProducto}">
+                                            ¿Estás seguro de que deseas editar este producto?
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- Enlace para ir al formulario de edición -->
+                                        <a class="btn btn-primary"
+                                            th:href="@{/modulo-venta/producto/editar/} + ${producto.idProducto}">Sí,
+                                            quiero editar</a>
+                                        <!-- Botón para cerrar el modal -->
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                            cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                        <!-- Botón para abrir el modal de dar baja -->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#bajaModal_' + ${producto.idProducto}">
+                            <i class="fa-sharp fa-solid fa-ban"></i>
+                        </button>
+                        <!-- Modal de dar baja -->
+                        <div class="modal fade" th:id="'bajaModal_' + ${producto.idProducto}" tabindex="-1"
+                            th:attr="aria-labelledby='bajaModalLabel_' + ${producto.idProducto}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" th:id="'bajaModalLabel_' + ${producto.idProducto}">
+                                            ¿Estás seguro de que deseas dar de baja este producto?
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- Enlace para dar de baja la categoría de ganado -->
+                                        <a class="btn btn-danger"
+                                            th:href="@{/modulo-venta/producto/baja(idProducto=${producto.idProducto})}">Sí,
+                                            dar de baja</a>
+                                        <!-- Botón para cerrar el modal -->
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                        <!-- Botón para abrir el modal de eliminar -->
+                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#deleteModal_' + ${producto.idProducto}">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                        <!-- Modal de eliminar -->
+                        <div class="modal fade" th:id="'deleteModal_' + ${producto.idProducto}" tabindex="-1"
+                            th:attr="aria-labelledby='deleteModalLabel_' + ${producto.idProducto}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" th:id="'deleteModalLabel_' + ${producto.idProducto}">
+                                            ¿Estás seguro de que deseas eliminar este producto?
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- Enlace para eliminar la categoría de ganado -->
+                                        <a class="btn btn-danger"
+                                            th:href="@{/modulo-venta/producto/eliminar(idProducto=${producto.idProducto})}">Sí,
+                                            eliminar</a>
+                                        <!-- Botón para cerrar el modal -->
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tfoot></tfoot>
+            </table>
+        </div>
+        <div th:if="${productos == null or productos.empty}">
+            <h1>La lista de productos esta vacia</h1>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        /* Generar ID único para cada modal */
+        /* Inserta este código antes de cerrar la etiqueta </body> */
+
+        /* Obtén todos los botones de edición */
+        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+
+        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+        editButtons.forEach(function (button) {
+            var targetModalId = button.getAttribute("data-bs-target");
+            var modalId = button.getAttribute("th:data-bs-target");
+
+            // Crea un identificador único para el modal de edición
+            var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+
+            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+            var modal = document.querySelector(targetModalId);
+            modal.setAttribute("id", uniqueModalId);
+        });
+    </script>
+    <script th:inline="javascript">
+        /* Generar ID único para cada modal */
+        /* Inserta este código antes de cerrar la etiqueta </body> */
+
+        /* Obtén todos los botones de dar baja */
+        var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+
+        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+        deleteButtons.forEach(function (button) {
+            var targetModalId = button.getAttribute("data-bs-target");
+            var modalId = button.getAttribute("th:data-bs-target");
+
+            // Crea un identificador único para el modal de dar baja
+            var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+
+            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+            var modal = document.querySelector(targetModalId);
+            modal.setAttribute("id", uniqueModalId);
+        });
+    </script>
+    <script th:inline="javascript">
+        /* Generar ID único para cada modal */
+        /* Inserta este código antes de cerrar la etiqueta </body> */
+
+        /* Obtén todos los botones de eliminar */
+        var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+
+        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+        deleteButtons.forEach(function (button) {
+            var targetModalId = button.getAttribute("data-bs-target");
+            var modalId = button.getAttribute("th:data-bs-target");
+
+            // Crea un identificador único para el modal de eliminar
+            var uniqueModalId = "deleteModal_" + modalId.replace("#deleteModal_", "");
+
+            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+            var modal = document.querySelector(targetModalId);
+            modal.setAttribute("id", uniqueModalId);
+        });
+    </script>
+</body>
+
+</html>
