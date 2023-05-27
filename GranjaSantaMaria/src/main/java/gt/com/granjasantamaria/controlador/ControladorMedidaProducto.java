@@ -27,12 +27,12 @@ public class ControladorMedidaProducto {
     }
 
     @GetMapping("/modulo-venta/medida-producto/agregar")
-    public String agregarProveedor(MedidaProducto medidaProducto, Model model) {
+    public String agregarMedidaProducto(MedidaProducto medidaProducto, Model model) {
         return "/pages/modulo-venta/medida-producto/modificar-medida-producto";
     }
 
     @PostMapping("/modulo-venta/medida-producto/guardar")
-    public String guardarProducto(@Valid MedidaProducto medidaProducto, BindingResult bindingResult) throws Exception {
+    public String guardarMedidaProducto(@Valid MedidaProducto medidaProducto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacio el campo");
         } else {
@@ -41,8 +41,8 @@ public class ControladorMedidaProducto {
         }
     }
 
-    @GetMapping("/modulo-venta/medida-producto/editar/{idProducto}")
-    public String editarProducto(MedidaProducto medidaProducto, Model model) {
+    @GetMapping("/modulo-venta/medida-producto/editar/{idMedidaProducto}")
+    public String editarMedidaProducto(MedidaProducto medidaProducto, Model model) {
         medidaProducto = medidaProductoService.encontrarMedidaProducto(medidaProducto);
         model.addAttribute("medidaProducto", medidaProducto);
         return "/pages/modulo-venta/medida-producto/modificar-medida-producto";

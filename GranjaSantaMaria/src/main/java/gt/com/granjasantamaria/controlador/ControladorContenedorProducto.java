@@ -20,19 +20,19 @@ public class ControladorContenedorProducto {
     private ContenedorProductoService contenedorProductoService;
 
     @GetMapping("/modulo-venta/contenedor-producto/lista")
-    public String obtenerListadoProductos(Model model) {
-        var contenedorProducto = contenedorProductoService.obtenerListadoContenedorProductos();
-        model.addAttribute("contenedorProducto", contenedorProducto);
+    public String obtenerListadContenedorProductos(Model model) {
+        var contenedorProductos = contenedorProductoService.obtenerListadoContenedorProductos();
+        model.addAttribute("contenedorProductos", contenedorProductos);
         return "/pages/modulo-venta/contenedor-producto/medida-producto";
     }
 
     @GetMapping("/modulo-venta/contenedor-producto/agregar")
-    public String agregarProveedor(ContenedorProducto contenedorProducto, Model model) {
-        return "/pages/modulo-venta/contenedor-producto/medida-producto";
+    public String agregarContenedorProducto(ContenedorProducto contenedorProducto, Model model) {
+        return "/pages/modulo-venta/contenedor-producto/modificar-contenedor-producto";
     }
 
     @PostMapping("/modulo-venta/contenedor-producto/guardar")
-    public String guardarProducto(@Valid ContenedorProducto contenedorProducto, BindingResult bindingResult) throws Exception {
+    public String guardarContenedorProducto(@Valid ContenedorProducto contenedorProducto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacio el campo");
         } else {
@@ -41,21 +41,21 @@ public class ControladorContenedorProducto {
         }
     }
 
-    @GetMapping("/modulo-venta/contenedor-producto/editar/{idMedidaProducto}")
-    public String editarProducto(ContenedorProducto contenedorProducto, Model model) {
+    @GetMapping("/modulo-venta/contenedor-producto/editar/{idContenedorProducto}")
+    public String editarContenedorProducto(ContenedorProducto contenedorProducto, Model model) {
         contenedorProducto = contenedorProductoService.encontrarContenedorProducto(contenedorProducto);
         model.addAttribute("medidaProducto", contenedorProducto);
-        return "/pages/modulo-venta/contenedor-producto/medida-producto";
+        return "/pages/modulo-venta/contenedor-producto/modificar-contenedor-producto";
     }
 
     @GetMapping("/modulo-venta/contenedor-producto/eliminar")
-    public String eliminarProducto(ContenedorProducto contenedorProducto) {
+    public String eliminarContenedorProducto(ContenedorProducto contenedorProducto) {
         contenedorProductoService.eliminarContenedorProducto(contenedorProducto);
         return "redirect:/modulo-venta/contenedor-producto/lista";
     }
 
     @GetMapping("/modulo-venta/contenedor-producto/baja")
-    public String darBajaProducto(ContenedorProducto contenedorProducto) {
+    public String darBajaContenedorProducto(ContenedorProducto contenedorProducto) {
         contenedorProductoService.darBajaContenedorProducto(contenedorProducto);
         return "redirect:/modulo-venta/contenedor-producto/lista";
     }

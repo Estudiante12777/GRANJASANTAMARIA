@@ -4,7 +4,9 @@ import gt.com.granjasantamaria.dao.DescripcionProductoDao;
 import gt.com.granjasantamaria.modelo.DescripcionProducto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DescripcionProductoServiceImpl implements DescripcionProductoService {
 
     @Autowired

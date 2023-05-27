@@ -4,7 +4,9 @@ import gt.com.granjasantamaria.dao.ContenedorProductoDao;
 import gt.com.granjasantamaria.modelo.ContenedorProducto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ContenedorProductoServiceImpl implements ContenedorProductoService {
 
     @Autowired

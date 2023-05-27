@@ -4,7 +4,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import gt.com.granjasantamaria.dao.MedidaProductoDao;
 import gt.com.granjasantamaria.modelo.MedidaProducto;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MedidaProductoServiceImpl implements MedidaProductoService {
 
     @Autowired

@@ -20,19 +20,19 @@ public class ControladorDescripcionProducto {
     private DescripcionProductoService descripcionProductoService;
 
     @GetMapping("/modulo-venta/descripcion-producto/lista")
-    public String obtenerListadoProductos(Model model) {
+    public String obtenerListadoDescripcionProductos(Model model) {
         var productos = descripcionProductoService.obtenerListadoDescripcionProductos();
         model.addAttribute("productos", productos);
         return "/pages/modulo-venta/descripcion-producto/producto";
     }
 
     @GetMapping("/modulo-venta/descripcion-producto/agregar")
-    public String agregarProveedor(Producto producto, Model model) {
-        return "/pages/modulo-venta/descripcion-producto/modificar-producto";
+    public String agregarDescripcionProducto(Producto producto, Model model) {
+        return "/pages/modulo-venta/descripcion-producto/modificar-descripcion-producto";
     }
 
     @PostMapping("/modulo-venta/descripcion-producto/guardar")
-    public String guardarProducto(@Valid DescripcionProducto descripcionProducto, BindingResult bindingResult) throws Exception {
+    public String guardarDescripcionProducto(@Valid DescripcionProducto descripcionProducto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacio el campo");
         } else {
@@ -41,11 +41,11 @@ public class ControladorDescripcionProducto {
         }
     }
 
-    @GetMapping("/modulo-venta/descripcion-producto/editar/{idProducto}")
-    public String editarProducto(DescripcionProducto descripcionProducto, Model model) {
+    @GetMapping("/modulo-venta/descripcion-producto/editar/{idDescripcionProducto}")
+    public String editarDescripcionProducto(DescripcionProducto descripcionProducto, Model model) {
         descripcionProducto = descripcionProductoService.encontrarDescripcionProducto(descripcionProducto);
         model.addAttribute("producto", descripcionProducto);
-        return "/pages/modulo-venta/descripcion-producto/modificar-producto";
+        return "/pages/modulo-venta/descripcion-producto/modificar-descripcion-producto";
     }
 
     @GetMapping("/modulo-venta/descripcion-producto/eliminar")

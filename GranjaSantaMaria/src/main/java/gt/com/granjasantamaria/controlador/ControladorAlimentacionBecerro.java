@@ -40,7 +40,7 @@ public class ControladorAlimentacionBecerro {
                 + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
                 + "INNER JOIN ganado AS g ON g.id_ganado = a.id_ganado "
                 + "INNER JOIN ganado AS gm ON gm.id_ganado = p.id_ganado "
-                + "WHERE a.id_alimentacion_becerro = 1";
+                + "WHERE a.id_alimentacion_becerro = 2";
         Query query = entityManager.createNativeQuery(sqlQuery);
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerroList", results);
