@@ -1,7 +1,8 @@
 package gt.com.granjasantamaria.controlador;
 
-import gt.com.granjasantamaria.modelo.DetalleProducto;
+import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,15 +20,35 @@ public class ControladorDetalleProducto {
     @Autowired
     private DetalleProductoService detalleProductoService;
 
+    @Autowired
+    private ProductoService productoService;
+
+    @Autowired
+    private MedidaProductoService medidaProductoService;
+
+    @Autowired
+    private ContenedorProductoService contenedorProductoService;
+
+    @Autowired
+    private DescripcionProductoService descripcionProductoService;
+
     @GetMapping("/modulo-venta/detalle-producto/lista")
     public String obtenerListadoDetalleProductos(Model model) {
-        var productos = detalleProductoService.obtenerListadoDetalleProductos();
-        model.addAttribute("productos", productos);
-        return "/pages/modulo-venta/detalle-producto/producto";
+        var detalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
+        model.addAttribute("detalleProductos", detalleProductos);
+        return "/pages/modulo-venta/detalle-producto/detalle-producto";
     }
 
     @GetMapping("/modulo-venta/detalle-producto/agregar")
     public String agregarDetalleProducto(DetalleProducto detalleProducto, Model model) {
+        List<Producto> listadoProductos = productoService.obtenerListadoProductos();
+        model.addAttribute("listadoProductos", listadoProductos);
+        List<MedidaProducto> listadoMedidaProductos = medidaProductoService.obtenerListadoMedidaProductos();
+        model.addAttribute("listadoMedidaProductos", listadoMedidaProductos);
+        List<ContenedorProducto> listadoContenedorProductos = contenedorProductoService.obtenerListadoContenedorProductos();
+        model.addAttribute("listadoContenedorProductos", listadoContenedorProductos);
+        List<DescripcionProducto> listadoDescripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
+        model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
         return "/pages/modulo-venta/detalle-producto/modificar-detalle-producto";
     }
 
@@ -42,7 +63,15 @@ public class ControladorDetalleProducto {
     }
 
     @GetMapping("/modulo-venta/detalle-producto/editar/{idDetalleProducto}")
-    public String eliminarDetalleProducto(DetalleProducto detalleProducto, Model model) {
+    public String editarDetalleProducto(DetalleProducto detalleProducto, Model model) {
+        List<Producto> listadoProductos = productoService.obtenerListadoProductos();
+        model.addAttribute("listadoProductos", listadoProductos);
+        List<MedidaProducto> listadoMedidaProductos = medidaProductoService.obtenerListadoMedidaProductos();
+        model.addAttribute("listadoMedidaProductos", listadoMedidaProductos);
+        List<ContenedorProducto> listadoContenedorProductos = contenedorProductoService.obtenerListadoContenedorProductos();
+        model.addAttribute("listadoContenedorProductos", listadoContenedorProductos);
+        List<DescripcionProducto> listadoDescripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
+        model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
         detalleProducto = detalleProductoService.encontrarDetalleProducto(detalleProducto);
         model.addAttribute("producto", detalleProducto);
         return "/pages/modulo-venta/detalle-producto/modificar-detalle-producto";

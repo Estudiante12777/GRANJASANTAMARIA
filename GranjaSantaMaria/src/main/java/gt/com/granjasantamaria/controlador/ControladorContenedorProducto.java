@@ -23,7 +23,7 @@ public class ControladorContenedorProducto {
     public String obtenerListadContenedorProductos(Model model) {
         var contenedorProductos = contenedorProductoService.obtenerListadoContenedorProductos();
         model.addAttribute("contenedorProductos", contenedorProductos);
-        return "/pages/modulo-venta/contenedor-producto/medida-producto";
+        return "/pages/modulo-venta/contenedor-producto/contenedor-producto";
     }
 
     @GetMapping("/modulo-venta/contenedor-producto/agregar")

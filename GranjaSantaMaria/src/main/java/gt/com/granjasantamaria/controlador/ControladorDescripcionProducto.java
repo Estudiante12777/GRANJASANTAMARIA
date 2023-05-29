@@ -21,13 +21,13 @@ public class ControladorDescripcionProducto {
 
     @GetMapping("/modulo-venta/descripcion-producto/lista")
     public String obtenerListadoDescripcionProductos(Model model) {
-        var productos = descripcionProductoService.obtenerListadoDescripcionProductos();
-        model.addAttribute("productos", productos);
-        return "/pages/modulo-venta/descripcion-producto/producto";
+        var descripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
+        model.addAttribute("descripcionProductos", descripcionProductos);
+        return "/pages/modulo-venta/descripcion-producto/descripcion-producto";
     }
 
     @GetMapping("/modulo-venta/descripcion-producto/agregar")
-    public String agregarDescripcionProducto(Producto producto, Model model) {
+    public String agregarDescripcionProducto(DescripcionProducto descripcionProducto, Model model) {
         return "/pages/modulo-venta/descripcion-producto/modificar-descripcion-producto";
     }
 
@@ -44,7 +44,7 @@ public class ControladorDescripcionProducto {
     @GetMapping("/modulo-venta/descripcion-producto/editar/{idDescripcionProducto}")
     public String editarDescripcionProducto(DescripcionProducto descripcionProducto, Model model) {
         descripcionProducto = descripcionProductoService.encontrarDescripcionProducto(descripcionProducto);
-        model.addAttribute("producto", descripcionProducto);
+        model.addAttribute("descripcionProducto", descripcionProducto);
         return "/pages/modulo-venta/descripcion-producto/modificar-descripcion-producto";
     }
 

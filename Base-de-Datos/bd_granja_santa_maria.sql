@@ -143,6 +143,40 @@ CREATE TABLE detalle_producto(
   CONSTRAINT fk_detalle_producto_contenedor_producto FOREIGN KEY (id_contenedor_producto) REFERENCES contenedor_producto(id_contenedor_producto),
   CONSTRAINT fk_detalle_producto_descripcion_producto FOREIGN KEY (id_descripcion_producto) REFERENCES descripcion_producto(id_descripcion_producto)
 );
+CREATE TABLE venta_producto(
+	id_venta_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    fecha_venta_producto DATE NOT NULL, 
+    id_cliente INT NOT NULL, 
+    estado_venta_producto TINYINT NOT NULL, 
+	CONSTRAINT fk_venta_producto_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente)
+); 
+CREATE TABLE detalle_venta_producto(
+	id_detalle_venta_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
+    id_venta_producto INT NOT NULL, 
+    id_detalle_producto INT NOT NULL,
+    cantidad_producto INT NOT NULL, 
+    precio_por_unidad DOUBLE NOT NULL,
+    total_precio_producto DOUBLE NOT NULL,
+    descuento_producto DOUBLE NOT NULL, 
+    estado_detalle_venta_producto TINYINT NOT NULL,
+    CONSTRAINT fk_detalle_venta_venta_producto FOREIGN KEY (id_venta_producto) REFERENCES venta_producto (id_venta_producto), 
+    CONSTRAINT fk_detalle_venta_detalle_producto FOREIGN KEY (id_detalle_producto) REFERENCES detalle_producto (id_detalle_producto)
+); 
+CREATE TABLE inventario_producto (
+  id_inventario_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id_detalle_producto INT NOT NULL,
+  fecha_inventario_producto DATE NOT NULL,
+  cantidad_ingresada_producto INT NOT NULL,
+  cantidad_entrada_producto INT NOT NULL,
+  cantidad_salida_producto INT NOT NULL,
+  cantidad_final_producto INT NOT NULL,
+  fecha_ingreso DATE NOT NULL,
+  cantidad_vendida_hasta_hoy INT NOT NULL,
+  estado_inventario_producto TINYINT NOT NULL,
+  CONSTRAINT fk_inventario_detalle_producto FOREIGN KEY (id_detalle_producto) REFERENCES detalle_producto (id_detalle_producto)
+);
+SELECT * FROM inventario_producto; 
+
 /*
 	OTROS SCRIPTS
 */

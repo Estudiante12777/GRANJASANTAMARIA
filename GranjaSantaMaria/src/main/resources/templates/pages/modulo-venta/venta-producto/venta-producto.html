@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
+    <div class="container-fluid py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
+            <h3 class="text-center">Venta</h3>
+        </div>
+        <form th:action="@{/modulo-venta/venta-producto/realizar-venta}" method="post" th:object="${ventaProducto}">
+            <input type="hidden" name="idVentaProducto" th:field="*{idVentaProducto}" />
+            <!-- Campos del formulario para la venta de productos -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fechaVenta">Fecha de Venta:</label>
+                        <input type="date" id="fechaVenta" name="fechaVentaProducto" class="form-control" required />
+                        <span th:if="${#fields.hasErrors('fechaVentaProducto')}" class="text-danger"
+                            th:errors="*{fechaVentaProducto}">Error en la fecha de venta</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cliente">Cliente:</label>
+                        <select id="cliente" name="cliente.idCliente" class="form-control" required>
+                            <!-- Opciones para seleccionar un cliente -->
+                            <option value="">Seleccione un cliente</option>
+                            <!-- Aquí puedes iterar sobre la lista de clientes para generar las opciones -->
+                            <option th:each="cliente : ${listadoClientes}" th:value="${cliente.idCliente}"
+                                th:text="${cliente.nombreCliente + ' ' + cliente.apellidoCliente}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="producto">Producto:</label>
+                        <select id="producto" name="detalleProducto.idDetalleProducto" class="form-control" required>
+                            <!-- Opciones para seleccionar un producto -->
+                            <option value="">Seleccione un producto</option>
+                            <!-- Aquí puedes iterar sobre la lista de productos para generar las opciones -->
+                            <option th:each="producto : ${listadoDetalleProductos}"
+                                th:value="${producto.idDetalleProducto}"
+                                th:text="${producto.producto.nombreProducto + ' (' + producto.medidaProducto.nombreMedidaProducto + ') - ' + producto.contenedorProducto.nombreContenedorProducto + ' - ' + producto.descripcionProducto.nombreDescripcionProducto}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="number" id="cantidadProducto" name="detalleVentaProducto.cantidadProducto"
+                            class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="precioPorUnidad">Precio por unidad:</label>
+                        <input type="number" id="precioPorUnidad" name="detalleVentaProducto.precioPorUnidad"
+                            class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="total">Total:</label>
+                        <input type="number" id="totalPrecioProducto" name="detalleVentaProducto.totalPrecioProducto"
+                            class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="descuento">Descuento:</label>
+                        <input type="number" id="descuentoProducto" name="detalleVentaProducto.descuentoProducto"
+                            class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="estadoVentaProducto" th:field="*{estadoVentaProducto}">
+            <br>
+            <div class="row">
+                <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="col-sm-6 mb-3">
+                    <button type="button" class="btn btn-outline-success btn-lg btn-block" data-bs-toggle="modal"
+                        data-bs-target="#guardarModal">
+                        Realizar venta
+                    </button>
+                    <div class="modal fade" id="guardarModal" tabindex="-1" aria-labelledby="guardarModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="guardarModalLabel">Realizar venta</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Estás seguro de que deseas realizar la venta de este producto?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Este es el botón que realiza la acción de guardar -->
+                                    <button type="submit" class="btn btn-success" name="guardar">
+                                        Realizar venta
+                                    </button>
+                                    <!-- Este es el botón que cierra el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script th:inline="javascript">
+        /* Generar ID único para el modal de guardar */
+
+        // Obtén el botón de guardar
+        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+
+        // Obtén el atributo 'data-bs-target' del botón
+        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+
+        // Obtén el atributo 'id' del botón
+        var modalIdGuardar = guardarButton.getAttribute("id");
+
+        // Crea un identificador único para el modal de guardar
+        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modalGuardar = document.querySelector(targetGuardarModalId);
+        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+    </script>
+</body>
+
+</html>
