@@ -28,20 +28,29 @@ public class InventarioProducto implements Serializable {
     private LocalDate fechaInventarioProducto;
 
     @NotNull
-    @Column(name = "cantidad_inicial_producto", nullable = false)
-    private int cantidadInicialProducto;
+    @Column(name = "cantidad_ingresada_producto", nullable = false)
+    private Integer cantidadIngresadaProducto;
 
     @NotNull
     @Column(name = "cantidad_entrada_producto", nullable = false)
-    private int cantidadEntradaProducto;
+    private Integer cantidadEntradaProducto;
 
     @NotNull
     @Column(name = "cantidad_salida_producto", nullable = false)
-    private int cantidadSalidaProducto;
+    private Integer cantidadSalidaProducto;
 
     @NotNull
     @Column(name = "cantidad_final_producto", nullable = false)
-    private int cantidadFinalProducto;
+    private Integer cantidadFinalProducto;
+
+    @NotNull
+    @Column(name = "fecha_ingreso")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaIngreso;
+
+    @NotNull
+    @Column(name = "cantidad_vendida_hasta_hoy")
+    private Integer cantidadVendidaHastaHoy;
 
     @NotNull
     @Column(name = "estado_inventario_producto", nullable = false)

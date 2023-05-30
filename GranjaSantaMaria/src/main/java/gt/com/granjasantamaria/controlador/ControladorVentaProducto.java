@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,6 +27,9 @@ public class ControladorVentaProducto {
     @Autowired
     private DetalleProductoService detalleProductoService;
 
+    @Autowired
+    private InventarioProductoService inventarioProductoService;
+
     @GetMapping("/modulo-venta/venta-producto/")
     public String ventaProductos(VentaProducto ventaProducto, DetalleVentaProducto detalleVentaProducto, DetalleProducto detalleProducto, Model model) {
         // Obtener la lista de clientes y productos desde el servicio y agregarlos al modelo
@@ -39,16 +43,24 @@ public class ControladorVentaProducto {
     }
 
     @PostMapping("/modulo-venta/venta-producto/realizar-venta")
-    public String realizarVentaProducto(@ModelAttribute VentaProducto ventaProducto, @ModelAttribute DetalleVentaProducto detalleVentaProducto) {
+    public String realizarVentaProducto(@ModelAttribute VentaProducto ventaProducto, @ModelAttribute DetalleVentaProducto detalleVentaProducto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Manejar errores de validación si es necesario
+            return "error";
+        }
         // Guardar la venta en la tabla venta_producto
         ventaProductoService.guardarVentaProducto(ventaProducto);
-
         // Establecer la venta en el detalle de venta
         detalleVentaProducto.setVentaProducto(ventaProducto);
-
         // Guardar el detalle de venta en la tabla detalle_venta_producto
         detalleVentaProductoService.guardarDetalleVentaProducto(detalleVentaProducto);
-
+        // Actualizar el inventario
+        DetalleProducto detalleProductoVendido = detalleVentaProducto.getDetalleProducto();
+        InventarioProducto inventarioProducto = inventarioProductoService.obtenerInventarioProductoPorProducto(detalleProductoVendido);
+        int cantidadVendida = detalleVentaProducto.getCantidadProducto();
+        int cantidadActualizada = inventarioProducto.getCantidadFinalProducto() - cantidadVendida;
+        inventarioProducto.setCantidadFinalProducto(cantidadActualizada);
+        inventarioProductoService.guardarInventarioProducto(inventarioProducto);
         return "redirect:/modulo-venta/venta-producto/";
     }
 

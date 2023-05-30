@@ -74,20 +74,12 @@ public class ControladorProduccionDiaraLeche {
     }
 
     @PostMapping("/modulo-produccion-lacteos/produccion-diaria-leche/guardar")
-    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ProduccionDiariaLeche produccionDiariaLeche, BindingResult bindingResult, Model model) {
+    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ProduccionDiariaLeche produccionDiariaLeche, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
-            List<Ganado> listaGanados = ganadoService.listadoGanados();
-            model.addAttribute("listaGanados", listaGanados);
-            return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
-        }
-        try {
+            throw new Exception("Error, no puede estar vacío el campo");
+        } else {
             produccionDiariaLecheService.guardarProduccionDiariaLeche(produccionDiariaLeche);
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
-        } catch (Exception e) {
-            model.addAttribute("error", "Error al guardar la producción diaria de leche.");
-            List<Ganado> listaGanados = ganadoService.listadoGanados();
-            model.addAttribute("listaGanados", listaGanados);
-            return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
         }
     }
 

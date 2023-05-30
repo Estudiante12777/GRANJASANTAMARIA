@@ -27,10 +27,11 @@
         <div th:if="${listaProduccionDiariaLeche != null and !listaProduccionDiariaLeche.empty}">
             <table class="table">
                 <thead class="table-dark">
+                    <th>Productora de leche</th>
                     <th>Fecha de produccion</th>
                     <th>Produccion en el dia - litros</th>
                     <th>Produccion en la tarde - litros</th>
-                    <th>Nombre de la vaca</th>
+                    <th>Total produccion</th>
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Alimentar Becerro
                     </th>
@@ -43,6 +44,9 @@
                     <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
                 </thead>
                 <tr th:each="produccionDiariaLeche : ${listaProduccionDiariaLeche}">
+                    <td th:text="${produccionDiariaLeche.ganado.nombreGanado}">
+                        Mostrar Nombre del ganado
+                    </td>
                     <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">
                         Mostrar fecha de produccion de leche
                     </td>
@@ -51,8 +55,7 @@
                     </td>
                     <td th:text="${produccionDiariaLeche.produccionTardeLeche}">Mostrar Produccion de leche por la tarde
                     </td>
-                    <td th:text="${produccionDiariaLeche.ganado.nombreGanado}">
-                        Mostrar Nombre del ganado
+                    <td th:text="${produccionDiariaLeche.totalProduccionLeche}">Mostrar total produccion de leche
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <!-- Botón para abrir el modal de alimentacion becerro -->

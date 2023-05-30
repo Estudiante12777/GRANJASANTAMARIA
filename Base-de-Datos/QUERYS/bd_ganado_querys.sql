@@ -1,8 +1,5 @@
-CREATE DATABASE granja_santa_maria;
-
 USE granja_santa_maria; 
 
-/** GANADO **/
 CREATE TABLE raza_ganado(
 	id_raza_ganado INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
     nombre_raza_ganado VARCHAR(50) NOT NULL UNIQUE, 
@@ -34,15 +31,4 @@ CREATE TABLE alimentacion_becerro(
 	estado_alimentacion_becerro TINYINT NOT NULL,
     CONSTRAINT fk_alimentacion_becerro_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_alimentacion_becerro_produccion_diaria_leche FOREIGN KEY (id_produccion_diaria_leche) REFERENCES produccion_diaria_leche (id_produccion_diaria_leche) ON DELETE CASCADE ON UPDATE CASCADE
-);
-/* TABLAS PARA PRODUCCION DE LACTEOS */
-CREATE TABLE produccion_diaria_leche(
-	id_produccion_diaria_leche INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    id_ganado INT NOT NULL,
-    fecha_produccion_leche DATE NOT NUll, 
-    produccion_maniana_leche DOUBLE NOT NULL, 
-    produccion_tarde_leche DOUBLE NOT NULL, 
-    total_produccion_leche DOUBLE NOT NULL, 
-    estado_produccion_diaria_leche TINYINT NOT NULL,
-    CONSTRAINT fk_produccion_diaria_leche_ganado FOREIGN KEY (id_ganado) REFERENCES ganado (id_ganado) ON DELETE CASCADE ON UPDATE CASCADE
 );

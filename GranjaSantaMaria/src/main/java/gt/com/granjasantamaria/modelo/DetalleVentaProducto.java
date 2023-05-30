@@ -5,10 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import lombok.Data;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "detalle_venta_producto")
@@ -18,6 +14,7 @@ public class DetalleVentaProducto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_detalle_venta_producto")
     private Long idDetalleVentaProducto;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,17 +31,17 @@ public class DetalleVentaProducto implements Serializable {
 
     @NotNull
     @Column(name = "precio_por_unidad", nullable = false)
-    @DecimalMin(value = "0.0", message = "La producción de la maniana debe ser mayor o igual a cero")
+    @DecimalMin(value = "0.0", message = "El precio por unidad debe ser mayor o igual a cero")
     private Double precioPorUnidad;
 
     @NotNull
     @Column(name = "total_precio_producto", nullable = false)
-    @DecimalMin(value = "0.0", message = "La producción de la maniana debe ser mayor o igual a cero")
+    @DecimalMin(value = "0.0", message = "El total del precio del producto debe ser mayor o igual a cero")
     private Double totalPrecioProducto;
 
     @NotNull
     @Column(name = "descuento_producto", nullable = false)
-    @DecimalMin(value = "0.0", message = "La producción de la maniana debe ser mayor o igual a cero")
+    @DecimalMin(value = "0.0", message = "El descuento del producto debe ser mayor o igual a cero")
     private Double descuentoProducto;
 
     @NotNull

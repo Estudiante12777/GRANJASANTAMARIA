@@ -41,6 +41,7 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     @Override
     public void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         produccionDiariaLeche.setEstadoProduccionDiariaLeche(true);
+        produccionDiariaLeche.setTotalProduccionLeche(produccionDiariaLeche.getProduccionManianaLeche() + produccionDiariaLeche.getProduccionTardeLeche());
         produccionDiariaLecheDao.save(produccionDiariaLeche);
     }
 

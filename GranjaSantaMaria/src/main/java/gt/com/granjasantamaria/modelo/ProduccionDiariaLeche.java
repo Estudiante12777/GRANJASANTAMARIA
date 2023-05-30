@@ -21,6 +21,10 @@ public class ProduccionDiariaLeche implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProduccionDiariaLeche;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ganado")
+    private Ganado ganado;
 
     @NotNull
     @Column(name = "fecha_produccion_leche", nullable = false)
@@ -36,11 +40,11 @@ public class ProduccionDiariaLeche implements Serializable {
     @Column(name = "produccion_tarde_leche", nullable = false)
     @DecimalMin(value = "0.0", message = "La producción de la tarde debe ser mayor o igual a cero")
     private Double produccionTardeLeche;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_ganado")
-    private Ganado ganado;
-
+    
+    @NotNull
+    @Column(name = "total_produccion_leche", nullable = false)
+    private Double totalProduccionLeche; 
+    
     @NotNull
     @Column(name = "estado_produccion_diaria_leche", nullable = false)
     private boolean estadoProduccionDiariaLeche;

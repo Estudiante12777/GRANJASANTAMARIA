@@ -27,51 +27,48 @@ public class ControladorInventarioProducto {
 
     @GetMapping("/modulo-venta/inventario-producto/lista")
     public String obtenerListadoInventarioProductos(Model model) {
-        var listaInventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
-        model.addAttribute("listaInventarioProductos", listaInventarioProductos);
-        return "/pages/modulo-venta/inventario-producto/inventario-producto";
+        List<InventarioProducto> inventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
+        model.addAttribute("inventarioProductos", inventarioProductos);
+        return "pages/modulo-venta/inventario-producto/inventario-producto";
     }
 
     @GetMapping("/modulo-venta/inventario-producto/agregar")
-    public String agregarProduccionDiariaLeche(InventarioProducto inventarioProducto, Model model) {
+    public String agregarInventarioProducto(InventarioProducto inventarioProducto, Model model) {
         List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
         return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
     }
 
     @PostMapping("/modulo-venta/inventario-producto/guardar")
-    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) InventarioProducto inventarioProducto, BindingResult bindingResult, Model model) {
+    public String guardarInventarioProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) InventarioProducto inventarioProducto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
-        }
-        try {
-            inventarioProductoService.guardarInventarioProducto(inventarioProducto);
-            return "redirect:/modulo-venta/inventario-producto/lista";
-        } catch (Exception e) {
-            model.addAttribute("error", "Error al guardar la producción diaria de leche.");
+        } else {
             List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
             model.addAttribute("listaDetalleProductos", listaDetalleProductos);
-            return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
+            inventarioProductoService.guardarInventarioProducto(inventarioProducto);
+            model.addAttribute("listaDetalleProductos", listaDetalleProductos);
+            return "redirect:/modulo-venta/inventario-producto/lista";
         }
     }
 
     @GetMapping("/modulo-venta/inventario-producto/editar/{idInventarioProducto}")
-    public String editarProduccionDiariaLeche(InventarioProducto inventarioProducto, Model model) {
+    public String editarInventarioProducto(InventarioProducto inventarioProducto, Model model) {
         List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
         inventarioProducto = inventarioProductoService.encontrarInventarioProducto(inventarioProducto);
-        model.addAttribute("produccionDiariaLeche", inventarioProducto);
+        model.addAttribute("inventarioProducto", inventarioProducto);
         return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
     }
 
     @GetMapping("/modulo-venta/inventario-producto/eliminar")
-    public String eliminarProduccionDiariaLeche(InventarioProducto inventarioProducto) {
+    public String eliminarInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProductoService.eliminarInventarioProducto(inventarioProducto);
         return "redirect:/modulo-venta/inventario-producto/lista";
     }
 
     @GetMapping("/modulo-venta/inventario-producto/baja")
-    public String darBajaProduccionDiariaLeche(InventarioProducto inventarioProducto) {
+    public String darBajaInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProductoService.darBajaInventarioProducto(inventarioProducto);
         return "redirect:/modulo-venta/inventario-producto/lista";
     }

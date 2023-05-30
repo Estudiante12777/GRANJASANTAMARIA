@@ -7,10 +7,6 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "venta_producto")
@@ -20,6 +16,7 @@ public class VentaProducto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_venta_producto")
     private Long idVentaProducto;
 
     @NotNull
@@ -30,6 +27,10 @@ public class VentaProducto implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_inventario_producto")
+    private InventarioProducto inventarioProducto;
 
     @NotNull
     @Column(name = "estado_venta_producto", nullable = false)

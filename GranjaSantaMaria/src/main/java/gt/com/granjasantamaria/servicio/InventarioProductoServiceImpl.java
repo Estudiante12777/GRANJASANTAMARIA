@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.InventarioProductoDao;
+import gt.com.granjasantamaria.modelo.DetalleProducto;
 import gt.com.granjasantamaria.modelo.InventarioProducto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,13 @@ public class InventarioProductoServiceImpl implements InventarioProductoService 
             inventarioProductoExistente.setEstadoInventarioProducto(false);
             inventarioProductoDao.save(inventarioProductoExistente);
         }
+    }
+
+    // En la clase InventarioProductoServiceImpl
+    @Override
+    @Transactional(readOnly = true)
+    public InventarioProducto obtenerInventarioProductoPorProducto(DetalleProducto detalleProducto) {
+        return inventarioProductoDao.findByDetalleProductoAndEstadoInventarioProductoIsTrue(detalleProducto);
     }
 
 }

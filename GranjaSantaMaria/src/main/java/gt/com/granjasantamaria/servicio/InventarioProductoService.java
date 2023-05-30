@@ -1,5 +1,6 @@
 package gt.com.granjasantamaria.servicio;
 
+import gt.com.granjasantamaria.modelo.DetalleProducto;
 import gt.com.granjasantamaria.modelo.InventarioProducto;
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface InventarioProductoService {
     public InventarioProducto encontrarInventarioProducto(InventarioProducto inventarioProducto);
 
     public void darBajaInventarioProducto(InventarioProducto inventarioProducto);
+
+    public InventarioProducto obtenerInventarioProductoPorProducto(DetalleProducto detalleProducto);
 
 }
