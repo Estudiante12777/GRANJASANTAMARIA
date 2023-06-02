@@ -1,7 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
-import gt.com.granjasantamaria.dao.VentaProductoDao;
-import gt.com.granjasantamaria.modelo.VentaProducto;
+import gt.com.granjasantamaria.dao.*;
+import gt.com.granjasantamaria.modelo.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,9 @@ public class VentaProductoServiceIml implements VentaProductoService {
     @Autowired
     private VentaProductoDao ventaProductoDao;
 
+    @Autowired
+    private DetalleVentaProductoService detalleVentaProductoService;
+
     @Override
     @Transactional(readOnly = true)
     public List<VentaProducto> obtenerListaVentaProductos() {
@@ -25,9 +28,14 @@ public class VentaProductoServiceIml implements VentaProductoService {
 
     @Override
     @Transactional
-    public void guardarVentaProducto(VentaProducto ventaProducto) {
+    public void guardarVentaProducto(VentaProducto ventaProducto, DetalleVentaProducto detalleVentaProducto) {
         ventaProducto.setEstadoVentaProducto(true);
-        ventaProductoDao.save(ventaProducto);
+        // Primero guardamos la ventaProducto y obtenemos la entidad guardada
+        VentaProducto ventaProductoGuardada = ventaProductoDao.save(ventaProducto);
+        // Luego asignamos el id de la ventaProductoGuardada al detalleVentaProducto
+        detalleVentaProducto.setVentaProducto(ventaProductoGuardada);
+        // Finalmente guardamos el detalleVentaProducto usando el servicio correspondiente
+        detalleVentaProductoService.guardarDetalleVentaProducto(detalleVentaProducto);
     }
 
     @Override

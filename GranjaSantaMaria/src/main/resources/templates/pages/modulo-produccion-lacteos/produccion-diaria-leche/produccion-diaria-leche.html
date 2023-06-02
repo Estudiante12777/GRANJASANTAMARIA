@@ -27,10 +27,10 @@
         <div th:if="${listaProduccionDiariaLeche != null and !listaProduccionDiariaLeche.empty}">
             <table class="table">
                 <thead class="table-dark">
-                    <th>Productora de leche</th>
-                    <th>Fecha de produccion</th>
-                    <th>Produccion en el dia - litros</th>
-                    <th>Produccion en la tarde - litros</th>
+                    <th>Productora</th>
+                    <th>Fecha produccion</th>
+                    <th>Produccion mañana - litros</th>
+                    <th>Produccion tarde - litros</th>
                     <th>Total produccion</th>
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Alimentar Becerro
@@ -44,7 +44,7 @@
                     <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
                 </thead>
                 <tr th:each="produccionDiariaLeche : ${listaProduccionDiariaLeche}">
-                    <td th:text="${produccionDiariaLeche.ganado.nombreGanado}">
+                    <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">
                         Mostrar Nombre del ganado
                     </td>
                     <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">
@@ -97,7 +97,12 @@
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                             th:data-bs-target="'#verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
                             data-id="${produccionDiariaLeche.idProduccionDiariaLeche}">
-                            ver
+                            M
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            th:data-bs-target="'#verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                            data-id="${produccionDiariaLeche.idProduccionDiariaLeche}">
+                            H
                         </button>
                         <!-- Modal de alimentacion becerro -->
                         <div class="modal fade"

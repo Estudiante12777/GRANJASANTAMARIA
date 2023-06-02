@@ -17,7 +17,7 @@ public class DetalleVentaProducto implements Serializable {
     @Column(name = "id_detalle_venta_producto")
     private Long idDetalleVentaProducto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "id_venta_producto")
     private VentaProducto ventaProducto;
 
@@ -47,5 +47,5 @@ public class DetalleVentaProducto implements Serializable {
     @NotNull
     @Column(name = "estado_detalle_venta_producto", nullable = false)
     private boolean estadoDetalleVentaProducto;
-
+    
 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <div class="container py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+                <div class="card bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Departamento</h5>
+                        <form th:action="@{/modulo-ubicacion/departamento/guardar}" method="post"
+                            th:object="${departamento}" id="guardarFormulario">
+                            <input type="hidden" name="idDepartamento" th:field="*{idDepartamento}" />
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg" for="nombreDepartamento">Departamento:</label>
+                                <input class="form-control form-control-lg" type="text" required
+                                    name="nombreDepartamento" th:field="*{nombreDepartamento}" />
+                                <span th:if="${#fields.hasErrors('nombreDepartamento')}" class="text-danger"
+                                    th:errors="*{nombreDepartamento}">Error nombre del pais</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label form-label-lg" for="pais.nombrePais">Pais:</label>
+                                <div class="col-sm-8">
+                                    <select th:field="*{pais.idPais}" name="pais.nombrePais" required
+                                        class="form-select form-select-lg">
+                                        <option th:each="pais : ${listadoPaises}" th:value="${pais.idPais}"
+                                            th:text="${pais.nombrePais}"></option>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('pais.nombrePais')}" class="text-danger"
+                                        th:errors="*{pais.nombrePais}">Error
+                                        Pais</span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="estadoDepartamento" th:field="*{estadoDepartamento}">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a class="btn btn-outline-primary btn-lg btn-bloc"
+                                        th:href="@{/modulo-ubicacion/departamento/lista}"><i
+                                            class="fa-solid fa-arrow-left"></i></a>
+                                </div>
+                                <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                                    class="col-sm-6 mb-3">
+                                    <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                                        data-bs-toggle="modal" data-bs-target="#guardarModal">
+                                        <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                    </button>
+                                    <div class="modal fade" id="guardarModal" tabindex="-1"
+                                        aria-labelledby="guardarModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
+                                                        ganado</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Estás seguro de que deseas guardar esta categoría de ganado?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <!-- Este es el botón que realiza la acción de guardar -->
+                                                    <button type="submit" class="btn btn-success" name="guardar">
+                                                        Guardar
+                                                    </button>
+                                                    <!-- Este es el botón que cierra el modal -->
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        /* Generar ID único para el modal de guardar */
+
+        // Obtén el botón de guardar
+        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+
+        // Obtén el atributo 'data-bs-target' del botón
+        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+
+        // Obtén el atributo 'id' del botón
+        var modalIdGuardar = guardarButton.getAttribute("id");
+
+        // Crea un identificador único para el modal de guardar
+        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modalGuardar = document.querySelector(targetGuardarModalId);
+        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+    </script>
+</body>
+
+</html>

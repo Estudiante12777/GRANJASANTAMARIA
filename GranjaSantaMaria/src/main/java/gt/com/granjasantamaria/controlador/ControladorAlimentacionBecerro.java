@@ -24,7 +24,7 @@ public class ControladorAlimentacionBecerro {
     private AlimentacionBecerroService alimentacionBecerroService;
 
     @Autowired
-    private GanadoService ganadoService;
+    private GanadoMachoService ganadoMachoService;
 
     @Autowired
     private ProduccionDiariaLecheService produccionDiariaLecheService;
@@ -49,7 +49,7 @@ public class ControladorAlimentacionBecerro {
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/agregar")
     public String agregarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro, Model model) {
-        List<Ganado> listaGanados = ganadoService.listadoGanados();
+        List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
         model.addAttribute("listaGanados", listaGanados);
         return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
     }
@@ -57,7 +57,7 @@ public class ControladorAlimentacionBecerro {
     @PostMapping("/modulo-ganado/alimentacion-becerro/guardar")
     public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerro alimentacionBecerro, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<Ganado> listaGanados = ganadoService.listadoGanados();
+            List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
             model.addAttribute("listaGanados", listaGanados);
             return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
         }
@@ -66,7 +66,7 @@ public class ControladorAlimentacionBecerro {
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         } catch (Exception e) {
             model.addAttribute("error", "Error al guardar la producción diaria de leche.");
-            List<Ganado> listaGanados = ganadoService.listadoGanados();
+            List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
             model.addAttribute("listaGanados", listaGanados);
             return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
         }
@@ -74,7 +74,7 @@ public class ControladorAlimentacionBecerro {
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/editar/{idAlimentacionBecerro}")
     public String editarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        List<Ganado> listaGanados = ganadoService.listadoGanados();
+        List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
         model.addAttribute("listaGanados", listaGanados);
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);
         model.addAttribute("produccionDiariaLeche", produccionDiariaLeche);

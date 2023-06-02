@@ -23,7 +23,7 @@ public class ControladorProduccionDiaraLeche {
     private ProduccionDiariaLecheService produccionDiariaLecheService;
 
     @Autowired
-    private GanadoService ganadoService;
+    private GanadoHembraService ganadoHembraService;
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/lista")
     public String listaProduccionDiariaLeche(Model model) {
@@ -68,7 +68,7 @@ public class ControladorProduccionDiaraLeche {
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")
     public String agregarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        List<Ganado> listaGanados = ganadoService.listadoGanados();
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
         model.addAttribute("listaGanados", listaGanados);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
     }
@@ -85,7 +85,7 @@ public class ControladorProduccionDiaraLeche {
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/editar/{idProduccionDiariaLeche}")
     public String editarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        List<Ganado> listaGanados = ganadoService.listadoGanados();
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
         model.addAttribute("listaGanados", listaGanados);
 
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);

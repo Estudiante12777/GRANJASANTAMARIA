@@ -29,11 +29,11 @@ public class VentaProducto implements Serializable {
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_inventario_producto")
-    private InventarioProducto inventarioProducto;
-
+    @JoinColumn(name = "id_detalle_venta_producto")
+    private DetalleVentaProducto detalleVentaProducto;
+    
     @NotNull
     @Column(name = "estado_venta_producto", nullable = false)
     private boolean estadoVentaProducto;
-
+    
 }
