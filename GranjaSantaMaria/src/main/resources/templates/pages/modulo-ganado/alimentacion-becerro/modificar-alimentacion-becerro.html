@@ -18,16 +18,16 @@
                             th:object="${alimentacionBecerro}" id="guardarFormulario">
                             <input type="hidden" name="idAlimentacionBecerro" th:field="*{idAlimentacionBecerro}" />
                             <div class="mb-3">
-                                <label class="form-label form-label-lg" for="ganado.idGanado">Nombre del
+                                <label class="form-label form-label-lg" for="ganadoMacho.idGanadoMacho">Nombre del
                                     becerro:</label>
                                 <div class="col-sm-8">
-                                    <select th:field="*{ganado.idGanado}" name="ganado.nombreGanado" required
+                                    <select th:field="*{ganadoMacho.idGanadoMacho}" name="ganadoMacho.nombreGanadoMacho" required
                                         class="form-select form-select-lg">
-                                        <option th:each="ganado : ${listaGanados}" th:value="${ganado.idGanado}"
-                                            th:text="${ganado.nombreGanado}"></option>
+                                        <option th:each="ganadoMacho : ${listaGanados}" th:value="${ganadoMacho.idGanadoMacho}"
+                                            th:text="${ganadoMacho.nombreGanadoMacho}"></option>
                                     </select>
-                                    <span th:if="${#fields.hasErrors('ganado.nombreGanado')}" class="text-danger"
-                                        th:errors="*{ganado.nombreGanado}">Error
+                                    <span th:if="${#fields.hasErrors('ganadoMacho.nombreGanadoMacho')}" class="text-danger"
+                                        th:errors="*{ganadoMacho.nombreGanadoMacho}">Error
                                         ganado</span>
                                 </div>
                             </div>

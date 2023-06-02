@@ -4,6 +4,8 @@ import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -69,7 +71,14 @@ public class ControladorProduccionDiaraLeche {
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")
     public String agregarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
-        model.addAttribute("listaGanados", listaGanados);
+        // Filtrar la lista de ganado para mostrar solo vacas y novillas
+        List<GanadoHembra> listaVacasNovillas = listaGanados.stream()
+                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
+                || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
+                .collect(Collectors.toList());
+        System.out.println("Lista de ganados: " + listaGanados);
+        System.out.println("Lista de vacas y novillas: " + listaVacasNovillas);
+        model.addAttribute("listaGanados", listaVacasNovillas);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
     }
 
@@ -86,8 +95,14 @@ public class ControladorProduccionDiaraLeche {
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/editar/{idProduccionDiariaLeche}")
     public String editarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
-        model.addAttribute("listaGanados", listaGanados);
-
+        // Filtrar la lista de ganado para mostrar solo vacas y novillas
+        List<GanadoHembra> listaVacasNovillas = listaGanados.stream()
+                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
+                || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
+                .collect(Collectors.toList());
+        System.out.println("Lista de ganados: " + listaGanados);
+        System.out.println("Lista de vacas y novillas: " + listaVacasNovillas);
+        model.addAttribute("listaGanados", listaVacasNovillas);
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);
         model.addAttribute("produccionDiariaLeche", produccionDiariaLeche);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";

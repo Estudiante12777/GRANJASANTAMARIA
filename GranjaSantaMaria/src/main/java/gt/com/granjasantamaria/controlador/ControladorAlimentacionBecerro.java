@@ -33,15 +33,16 @@ public class ControladorAlimentacionBecerro {
     private EntityManager entityManager;
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/lista")
-    public String obtenerListadoAlimentacionBecerros(Model model) {
-        String sqlQuery = "SELECT g.nombre_ganado AS nombre_becerro, a.fecha_alimentacion_becerro, "
-                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, gm.nombre_ganado AS nombre_madre "
+    public String obtenerListadoAlimentacionBecerros(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
+        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
+                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, g.nombre_ganado_hembra AS nombre_madre "
                 + "FROM alimentacion_becerro AS a "
                 + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
-                + "INNER JOIN ganado AS g ON g.id_ganado = a.id_ganado "
-                + "INNER JOIN ganado AS gm ON gm.id_ganado = p.id_ganado "
-                + "WHERE a.id_alimentacion_becerro = 2";
+                + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho "
+                + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra "
+                + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche";
         Query query = entityManager.createNativeQuery(sqlQuery);
+        query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerroList", results);
         return "/pages/modulo-ganado/alimentacion-becerro/alimentacion-becerro";
@@ -55,7 +56,7 @@ public class ControladorAlimentacionBecerro {
     }
 
     @PostMapping("/modulo-ganado/alimentacion-becerro/guardar")
-    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerro alimentacionBecerro, BindingResult bindingResult, Model model) {
+    public String guardarAlimentacionBecerro(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerro alimentacionBecerro, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
             model.addAttribute("listaGanados", listaGanados);
@@ -73,7 +74,7 @@ public class ControladorAlimentacionBecerro {
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/editar/{idAlimentacionBecerro}")
-    public String editarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
+    public String editarAlimentacionBecerro(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
         model.addAttribute("listaGanados", listaGanados);
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);

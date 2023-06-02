@@ -22,19 +22,102 @@
                         <th>Litros - Tarde</th>
                         <th>Total diario vaca</th>
                         <th>Fecha de producción</th>
+                        <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                            Alimentar Becerro
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="produccionDiariaLeche : ${listaTotalProduccionLeche}">
-                        <td th:text="${produccionDiariaLeche.ganado.nombreGanado}">Mostrar Nombre del ganado</td>
+                        <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">Mostrar Nombre del ganado
+                        </td>
                         <td th:text="${produccionDiariaLeche.produccionManianaLeche}">Mostrar Producción de leche por la
                             mañana</td>
                         <td th:text="${produccionDiariaLeche.produccionTardeLeche}">Mostrar Producción de leche por la
                             tarde</td>
-                        <td
-                            th:text="${#numbers.formatDecimal(produccionDiariaLeche.produccionManianaLeche + produccionDiariaLeche.produccionTardeLeche, 0, 'COMMA', 1, 'POINT')}">
-                            Mostrar Total diario</td>
+                        <td th:text="${produccionDiariaLeche.totalProduccionLeche}">Mostrar Producción de leche por la
+                            tarde</td>
                         <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">Mostrar fecha de producción de leche
+                        </td>
+                        <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                            <!-- Botón para abrir el modal de alimentacion becerro -->
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                th:data-bs-target="'#alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                                data-id="${produccionDiariaLeche.idProduccionDiariaLeche}">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <!-- Modal de alimentacion becerro -->
+                            <div class="modal fade"
+                                th:id="'alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                                tabindex="-1"
+                                th:attr="aria-labelledby='alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                th:id="'alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
+                                                ¿Estás seguro de que deseas agregar un registro de alimentacion becerro?
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- Enlace para ir al formulario de edición -->
+                                            <a class="btn btn-primary"
+                                                th:href="@{/modulo-ganado/alimentacion-becerro/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                Becerro
+                                            </a>
+                                            <a class="btn btn-primary"
+                                                th:href="@{/modulo-ganado/alimentacion-becerra/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                Becerra
+                                            </a>
+                                            <!-- Botón para cerrar el modal -->
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                                cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Botón para abrir el modal de alimentacion becerro -->
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                                th:data-bs-target="'#verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                                data-id="${produccionDiariaLeche.idProduccionDiariaLeche}">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                            <!-- Modal de alimentacion becerro -->
+                            <div class="modal fade"
+                                th:id="'verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                                tabindex="-1"
+                                th:attr="aria-labelledby='verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                th:id="'verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
+                                                ¿Estás seguro de que deseas ver el registro de alimentacion becerro?
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <!-- Enlace para ir al formulario de edición -->
+                                            <a class="btn btn-primary"
+                                                th:href="@{/modulo-ganado/alimentacion-becerro/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                becerro
+                                            </a>
+                                            <a class="btn btn-primary"
+                                                th:href="@{/modulo-ganado/alimentacion-becerra/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                becerra
+                                            </a>
+                                            <!-- Botón para cerrar el modal -->
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                                cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -63,6 +146,52 @@
             <h1>Se muestra el total de produccion de leche por fecha</h1>
         </div>
     </div>
+    <script th:inline="javascript">
+        /* Generar ID único para cada modal */
+        /* Inserta este código antes de cerrar la etiqueta </body> */
+
+        /* Obtén todos los botones de edición */
+        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+
+        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+        editButtons.forEach(function (button) {
+            var targetModalId = button.getAttribute("data-bs-target");
+            var modalId = button.getAttribute("th:data-bs-target");
+
+            // Crea un identificador único para el modal de edición
+            var uniqueModalId = "alimentacionModal_" + modalId.replace("#alimentacionModal_", "");
+
+            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+            var modal = document.querySelector(targetModalId);
+            modal.setAttribute("id", uniqueModalId);
+        });
+    </script>
+    <script th:inline="javascript">
+        /* Generar ID único para cada modal */
+        /* Inserta este código antes de cerrar la etiqueta </body> */
+
+        /* Obtén todos los botones de edición */
+        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+
+        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+        editButtons.forEach(function (button) {
+            var targetModalId = button.getAttribute("data-bs-target");
+            var modalId = button.getAttribute("th:data-bs-target");
+
+            // Crea un identificador único para el modal de edición
+            var uniqueModalId = "verModalAlimentacion_" + modalId.replace("#verModalAlimentacion_", "");
+
+            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+            var modal = document.querySelector(targetModalId);
+            modal.setAttribute("id", uniqueModalId);
+        });
+    </script>
 </body>
 
 </html>

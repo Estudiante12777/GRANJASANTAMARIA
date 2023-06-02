@@ -84,7 +84,11 @@
                                         <!-- Enlace para ir al formulario de edición -->
                                         <a class="btn btn-primary"
                                             th:href="@{/modulo-ganado/alimentacion-becerro/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
-                                            Sí, quiero agregar
+                                            Becerro
+                                        </a>
+                                        <a class="btn btn-primary"
+                                            th:href="@{/modulo-ganado/alimentacion-becerra/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                            Becerra
                                         </a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -97,12 +101,7 @@
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                             th:data-bs-target="'#verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
                             data-id="${produccionDiariaLeche.idProduccionDiariaLeche}">
-                            M
-                        </button>
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                            th:data-bs-target="'#verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
-                            data-id="${produccionDiariaLeche.idProduccionDiariaLeche}">
-                            H
+                            <i class="fa-solid fa-eye"></i>
                         </button>
                         <!-- Modal de alimentacion becerro -->
                         <div class="modal fade"
@@ -123,8 +122,12 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para ir al formulario de edición -->
                                         <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerro/lista}">
-                                            Sí, quiero agregar
+                                            th:href="@{/modulo-ganado/alimentacion-becerro/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                            becerro
+                                        </a>
+                                        <a class="btn btn-primary"
+                                            th:href="@{/modulo-ganado/alimentacion-becerra/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                            becerra
                                         </a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

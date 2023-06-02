@@ -13,23 +13,23 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Data
 @Entity
-@Table(name = "alimentacion_becerro")
-public class AlimentacionBecerro implements Serializable {
+@Table(name = "alimentacion_becerra")
+public class AlimentacionBecerra implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAlimentacionBecerro;
+    private Long idAlimentacionBecerra;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_ganado_macho")
-    private GanadoMacho ganadoMacho;
+    @JoinColumn(name = "id_ganado_hembra")
+    private GanadoHembra ganadoHembra;
 
     @NotNull
-    @Column(name = "fecha_alimentacion_becerro", nullable = false)
+    @Column(name = "fecha_alimentacion_becerra", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaAlimentacionBecerro;
+    private LocalDate fechaAlimentacionBecerra;
 
     @NotNull
     @Column(name = "cantidad_maniana_alimentacion", nullable = false)
@@ -46,7 +46,7 @@ public class AlimentacionBecerro implements Serializable {
     private Long idProduccionDiariaLeche;
 
     @NotNull
-    @Column(name = "estado_alimentacion_becerro", nullable = false)
-    private boolean estadoAlimentacionBecerro;
+    @Column(name = "estado_alimentacion_becerra", nullable = false)
+    private boolean estadoAlimentacionBecerra;
 
 }

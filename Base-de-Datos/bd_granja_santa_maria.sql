@@ -2,6 +2,12 @@ CREATE DATABASE granja_santa_maria;
 
 USE granja_santa_maria; 
 
+SELECT *
+FROM alimentacion_becerro
+JOIN produccion_diaria_leche ON alimentacion_becerro.id_produccion_diaria_leche = produccion_diaria_leche.id_produccion_diaria_leche
+WHERE produccion_diaria_leche.id_produccion_diaria_leche = 1;
+
+
 /** GANADO **/
 CREATE TABLE raza_ganado(
 	id_raza_ganado INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
@@ -34,8 +40,9 @@ CREATE TABLE historial_clinico_macho (
 CREATE TABLE detalle_historial_clinico_macho (
     id_detalle_historial_clinico INT PRIMARY KEY AUTO_INCREMENT,
     id_historial_clinico_macho INT NOT NULL,
-    fecha DATE NOT NULL,
-    descripcion TEXT,
+    fecha_registro_historial_clinico DATE NOT NULL,
+    descripcion_historial_clinico TEXT NOT NULL,
+    estado_detalle_historial_clinico TINYINT NOT NULL,
     CONSTRAINT fk_detalle_historial_clinico_macho_historial_clinico_macho FOREIGN KEY (id_historial_clinico_macho) REFERENCES historial_clinico_macho (id_historial_clinico_macho) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE ganado_hembra(
@@ -65,8 +72,9 @@ CREATE TABLE detalle_historial_clinico_hembra (
     produccion_leche_maniana DOUBLE NOT NULL,
     produccion_leche_tarde DOUBLE NOT NULL,
     observaciones_adicionales VARCHAR(255),
-    fecha DATE NOT NULL,
-    descripcion VARCHAR(255) NOT NULL,
+    fecha_registro_historial_clinico DATE NOT NULL,
+    descripcion_historial_clinico VARCHAR(255) NOT NULL,
+    estado_detalle_historial_clinico TINYINT NOT NULL,
     CONSTRAINT fk_detalle_historial_clinico_hembra_historial_clinico_hembra FOREIGN KEY (id_historial_clinico_hembra) REFERENCES historial_clinico_hembra (id_historial_clinico_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE prenies_ganado_hembra (
@@ -76,6 +84,7 @@ CREATE TABLE prenies_ganado_hembra (
     toro_utilizado VARCHAR(50) NOT NULL,
     promedio_gestacion INT NOT NULL, 
     fecha_esperada_parto DATE NOT NULL,
+    estado_prenies_ganado_hembra TINYINT NOT NULL,
     CONSTRAINT fk_preñes_ganado_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE dieta_terneros_terneras(
@@ -115,5 +124,7 @@ CREATE TABLE alimentacion_becerra(
     CONSTRAINT fk_alimentacion_becerra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_alimentacion_becerra_produccion_diaria_leche FOREIGN KEY (id_produccion_diaria_leche) REFERENCES produccion_diaria_leche (id_produccion_diaria_leche) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-
+CREATE TABLE dieta_ternera_ternero(
+    id_dieta_ternera_ternero INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    descripcion_dieta TEXT NOT NULL
+);

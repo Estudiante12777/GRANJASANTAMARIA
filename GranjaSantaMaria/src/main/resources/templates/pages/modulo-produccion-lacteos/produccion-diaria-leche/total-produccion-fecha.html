@@ -37,16 +37,17 @@
                 </thead>
                 <tbody>
                     <tr th:each="produccionDiariaLeche : ${totalProduccionesFecha}">
-                        <td th:text="${produccionDiariaLeche.ganado.nombreGanado}">Mostrar Nombre del ganado</td>
+                        <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">Mostrar Nombre del ganado
+                        </td>
                         <td th:text="${produccionDiariaLeche.produccionManianaLeche}">Mostrar Producción de leche por la
                             mañana
                         </td>
                         <td th:text="${produccionDiariaLeche.produccionTardeLeche}">Mostrar Producción de leche por la
                             tarde
                         </td>
-                        <td
-                            th:text="${#numbers.formatDecimal(produccionDiariaLeche.produccionManianaLeche + produccionDiariaLeche.produccionTardeLeche, 0, 'COMMA', 1, 'POINT')}">
-                            Mostrar Total diario</td>
+                        <td th:text="${produccionDiariaLeche.produccionTardeLeche}">Mostrar Producción de leche por la
+                            tarde
+                        </td>
                         <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">Mostrar fecha de producción de leche
                         </td>
                     </tr>
