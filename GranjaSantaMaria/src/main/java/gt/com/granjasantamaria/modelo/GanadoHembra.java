@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.Id;
+import lombok.ToString;
 
 /**
  *
@@ -37,5 +38,9 @@ public class GanadoHembra implements Serializable {
     @NotNull
     @Column(name = "estado_ganado_hembra", nullable = false)
     private boolean estadoGanadoHembra;
+
+    public String ToString() {
+        return getNombreGanadoHembra();
+    }
 
 }

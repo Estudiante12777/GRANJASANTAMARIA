@@ -5,7 +5,6 @@ import gt.com.granjasantamaria.servicio.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
