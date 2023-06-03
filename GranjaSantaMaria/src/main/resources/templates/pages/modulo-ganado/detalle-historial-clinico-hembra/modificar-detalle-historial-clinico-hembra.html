@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+    <div class="container-fluid py-5" layout:fragment="page-content"
+        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-8 col-12">
+                <div class="card bg-light text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Información sobre el detalle del historial clínico de la
+                            hembra</h5>
+                        <form th:action="@{/modulo-ganado/detalle-historial-clinico-hembra/guardar}" method="post"
+                            th:object="${detalleHistorialClinicoHembra}" id="guardarFormulario">
+                            <input type="hidden" name="idDetalleHistorialClinicoHembra"
+                                th:field="*{idDetalleHistorialClinicoHembra}" />
+                            <input type="hidden" name="estadoDetalleHistorialClinicoHembra"
+                                th:field="*{estadoDetalleHistorialClinicoHembra}">
+                            <input type="hidden" name="idHistorialClinicoHembra"
+                                th:value="${idHistorialClinicoHembra}" />
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="novilla">Novilla</label>
+                                    <input type="checkbox" class="form-check-input" id="novilla" name="novilla"
+                                        th:field="*{novilla}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="novillaPreniada">Novilla preñada</label>
+                                    <input type="checkbox" class="form-check-input" id="novillaPreniada"
+                                        name="novillaPreniada" th:field="*{novillaPreniada}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="vacaPrimerParto">Vaca de primer Parto</label>
+                                    <input type="checkbox" class="form-check-input" id="vacaPrimerParto"
+                                        name="vacaPrimerParto" th:field="*{vacaPrimerParto}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="produccionLecheManiana">Producción de Leche en la Mañana</label>
+                                    <input type="number" class="form-control" id="produccionLecheManiana"
+                                        name="produccionLecheManiana" th:field="*{produccionLecheManiana}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="produccionLecheTarde">Producción de Leche en la Tarde</label>
+                                    <input type="number" class="form-control" id="produccionLecheTarde"
+                                        name="produccionLecheTarde" th:field="*{produccionLecheTarde}">
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="observacionesAdicionales">Observaciones Adicionales</label>
+                                    <textarea class="form-control" id="observacionesAdicionales"
+                                        name="observacionesAdicionales"
+                                        th:field="*{observacionesAdicionales}"></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="fechaRegistroHistorialClinico">Fecha de Registro del Historial
+                                        Clínico</label>
+                                    <input type="date" class="form-control" id="fechaRegistroHistorialClinico"
+                                        name="fechaRegistroHistorialClinico"
+                                        th:field="*{fechaRegistroHistorialClinico}">
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="descripcionHistorialClinico">Descripción del Historial Clínico</label>
+                                    <textarea class="form-control" id="descripcionHistorialClinico"
+                                        name="descripcionHistorialClinico"
+                                        th:field="*{descripcionHistorialClinico}"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:inline="javascript">
+        /* Generar ID único para el modal de guardar */
+
+        // Obtén el botón de guardar
+        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+
+        // Obtén el atributo 'data-bs-target' del botón
+        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+
+        // Obtén el atributo 'id' del botón
+        var modalIdGuardar = guardarButton.getAttribute("id");
+
+        // Crea un identificador único para el modal de guardar
+        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modalGuardar = document.querySelector(targetGuardarModalId);
+        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+    </script>
+</body>
+
+</html>

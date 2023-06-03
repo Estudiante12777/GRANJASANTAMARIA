@@ -128,3 +128,21 @@ CREATE TABLE dieta_ternera_ternero(
     id_dieta_ternera_ternero INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     descripcion_dieta TEXT NOT NULL
 );
+
+SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro,
+       a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, g.nombre_ganado_hembra AS nombre_madre
+FROM alimentacion_becerro AS a
+INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche
+INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho
+INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra
+WHERE p.id_produccion_diaria_leche = 1;
+
+SELECT gh.nombre_ganado_hembra AS nombre_becerra, ab.fecha_alimentacion_becerra,
+       ab.cantidad_maniana_alimentacion, ab.cantidad_tarde_alimentacion,
+       g.nombre_ganado_hembra AS nombre_madre
+FROM alimentacion_becerra AS ab
+INNER JOIN produccion_diaria_leche AS pdl ON ab.id_produccion_diaria_leche = pdl.id_produccion_diaria_leche
+INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = ab.id_ganado_hembra
+INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = pdl.id_ganado_hembra
+WHERE pdl.id_produccion_diaria_leche = 2;
+

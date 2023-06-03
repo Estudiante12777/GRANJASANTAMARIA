@@ -64,7 +64,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title"
                                             th:id="'alimentacionModal_' + ${historialClinicoHembra.idHistorialClinicoHembra}">
-                                            ¿Estás seguro de que deseas agregar un registro de alimentacion becerro?
+                                            ¿Estás seguro de que deseas agregar detalles al historial clinico?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -72,12 +72,8 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para ir al formulario de edición -->
                                         <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerro/agregar(idHistorialClinicoHembra=${historialClinicoHembra.idHistorialClinicoHembra})}">
-                                            Becerro
-                                        </a>
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerra/agregar(idHistorialClinicoHembra=${historialClinicoHembra.idHistorialClinicoHembra})}">
-                                            Becerra
+                                            th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/agregar(idHistorialClinicoHembra=${historialClinicoHembra.idHistorialClinicoHembra})}">
+                                            Agregar
                                         </a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -111,12 +107,8 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para ir al formulario de edición -->
                                         <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerro/lista(idHistorialClinicoHembra=${historialClinicoHembra.idHistorialClinicoHembra})}">
+                                            th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/lista(idHistorialClinicoHembra=${historialClinicoHembra.idHistorialClinicoHembra})}">
                                             becerro
-                                        </a>
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerra/lista(idHistorialClinicoHembra=${historialClinicoHembra.idHistorialClinicoHembra})}">
-                                            becerra
                                         </a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
