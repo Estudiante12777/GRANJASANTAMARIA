@@ -60,7 +60,7 @@ public class DetalleHistorialClinicoHembra implements Serializable {
     private String descripcionHistorialClinico;
 
     @NotNull
-    @Column(name = "estado_detalle_historial_clinico", nullable = false)
-    private boolean estadoDetalleHistorialClinico;
+    @Column(name = "estado_detalle_historial_clinico_hembra", nullable = false)
+    private boolean estadoDetalleHistorialClinicoHembra;
 
 }

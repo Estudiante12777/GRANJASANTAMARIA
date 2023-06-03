@@ -74,7 +74,7 @@ CREATE TABLE detalle_historial_clinico_hembra (
     observaciones_adicionales VARCHAR(255),
     fecha_registro_historial_clinico DATE NOT NULL,
     descripcion_historial_clinico VARCHAR(255) NOT NULL,
-    estado_detalle_historial_clinico TINYINT NOT NULL,
+    estado_detalle_historial_clinico_hembra TINYINT NOT NULL,
     CONSTRAINT fk_detalle_historial_clinico_hembra_historial_clinico_hembra FOREIGN KEY (id_historial_clinico_hembra) REFERENCES historial_clinico_hembra (id_historial_clinico_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE prenies_ganado_hembra (
