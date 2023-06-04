@@ -11,26 +11,26 @@
     <div class="container-fluid py-3" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <h5 class="text-center">Alimentacion de becerros</h5>
-        <div th:if="${alimentacionBecerraList != null and !alimentacionBecerraList.empty}">
+        <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
             <table class="table">
                 <thead class="table-dark">
-                    <th>Becerra</th>
-                    <th>Fecha alimentacion</th>
+                    <th>Becerro</th>
+                    <th>Fecha</th>
                     <th>Cantidad alimentacion mañana</th>
                     <th>Cantidad alimentacion tarde</th>
-                    <th>Madre de la becerra</th>
+                    <th>Madre del becerro</th>
                 </thead>
-                <tr th:each="alimentacionBecerra : ${alimentacionBecerraList}">
-                    <td th:text="${alimentacionBecerra[0]}">Mostrar Nombre del becerro</td>
-                    <td th:text="${alimentacionBecerra[1]}">Mostrar Fecha</td>
-                    <td th:text="${alimentacionBecerra[2]}">Mostrar Cantidad alimentacion mañana</td>
-                    <td th:text="${alimentacionBecerra[3]}">Mostrar Cantidad alimentacion tarde</td>
-                    <td th:text="${alimentacionBecerra[4]}">Mostrar nombre de la madre</td>
+                <tr th:each="alimentacionBecerro : ${alimentacionBecerroList}">
+                    <td th:text="${alimentacionBecerro[0]}">Mostrar Nombre del becerro</td>
+                    <td th:text="${alimentacionBecerro[1]}">Mostrar Fecha</td>
+                    <td th:text="${alimentacionBecerro[2]}">Mostrar Cantidad alimentacion mañana</td>
+                    <td th:text="${alimentacionBecerro[3]}">Mostrar Cantidad alimentacion tarde</td>
+                    <td th:text="${alimentacionBecerro[4]}">Mostrar Nombre de la madre del becerro</td>
                 </tr>
                 <tfoot></tfoot>
             </table>
         </div>
-        <div th:if="${alimentacionBecerraList == null or alimentacionBecerraList.empty}">
+        <div th:if="${alimentacionBecerroList == null or alimentacionBecerroList.empty}">
             <h1>Esta hembra no tiene becerros ni terneros, por eso no hay registros de alimentacion</h1>
         </div>
     </div>

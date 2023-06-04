@@ -19,21 +19,37 @@ public class VentaProducto implements Serializable {
     @Column(name = "id_venta_producto")
     private Long idVentaProducto;
 
-    @NotNull
-    @Column(name = "fecha_venta_producto", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaVentaProducto;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_detalle_venta_producto")
-    private DetalleVentaProducto detalleVentaProducto;
-    
+    @JoinColumn(name = "id_inventario_producto")
+    private InventarioProducto inventarioProducto;
+
+    @NotNull
+    @Column(name = "fecha_venta_producto")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaVentaProducto;
+
+    @NotNull
+    @Column(name = "cantidad_producto")
+    private Integer cantidadProducto;
+
+    @NotNull
+    @Column(name = "precio_por_unidad")
+    private Double precioPorUnidad;
+
+    @NotNull
+    @Column(name = "total_precio_producto")
+    private Double totalPrecioProducto;
+
+    @NotNull
+    @Column(name = "descuento_producto")
+    private Double descuentoProducto;
+
     @NotNull
     @Column(name = "estado_venta_producto", nullable = false)
     private boolean estadoVentaProducto;
-    
+
 }

@@ -40,4 +40,10 @@ public class DetalleProducto implements Serializable {
     @Column(name = "estadoDetalleProducto")
     private boolean estadoDetalleProducto;
 
+    @Override
+    public String toString() {
+        return producto.getNombreProducto() + " - " + medidaProducto.getNombreMedidaProducto() + " - "
+                + contenedorProducto.getNombreContenedorProducto() + " - " + descripcionProducto.getNombreDescripcionProducto();
+    }
+
 }

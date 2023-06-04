@@ -13,14 +13,15 @@
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
             <h3 class="text-center">Venta</h3>
         </div>
-        <form th:action="@{/modulo-venta/venta-producto/realizar-venta}" method="post" th:object="${ventaProducto}">
+        <form th:action="@{/modulo-venta/venta-producto/guardar}" method="post" th:object="${ventaProducto}">
             <input type="hidden" name="idVentaProducto" th:field="*{idVentaProducto}" />
             <!-- Campos del formulario para la venta de productos -->
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="fechaVenta">Fecha de Venta:</label>
-                        <input type="date" id="fechaVenta" name="fechaVentaProducto" class="form-control" required />
+                        <label for="fechaVentaProducto">Fecha de Venta:</label>
+                        <input type="date" id="fechaVentaProducto" name="fechaVentaProducto" class="form-control"
+                            required value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
                         <span th:if="${#fields.hasErrors('fechaVentaProducto')}" class="text-danger"
                             th:errors="*{fechaVentaProducto}">Error en la fecha de venta</span>
                     </div>
@@ -42,23 +43,23 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="producto">Producto:</label>
-                        <select id="producto" name="detalleVentaProducto.detalleProducto.idDetalleProducto"
-                            class="form-control" required>
+                        <select id="producto" name="inventarioProducto.idInventarioProducto" class="form-control"
+                            required>
                             <!-- Opciones para seleccionar un producto -->
                             <option value="">Seleccione un producto</option>
-                            <!-- Iterar sobre la lista de productos para generar las opciones -->
-                            <option th:each="producto : ${listadoDetalleProductos}"
-                                th:value="${producto.idDetalleProducto}"
-                                th:text="${producto.producto.nombreProducto + ' (' + producto.medidaProducto.nombreMedidaProducto + ') - ' + producto.contenedorProducto.nombreContenedorProducto + ' - ' + producto.descripcionProducto.nombreDescripcionProducto}">
+                            <!-- Iterar sobre la lista de inventario productos para generar las opciones -->
+                            <option th:each="inventarioProducto : ${listadoInventarioProductos}"
+                                th:value="${inventarioProducto.idInventarioProducto}"
+                                th:text="${inventarioProducto.detalleProducto}">
                             </option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="cantidad">Cantidad:</label>
-                        <input type="number" id="cantidadProducto" name="detalleVentaProducto.cantidadProducto"
-                            class="form-control" required />
+                        <label for="cantidadProducto">Cantidad:</label>
+                        <input type="number" id="cantidadProducto" name="cantidadProducto" class="form-control"
+                            required />
                     </div>
                 </div>
             </div>
@@ -66,24 +67,24 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="precioPorUnidad">Precio por unidad:</label>
-                        <input type="number" id="precioPorUnidad" name="detalleVentaProducto.precioPorUnidad"
-                            class="form-control" required />
+                        <input type="number" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
+                            required />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="total">Total:</label>
-                        <input type="number" id="totalPrecioProducto" name="detalleVentaProducto.totalPrecioProducto"
-                            class="form-control" readonly />
+                        <label for="totalPrecioProducto">Total:</label>
+                        <input type="number" id="totalPrecioProducto" name="totalPrecioProducto" class="form-control"
+                            required />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="descuento">Descuento:</label>
-                        <input type="number" id="descuentoProducto" name="detalleVentaProducto.descuentoProducto"
-                            class="form-control" required />
+                        <label for="descuentoProducto">Descuento:</label>
+                        <input type="number" id="descuentoProducto" name="descuentoProducto" class="form-control"
+                            required />
                     </div>
                 </div>
             </div>
@@ -119,17 +120,8 @@
         }
 
         // Evento de cambio en los campos Cantidad y Precio por unidad
-        var cantidadProductoInput = document.getElementById("cantidadProducto");
-        var precioPorUnidadInput = document.getElementById("precioPorUnidad");
-        cantidadProductoInput.addEventListener("change", calcularTotal);
-        precioPorUnidadInput.addEventListener("change", calcularTotal);
-
-        /* Agregar otro producto */
-        var agregarProductoBtn = document.getElementById("agregarProductoBtn");
-        agregarProductoBtn.addEventListener("click", function () {
-            // Enviar el formulario actual y agregar otro producto
-            document.forms[0].submit();
-        });
+        document.getElementById("cantidadProducto").addEventListener("input", calcularTotal);
+        document.getElementById("precioPorUnidad").addEventListener("input", calcularTotal);
     </script>
 </body>
 

@@ -1,18 +1,16 @@
 package gt.com.granjasantamaria.servicio;
 
-import gt.com.granjasantamaria.modelo.DetalleVentaProducto;
 import gt.com.granjasantamaria.modelo.VentaProducto;
 import java.util.List;
 
 /**
- *
- * @author gerso
+ * Servicio para gestionar las ventas de productos.
  */
 public interface VentaProductoService {
 
-    public List<VentaProducto> obtenerListaVentaProductos();
+    public List<VentaProducto> obtenerListadoVentaProductos();
 
-    public void guardarVentaProducto(VentaProducto ventaProducto, DetalleVentaProducto detalleVentaProducto);
+    public void guardarVentaProducto(VentaProducto ventaProducto);
 
     public void eliminarVentaProducto(VentaProducto ventaProducto);
 

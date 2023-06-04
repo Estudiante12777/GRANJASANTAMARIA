@@ -22,20 +22,20 @@ public class DetalleHistorialClinicoMacho implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDetalleHistorialClinicoMacho;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_historial_clinico_macho")
-    private HistorialClinicoMacho historialClinicoMacho;
+    @NotNull
+    @Column(name = "id_historial_clinico_macho", nullable = false)
+    private Long idHistorialClinicoMacho;
 
     @NotNull
     @Column(name = "fecha_registro_historial_clinico", nullable = false)
-    private LocalDate fechaRegistroHistorialClinicioMacho;
+    private LocalDate fechaRegistroHistorialClinicoMacho;
 
     @NotNull
     @Column(name = "descripcion_historial_clinico", nullable = false)
     private String descripcionHistorialClinico;
 
     @NotNull
-    @Column(name = "estado_detalle_historial_clinico", nullable = false)
-    private boolean estadoDetalleHistorialClinicio;
+    @Column(name = "estado_detalle_historial_clinico_macho", nullable = false)
+    private boolean estadoDetalleHistorialClinicoMacho;
 
 }

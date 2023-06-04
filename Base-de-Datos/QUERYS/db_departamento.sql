@@ -1,1 +1,1 @@
-SELECT * FROM granja_santa_maria.departamento; 
+SELECT * FROM granja_santa_maria.departamento;

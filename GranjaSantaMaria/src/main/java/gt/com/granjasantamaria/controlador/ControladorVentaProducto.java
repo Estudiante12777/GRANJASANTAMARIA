@@ -3,7 +3,9 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,9 +18,6 @@ public class ControladorVentaProducto {
     private VentaProductoService ventaProductoService;
 
     @Autowired
-    private DetalleVentaProductoService detalleVentaProductoService;
-
-    @Autowired
     private ClienteService clienteService;
 
     @Autowired
@@ -27,26 +26,51 @@ public class ControladorVentaProducto {
     @Autowired
     private InventarioProductoService inventarioProductoService;
 
-    @GetMapping("/modulo-venta/venta-producto/")
-    public String ventaProductos(VentaProducto ventaProducto, DetalleVentaProducto detalleVentaProducto, DetalleProducto detalleProducto, Model model) {
-        List<Cliente> listadoClientes = clienteService.listadoClientes();
-        model.addAttribute("listadoClientes", listadoClientes);
-        List<DetalleProducto> listadoDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
-        model.addAttribute("listadoDetalleProductos", listadoDetalleProductos);
-        List<DetalleVentaProducto> listaDetalleVentaProductos = detalleVentaProductoService.obtenerListadoDetalleVentaProductos();
-        model.addAttribute("listaDetalleVentaProductos", listaDetalleVentaProductos);
-        model.addAttribute("detalleVentaProducto", new DetalleVentaProducto()); // Agregado
-        return "pages/modulo-venta/venta-producto/venta-producto";
+    @GetMapping("/modulo-venta/venta-producto/lista")
+    public String listadoVentaProducto(Model model) {
+        var listadoVentasProducto = ventaProductoService.obtenerListadoVentaProductos();
+        model.addAttribute("listadoVentasProducto", listadoVentasProducto);
+        return "/pages/modulo-venta/venta-producto/venta-producto";
     }
 
-    @PostMapping("/modulo-venta/venta-producto/realizar-venta")
-    public String realizarVentaProducto(@ModelAttribute VentaProducto ventaProducto, @ModelAttribute DetalleVentaProducto detalleVentaProducto, BindingResult bindingResult) {
+    @GetMapping("/modulo-venta/venta-producto/agregar")
+    public String agregarVentaProducto(VentaProducto ventaProducto, Model model) {
+        List<Cliente> listadoClientes = clienteService.listadoClientes();
+        model.addAttribute("listadoClientes", listadoClientes);
+        List<InventarioProducto> listadoInventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
+        model.addAttribute("listadoInventarioProductos", listadoInventarioProductos);
+        return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
+    }
+
+    @PostMapping("/modulo-venta/venta-producto/guardar")
+    public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
-            return "error";
+            throw new Exception("Error, no puede estar vacío el campo");
+        } else {
+            ventaProductoService.guardarVentaProducto(ventaProducto);
+            return "redirect:/modulo-venta/venta-producto/lista";
         }
-        ventaProductoService.guardarVentaProducto(ventaProducto, detalleVentaProducto);
-        DetalleProducto detalleProductoVendido = detalleVentaProducto.getDetalleProducto();
-        return "redirect:/modulo-venta/venta-producto/";
+    }
+
+    @GetMapping("/modulo-venta/venta-producto/editar/{idProduccionDiariaLeche}")
+    public String editarVentaProducto(VentaProducto ventaProducto, Model model) {
+        List<Cliente> listadoClientes = clienteService.listadoClientes();
+        model.addAttribute("listadoClientes", listadoClientes);
+        List<InventarioProducto> listadoInventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
+        model.addAttribute("listadoInventarioProductos", listadoInventarioProductos);
+        return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
+    }
+
+    @GetMapping("/modulo-venta/venta-producto/eliminar")
+    public String eliminarVentaProducto(VentaProducto ventaProducto) {
+        ventaProductoService.eliminarVentaProducto(ventaProducto);
+        return "redirect:/modulo-venta/venta-producto/lista";
+    }
+
+    @GetMapping("/modulo-venta/venta-producto/baja")
+    public String darBajaVentaProducto(VentaProducto ventaProducto) {
+        ventaProductoService.darBajaVentaProducto(ventaProducto);
+        return "redirect:/modulo-venta/venta-producto/lista";
     }
 
 }

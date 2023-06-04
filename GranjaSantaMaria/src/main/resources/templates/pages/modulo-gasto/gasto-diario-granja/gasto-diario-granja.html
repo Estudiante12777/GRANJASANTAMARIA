@@ -4,7 +4,6 @@
 
 <head th:replace="layout/layout :: head">
     <title></title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -12,64 +11,58 @@
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <h3 class="text-center">Ventas</h3>
-            <a class="btn btn-outline-success" th:href="@{/modulo-venta/venta-producto/agregar}"><i
-                    class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+            <a class="btn btn-outline-success" th:href="@{/modulo-gasto/gasto-diario-granja/agregar}"><i
+                    class="fa-solid fa-plus"></i>
+                Crear nuevo registro</a>
         </div>
-        <div th:if="${listadoVentasProducto != null and !listadoVentasProducto.empty}">
+        <div th:if="${listaDiarioGastosGranja != null and !listaDiarioGastosGranja.empty}">
             <table class="table">
                 <thead class="table-dark">
-                    <th>Cliente</th>
-                    <th>Producto</th>
                     <th>Fecha</th>
-                    <th>Cantidad productos</th>
-                    <th>Precio unidad</th>
-                    <th>Total venta</th>
-                    <th>Descuento</th>
+                    <th>No.</th>
+                    <th>Detalle inversion</th>
+                    <th>Valor unitario</th>
+                    <th>Valor total</th>
                     <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         Editar
                     </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
+                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR',)">
+                        Dar baja
+                    </th>
                     <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
                 </thead>
-                <tr th:each="ventaProducto : ${listadoVentasProducto}">
-                    <td th:text="${ventaProducto.cliente.nombreCliente}">
-                        Mostrar Nombre del listadoVentasProducto
+                <tr th:each="diarioGastoGranja : ${listaDiarioGastosGranja}">
+                    <td th:text="${diarioGastoGranja.fechaGasto}">
+                        Mostrar Nombre del ganado
                     </td>
-                    <td th:text="${ventaProducto.inventarioProducto.detalleProducto}">
-                        Mostrar Nombre del listadoVentasProducto
+                    <td th:text="${diarioGastoGranja.unidadesAdquiridas}">
+                        Mostrar fecha de produccion de leche
                     </td>
-                    <td th:text="${ventaProducto.fechaVentaProducto}">
-                        Mostrar descripcion del listadoVentasProducto
+                    <td th:text="${diarioGastoGranja.detalleInversion}">
+                        Mostrar Produccion de leche por la mañana
                     </td>
-                    <td th:text="${ventaProducto.cantidadProducto}">
-                        Mostrar descripcion del listadoVentasProducto
+                    <td th:text="${diarioGastoGranja.valorUnitario}">Mostrar Produccion de leche por la tarde
                     </td>
-                    <td th:text="${ventaProducto.precioPorUnidad}">
-                        Mostrar descripcion del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.totalPrecioProducto}">
-                        Mostrar descripcion del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.descuentoProducto}">
-                        Mostrar descripcion del listadoVentasProducto
+                    <td th:text="${diarioGastoGranja.valorTotal}">Mostrar total produccion de leche
                     </td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <!-- Botón para abrir el modal de edición -->
                         <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal_' + ${ventaProducto.idVentaProducto}">
+                            th:data-bs-target="'#editModal_' + ${diarioGastoGranja.idDiarioGastoGranja}">
                             <i class="fa-sharp fa-solid fa-pencil"></i>
                         </button>
                         <!-- Modal de edición -->
-                        <div class="modal fade" th:id="'editModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
-                            th:attr="aria-labelledby='editModalLabel_' + ${ventaProducto.idVentaProducto}"
+                        <div class="modal fade" th:id="'editModal_' + ${diarioGastoGranja.idDiarioGastoGranja}"
+                            tabindex="-1"
+                            th:attr="aria-labelledby='editModalLabel_' + ${diarioGastoGranja.idDiarioGastoGranja}"
                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title"
-                                            th:id="'editModalLabel_' + ${ventaProducto.idVentaProducto}">
-                                            ¿Estás seguro de que deseas editar este producto?
+                                            th:id="'editModalLabel_' + ${diarioGastoGranja.idDiarioGastoGranja}">
+                                            ¿Estás seguro de que deseas editar este registro de produccion diaria de
+                                            leche?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -77,7 +70,7 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para ir al formulario de edición -->
                                         <a class="btn btn-primary"
-                                            th:href="@{/modulo-venta/venta-producto/editar/} + ${ventaProducto.idVentaProducto}">Sí,
+                                            th:href="@{/modulo-gasto/gasto-diario-granja/editar/} + ${diarioGastoGranja.idDiarioGastoGranja}">Sí,
                                             quiero editar</a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -90,19 +83,21 @@
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <!-- Botón para abrir el modal de dar baja -->
                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#bajaModal_' + ${ventaProducto.idVentaProducto}">
+                            th:data-bs-target="'#bajaModal_' + ${diarioGastoGranja.idDiarioGastoGranja}">
                             <i class="fa-sharp fa-solid fa-ban"></i>
                         </button>
                         <!-- Modal de dar baja -->
-                        <div class="modal fade" th:id="'bajaModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
-                            th:attr="aria-labelledby='bajaModalLabel_' + ${ventaProducto.idVentaProducto}"
+                        <div class="modal fade" th:id="'bajaModal_' + ${diarioGastoGranja.idDiarioGastoGranja}"
+                            tabindex="-1"
+                            th:attr="aria-labelledby='bajaModalLabel_' + ${diarioGastoGranja.idDiarioGastoGranja}"
                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title"
-                                            th:id="'bajaModalLabel_' + ${ventaProducto.idVentaProducto}">
-                                            ¿Estás seguro de que deseas dar de baja este producto?
+                                            th:id="'bajaModalLabel_' + ${diarioGastoGranja.idDiarioGastoGranja}">
+                                            ¿Estás seguro de que deseas dar de baja este registro de produccion diaria
+                                            de leche?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -110,7 +105,7 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para dar de baja la categoría de ganado -->
                                         <a class="btn btn-danger"
-                                            th:href="@{/modulo-venta/venta-producto/baja(idVentaProducto=${ventaProducto.idVentaProducto})}">Sí,
+                                            th:href="@{/modulo-gasto/gasto-diario-granja/baja(idDiarioGastoGranja=${diarioGastoGranja.idDiarioGastoGranja})}">Sí,
                                             dar de baja</a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary"
@@ -123,19 +118,21 @@
                     <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                         <!-- Botón para abrir el modal de eliminar -->
                         <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#deleteModal_' + ${ventaProducto.idVentaProducto}">
+                            th:data-bs-target="'#deleteModal_' + ${diarioGastoGranja.idDiarioGastoGranja}">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                         <!-- Modal de eliminar -->
-                        <div class="modal fade" th:id="'deleteModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
-                            th:attr="aria-labelledby='deleteModalLabel_' + ${ventaProducto.idVentaProducto}"
+                        <div class="modal fade" th:id="'deleteModal_' + ${diarioGastoGranja.idDiarioGastoGranja}"
+                            tabindex="-1"
+                            th:attr="aria-labelledby='deleteModalLabel_' + ${diarioGastoGranja.idDiarioGastoGranja}"
                             aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title"
-                                            th:id="'deleteModalLabel_' + ${ventaProducto.idVentaProducto}">
-                                            ¿Estás seguro de que deseas eliminar este producto?
+                                            th:id="'deleteModalLabel_' + ${diarioGastoGranja.idDiarioGastoGranja}">
+                                            ¿Estás seguro de que deseas eliminar este registro de produccion diaria de
+                                            leche?
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -143,7 +140,7 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para eliminar la categoría de ganado -->
                                         <a class="btn btn-danger"
-                                            th:href="@{/modulo-venta/producto/eliminar(idVentaProducto=${ventaProducto.idVentaProducto})}">Sí,
+                                            th:href="@{/modulo-gasto/gasto-diario-granja/eliminar(idDiarioGastoGranja=${diarioGastoGranja.idDiarioGastoGranja})}">Sí,
                                             eliminar</a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary"
@@ -157,8 +154,8 @@
                 <tfoot></tfoot>
             </table>
         </div>
-        <div th:if="${listadoVentasProducto == null or listadoVentasProducto.empty}">
-            <h1>La lista de ventas esta vacia</h1>
+        <div th:if="${listaDiarioGastosGranja == null or listaDiarioGastosGranja.empty}">
+            <h1>La lista de diario de gastos esta vacia!</h1>
         </div>
     </div>
     <script th:inline="javascript">
