@@ -250,4 +250,3 @@ CREATE TABLE inventario_producto (
   estado_inventario_producto TINYINT NOT NULL,
   CONSTRAINT fk_inventario_detalle_producto FOREIGN KEY (id_detalle_producto) REFERENCES detalle_producto (id_detalle_producto) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
-SELECT * FROM venta_producto; 
