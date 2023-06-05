@@ -32,14 +32,14 @@ public class ControladorDetalleProducto {
     @Autowired
     private DescripcionProductoService descripcionProductoService;
 
-    @GetMapping("/modulo-venta/detalle-producto/lista")
+    @GetMapping("/modulo-producto/detalle-producto/lista")
     public String obtenerListadoDetalleProductos(Model model) {
         var detalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("detalleProductos", detalleProductos);
         return "/pages/modulo-venta/detalle-producto/detalle-producto";
     }
 
-    @GetMapping("/modulo-venta/detalle-producto/agregar")
+    @GetMapping("/modulo-producto/detalle-producto/agregar")
     public String agregarDetalleProducto(DetalleProducto detalleProducto, Model model) {
         List<Producto> listadoProductos = productoService.obtenerListadoProductos();
         model.addAttribute("listadoProductos", listadoProductos);
@@ -52,7 +52,7 @@ public class ControladorDetalleProducto {
         return "/pages/modulo-venta/detalle-producto/modificar-detalle-producto";
     }
 
-    @PostMapping("/modulo-venta/detalle-producto/guardar")
+    @PostMapping("/modulo-producto/detalle-producto/guardar")
     public String guardarDetalleProducto(@Valid DetalleProducto detalleProducto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacio el campo");
@@ -62,7 +62,7 @@ public class ControladorDetalleProducto {
         }
     }
 
-    @GetMapping("/modulo-venta/detalle-producto/editar/{idDetalleProducto}")
+    @GetMapping("/modulo-producto/detalle-producto/editar/{idDetalleProducto}")
     public String editarDetalleProducto(DetalleProducto detalleProducto, Model model) {
         List<Producto> listadoProductos = productoService.obtenerListadoProductos();
         model.addAttribute("listadoProductos", listadoProductos);
@@ -77,13 +77,13 @@ public class ControladorDetalleProducto {
         return "/pages/modulo-venta/detalle-producto/modificar-detalle-producto";
     }
 
-    @GetMapping("/modulo-venta/detalle-producto/eliminar")
+    @GetMapping("/modulo-producto/detalle-producto/eliminar")
     public String eliminarDetalleProducto(DetalleProducto detalleProducto) {
         detalleProductoService.eliminarDetalleProducto(detalleProducto);
         return "redirect:/modulo-venta/detalle-producto/lista";
     }
 
-    @GetMapping("/modulo-venta/detalle-producto/baja")
+    @GetMapping("/modulo-producto/detalle-producto/baja")
     public String darBajaDetalleProducto(DetalleProducto detalleProducto) {
         detalleProductoService.darBajaDetalleProducto(detalleProducto);
         return "redirect:/modulo-venta/detalle-producto/lista";

@@ -25,21 +25,21 @@ public class ControladorInventarioProducto {
     @Autowired
     private DetalleProductoService detalleProductoService;
 
-    @GetMapping("/modulo-venta/inventario-producto/lista")
+    @GetMapping("/modulo-producto/inventario-producto/lista")
     public String obtenerListadoInventarioProductos(Model model) {
         List<InventarioProducto> inventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
         model.addAttribute("inventarioProductos", inventarioProductos);
         return "pages/modulo-venta/inventario-producto/inventario-producto";
     }
 
-    @GetMapping("/modulo-venta/inventario-producto/agregar")
+    @GetMapping("/modulo-producto/inventario-producto/agregar")
     public String agregarInventarioProducto(InventarioProducto inventarioProducto, Model model) {
         List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
         return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
     }
 
-    @PostMapping("/modulo-venta/inventario-producto/guardar")
+    @PostMapping("/modulo-producto/inventario-producto/guardar")
     public String guardarInventarioProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) InventarioProducto inventarioProducto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
@@ -52,7 +52,7 @@ public class ControladorInventarioProducto {
         }
     }
 
-    @GetMapping("/modulo-venta/inventario-producto/editar/{idInventarioProducto}")
+    @GetMapping("/modulo-producto/inventario-producto/editar/{idInventarioProducto}")
     public String editarInventarioProducto(InventarioProducto inventarioProducto, Model model) {
         List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
@@ -61,13 +61,13 @@ public class ControladorInventarioProducto {
         return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
     }
 
-    @GetMapping("/modulo-venta/inventario-producto/eliminar")
+    @GetMapping("/modulo-producto/inventario-producto/eliminar")
     public String eliminarInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProductoService.eliminarInventarioProducto(inventarioProducto);
         return "redirect:/modulo-venta/inventario-producto/lista";
     }
 
-    @GetMapping("/modulo-venta/inventario-producto/baja")
+    @GetMapping("/modulo-producto/inventario-producto/baja")
     public String darBajaInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProductoService.darBajaInventarioProducto(inventarioProducto);
         return "redirect:/modulo-venta/inventario-producto/lista";

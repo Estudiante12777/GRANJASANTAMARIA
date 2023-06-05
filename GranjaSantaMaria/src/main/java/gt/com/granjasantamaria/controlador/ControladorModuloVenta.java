@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author gerso
  */
 @Controller
-public class ControladorModuloVentas {
+public class ControladorModuloVenta {
 
     @GetMapping("/modulo-venta")
     public String produccionLacteos() {

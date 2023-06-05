@@ -19,45 +19,45 @@ public class ControladorProducto {
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping("/modulo-venta/producto/lista")
+    @GetMapping("/modulo-producto/producto/lista")
     public String obtenerListadoProductos(Model model) {
         var productos = productoService.obtenerListadoProductos();
         model.addAttribute("productos", productos);
-        return "/pages/modulo-venta/producto/producto";
+        return "/pages/modulo-producto/producto/producto";
     }
 
-    @GetMapping("/modulo-venta/producto/agregar")
+    @GetMapping("/modulo-producto/producto/agregar")
     public String agregarProveedor(Producto producto, Model model) {
-        return "/pages/modulo-venta/producto/modificar-producto";
+        return "/pages/modulo-producto/producto/modificar-producto";
     }
 
-    @PostMapping("/modulo-venta/producto/guardar")
+    @PostMapping("/modulo-producto/producto/guardar")
     public String guardarProducto(@Valid Producto prdoProducto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacio el campo");
         } else {
             productoService.guardarProducto(prdoProducto);
-            return "redirect:/modulo-venta/producto/lista";
+            return "redirect:/modulo-producto/producto/lista";
         }
     }
 
-    @GetMapping("/modulo-venta/producto/editar/{idProducto}")
+    @GetMapping("/modulo-producto/producto/editar/{idProducto}")
     public String editarProducto(Producto producto, Model model) {
         producto = productoService.encontranProducto(producto);
         model.addAttribute("producto", producto);
-        return "/pages/modulo-venta/producto/modificar-producto";
+        return "/pages/modulo-producto/producto/modificar-producto";
     }
 
-    @GetMapping("/modulo-venta/producto/eliminar")
+    @GetMapping("/modulo-producto/producto/eliminar")
     public String eliminarProducto(Producto producto) {
         productoService.eliminarProducto(producto);
-        return "redirect:/modulo-venta/producto/lista";
+        return "redirect:/modulo-producto/producto/lista";
     }
 
-    @GetMapping("/modulo-venta/producto/baja")
+    @GetMapping("/modulo-producto/producto/baja")
     public String darBajaProducto(Producto producto) {
         productoService.darBajaProducto(producto);
-        return "redirect:/modulo-venta/producto/lista";
+        return "redirect:/modulo-producto/producto/lista";
     }
 
 }
