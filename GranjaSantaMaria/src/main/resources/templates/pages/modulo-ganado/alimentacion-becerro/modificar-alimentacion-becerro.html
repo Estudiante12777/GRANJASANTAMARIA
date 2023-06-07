@@ -21,13 +21,14 @@
                                 <label class="form-label form-label-lg" for="ganadoMacho.idGanadoMacho">Nombre del
                                     becerro:</label>
                                 <div class="col-sm-8">
-                                    <select th:field="*{ganadoMacho.idGanadoMacho}" name="ganadoMacho.nombreGanadoMacho" required
-                                        class="form-select form-select-lg">
-                                        <option th:each="ganadoMacho : ${listaGanados}" th:value="${ganadoMacho.idGanadoMacho}"
+                                    <select th:field="*{ganadoMacho.idGanadoMacho}" name="ganadoMacho.nombreGanadoMacho"
+                                        required class="form-select form-select-lg">
+                                        <option th:each="ganadoMacho : ${listaGanados}"
+                                            th:value="${ganadoMacho.idGanadoMacho}"
                                             th:text="${ganadoMacho.nombreGanadoMacho}"></option>
                                     </select>
-                                    <span th:if="${#fields.hasErrors('ganadoMacho.nombreGanadoMacho')}" class="text-danger"
-                                        th:errors="*{ganadoMacho.nombreGanadoMacho}">Error
+                                    <span th:if="${#fields.hasErrors('ganadoMacho.nombreGanadoMacho')}"
+                                        class="text-danger" th:errors="*{ganadoMacho.nombreGanadoMacho}">Error
                                         ganado</span>
                                 </div>
                             </div>

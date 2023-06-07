@@ -32,7 +32,6 @@
                     <td th:text="${alimentacionBecerro[2]}">Mostrar Cantidad alimentacion mañana</td>
                     <td th:text="${alimentacionBecerro[3]}">Mostrar Cantidad alimentacion tarde</td>
                     <td th:text="${alimentacionBecerro[4]}">Mostrar Nombre de la madre del becerro</td>
-                    <td th:text="${alimentacionBecerro[5]}">Mostrar Nombre de la madre del becerro</td>
                     <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                         <!-- Botón para abrir el modal de edición -->
                         <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"

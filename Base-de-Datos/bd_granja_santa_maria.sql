@@ -101,6 +101,7 @@ CREATE TABLE detalle_historial_clinico_macho (
 );
 CREATE TABLE ganado_hembra(
 	id_ganado_hembra INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	fotografia VARCHAR(100) NOT NULL,
     nombre_ganado_hembra VARCHAR(50) NOT NULL UNIQUE,
     id_tipo_ganado INT NOT NULL,
     id_raza_ganado INT NOT NULL,
@@ -141,10 +142,6 @@ CREATE TABLE prenies_ganado_hembra (
     estado_prenies_ganado_hembra TINYINT NOT NULL,
     CONSTRAINT fk_preñes_ganado_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE TABLE dieta_terneros_terneras(
-	id_levante_terneros_terneras INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    descripcion_dieta TEXT NOT NULL
-); 
 /* TABLAS PARA PRODUCCION DE LACTEOS */
 CREATE TABLE produccion_diaria_leche(
 	id_produccion_diaria_leche INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 

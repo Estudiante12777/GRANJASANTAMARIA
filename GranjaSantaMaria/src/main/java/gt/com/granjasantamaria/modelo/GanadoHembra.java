@@ -2,14 +2,16 @@ package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.Id;
+
 import lombok.ToString;
 
 /**
- *
  * @author gerso
  */
 @Data
@@ -22,6 +24,9 @@ public class GanadoHembra implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idGanadoHembra;
+
+    @Column(name = "fotografia", nullable = false)
+    private String fotografia;
 
     @NotNull
     @Column(name = "nombre_ganado_hembra", nullable = false)
