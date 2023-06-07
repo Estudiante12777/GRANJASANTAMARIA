@@ -19,6 +19,7 @@
         <div th:if="${ganadosMacho != null and !ganadosMacho.empty}">
             <table class="table">
                 <thead class="table-dark">
+                    <th>Fotografia</th>
                     <th>Nombre</th>
                     <th>Tipo de ganado</th>
                     <th>Categoria de ganado</th>
@@ -31,6 +32,10 @@
                     <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
                 </thead>
                 <tr th:each="ganado : ${ganadosMacho}">
+                    <td>
+                        <img th:src="@{'/images/' + ${ganado.fotografia}}" alt="Fotografía del ganado" width="100"
+                            height="100">
+                    </td>
                     <td th:text="${ganado.nombreGanadoMacho}">
                         Mostrar Nombre de ganado
                     </td>

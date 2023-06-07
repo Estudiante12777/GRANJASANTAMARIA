@@ -74,6 +74,7 @@ CREATE TABLE tipo_ganado(
 ); 
 CREATE TABLE ganado_macho(
     id_ganado_macho INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    fotografia VARCHAR(100) NOT NULL,
     nombre_ganado_macho VARCHAR(50) NOT NULL UNIQUE,
     id_tipo_ganado INT NOT NULL,
     id_raza_ganado INT NOT NULL,

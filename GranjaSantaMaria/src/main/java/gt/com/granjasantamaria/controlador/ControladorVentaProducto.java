@@ -26,14 +26,14 @@ public class ControladorVentaProducto {
     @Autowired
     private InventarioProductoService inventarioProductoService;
 
-    @GetMapping("/modulo-producto/venta-producto/lista")
+    @GetMapping("/modulo-venta/venta-producto/lista")
     public String listadoVentaProducto(Model model) {
         var listadoVentasProducto = ventaProductoService.obtenerListadoVentaProductos();
         model.addAttribute("listadoVentasProducto", listadoVentasProducto);
         return "/pages/modulo-venta/venta-producto/venta-producto";
     }
 
-    @GetMapping("/modulo-producto/venta-producto/agregar")
+    @GetMapping("/modulo-venta/venta-producto/agregar")
     public String agregarVentaProducto(VentaProducto ventaProducto, Model model) {
         List<Cliente> listadoClientes = clienteService.listadoClientes();
         model.addAttribute("listadoClientes", listadoClientes);
@@ -42,7 +42,7 @@ public class ControladorVentaProducto {
         return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
     }
 
-    @PostMapping("/modulo-producto/venta-producto/guardar")
+    @PostMapping("/modulo-venta/venta-producto/guardar")
     public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
@@ -52,7 +52,7 @@ public class ControladorVentaProducto {
         }
     }
 
-    @GetMapping("/modulo-producto/venta-producto/editar/{idProduccionDiariaLeche}")
+    @GetMapping("/modulo-venta/venta-producto/editar/{idProduccionDiariaLeche}")
     public String editarVentaProducto(VentaProducto ventaProducto, Model model) {
         List<Cliente> listadoClientes = clienteService.listadoClientes();
         model.addAttribute("listadoClientes", listadoClientes);
@@ -61,13 +61,13 @@ public class ControladorVentaProducto {
         return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
     }
 
-    @GetMapping("/modulo-producto/venta-producto/eliminar")
+    @GetMapping("/modulo-venta/venta-producto/eliminar")
     public String eliminarVentaProducto(VentaProducto ventaProducto) {
         ventaProductoService.eliminarVentaProducto(ventaProducto);
         return "redirect:/modulo-venta/venta-producto/lista";
     }
 
-    @GetMapping("/modulo-producto/venta-producto/baja")
+    @GetMapping("/modulo-venta/venta-producto/baja")
     public String darBajaVentaProducto(VentaProducto ventaProducto) {
         ventaProductoService.darBajaVentaProducto(ventaProducto);
         return "redirect:/modulo-venta/venta-producto/lista";

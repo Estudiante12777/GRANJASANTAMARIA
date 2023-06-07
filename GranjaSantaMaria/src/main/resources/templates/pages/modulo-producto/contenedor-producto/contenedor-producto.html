@@ -13,7 +13,7 @@
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
             <h3 class="text-center">Contenedor de productos</h3>
-            <a class="btn btn-outline-success" th:href="@{/modulo-venta/contenedor-producto/agregar}"><i
+            <a class="btn btn-outline-success" th:href="@{/modulo-producto/contenedor-producto/agregar}"><i
                     class="fa-solid fa-plus"></i> Crear nuevo registro</a>
         </div>
         <div th:if="${contenedorProductos != null and !contenedorProductos.empty}">
@@ -54,7 +54,7 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para ir al formulario de edición -->
                                         <a class="btn btn-primary"
-                                            th:href="@{/modulo-venta/contenedor-producto/editar/} + ${contenedorProducto.idContenedorProducto}">Sí,
+                                            th:href="@{/modulo-producto/contenedor-producto/editar/} + ${contenedorProducto.idContenedorProducto}">Sí,
                                             quiero editar</a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -88,7 +88,7 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para dar de baja la categoría de ganado -->
                                         <a class="btn btn-danger"
-                                            th:href="@{/modulo-venta/contenedor-producto/baja(idContenedorProducto=${contenedorProducto.idContenedorProducto})}">Sí,
+                                            th:href="@{/modulo-producto/contenedor-producto/baja(idContenedorProducto=${contenedorProducto.idContenedorProducto})}">Sí,
                                             dar de baja</a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary"
@@ -122,7 +122,7 @@
                                     <div class="modal-footer">
                                         <!-- Enlace para eliminar la categoría de ganado -->
                                         <a class="btn btn-danger"
-                                            th:href="@{/modulo-venta/contenedor-producto/eliminar(idContenedorProducto=${contenedorProducto.idContenedorProducto})}">Sí,
+                                            th:href="@{/modulo-producto/contenedor-producto/eliminar(idContenedorProducto=${contenedorProducto.idContenedorProducto})}">Sí,
                                             eliminar</a>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary"

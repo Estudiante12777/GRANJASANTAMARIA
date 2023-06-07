@@ -36,7 +36,7 @@ public class ControladorDetalleProducto {
     public String obtenerListadoDetalleProductos(Model model) {
         var detalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("detalleProductos", detalleProductos);
-        return "/pages/modulo-venta/detalle-producto/detalle-producto";
+        return "/pages/modulo-producto/detalle-producto/detalle-producto";
     }
 
     @GetMapping("/modulo-producto/detalle-producto/agregar")
@@ -49,7 +49,7 @@ public class ControladorDetalleProducto {
         model.addAttribute("listadoContenedorProductos", listadoContenedorProductos);
         List<DescripcionProducto> listadoDescripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
         model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
-        return "/pages/modulo-venta/detalle-producto/modificar-detalle-producto";
+        return "/pages/modulo-producto/detalle-producto/modificar-detalle-producto";
     }
 
     @PostMapping("/modulo-producto/detalle-producto/guardar")
@@ -58,7 +58,7 @@ public class ControladorDetalleProducto {
             throw new Exception("Error, no puede estar vacio el campo");
         } else {
             detalleProductoService.guardarDetalleProducto(detalleProducto);
-            return "redirect:/modulo-venta/detalle-producto/lista";
+            return "redirect:/modulo-producto/detalle-producto/lista";
         }
     }
 
@@ -74,19 +74,19 @@ public class ControladorDetalleProducto {
         model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
         detalleProducto = detalleProductoService.encontrarDetalleProducto(detalleProducto);
         model.addAttribute("producto", detalleProducto);
-        return "/pages/modulo-venta/detalle-producto/modificar-detalle-producto";
+        return "/pages/modulo-producto/detalle-producto/modificar-detalle-producto";
     }
 
     @GetMapping("/modulo-producto/detalle-producto/eliminar")
     public String eliminarDetalleProducto(DetalleProducto detalleProducto) {
         detalleProductoService.eliminarDetalleProducto(detalleProducto);
-        return "redirect:/modulo-venta/detalle-producto/lista";
+        return "redirect:/modulo-producto/detalle-producto/lista";
     }
 
     @GetMapping("/modulo-producto/detalle-producto/baja")
     public String darBajaDetalleProducto(DetalleProducto detalleProducto) {
         detalleProductoService.darBajaDetalleProducto(detalleProducto);
-        return "redirect:/modulo-venta/detalle-producto/lista";
+        return "redirect:/modulo-producto/detalle-producto/lista";
     }
 
 }

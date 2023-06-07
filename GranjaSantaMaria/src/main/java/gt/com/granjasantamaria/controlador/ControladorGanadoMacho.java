@@ -2,6 +2,9 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 public class ControladorGanadoMacho {
+
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/images";
 
     @Autowired
     private GanadoMachoService ganadoMachoService;
@@ -43,10 +49,15 @@ public class ControladorGanadoMacho {
     }
 
     @PostMapping("/modulo-ganado/ganado-macho/guardar")
-    public String guardarGanadoMacho(@Valid GanadoMacho ganadoMacho, BindingResult bindingResult) throws Exception {
+    public String guardarGanadoMacho(@RequestParam("image") MultipartFile file, @Valid GanadoMacho ganadoMacho, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
+            StringBuilder fileNames = new StringBuilder();
+            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+            fileNames.append(file.getOriginalFilename());
+            Files.write(fileNameAndPath, file.getBytes());
+            ganadoMacho.setFotografia(file.getOriginalFilename());
             ganadoMachoService.guardarGanadoMacho(ganadoMacho);
             return "redirect:/modulo-ganado/ganado-macho/lista";
         }

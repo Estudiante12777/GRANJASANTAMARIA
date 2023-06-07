@@ -25,53 +25,52 @@ public class ControladorInventarioProducto {
     @Autowired
     private DetalleProductoService detalleProductoService;
 
-    @GetMapping("/modulo-producto/inventario-producto/lista")
+    @GetMapping("/modulo-inventario/inventario-producto/lista")
     public String obtenerListadoInventarioProductos(Model model) {
         List<InventarioProducto> inventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
         model.addAttribute("inventarioProductos", inventarioProductos);
-        return "pages/modulo-venta/inventario-producto/inventario-producto";
+        return "pages/modulo-inventario/inventario-producto/inventario-producto";
     }
 
-    @GetMapping("/modulo-producto/inventario-producto/agregar")
+    @GetMapping("/modulo-inventario/inventario-producto/agregar")
     public String agregarInventarioProducto(InventarioProducto inventarioProducto, Model model) {
         List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
-        return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
+        return "/pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
     }
 
-    @PostMapping("/modulo-producto/inventario-producto/guardar")
+    @PostMapping("/modulo-inventario/inventario-producto/guardar")
     public String guardarInventarioProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) InventarioProducto inventarioProducto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
+            return "/pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
         } else {
             List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
             model.addAttribute("listaDetalleProductos", listaDetalleProductos);
             inventarioProductoService.guardarInventarioProducto(inventarioProducto);
             model.addAttribute("listaDetalleProductos", listaDetalleProductos);
-            return "redirect:/modulo-venta/inventario-producto/lista";
+            return "redirect:/modulo-inventario/inventario-producto/lista";
         }
     }
 
-    @GetMapping("/modulo-producto/inventario-producto/editar/{idInventarioProducto}")
+    @GetMapping("/modulo-inventario/inventario-producto/editar/{idInventarioProducto}")
     public String editarInventarioProducto(InventarioProducto inventarioProducto, Model model) {
         List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
         inventarioProducto = inventarioProductoService.encontrarInventarioProducto(inventarioProducto);
         model.addAttribute("inventarioProducto", inventarioProducto);
-        return "/pages/modulo-venta/inventario-producto/modificar-inventario-producto";
+        return "/pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
     }
 
-    @GetMapping("/modulo-producto/inventario-producto/eliminar")
+    @GetMapping("/modulo-inventario/inventario-producto/eliminar")
     public String eliminarInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProductoService.eliminarInventarioProducto(inventarioProducto);
-        return "redirect:/modulo-venta/inventario-producto/lista";
+        return "redirect:/modulo-inventario/inventario-producto/lista";
     }
 
-    @GetMapping("/modulo-producto/inventario-producto/baja")
+    @GetMapping("/modulo-inventario/inventario-producto/baja")
     public String darBajaInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProductoService.darBajaInventarioProducto(inventarioProducto);
-        return "redirect:/modulo-venta/inventario-producto/lista";
+        return "redirect:/modulo-inventario/inventario-producto/lista";
     }
 
 }
-
