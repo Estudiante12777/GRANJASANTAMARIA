@@ -6,10 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import lombok.Data;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "usuario")

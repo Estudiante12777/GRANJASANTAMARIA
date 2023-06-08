@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ae3c3c33-a8b7-44ca-b911-abfc7223dcdf" name="Changes" comment="" />
+    <list default="true" id="ae3c3c33-a8b7-44ca-b911-abfc7223dcdf" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GranjaSantaMaria/src/main/java/gt/com/granjasantamaria/configuraciones/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/GranjaSantaMaria/src/main/java/gt/com/granjasantamaria/configuraciones/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GranjaSantaMaria/src/main/java/gt/com/granjasantamaria/controlador/ControladorGanadoMacho.java" beforeDir="false" afterPath="$PROJECT_DIR$/GranjaSantaMaria/src/main/java/gt/com/granjasantamaria/controlador/ControladorGanadoMacho.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GranjaSantaMaria/src/main/java/gt/com/granjasantamaria/modelo/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/GranjaSantaMaria/src/main/java/gt/com/granjasantamaria/modelo/Usuario.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +20,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -30,15 +41,27 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/SUBVERSION/PROYECTOGRANJASANTAMARIA/GRANJASANTAMARIA/GranjaSantaMaria",
+    "last_opened_file_path": "C:/SUBVERSION/PROYECTOGRANJASANTAMARIA/GRANJASANTAMARIA",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "spring.configuration.checksum": "6f0292b570bba7445c4cdab194ec22bd",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
     <configuration name="HolaSpringApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <module name="GranjaSantaMaria" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="gt.com.granjasantamaria.HolaSpringApplication" />
       <method v="2">
@@ -55,7 +78,11 @@
       <option name="presentableId" value="Default" />
       <updated>1685922894735</updated>
       <workItem from="1685922899861" duration="45000" />
+      <workItem from="1686240382062" duration="4701000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>
