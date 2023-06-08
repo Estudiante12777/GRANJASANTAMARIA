@@ -31,6 +31,21 @@ public class ControladorAlimentacionBecerro {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @GetMapping("/modulo-ganado/alimentacion-becerro")
+    public String obtenerListadoAlimentacionBecerros(Model model) {
+        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
+                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, g.nombre_ganado_hembra AS nombre_madre, "
+                + "a.id_alimentacion_becerro "
+                + "FROM alimentacion_becerro AS a "
+                + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
+                + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho "
+                + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra";
+        Query query = entityManager.createNativeQuery(sqlQuery);
+        List<Object[]> results = query.getResultList();
+        model.addAttribute("alimentacionBecerroList", results);
+        return "/pages/modulo-ganado/alimentacion-becerro/alimentacion";
+    }
+
     @GetMapping("/modulo-ganado/alimentacion-becerro/lista")
     public String obtenerListadoAlimentacionBecerros(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
         String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
