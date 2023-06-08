@@ -3,17 +3,17 @@ CREATE DATABASE granja_santa_maria;
 USE granja_santa_maria; 
 
 /** TABLAS PARA USUARIOS **/
+CREATE TABLE usuario(
+	id_usuario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
 CREATE TABLE rol(
-	id_rol INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    nombre VARCHAR(50) NOT NULL UNIQUE, 
-    id_usuario INT NOT NULL, 
+	id_rol INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    id_usuario INT NOT NULL,
     CONSTRAINT fk_rol_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario)
 );
-CREATE TABLE usuario(
-	id_usuario INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
-    username VARCHAR(50) NOT NULL UNIQUE, 
-    password VARCHAR(255) NOT NULL
-); 
 /* TABLAS PARA UBICACIONES */
 CREATE TABLE pais(
 	id_pais INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
@@ -81,7 +81,7 @@ CREATE TABLE ganado_macho(
     estado_ganado_macho TINYINT NOT NULL,
     CONSTRAINT fk_ganado_macho_tipo_ganado FOREIGN KEY (id_tipo_ganado) REFERENCES tipo_ganado (id_tipo_ganado) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_ganado_macho_raza_ganado FOREIGN KEY (id_raza_ganado) REFERENCES raza_ganado (id_raza_ganado) ON DELETE CASCADE ON UPDATE CASCADE
-); 
+);
 CREATE TABLE historial_clinico_macho (
     id_historial_clinico_macho INT PRIMARY KEY AUTO_INCREMENT,
     id_ganado_macho INT NOT NULL,
@@ -90,14 +90,6 @@ CREATE TABLE historial_clinico_macho (
     condiciones_fisicas_recibido VARCHAR(150) NOT NULL,
     estado_historial_clinico_macho TINYINT NOT NULL,
     CONSTRAINT fk_historial_clinico_macho_ganado_macho FOREIGN KEY (id_ganado_macho) REFERENCES ganado_macho (id_ganado_macho) ON DELETE CASCADE ON UPDATE CASCADE
-);
-CREATE TABLE detalle_historial_clinico_macho (
-    id_detalle_historial_clinico_macho INT PRIMARY KEY AUTO_INCREMENT,
-    id_historial_clinico_macho INT NOT NULL,
-    fecha_registro_historial_clinico DATE NOT NULL,
-    descripcion_historial_clinico TEXT NOT NULL,
-    estado_detalle_historial_clinico_macho TINYINT NOT NULL,
-    CONSTRAINT fk_detalle_historial_clinico_macho_historial_clinico_macho FOREIGN KEY (id_historial_clinico_macho) REFERENCES historial_clinico_macho (id_historial_clinico_macho) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE ganado_hembra(
 	id_ganado_hembra INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -117,30 +109,6 @@ CREATE TABLE historial_clinico_hembra (
     condiciones_fisicas_recibida VARCHAR(150) NOT NULL,
     estado_historial_clinico_hembra TINYINT NOT NULL,
     CONSTRAINT fk_historial_clinico_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
-);
-CREATE TABLE detalle_historial_clinico_hembra (
-    id_detalle_historial_clinico_hembra INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    id_historial_clinico_hembra INT NOT NULL,
-	novilla TINYINT NOT NULL,
-    novilla_preniada TINYINT NOT NULL,
-    vaca_primer_parto TINYINT NOT NULL,
-    produccion_leche_maniana DOUBLE NOT NULL,
-    produccion_leche_tarde DOUBLE NOT NULL,
-    observaciones_adicionales VARCHAR(255),
-    fecha_registro_historial_clinico DATE NOT NULL,
-    descripcion_historial_clinico VARCHAR(255) NOT NULL,
-    estado_detalle_historial_clinico_hembra TINYINT NOT NULL,
-    CONSTRAINT fk_detalle_historial_clinico_hembra_historial_clinico_hembra FOREIGN KEY (id_historial_clinico_hembra) REFERENCES historial_clinico_hembra (id_historial_clinico_hembra) ON DELETE CASCADE ON UPDATE CASCADE
-);
-CREATE TABLE prenies_ganado_hembra (
-    id_prenies_ganado_hembra INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    id_ganado_hembra INT NOT NULL,
-    fecha_concepcion DATE NOT NULL,
-    toro_utilizado VARCHAR(50) NOT NULL,
-    promedio_gestacion INT NOT NULL, 
-    fecha_esperada_parto DATE NOT NULL,
-    estado_prenies_ganado_hembra TINYINT NOT NULL,
-    CONSTRAINT fk_preñes_ganado_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
 /* TABLAS PARA PRODUCCION DE LACTEOS */
 CREATE TABLE produccion_diaria_leche(
@@ -224,6 +192,19 @@ CREATE TABLE detalle_producto(
   CONSTRAINT fk_detalle_producto_contenedor_producto FOREIGN KEY (id_contenedor_producto) REFERENCES contenedor_producto(id_contenedor_producto),
   CONSTRAINT fk_detalle_producto_descripcion_producto FOREIGN KEY (id_descripcion_producto) REFERENCES descripcion_producto(id_descripcion_producto)
 );
+CREATE TABLE inventario_producto (
+  id_inventario_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  id_detalle_producto INT NOT NULL,
+  fecha_inventario_producto DATE NOT NULL,
+  cantidad_ingresada_producto INT NOT NULL,
+  cantidad_entrada_producto INT NOT NULL,
+  cantidad_salida_producto INT NOT NULL,
+  cantidad_final_producto INT NOT NULL,
+  fecha_ingreso DATE NOT NULL,
+  cantidad_vendida_hasta_hoy INT NOT NULL,
+  estado_inventario_producto TINYINT NOT NULL,
+  CONSTRAINT fk_inventario_detalle_producto FOREIGN KEY (id_detalle_producto) REFERENCES detalle_producto (id_detalle_producto) ON DELETE CASCADE ON UPDATE CASCADE
+);
 CREATE TABLE venta_producto (
     id_venta_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     id_cliente INT NOT NULL,
@@ -237,16 +218,3 @@ CREATE TABLE venta_producto (
     CONSTRAINT fk_venta_producto_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_venta_producto_inventario_producto FOREIGN KEY (id_inventario_producto) REFERENCES inventario_producto (id_inventario_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE TABLE inventario_producto (
-  id_inventario_producto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  id_detalle_producto INT NOT NULL,
-  fecha_inventario_producto DATE NOT NULL,
-  cantidad_ingresada_producto INT NOT NULL,
-  cantidad_entrada_producto INT NOT NULL,
-  cantidad_salida_producto INT NOT NULL,
-  cantidad_final_producto INT NOT NULL,
-  fecha_ingreso DATE NOT NULL,
-  cantidad_vendida_hasta_hoy INT NOT NULL,
-  estado_inventario_producto TINYINT NOT NULL,
-  CONSTRAINT fk_inventario_detalle_producto FOREIGN KEY (id_detalle_producto) REFERENCES detalle_producto (id_detalle_producto) ON DELETE CASCADE ON UPDATE CASCADE
-); 
