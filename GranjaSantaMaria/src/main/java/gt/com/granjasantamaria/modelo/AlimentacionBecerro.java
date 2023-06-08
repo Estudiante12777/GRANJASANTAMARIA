@@ -42,6 +42,11 @@ public class AlimentacionBecerro implements Serializable {
     private Double cantidadTardeAlimentacion;
 
     @NotNull
+    @Column(name = "total_alimentacion_becerro", nullable = false)
+    @DecimalMin(value = "0.0", message = "El total de alimentacion debe ser mayor o igual a cero")
+    private Double totalAlimentacionBecerro;
+
+    @NotNull
     @Column(name = "id_produccion_diaria_leche", nullable = false)
     private Long idProduccionDiariaLeche;
 

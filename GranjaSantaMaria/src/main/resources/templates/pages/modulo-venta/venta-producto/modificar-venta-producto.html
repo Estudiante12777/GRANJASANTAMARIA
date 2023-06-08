@@ -6,14 +6,14 @@
     <title>Venta de Productos</title>
 </head>
 
-<body>
+<body >
     <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
     <div class="container-fluid py-5" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
             <h3 class="text-center">Venta</h3>
         </div>
-        <form th:action="@{/modulo-venta/venta-producto/guardar}" method="post" th:object="${ventaProducto}">
+        <form th:action="@{/modulo-venta/venta-producto/guardar}" method="post" th:object="${ventaProducto}" id="formularioVenta">
             <input type="hidden" name="idVentaProducto" th:field="*{idVentaProducto}" />
             <!-- Campos del formulario para la venta de productos -->
             <div class="row">
@@ -55,29 +55,20 @@
                         </select>
                     </div>
                 </div>
-
-
-
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="cantidadProducto">Cantidad:</label>
                         <input type="number" id="cantidadProducto" name="cantidadProducto" class="form-control"
-                            required />
+                            th:field="*{cantidadProducto}" required />
                     </div>
                 </div>
-
-
-
             </div>
-
-
-
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="precioPorUnidad">Precio por unidad:</label>
                         <input type="number" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
-                            required />
+                            th:field="*{precioPorUnidad}" required />
                     </div>
                 </div>
                 <div class="col-md-6">
