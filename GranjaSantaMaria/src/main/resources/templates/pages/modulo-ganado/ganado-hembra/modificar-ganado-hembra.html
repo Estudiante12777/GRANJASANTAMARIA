@@ -13,13 +13,13 @@
             <div class="col-md-6 col-sm-8 col-12">
                 <div class="card bg-light text-dark">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Inforarmacion sobre el ganado</h5>
+                        <h5 class="card-title text-center">Inforarmacion sobre el ganado hembra</h5>
                         <form th:action="@{/modulo-ganado/ganado-hembra/guardar}" method="post"
                             th:object="${ganadoHembra}" id="guardarFormulario" enctype="multipart/form-data">
                             <input type="hidden" name="idGanadoHembra" th:field="*{idGanadoHembra}" />
                             <div class="mb-3">
                                 <label class="form-label form-label-lg" for="image">Nombre:</label>
-                                <input type="file" name="image" accept="image/*" class="form-control-file">
+                                <input type="file" name="image" accept="image/*" class="form-control-file" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label form-label-lg" for="nombreGanadoHembra">Nombre:</label>

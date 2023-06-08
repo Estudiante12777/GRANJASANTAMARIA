@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,8 +34,13 @@ public class ControladorGanadoMacho {
     private RazaGanadoService razaGanadoService;
 
     @GetMapping("/modulo-ganado/ganado-macho/lista")
-    public String listadoGanadoMachods(Model model) {
-        var ganadosMacho = ganadoMachoService.obtenerListadoGanadoMachos();
+    public String listadoGanadoMachods(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 8);
+        Page<GanadoMacho> ganadoMachoPage = ganadoMachoService.obtenerGanadoMachoPaginado(pageRequest);
+        model.addAttribute("pageRequest", pageRequest);
+        var ganadosMacho = ganadoMachoPage.getContent().stream()
+                .limit(8)
+                .collect(Collectors.toList());
         model.addAttribute("ganadosMacho", ganadosMacho);
         return "/pages/modulo-ganado/ganado-macho/ganado-macho";
     }

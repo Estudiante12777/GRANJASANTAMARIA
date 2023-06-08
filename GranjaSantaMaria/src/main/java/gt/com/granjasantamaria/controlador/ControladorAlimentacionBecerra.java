@@ -14,9 +14,6 @@ import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 import org.springframework.validation.BindingResult;
 
-/**
- * @author gerso
- */
 @Controller
 public class ControladorAlimentacionBecerra {
 
@@ -25,9 +22,6 @@ public class ControladorAlimentacionBecerra {
 
     @Autowired
     private GanadoHembraService ganadoHembraService;
-
-    @Autowired
-    private ProduccionDiariaLecheService produccionDiariaLecheService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -68,7 +62,7 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/agregar")
     public String agregarAlimentacionBecerro(AlimentacionBecerra alimentacionBecerra, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
         // Filtrar la lista de ganado para mostrar solo vacas y novillas
         List<GanadoHembra> listaTernerasBecerras = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera")
                 || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
@@ -81,7 +75,7 @@ public class ControladorAlimentacionBecerra {
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
     public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
+            List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
             model.addAttribute("listaGanados", listaGanados);
             return "/pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
         }
@@ -90,7 +84,7 @@ public class ControladorAlimentacionBecerra {
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         } catch (Exception e) {
             model.addAttribute("error", "Error al guardar la producción diaria de leche.");
-            List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
+            List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
             model.addAttribute("listaGanados", listaGanados);
             return "/pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
         }
@@ -98,7 +92,7 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}")
     public String editarAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra, AlimentacionBecerra alimentacionBecerra, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
         // Filtrar la lista de ganado para mostrar solo terneras y becerras
         List<GanadoHembra> listaTernerasBecerras = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
         System.out.println("Lista de ganados: " + listaGanados);

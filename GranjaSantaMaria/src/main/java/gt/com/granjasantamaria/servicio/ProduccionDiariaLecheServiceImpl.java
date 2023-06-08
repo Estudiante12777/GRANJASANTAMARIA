@@ -2,16 +2,16 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.*;
 import gt.com.granjasantamaria.modelo.*;
+
 import java.time.LocalDate;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheService {
 
@@ -36,6 +36,12 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     public List<ProduccionDiariaLeche> obtenerListaTotalProduccionDiariaLeche() {
         LocalDate fechaActual = LocalDate.now();
         return produccionDiariaLecheDao.findByFechaProduccionLecheAndEstadoProduccionDiariaLecheIsTrue(fechaActual);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginado(Pageable pageable) {
+        return produccionDiariaLecheDao.findAllByEstadoProduccionDiariaLecheIsTrue(pageable);
     }
 
     @Override

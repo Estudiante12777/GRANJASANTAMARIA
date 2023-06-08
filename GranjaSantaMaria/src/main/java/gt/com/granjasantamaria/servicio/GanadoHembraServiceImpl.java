@@ -2,15 +2,15 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.GanadoHembraDao;
 import gt.com.granjasantamaria.modelo.GanadoHembra;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class GanadoHembraServiceImpl implements GanadoHembraService {
 
@@ -19,8 +19,14 @@ public class GanadoHembraServiceImpl implements GanadoHembraService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<GanadoHembra> obtenerListadoGanadoHembras() {
+    public List<GanadoHembra> obtenerListadoGanadosHembra() {
         return ganadoHembraDao.findByEstadoGanadoHembraIsTrue();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<GanadoHembra> obtenerGanadoHembraPaginado(Pageable pageable) {
+        return (Page<GanadoHembra>) ganadoHembraDao.findAllByEstadoGanadoHembraIsTrue(pageable);
     }
 
     @Override

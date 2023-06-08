@@ -1,15 +1,16 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.GanadoHembra;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
-/**
- *
- * @author gerso
- */
 public interface GanadoHembraService {
 
-    public List<GanadoHembra> obtenerListadoGanadoHembras();
+    public List<GanadoHembra> obtenerListadoGanadosHembra();
+
+    public Page<GanadoHembra> obtenerGanadoHembraPaginado(Pageable pageable);
 
     public void guardarGanadoHembra(GanadoHembra ganadoHembra);
 

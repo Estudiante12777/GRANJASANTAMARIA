@@ -7,10 +7,6 @@ import javax.validation.constraints.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "produccion_diaria_leche")

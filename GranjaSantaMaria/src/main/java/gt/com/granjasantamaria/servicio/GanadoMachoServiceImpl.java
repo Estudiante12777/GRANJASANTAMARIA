@@ -2,15 +2,15 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.GanadoMachoDao;
 import gt.com.granjasantamaria.modelo.GanadoMacho;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class GanadoMachoServiceImpl implements GanadoMachoService {
 
@@ -21,6 +21,12 @@ public class GanadoMachoServiceImpl implements GanadoMachoService {
     @Transactional(readOnly = true)
     public List<GanadoMacho> obtenerListadoGanadoMachos() {
         return ganadoMachoDao.findByEstadoGanadoMachoIsTrue();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<GanadoMacho> obtenerGanadoMachoPaginado(Pageable pageable) {
+        return ganadoMachoDao.findAllByEstadoGanadoMachoIsTrue(pageable);
     }
 
     @Override

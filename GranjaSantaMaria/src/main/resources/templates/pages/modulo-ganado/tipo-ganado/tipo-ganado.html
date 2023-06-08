@@ -7,7 +7,6 @@
 </head>
 
 <body>
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
     <div class="container py-3" layout:fragment="page-content"
         sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
         <h5 class="text-center">Tipos de ganado</h5>
@@ -136,9 +135,6 @@
                 </tr>
                 <tfoot></tfoot>
             </table>
-        </div>
-        <div th:if="${tipoDeGanados == null or tipoDeGanados.empty}">
-            <h1>La lista de tipos de ganado esta vacia</h1>
         </div>
     </div>
     <script th:inline="javascript">

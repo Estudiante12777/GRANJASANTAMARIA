@@ -11,9 +11,6 @@ import javax.persistence.Id;
 
 import lombok.ToString;
 
-/**
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "ganado_hembra")

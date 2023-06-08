@@ -33,7 +33,7 @@ public class ControladorHistorialClinicoHembra {
 
     @GetMapping("/modulo-ganado/historial-clinico-hembra/agregar")
     public String agregarHistorialClinicoHembra(HistorialClinicoHembra historialClinicoHembra, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
         model.addAttribute("listaGanados", listaGanados);
         return "/pages/modulo-ganado/historial-clinico-hembra/modificar-historial-clinico-hembra";
     }
@@ -50,7 +50,7 @@ public class ControladorHistorialClinicoHembra {
 
     @GetMapping("/modulo-ganado/historial-clinico-hembra/editar/{idHistorialClinicoHembra}")
     public String editarHistorialClinicoHembra(HistorialClinicoHembra historialClinicoHembra, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadoHembras();
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
         model.addAttribute("listaGanados", listaGanados);
         historialClinicoHembra = historialClinicoHembraService.encontrarHistorialClincioHembra(historialClinicoHembra);
         model.addAttribute("historialClinicoHembra", historialClinicoHembra);

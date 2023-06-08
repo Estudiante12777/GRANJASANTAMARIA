@@ -11,15 +11,14 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @author gerso
- */
 @Controller
 public class ControladorGanadoHembra {
 
@@ -35,8 +34,13 @@ public class ControladorGanadoHembra {
     private RazaGanadoService razaGanadoService;
 
     @GetMapping("/modulo-ganado/ganado-hembra/lista")
-    public String listadoGanadoMachods(Model model) {
-        var ganadosHembra = ganadoHembraService.obtenerListadoGanadoHembras();
+    public String listadoGanadosHembra(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 8);
+        Page<GanadoHembra> ganadoHembraPage = ganadoHembraService.obtenerGanadoHembraPaginado(pageRequest);
+        model.addAttribute("ganadoHembraPage", ganadoHembraPage);
+        var ganadosHembra = ganadoHembraPage.getContent().stream()
+                .limit(8)
+                .collect(Collectors.toList());
         model.addAttribute("ganadosHembra", ganadosHembra);
         return "/pages/modulo-ganado/ganado-hembra/ganado-hembra";
     }
