@@ -3,20 +3,19 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoMacho;
 import gt.com.granjasantamaria.modelo.HistorialClinicoMacho;
 import gt.com.granjasantamaria.servicio.*;
+
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
 @Controller
 public class ControladorDetalleHistorialClinicoMacho {
 
@@ -31,17 +30,16 @@ public class ControladorDetalleHistorialClinicoMacho {
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/lista")
     public String obtenerListadoDetalleHistorialClinicoMacho(@RequestParam("idHistorialClinicoMacho") Long idHistorialClinicoMacho, Model model) {
-        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
-                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, g.nombre_ganado_hembra AS nombre_madre "
-                + "FROM alimentacion_becerro AS a "
-                + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
-                + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho "
-                + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra "
-                + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche";
+        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_ganado, dhc.fecha_registro_historial_clinico, "
+                + "dhc.descripcion_historial_clinico, dhc.id_detalle_historial_clinico_macho "
+                + "FROM detalle_historial_clinico_macho AS dhc "
+                + "INNER JOIN historial_clinico_macho AS h ON h.id_historial_clinico_macho = dhc.id_historial_clinico_macho "
+                + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = h.id_ganado_macho "
+                + "WHERE dhc.id_historial_clinico_macho = :idHistorialClinicoMacho";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idHistorialClinicoMacho", idHistorialClinicoMacho);
         List<Object[]> results = query.getResultList();
-        model.addAttribute("alimentacionBecerroList", results);
+        model.addAttribute("detalleHistorialClinicoMachoList", results);
         return "/pages/modulo-ganado/detalle-historial-clinico-macho/detalle-historial-clinico-macho";
     }
 
@@ -55,19 +53,22 @@ public class ControladorDetalleHistorialClinicoMacho {
     @PostMapping("/modulo-ganado/detalle-historial-clinico-macho/guardar")
     public String guardarDetalleHistorialClinicoMacho(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DetalleHistorialClinicoMacho detalleHistorialClinicoMacho, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
-            throw new Exception("Error, no puede estar vacío el campo");
+            FieldError fieldError = bindingResult.getFieldError();
+            String fieldName = fieldError.getField();
+            throw new Exception("Error el campo, " + fieldName + " no puede estar vacío el campo");
         } else {
             detalleHistorialClinicoMachoService.guardarDetalleHistorialClinicoMacho(detalleHistorialClinicoMacho);
-            return "redirect:/modulo-ganado/detalle-historial-clinico-macho/lista";
+            return "redirect:/modulo-ganado/historial-clinico-macho/lista";
         }
     }
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/editar/{idDetalleHistorialClinicoMacho}")
-    public String editarDetalleHistorialClinicoMacho(DetalleHistorialClinicoMacho detalleHistorialClinicoMacho, Model model) {
+    public String editarDetalleHistorialClinicoMacho(@PathVariable("idDetalleHistorialClinicoMacho") Long idDetalleHistorialClinicoMacho, DetalleHistorialClinicoMacho detalleHistorialClinicoMacho, Model model) {
         List<HistorialClinicoMacho> listaGanados = historialClinicioMachoService.obtenerListadoHistorialClinicoMachos();
         model.addAttribute("listaGanados", listaGanados);
         detalleHistorialClinicoMacho = detalleHistorialClinicoMachoService.encontrarDetalleHistorialClinicoMacho(detalleHistorialClinicoMacho);
         model.addAttribute("detalleHistorialClinicoMacho", detalleHistorialClinicoMacho);
+        model.addAttribute("idDetalleHistorialClinicoMacho", idDetalleHistorialClinicoMacho);
         return "/pages/modulo-ganado/detalle-historial-clinico-macho/modificar-detalle-historial-clinico-macho";
     }
 

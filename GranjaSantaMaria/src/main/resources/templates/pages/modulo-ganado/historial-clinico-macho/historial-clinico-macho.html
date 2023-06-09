@@ -1,355 +1,356 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-5" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <a class="btn btn-outline-success" th:href="@{/modulo-ganado/historial-clinico-macho/agregar}"><i
-                    class="fa-solid fa-plus"></i>
-                Crear nuevo registro</a>
-        </div>
-        <div th:if="${historialClinicoMachos != null and !historialClinicoMachos.empty}">
-            <table class="table">
-                <thead class="table-dark">
-                    <th>Ganado</th>
-                    <th>Fecha ingreso granja</th>
-                    <th>Procedencia</th>
-                    <th>Condiciones fisicas recibido</th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        Historial clinico
-                    </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        Editar
-                    </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR',)">
-                        Dar baja
-                    </th>
-                    <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
-                </thead>
-                <tr th:each="historialClinicoMacho : ${historialClinicoMachos}">
-                    <td th:text="${historialClinicoMacho.ganadoMacho.nombreGanadoMacho}">
-                        Mostrar Nombre del ganado
-                    </td>
-                    <td th:text="${historialClinicoMacho.fechaIngresoGranja}">
-                        Mostrar fecha de produccion de leche
-                    </td>
-                    <td th:text="${historialClinicoMacho.procedenciaGanadoMacho}">
-                        Mostrar Produccion de leche por la mañana
-                    </td>
-                    <td th:text="${historialClinicoMacho.condicionesFisicasRecibido}">Mostrar Produccion de leche por
-                        la tarde
-                    </td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <!-- Botón para abrir el modal de alimentacion becerro -->
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <h3 class="text-center">Historial clinico ganado macho</h3>
+    <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
+        <a class="btn btn-outline-success" th:href="@{/modulo-ganado/historial-clinico-macho/agregar}"><i
+                class="fa-solid fa-plus"></i>
+            Crear nuevo registro</a>
+    </div>
+    <div th:if="${historialClinicoMachos != null and !historialClinicoMachos.empty}">
+        <table class="table">
+            <thead class="table-dark">
+            <th>Ganado</th>
+            <th>Fecha ingreso granja</th>
+            <th>Procedencia</th>
+            <th>Condiciones fisicas recibido</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                Historial clinico
+            </th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                Editar
+            </th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR',)">
+                Dar baja
+            </th>
+            <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
+            </thead>
+            <tr th:each="historialClinicoMacho : ${historialClinicoMachos}">
+                <td th:text="${historialClinicoMacho.ganadoMacho.nombreGanadoMacho}">
+                    Mostrar Nombre del ganado
+                </td>
+                <td th:text="${historialClinicoMacho.fechaIngresoGranja}">
+                    Mostrar fecha de produccion de leche
+                </td>
+                <td th:text="${historialClinicoMacho.procedenciaGanadoMacho}">
+                    Mostrar Produccion de leche por la mañana
+                </td>
+                <td th:text="${historialClinicoMacho.condicionesFisicasRecibido}">Mostrar Produccion de leche por
+                    la tarde
+                </td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de alimentacion becerro -->
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                             th:data-bs-target="'#alimentacionModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
                             data-id="${historialClinicoMacho.idHistorialClinicoMacho}">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                        <!-- Modal de alimentacion becerro -->
-                        <div class="modal fade"
-                            th:id="'alimentacionModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            tabindex="-1"
-                            th:attr="aria-labelledby='alimentacionModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'alimentacionModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                                            ¿Estás seguro de que deseas agregar un registro de historial clinico?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <!-- Modal de alimentacion becerro -->
+                    <div class="modal fade"
+                         th:id="'alimentacionModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         tabindex="-1"
+                         th:attr="aria-labelledby='alimentacionModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'alimentacionModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
+                                        ¿Estás seguro de que deseas agregar un registro al detalle del historial
+                                        clinico?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/detalle-historial-clinico-macho/agregar(idHistorialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">
-                                            Becerro
-                                        </a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
-                                            cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/agregar(idHistorialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">
+                                        Agregar
+                                    </a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <!-- Botón para abrir el modal de alimentacion becerro -->
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    </div>
+                    <!-- Botón para abrir el modal de alimentacion becerro -->
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                             th:data-bs-target="'#verModalAlimentacion_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
                             data-id="${historialClinicoMacho.idHistorialClinicoMacho}">
-                            <i class="fa-solid fa-eye"></i>
-                        </button>
-                        <!-- Modal de alimentacion becerro -->
-                        <div class="modal fade"
-                            th:id="'verModalAlimentacion_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            tabindex="-1"
-                            th:attr="aria-labelledby='verModalAlimentacion_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'verModalAlimentacion_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                                            ¿Estás seguro de que deseas ver el registro de alimentacion becerro?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <!-- Modal de alimentacion becerro -->
+                    <div class="modal fade"
+                         th:id="'verModalAlimentacion_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         tabindex="-1"
+                         th:attr="aria-labelledby='verModalAlimentacion_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'verModalAlimentacion_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
+                                        ¿Estás seguro de que deseas ver el registro del detalle del historial clinico?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerro/lista(historialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">
-                                            becerro
-                                        </a>
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerra/lista(historialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">
-                                            becerra
-                                        </a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
-                                            cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/lista(idHistorialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">
+                                        Ver
+                                    </a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <!-- Botón para abrir el modal de edición -->
-                        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                    </div>
+                </td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de edición -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
                             th:data-bs-target="'#editModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                            <i class="fa-sharp fa-solid fa-pencil"></i>
-                        </button>
-                        <!-- Modal de edición -->
-                        <div class="modal fade" th:id="'editModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            tabindex="-1"
-                            th:attr="aria-labelledby='editModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'editModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                                            ¿Estás seguro de que deseas editar este registro de produccion diaria de
-                                            leche?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <i class="fa-sharp fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- Modal de edición -->
+                    <div class="modal fade" th:id="'editModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'editModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
+                                        ¿Estás seguro de que deseas editar este registro de historial clinico macho?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/historial-clinico-macho/editar/} + ${historialClinicoMacho.idHistorialClinicoMacho}">Sí,
-                                            quiero editar</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
-                                            cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/historial-clinico-macho/editar/} + ${historialClinicoMacho.idHistorialClinicoMacho}">Sí,
+                                        quiero editar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <!-- Botón para abrir el modal de dar baja -->
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de dar baja -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                             th:data-bs-target="'#bajaModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                            <i class="fa-sharp fa-solid fa-ban"></i>
-                        </button>
-                        <!-- Modal de dar baja -->
-                        <div class="modal fade" th:id="'bajaModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            tabindex="-1"
-                            th:attr="aria-labelledby='bajaModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'bajaModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                                            ¿Estás seguro de que deseas dar de baja este registro de produccion diaria
-                                            de leche?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <i class="fa-sharp fa-solid fa-ban"></i>
+                    </button>
+                    <!-- Modal de dar baja -->
+                    <div class="modal fade" th:id="'bajaModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'bajaModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
+                                        ¿Estás seguro de que deseas dar de baja este registro de historial clinico macho?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para dar de baja la categoría de ganado -->
-                                        <a class="btn btn-danger"
-                                            th:href="@{/modulo-ganado/historial-clinico-hembra/baja(idHistorialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">Sí,
-                                            dar de baja</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para dar de baja la categoría de ganado -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-ganado/historial-clinico-hembra/baja(idHistorialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">Sí,
+                                        dar de baja</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <!-- Botón para abrir el modal de eliminar -->
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de eliminar -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                             th:data-bs-target="'#deleteModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                        <!-- Modal de eliminar -->
-                        <div class="modal fade"
-                            th:id="'deleteModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}" tabindex="-1"
-                            th:attr="aria-labelledby='deleteModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'deleteModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
-                                            ¿Estás seguro de que deseas eliminar este registro de produccion diaria de
-                                            leche?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <!-- Modal de eliminar -->
+                    <div class="modal fade"
+                         th:id="'deleteModal_' + ${historialClinicoMacho.idHistorialClinicoMacho}" tabindex="-1"
+                         th:attr="aria-labelledby='deleteModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'deleteModalLabel_' + ${historialClinicoMacho.idHistorialClinicoMacho}">
+                                        ¿Estás seguro de que deseas eliminar este registro de historial clinico macho?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para eliminar la categoría de ganado -->
-                                        <a class="btn btn-danger"
-                                            th:href="@{/modulo-ganado/historial-clinico-hembra/eliminar(idHistorialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">Sí,
-                                            eliminar</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para eliminar la categoría de ganado -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-ganado/historial-clinico-hembra/eliminar(idHistorialClinicoMacho=${historialClinicoMacho.idHistorialClinicoMacho})}">Sí,
+                                        eliminar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tfoot></tfoot>
-            </table>
-        </div>
-        <div th:if="${historialClinicoMachos == null or historialClinicoMachos.empty}">
-            <h1>Hisorial clinico vacio</h1>
-        </div>
+                    </div>
+                </td>
+            </tr>
+            <tfoot></tfoot>
+        </table>
     </div>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+    <div class="py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block"
+           th:href="@{/modulo-ganado}"><i
+                class="fa-solid fa-arrow-left"></i></a>
+    </div>
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de edición */
-        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de edición */
+    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        editButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de edición
-            var uniqueModalId = "alimentacionModal_" + modalId.replace("#alimentacionModal_", "");
+        // Crea un identificador único para el modal de edición
+        var uniqueModalId = "alimentacionModal_" + modalId.replace("#alimentacionModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de edición */
-        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de edición */
+    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        editButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de edición
-            var uniqueModalId = "verModalAlimentacion_" + modalId.replace("#verModalAlimentacion_", "");
+        // Crea un identificador único para el modal de edición
+        var uniqueModalId = "verModalAlimentacion_" + modalId.replace("#verModalAlimentacion_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de edición */
-        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de edición */
+    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        editButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de edición
-            var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+        // Crea un identificador único para el modal de edición
+        var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de dar baja */
-        var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de dar baja */
+    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        deleteButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    deleteButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de dar baja
-            var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+        // Crea un identificador único para el modal de dar baja
+        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de eliminar */
-        var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de eliminar */
+    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        deleteButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    deleteButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de eliminar
-            var uniqueModalId = "deleteModal_" + modalId.replace("#deleteModal_", "");
+        // Crea un identificador único para el modal de eliminar
+        var uniqueModalId = "deleteModal_" + modalId.replace("#deleteModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
 </body>
 
 </html>

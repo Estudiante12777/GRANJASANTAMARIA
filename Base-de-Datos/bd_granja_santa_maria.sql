@@ -91,6 +91,14 @@ CREATE TABLE historial_clinico_macho (
     estado_historial_clinico_macho TINYINT NOT NULL,
     CONSTRAINT fk_historial_clinico_macho_ganado_macho FOREIGN KEY (id_ganado_macho) REFERENCES ganado_macho (id_ganado_macho) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE detalle_historial_clinico_macho (
+    id_detalle_historial_clinico_macho INT PRIMARY KEY AUTO_INCREMENT,
+    id_historial_clinico_macho INT NOT NULL,
+    fecha_registro_historial_clinico DATE NOT NULL,
+    descripcion_historial_clinico TEXT NOT NULL,
+    estado_detalle_historial_clinico_macho TINYINT NOT NULL,
+    CONSTRAINT fk_detalle_historial_clinico_macho_historial_clinico_macho FOREIGN KEY (id_historial_clinico_macho) REFERENCES historial_clinico_macho (id_historial_clinico_macho) ON DELETE CASCADE ON UPDATE CASCADE
+);
 CREATE TABLE ganado_hembra(
 	id_ganado_hembra INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	fotografia VARCHAR(100) NOT NULL,

@@ -6,11 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "detalle_historial_clinico_macho")
@@ -28,6 +25,7 @@ public class DetalleHistorialClinicoMacho implements Serializable {
 
     @NotNull
     @Column(name = "fecha_registro_historial_clinico", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaRegistroHistorialClinicoMacho;
 
     @NotNull

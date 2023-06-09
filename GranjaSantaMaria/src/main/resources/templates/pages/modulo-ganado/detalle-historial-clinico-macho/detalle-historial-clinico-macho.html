@@ -1,39 +1,154 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-3" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <h5 class="text-center">Alimentacion de becerros</h5>
-        <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
-            <table class="table">
-                <thead class="table-dark">
-                    <th>Becerro</th>
-                    <th>Fecha</th>
-                    <th>Cantidad alimentacion mañana</th>
-                    <th>Cantidad alimentacion tarde</th>
-                    <th>Madre del becerro</th>
-                </thead>
-                <tr th:each="alimentacionBecerro : ${alimentacionBecerroList}">
-                    <td th:text="${alimentacionBecerro[0]}">Mostrar Nombre del becerro</td>
-                    <td th:text="${alimentacionBecerro[1]}">Mostrar Fecha</td>
-                    <td th:text="${alimentacionBecerro[2]}">Mostrar Cantidad alimentacion mañana</td>
-                    <td th:text="${alimentacionBecerro[3]}">Mostrar Cantidad alimentacion tarde</td>
-                    <td th:text="${alimentacionBecerro[4]}">Mostrar Nombre de la madre del becerro</td>
-                </tr>
-                <tfoot></tfoot>
-            </table>
-        </div>
-        <div th:if="${alimentacionBecerroList == null or alimentacionBecerroList.empty}">
-            <h1>Esta hembra no tiene becerros ni terneros, por eso no hay registros de alimentacion</h1>
-        </div>
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <h5 class="text-center">Detalle del historial clínico ganado macho</h5>
+    <div th:if="${detalleHistorialClinicoMachoList != null and !detalleHistorialClinicoMachoList.empty}">
+        <table class="table">
+            <thead class="table-dark">
+            <th>Nombre Ganado</th>
+            <th>Fecha Registro</th>
+            <th>Descripción</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
+                Editar
+            </th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                Dar baja
+            </th>
+            </thead>
+            <tr th:each="detalleHistorialClinicoMacho : ${detalleHistorialClinicoMachoList}">
+                <td th:text="${detalleHistorialClinicoMacho[0]}">Mostrar Nombre del Ganado</td>
+                <td th:text="${detalleHistorialClinicoMacho[1]}">Mostrar Fecha de Registro</td>
+                <td th:text="${detalleHistorialClinicoMacho[2]}">Mostrar Descripción</td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de edición -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#editModal_' + ${detalleHistorialClinicoMachoList[3]}">
+                        <i class="fa-sharp fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- Modal de edición -->
+                    <div class="modal fade" th:id="'editModal_' + ${detalleHistorialClinicoMachoList[3]}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${detalleHistorialClinicoMachoList[3]}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'editModalLabel_' + ${detalleHistorialClinicoMachoList[3]}">
+                                        ¿Estás seguro de que deseas editar este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/editar/{idDetalleHistorialClinicoMacho}(idDetalleHistorialClinicoMacho=${detalleHistorialClinicoMachoList[3]})}">Sí,
+                                        quiero editar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de dar baja -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#bajaModal_' + ${detalleHistorialClinicoMachoList[3]}">
+                        <i class="fa-sharp fa-solid fa-ban"></i>
+                    </button>
+                    <!-- Modal de dar baja -->
+                    <div class="modal fade" th:id="'bajaModal_' + ${detalleHistorialClinicoMachoList[3]}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${detalleHistorialClinicoMachoList[3]}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'bajaModalLabel_' + ${detalleHistorialClinicoMachoList[3]}">
+                                        ¿Estás seguro de que deseas dar de baja este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para dar de baja el registro -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/baja/} + ${detalleHistorialClinicoMachoList[3]}">Sí,
+                                        dar de baja</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
+    <div class="py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block"
+           th:href="@{/modulo-ganado/historial-clinico-macho/lista}"><i
+                class="fa-solid fa-arrow-left"></i></a>
+    </div>
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
+
+    /* Obtén todos los botones de edición */
+    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+
+        // Genera un identificador único para el modal de edición
+        var uniqueModalId = "editModal_" + button.dataset.bsTarget.substring(1);
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
+
+    /* Obtén todos los botones de dar baja */
+    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    deleteButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
+
+        // Crea un identificador único para el modal de dar baja
+        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
 </body>
 
 </html>

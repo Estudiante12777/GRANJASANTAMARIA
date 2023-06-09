@@ -1,71 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <div class="container-fluid py-5" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-sm-8 col-12">
-                <div class="card bg-light text-dark">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Información sobre el detalle del historial clínico de la
-                            hembra</h5>
-                        <form th:action="@{/modulo-ganado/detalle-historial-clinico-macho/guardar}" method="post"
-                            th:object="${detalleHistorialClinicoMacho}" id="guardarFormulario">
-                            <input type="hidden" name="idDetalleHistorialClinicoMacho"
-                                th:field="*{idDetalleHistorialClinicoMacho}" />
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="fechaRegistroHistorialClinicoMacho">Fecha de registro clinico</label>
-                                    <input type="date" class="form-control" id="fechaRegistroHistorialClinicoMacho"
-                                        name="fechaRegistroHistorialClinicoMacho"
-                                        th:field="*{fechaRegistroHistorialClinicoMacho}">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="descripcionHistorialClinico">Descripcion</label>
-                                    <input type="text" class="form-control" id="descripcionHistorialClinico"
-                                        name="descripcionHistorialClinico" th:value="*{descripcionHistorialClinico}">
-                                </div>
-                                <input type="hidden" name="idHistorialClinicoMacho" th:field="*{idHistorialClinicoMacho}">
-                                <input type="hidden" name="estadoDetalleHistorialClinicoMacho"
-                                    th:field="*{estadoDetalleHistorialClinicoMacho}">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">Guardar</button>
-                                </div>
+<div class="container-fluid py-5" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-12">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Información sobre el detalle del historial clínico macho</h5>
+                    <form th:action="@{/modulo-ganado/detalle-historial-clinico-macho/guardar}" method="post"
+                          th:object="${detalleHistorialClinicoMacho}" id="guardarFormulario">
+                        <input type="hidden" name="idDetalleHistorialClinicoMacho"
+                               th:field="*{idDetalleHistorialClinicoMacho}"/>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fechaRegistroHistorialClinicoMacho">Fecha de registro clinico</label>
+                                <input type="date" class="form-control" id="fechaRegistroHistorialClinicoMacho"
+                                       name="fechaRegistroHistorialClinicoMacho"
+                                       th:field="*{fechaRegistroHistorialClinicoMacho}">
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="descripcionHistorialClinico">Descripcion</label>
+                                <input type="text" class="form-control" id="descripcionHistorialClinico"
+                                       name="descripcionHistorialClinico" th:value="*{descripcionHistorialClinico}">
+                            </div>
+                            <input type="hidden" name="idHistorialClinicoMacho" th:field="*{idHistorialClinicoMacho}">
+                            <input type="hidden" name="estadoDetalleHistorialClinicoMacho"
+                                   th:field="*{estadoDetalleHistorialClinicoMacho}">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <script th:inline="javascript">
-        /* Generar ID único para el modal de guardar */
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para el modal de guardar */
 
-        // Obtén el botón de guardar
-        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    // Obtén el botón de guardar
+    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
 
-        // Obtén el atributo 'data-bs-target' del botón
-        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    // Obtén el atributo 'data-bs-target' del botón
+    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
 
-        // Obtén el atributo 'id' del botón
-        var modalIdGuardar = guardarButton.getAttribute("id");
+    // Obtén el atributo 'id' del botón
+    var modalIdGuardar = guardarButton.getAttribute("id");
 
-        // Crea un identificador único para el modal de guardar
-        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    // Crea un identificador único para el modal de guardar
+    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
 
-        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+    // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+    guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
 
-        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modalGuardar = document.querySelector(targetGuardarModalId);
-        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
-    </script>
+    // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+    var modalGuardar = document.querySelector(targetGuardarModalId);
+    modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+</script>
 </body>
 
 </html>

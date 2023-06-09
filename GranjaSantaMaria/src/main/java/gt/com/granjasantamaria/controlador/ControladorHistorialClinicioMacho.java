@@ -11,10 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
 @Controller
 public class ControladorHistorialClinicioMacho {
 
@@ -53,7 +49,7 @@ public class ControladorHistorialClinicioMacho {
         List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
         model.addAttribute("listaGanados", listaGanados);
         historialClinicoMacho = historialClinicioMachoService.encontrarHistorialClinicoMacho(historialClinicoMacho);
-        model.addAttribute("historialClinicoHembra", historialClinicoMacho);
+        model.addAttribute("historialClinicoMacho", historialClinicoMacho);
         return "/pages/modulo-ganado/historial-clinico-macho/modificar-historial-clinico-macho";
     }
 
@@ -70,6 +66,3 @@ public class ControladorHistorialClinicioMacho {
     }
 
 }
-
-
-

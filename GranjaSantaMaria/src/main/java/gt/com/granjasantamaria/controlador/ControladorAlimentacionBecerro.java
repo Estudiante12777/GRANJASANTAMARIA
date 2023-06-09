@@ -36,7 +36,8 @@ public class ControladorAlimentacionBecerro {
                 + "FROM alimentacion_becerro AS a "
                 + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
                 + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho "
-                + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra";
+                + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra "
+                + "AND a.estado_alimentacion_becerro = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerroList", results);
@@ -52,7 +53,9 @@ public class ControladorAlimentacionBecerro {
                 + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
                 + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho "
                 + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra "
-                + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche";
+                + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche "
+                + "AND a.estado_alimentacion_becerro = 1"; // Agrega esta condición para filtrar solo los registros activos
+
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
@@ -105,16 +108,12 @@ public class ControladorAlimentacionBecerro {
         return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
     }
 
-    @GetMapping("/modulo-ganado/alimentacion-becerro/eliminar")
-    public String eliminarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro) {
-        alimentacionBecerroService.eliminarAlimentacionBecerro(alimentacionBecerro);
-        return "redirect:/modulo-ganado/alimentacion-becerro/lista";
-    }
-
-    @GetMapping("/modulo-ganado/alimentacion-becerro/baja")
-    public String darDeBajaAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro) {
+    @GetMapping("/modulo-ganado/alimentacion-becerro/baja/{idAlimentacionBecerro}")
+    public String darDeBajaAlimentacionBecerro(@PathVariable("idAlimentacionBecerro") Long idAlimentacionBecerro) {
+        AlimentacionBecerro alimentacionBecerro = new AlimentacionBecerro();
+        alimentacionBecerro.setIdAlimentacionBecerro(idAlimentacionBecerro);
         alimentacionBecerroService.darDeBajaAlimentacionBecerro(alimentacionBecerro);
-        return "redirect:/modulo-ganado/alimentacion-becerro/lista";
+        return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
     }
 
 }
