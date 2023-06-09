@@ -1,153 +1,158 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-3" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <h5 class="text-center">Alimentacion de becerros</h5>
-        <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
-            <table class="table">
-                <thead class="table-dark">
-                    <th>Becerro</th>
-                    <th>Fecha alimentacion</th>
-                    <th>Cantidad alimentacion mañana</th>
-                    <th>Cantidad alimentacion tarde</th>
-                    <th>Madre del becerro</th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        Editar
-                    </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
-                        Dar baja
-                    </th>
-                </thead>
-                <tr th:each="alimentacionBecerro : ${alimentacionBecerroList}">
-                    <td th:text="${alimentacionBecerro[0]}">Mostrar Nombre del becerro</td>
-                    <td th:text="${alimentacionBecerro[1]}">Mostrar Fecha</td>
-                    <td th:text="${alimentacionBecerro[2]}">Mostrar Cantidad alimentacion mañana</td>
-                    <td th:text="${alimentacionBecerro[3]}">Mostrar Cantidad alimentacion tarde</td>
-                    <td th:text="${alimentacionBecerro[4]}">Mostrar Nombre de la madre del becerro</td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <!-- Botón para abrir el modal de edición -->
-                        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal_' + ${alimentacionBecerro[5]}">
-                            <i class="fa-sharp fa-solid fa-pencil"></i>
-                        </button>
-                        <!-- Modal de edición -->
-                        <div class="modal fade" th:id="'editModal_' + ${alimentacionBecerro[5]}" tabindex="-1"
-                            th:attr="aria-labelledby='editModalLabel_' + ${alimentacionBecerro[5]}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" th:id="'editModalLabel_' + ${alimentacionBecerro[5]}">
-                                            ¿Estás seguro de que deseas editar este registro?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <h5 class="text-center">Alimentacion de becerros y terneros</h5>
+    <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
+        <table class="table">
+            <thead class="table-dark">
+            <th>Becerro</th>
+            <th>Fecha</th>
+            <th>Cantidad mañana</th>
+            <th>Cantidad tarde</th>
+            <th>Total cantidad</th>
+            <th>Madre del becerro</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                Editar
+            </th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                Dar baja
+            </th>
+            </thead>
+            <tr th:each="alimentacionBecerro : ${alimentacionBecerroList}">
+                <td th:text="${alimentacionBecerro[0]}">Mostrar Nombre del becerro</td>
+                <td th:text="${alimentacionBecerro[1]}">Mostrar Fecha</td>
+                <td th:text="${alimentacionBecerro[2]}">Mostrar Cantidad alimentacion mañana</td>
+                <td th:text="${alimentacionBecerro[3]}">Mostrar Cantidad alimentacion tarde</td>
+                <td th:text="${alimentacionBecerro[4]}">Mostrar Total cantidad alimentacion</td>
+                <td th:text="${alimentacionBecerro[5]}">Mostrar Nombre de la madre del becerro</td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de edición -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#editModal_' + ${alimentacionBecerro[6]}">
+                        <i class="fa-sharp fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- Modal de edición -->
+                    <div class="modal fade" th:id="'editModal_' + ${alimentacionBecerro[6]}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${alimentacionBecerro[6]}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" th:id="'editModalLabel_' + ${alimentacionBecerro[6]}">
+                                        ¿Estás seguro de que deseas editar este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerro/editar/{idAlimentacionBecerro}(idAlimentacionBecerro=${alimentacionBecerro[5]})}">Sí,
-                                            quiero editar</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
-                                            cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/alimentacion-becerro/editar/{idAlimentacionBecerro}(idAlimentacionBecerro=${alimentacionBecerro[6]})}">Sí,
+                                        quiero editar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <!-- Botón para abrir el modal de dar baja -->
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#bajaModal_' + ${alimentacionBecerro[5]}">
-                            <i class="fa-sharp fa-solid fa-ban"></i>
-                        </button>
-                        <!-- Modal de dar baja -->
-                        <div class="modal fade" th:id="'bajaModal_' + ${alimentacionBecerro[5]}" tabindex="-1"
-                            th:attr="aria-labelledby='bajaModalLabel_' + ${alimentacionBecerro[5]}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" th:id="'bajaModalLabel_' + ${alimentacionBecerro[5]}">
-                                            ¿Estás seguro de que deseas dar de baja este registro?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de dar baja -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#bajaModal_' + ${alimentacionBecerro[6]}">
+                        <i class="fa-sharp fa-solid fa-ban"></i>
+                    </button>
+                    <!-- Modal de dar baja -->
+                    <div class="modal fade" th:id="'bajaModal_' + ${alimentacionBecerro[6]}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${alimentacionBecerro[6]}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" th:id="'bajaModalLabel_' + ${alimentacionBecerro[6]}">
+                                        ¿Estás seguro de que deseas dar de baja este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para dar de baja el registro -->
-                                        <a class="btn btn-danger"
-                                            th:href="@{/modulo-ganado/alimentacion-becerro/baja/} + ${alimentacionBecerro[5]}">Sí,
-                                            dar de baja</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para dar de baja el registro -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-ganado/alimentacion-becerro/baja/} + ${alimentacionBecerro[6]}">Sí,
+                                        dar de baja</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tfoot></tfoot>
-            </table>
-        </div>
-        <div th:if="${alimentacionBecerroList == null or alimentacionBecerroList.empty}">
-            <h1>Esta hembra no tiene becerros ni terneros, por eso no hay registros de alimentacion</h1>
+                    </div>
+                </td>
+            </tr>
+            <tfoot></tfoot>
+        </table>
+        <div class="py-3">
+            <a class="btn btn-outline-primary btn-lg btn-block"
+               th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/lista}"><i
+                    class="fa-solid fa-arrow-left"></i></a>
         </div>
     </div>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de edición */
-        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de edición */
+    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        editButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de edición
-            var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+        // Crea un identificador único para el modal de edición
+        var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de dar baja */
-        var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de dar baja */
+    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        deleteButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    deleteButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de dar baja
-            var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+        // Crea un identificador único para el modal de dar baja
+        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
 </body>
 
 </html>

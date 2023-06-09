@@ -16,9 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author gerso
- */
 @Controller
 public class ControladorAlimentacionBecerro {
 
@@ -34,7 +31,7 @@ public class ControladorAlimentacionBecerro {
     @GetMapping("/modulo-ganado/alimentacion-becerro")
     public String obtenerListadoAlimentacionBecerros(Model model) {
         String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
-                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, g.nombre_ganado_hembra AS nombre_madre, "
+                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerro, g.nombre_ganado_hembra AS nombre_madre, "
                 + "a.id_alimentacion_becerro "
                 + "FROM alimentacion_becerro AS a "
                 + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
@@ -49,7 +46,7 @@ public class ControladorAlimentacionBecerro {
     @GetMapping("/modulo-ganado/alimentacion-becerro/lista")
     public String obtenerListadoAlimentacionBecerros(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
         String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
-                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, g.nombre_ganado_hembra AS nombre_madre, "
+                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerro, g.nombre_ganado_hembra AS nombre_madre, "
                 + "a.id_alimentacion_becerro "
                 + "FROM alimentacion_becerro AS a "
                 + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "

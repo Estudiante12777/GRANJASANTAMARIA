@@ -29,7 +29,7 @@ public class ControladorAlimentacionBecerra {
     @GetMapping("/modulo-ganado/alimentacion-becerra")
     public String obtenerListadoAlimentacionBecerras(Model model) {
         String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, " +
-                "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, " +
+                "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, " +
                 "m.nombre_ganado_hembra AS madreBecerra, " +
                 "a.id_alimentacion_becerra " +
                 "FROM alimentacion_becerra AS a " +
@@ -45,7 +45,7 @@ public class ControladorAlimentacionBecerra {
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
         String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, " +
-                "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, " +
+                "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, " +
                 "m.nombre_ganado_hembra AS madreBecerra, " +
                 "a.id_alimentacion_becerra " +
                 "FROM alimentacion_becerra AS a " +

@@ -1,103 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-3" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <h5 class="text-center">Alimentacion de becerralimentacion-becerras</h5>
-        <div th:if="${alimentacionBecerraList != null and !alimentacionBecerraList.empty}">
-            <table class="table">
-                <thead class="table-dark">
-                    <th>Becerra</th>
-                    <th>Fecha alimentacion</th>
-                    <th>Cantidad alimentacion mañana</th>
-                    <th>Cantidad alimentacion tarde</th>
-                    <th>Madre de la becerra</th>
-                    <th>Editar</th>
-                    <th>Dar baja</th>
-                </thead>
-                <tr th:each="alimentacionBecerra : ${alimentacionBecerraList}">
-                    <td th:text="${alimentacionBecerra[0]}">Mostrar Nombre del becerralimentacion-becerra</td>
-                    <td th:text="${alimentacionBecerra[1]}">Mostrar Fecha</td>
-                    <td th:text="${alimentacionBecerra[2]}">Mostrar Cantidad alimentacion mañana</td>
-                    <td th:text="${alimentacionBecerra[3]}">Mostrar Cantidad alimentacion tarde</td>
-                    <td th:text="${alimentacionBecerra[4]}">Mostrar nombre de la madre</td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <!-- Botón para abrir el modal de edición -->
-                        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal_' + ${alimentacionBecerra[5]}">
-                            <i class="fa-sharp fa-solid fa-pencil"></i>
-                        </button>
-                        <!-- Modal de edición -->
-                        <div class="modal fade" th:id="'editModal_' + ${alimentacionBecerra[5]}" tabindex="-1"
-                            th:attr="aria-labelledby='editModalLabel_' + ${alimentacionBecerra[5]}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" th:id="'editModalLabel_' + ${alimentacionBecerra[5]}">
-                                            ¿Estás seguro de que deseas editar este registro?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <h5 class="text-center">Alimentacion de becerras y terneras</h5>
+    <div th:if="${alimentacionBecerraList != null and !alimentacionBecerraList.empty}">
+        <table class="table">
+            <thead class="table-dark">
+            <th>Becerra</th>
+            <th>Fecha</th>
+            <th>Cantidad mañana</th>
+            <th>Cantidad tarde</th>
+            <th>Total cantidad</th>
+            <th>Madre de la becerra</th>
+            <th>Editar</th>
+            <th>Dar baja</th>
+            </thead>
+            <tr th:each="alimentacionBecerra : ${alimentacionBecerraList}">
+                <td th:text="${alimentacionBecerra[0]}">Mostrar Nombre del becerralimentacion-becerra</td>
+                <td th:text="${alimentacionBecerra[1]}">Mostrar Fecha</td>
+                <td th:text="${alimentacionBecerra[2]}">Mostrar Cantidad alimentacion mañana</td>
+                <td th:text="${alimentacionBecerra[3]}">Mostrar Cantidad alimentacion tarde</td>
+                <td th:text="${alimentacionBecerra[4]}">Mostrar total cantidad alimentacion</td>
+                <td th:text="${alimentacionBecerra[5]}">Mostrar nombre de la madre</td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de edición -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#editModal_' + ${alimentacionBecerra[6]}">
+                        <i class="fa-sharp fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- Modal de edición -->
+                    <div class="modal fade" th:id="'editModal_' + ${alimentacionBecerra[6]}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${alimentacionBecerra[6]}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" th:id="'editModalLabel_' + ${alimentacionBecerra[6]}">
+                                        ¿Estás seguro de que deseas editar este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacionBecerra[5]})}">Sí,
-                                            quiero editar</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
-                                            cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacionBecerra[6]})}">Sí,
+                                        quiero editar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <!-- Botón para abrir el modal de dar baja -->
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#bajaModal_' + ${alimentacionBecerra[5]}">
-                            <i class="fa-sharp fa-solid fa-ban"></i>
-                        </button>
-                        <!-- Modal de dar baja -->
-                        <div class="modal fade" th:id="'bajaModal_' + ${alimentacionBecerra[5]}" tabindex="-1"
-                            th:attr="aria-labelledby='bajaModalLabel_' + ${alimentacionBecerra[5]}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" th:id="'bajaModalLabel_' + ${alimentacionBecerra[5]}">
-                                            ¿Estás seguro de que deseas dar de baja este registro?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de dar baja -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#bajaModal_' + ${alimentacionBecerra[6]}">
+                        <i class="fa-sharp fa-solid fa-ban"></i>
+                    </button>
+                    <!-- Modal de dar baja -->
+                    <div class="modal fade" th:id="'bajaModal_' + ${alimentacionBecerra[6]}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${alimentacionBecerra[6]}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" th:id="'bajaModalLabel_' + ${alimentacionBecerra[6]}">
+                                        ¿Estás seguro de que deseas dar de baja este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para dar de baja el registro -->
-                                        <a class="btn btn-danger"
-                                            th:href="@{/modulo-ganado/alimentacion-becerra/baja/} + ${alimentacionBecerra[5]}">Sí,
-                                            dar de baja</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para dar de baja el registro -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-ganado/alimentacion-becerra/baja/} + ${alimentacionBecerra[6]}">Sí,
+                                        dar de baja</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
-                <tfoot></tfoot>
-            </table>
-        </div>
-        <div th:if="${alimentacionBecerraList == null or alimentacionBecerraList.empty}">
-            <h1>Esta hembra no tiene becerralimentacion-becerras ni terneros, por eso no hay registros de alimentacion</h1>
+                    </div>
+                </td>
+            </tr>
+            <tfoot></tfoot>
+        </table>
+        <div class="py-3">
+            <a class="btn btn-outline-primary btn-lg btn-block"
+               th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/lista}"><i
+                    class="fa-solid fa-arrow-left"></i></a>
         </div>
     </div>
+</div>
 </body>
 
 </html>

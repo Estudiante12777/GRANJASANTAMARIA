@@ -7,7 +7,6 @@
 </head>
 
 <body>
-<!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
 <div class="container-fluid py-5" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
@@ -76,7 +75,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title"
                                         th:id="'alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
-                                        ¿Estás seguro de que deseas agregar un registro de alimentacion becerro?
+                                        ¿Estás seguro de que deseas agregar un registro de alimentacion?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -116,7 +115,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title"
                                         th:id="'verModalAlimentacion_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
-                                        ¿Estás seguro de que deseas ver el registro de alimentacion becerro?
+                                        ¿Estás seguro de que deseas ver el registro de alimentacion?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>

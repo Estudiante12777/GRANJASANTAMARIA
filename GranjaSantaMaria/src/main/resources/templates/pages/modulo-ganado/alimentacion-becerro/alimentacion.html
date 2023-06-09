@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-3" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <h5 class="text-center">Alimentación de becerras y terneras</h5>
-        <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
-            <table class="table">
-                <thead class="table-dark">
-                    <th>Becerra</th>
-                    <th>Fecha de alimentación</th>
-                    <th>Cantidad de alimentación en la mañana</th>
-                    <th>Cantidad de alimentación en la tarde</th>
-                    <th>Madre de la Becerra</th>
-                </thead>
-                <tr th:each="alimentacion : ${alimentacionBecerroList}">
-                    <td th:text="${alimentacion[0]}">Mostrar Nombre de la Becerra</td>
-                    <td th:text="${alimentacion[1]}">Mostrar Fecha de Alimentación</td>
-                    <td th:text="${alimentacion[2]}">Mostrar Cantidad de Alimentación en la mañana</td>
-                    <td th:text="${alimentacion[3]}">Mostrar Cantidad de Alimentación en la tarde</td>
-                    <td th:text="${alimentacion[4]}">Mostrar Madre de la Becerra</td>
-                </tr>
-            </table>
-        </div>
-        <div th:if="${alimentacionBecerroList == null or alimentacionBecerroList.empty}">
-            <h1>No hay registros de alimentación de becerras</h1>
-        </div>
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <h5 class="text-center">Alimentación de becerros y terneros</h5>
+    <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
+        <table class="table">
+            <thead class="table-dark">
+            <th>Becerro</th>
+            <th>Fecha</th>
+            <th>Cantidad mañana</th>
+            <th>Cantidad tarde</th>
+            <th>Total cantidad</th>
+            <th>Madre del Becerro</th>
+            </thead>
+            <tr th:each="alimentacion : ${alimentacionBecerroList}">
+                <td th:text="${alimentacion[0]}">Mostrar Nombre del becerro</td>
+                <td th:text="${alimentacion[1]}">Mostrar Fecha de Alimentación</td>
+                <td th:text="${alimentacion[2]}">Mostrar Cantidad de Alimentación en la mañana</td>
+                <td th:text="${alimentacion[3]}">Mostrar Cantidad de Alimentación en la tarde</td>
+                <td th:text="${alimentacion[4]}">Mostrar total cantidad alimentacion</td>
+                <td th:text="${alimentacion[5]}">Mostrar Madre del becerro</td>
+            </tr>
+        </table>
     </div>
+</div>
 </body>
 
 </html>
