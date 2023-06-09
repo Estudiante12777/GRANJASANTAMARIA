@@ -27,13 +27,17 @@ public class ControladorProduccionDiaraLeche {
     private GanadoHembraService ganadoHembraService;
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/lista")
-    public String listaProduccionDiariaLeche(Model model, @RequestParam(defaultValue = "0") int pagina) {
-        PageRequest pageRequest = PageRequest.of(pagina, 8);
-        Page<ProduccionDiariaLeche> produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginado(pageRequest);
-        model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
-        var listaProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaTotalProduccionDiariaLeche();
+    public String listaProduccionDiariaLeche(Model model) {
+        var listaProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaProduccionDiariaLeche();
         model.addAttribute("listaProduccionDiariaLeche", listaProduccionDiariaLeche);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/produccion-diaria-leche";
+    }
+
+    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche")
+    public String listaTotalProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
+        var listaTotalProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaProduccionDiariaLeche();
+        model.addAttribute("listaTotalProduccionDiariaLeche", listaTotalProduccionDiariaLeche);
+        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-leche")
@@ -48,13 +52,6 @@ public class ControladorProduccionDiaraLeche {
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-leche";
     }
 
-    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche")
-    public String listaTotalProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        var listaTotalProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaProduccionDiariaLeche();
-        model.addAttribute("listaTotalProduccionDiariaLeche", listaTotalProduccionDiariaLeche);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche";
-    }
-
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha")
     public String listaTotalProduccionFecha(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         var listaTotalProduccionFecha = produccionDiariaLecheService.obtenerListaTotalProduccionLeche();
@@ -63,13 +60,17 @@ public class ControladorProduccionDiaraLeche {
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/encontrar-total-produccion-fecha")
-    public String encontrarTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, Model model) {
+    public String encontrarTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(defaultValue = "0") int pagina, Model model) {
+        int pageSize = 10; // Tamaño de cada página
+        PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
-        // Llamar al servicio que hace la consulta
-        List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
-        // Añadir el resultado al modelo
+        // Llamar al servicio que hace la consulta paginada
+        Page<ProduccionDiariaLeche> produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginado(pageRequest);
+        List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLechePage.getContent(); // Obtener los elementos de la página actual
+        // Añadir los resultados al modelo
+        model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
         model.addAttribute("totalProduccionesFecha", totalProduccionesFecha);
         // Devolver el nombre de la vista
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";

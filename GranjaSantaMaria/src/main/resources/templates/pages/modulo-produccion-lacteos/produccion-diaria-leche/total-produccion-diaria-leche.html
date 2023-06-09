@@ -10,9 +10,7 @@
 <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
 <div class="container-fluid py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-    <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="fs-1 text-center mb-3">
-        <label>Este es el total de la produccion de leche en el día</label>
-    </div>
+    <h5 class="text-center">Total de la produccion diaria de leche</h5>
     <div th:if="${listaTotalProduccionDiariaLeche != null and !listaTotalProduccionDiariaLeche.empty}">
         <table class="table">
             <thead class="table-dark">
@@ -57,9 +55,6 @@
                th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/lista}"><i
                     class="fa-solid fa-arrow-left"></i></a>
         </div>
-    </div>
-    <div th:if="${listaTotalProduccionDiariaLeche == null or listaTotalProduccionDiariaLeche.empty}">
-        <h1>Se muestra el total de produccion diaria de leche</h1>
     </div>
 </div>
 </body>

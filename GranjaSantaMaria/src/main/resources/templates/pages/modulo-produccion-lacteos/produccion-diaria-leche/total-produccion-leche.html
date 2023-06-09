@@ -26,7 +26,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="produccionDiariaLeche, iterStat : ${listaTotalProduccionLeche}" th:if="${iterStat.index lt 8}">
+            <tr th:each="produccionDiariaLeche, iterStat : ${listaTotalProduccionLeche}" th:if="${iterStat.index lt 10}">
                 <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">Mostrar Nombre del ganado
                 </td>
                 <td th:text="${produccionDiariaLeche.produccionManianaLeche}">Mostrar Producción de leche por la

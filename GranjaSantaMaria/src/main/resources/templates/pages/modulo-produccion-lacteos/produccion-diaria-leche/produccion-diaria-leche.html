@@ -251,33 +251,6 @@
             </tr>
             <tfoot></tfoot>
         </table>
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <!-- Si hay una página anterior, mostrar el enlace -->
-                <li th:if="${produccionDiariaLechePage.hasPrevious()}" class="page-item">
-                    <a class="page-link"
-                       th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/lista(pagina=${produccionDiariaLechePage.getNumber()-1})}"
-                       aria-label="Previous">
-                        <span aria-hidden="true">«</span>
-                    </a>
-                </li>
-                <!-- Mostrar el número de la página actual -->
-                <li class="page-item active"><a class="page-link"
-                                                th:text="${produccionDiariaLechePage.getNumber()+1}"></a>
-                </li>
-                <!-- Si hay una página siguiente, mostrar el enlace -->
-                <li th:if="${produccionDiariaLechePage.hasNext()}" class="page-item">
-                    <a class="page-link"
-                       th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/lista(pagina=${produccionDiariaLechePage.getNumber()+1})}"
-                       aria-label="Next">
-                        <span aria-hidden="true">»</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div th:if="${listaProduccionDiariaLeche == null or listaProduccionDiariaLeche.empty}">
-        <h1>Solo se muestran los registros de produccion diaria de este dia!</h1>
     </div>
 </div>
 <script th:inline="javascript">
