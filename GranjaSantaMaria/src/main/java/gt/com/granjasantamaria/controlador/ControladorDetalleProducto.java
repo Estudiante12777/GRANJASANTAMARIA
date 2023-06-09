@@ -2,18 +2,16 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+
 import java.util.List;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
 @Controller
 public class ControladorDetalleProducto {
 
@@ -73,7 +71,7 @@ public class ControladorDetalleProducto {
         List<DescripcionProducto> listadoDescripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
         model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
         detalleProducto = detalleProductoService.encontrarDetalleProducto(detalleProducto);
-        model.addAttribute("producto", detalleProducto);
+        model.addAttribute("detalleProducto", detalleProducto);
         return "/pages/modulo-producto/detalle-producto/modificar-detalle-producto";
     }
 

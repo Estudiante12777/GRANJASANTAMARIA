@@ -1,155 +1,154 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <div class="container py-5" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-sm-8 col-12">
-                <div class="card bg-light text-dark">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Cliente</h5>
-                        <form th:action="@{/modulo-persona/cliente/guardar}" method="post" th:object="${cliente}"
-                            id="guardarFormulario">
-                            <input type="hidden" name="idCliente" th:field="*{idCliente}" />
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="nombreCliente">Nombre cliente:</label>
-                                <input class="form-control form-control-lg" type="text" required name="nombreCliente"
-                                    th:field="*{nombreCliente}" />
-                                <span th:if="${#fields.hasErrors('nombreCliente')}" class="text-danger"
-                                    th:errors="*{nombreCliente}">Error nombre del cliente</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="apellidoCliente">Apellido cliente:</label>
-                                <input class="form-control form-control-lg" type="text" required name="apellidoCliente"
-                                    th:field="*{apellidoCliente}" />
-                                <span th:if="${#fields.hasErrors('apellidoCliente')}" class="text-danger"
-                                    th:errors="*{apellidoCliente}">Error apellido del cliente</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="telefonoCliente">Telefono:</label>
-                                <input class="form-control form-control-lg" type="tel" required name="telefonoCliente"
-                                    th:field="*{telefonoCliente}" />
-                                <span th:if="${#fields.hasErrors('telefonoCliente')}" class="text-danger"
-                                    th:errors="*{telefonoCliente}">Error apellido del cliente</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="direccionCliente">Direccion
-                                    cliente:</label>
-                                <input class="form-control form-control-lg" type="text" required name="direccionCliente"
-                                    th:field="*{direccionCliente}" />
-                                <span th:if="${#fields.hasErrors('direccionCliente')}" class="text-danger"
-                                    th:errors="*{direccionCliente}">Error direccion del cliente</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg"
-                                    for="municipio.nombreMunicipio">Municipio:</label>
-                                <div class="col-sm-8">
-                                    <select th:field="*{municipio.idMunicipio}" name="municipio.nombreMunicipio"
+<div class="container py-5" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-12">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Cliente</h5>
+                    <form th:action="@{/modulo-persona/cliente/guardar}" method="post" th:object="${cliente}"
+                          id="guardarFormulario">
+                        <input type="hidden" name="idCliente" th:field="*{idCliente}"/>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="nombreCliente">Nombre cliente:</label>
+                            <input class="form-control form-control-lg" type="text" required name="nombreCliente"
+                                   th:field="*{nombreCliente}"/>
+                            <span th:if="${#fields.hasErrors('nombreCliente')}" class="text-danger"
+                                  th:errors="*{nombreCliente}">Error nombre del cliente</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="apellidoCliente">Apellido cliente:</label>
+                            <input class="form-control form-control-lg" type="text" required name="apellidoCliente"
+                                   th:field="*{apellidoCliente}"/>
+                            <span th:if="${#fields.hasErrors('apellidoCliente')}" class="text-danger"
+                                  th:errors="*{apellidoCliente}">Error apellido del cliente</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="telefonoCliente">Telefono:</label>
+                            <input class="form-control form-control-lg" type="tel" required name="telefonoCliente"
+                                   th:field="*{telefonoCliente}"/>
+                            <span th:if="${#fields.hasErrors('telefonoCliente')}" class="text-danger"
+                                  th:errors="*{telefonoCliente}">Error apellido del cliente</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="direccionCliente">Direccion
+                                cliente:</label>
+                            <input class="form-control form-control-lg" type="text" required name="direccionCliente"
+                                   th:field="*{direccionCliente}"/>
+                            <span th:if="${#fields.hasErrors('direccionCliente')}" class="text-danger"
+                                  th:errors="*{direccionCliente}">Error direccion del cliente</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
+                                   for="municipio.nombreMunicipio">Municipio:</label>
+                            <div class="col-sm-8">
+                                <select th:field="*{municipio.idMunicipio}" name="municipio.nombreMunicipio"
                                         required class="form-select form-select-lg">
-                                        <option th:each="municipio : ${listadoMunicipios}"
+                                    <option th:each="municipio : ${listadoMunicipios}"
                                             th:value="${municipio.idMunicipio}" th:text="${municipio.nombreMunicipio}">
-                                        </option>
-                                        </option>
-                                    </select>
-                                    <span th:if="${#fields.hasErrors('municipio.nombreMunicipio')}" class="text-danger"
-                                        th:errors="*{municipio.nombreMunicipio}">Error
+                                    </option>
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('municipio.nombreMunicipio')}" class="text-danger"
+                                      th:errors="*{municipio.nombreMunicipio}">Error
                                         Municipio</span>
-                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg"
-                                    for="departamento.nombreDepartamento">Departamento:</label>
-                                <div class="col-sm-8">
-                                    <select th:field="*{departamento.idDepartamento}"
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
+                                   for="departamento.nombreDepartamento">Departamento:</label>
+                            <div class="col-sm-8">
+                                <select th:field="*{departamento.idDepartamento}"
                                         name="departamento.nombreDepartamento" required
                                         class="form-select form-select-lg">
-                                        <option th:each="departamento : ${listadoDepartamentos}"
+                                    <option th:each="departamento : ${listadoDepartamentos}"
                                             th:value="${departamento.idDepartamento}"
                                             th:text="${departamento.nombreDepartamento}">
-                                        </option>
-                                        </option>
-                                    </select>
-                                    <span th:if="${#fields.hasErrors('departamento.nombreDepartamento')}"
-                                        class="text-danger" th:errors="*{departamento.nombreDepartamento}">Error
+                                    </option>
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('departamento.nombreDepartamento')}"
+                                      class="text-danger" th:errors="*{departamento.nombreDepartamento}">Error
                                         Departamento</span>
-                                </div>
                             </div>
-                            <input type="hidden" name="estadoCliente" th:field="*{estadoCliente}">
-                            <div class="row">
-                                <div class="col-sm-6 mb-3">
-                                    <a class="btn btn-outline-primary btn-lg btn-block"
-                                        th:href="@{/modulo-persona/cliente/lista}"><i
-                                            class="fa-solid fa-arrow-left"></i></a>
-                                </div>
-                                <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
-                                    class="col-sm-6 mb-3">
-                                    <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                        </div>
+                        <input type="hidden" name="estadoCliente" th:field="*{estadoCliente}">
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <a class="btn btn-outline-primary btn-lg btn-block"
+                                   th:href="@{/modulo-persona/cliente/lista}"><i
+                                        class="fa-solid fa-arrow-left"></i></a>
+                            </div>
+                            <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                                 class="col-sm-6 mb-3">
+                                <button type="button" class="btn btn-outline-success btn-lg btn-block"
                                         data-bs-toggle="modal" data-bs-target="#guardarModal">
-                                        <i class="fa-solid fa-floppy-disk"></i> Guardar
-                                    </button>
-                                    <div class="modal fade" id="guardarModal" tabindex="-1"
-                                        aria-labelledby="guardarModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
-                                                        ganado</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                </button>
+                                <div class="modal fade" id="guardarModal" tabindex="-1"
+                                     aria-labelledby="guardarModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar cliente</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>¿Estás seguro de que deseas guardar esta categoría de ganado?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <!-- Este es el botón que realiza la acción de guardar -->
-                                                    <button type="submit" class="btn btn-success" name="guardar">
-                                                        Guardar
-                                                    </button>
-                                                    <!-- Este es el botón que cierra el modal -->
-                                                    <button type="button" class="btn btn-secondary"
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro de que deseas guardar este cliente?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- Este es el botón que realiza la acción de guardar -->
+                                                <button type="submit" class="btn btn-success" name="guardar">
+                                                    Guardar
+                                                </button>
+                                                <!-- Este es el botón que cierra el modal -->
+                                                <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">
-                                                        Cancelar
-                                                    </button>
-                                                </div>
+                                                    Cancelar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <script th:inline="javascript">
-        /* Generar ID único para el modal de guardar */
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para el modal de guardar */
 
-        // Obtén el botón de guardar
-        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    // Obtén el botón de guardar
+    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
 
-        // Obtén el atributo 'data-bs-target' del botón
-        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    // Obtén el atributo 'data-bs-target' del botón
+    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
 
-        // Obtén el atributo 'id' del botón
-        var modalIdGuardar = guardarButton.getAttribute("id");
+    // Obtén el atributo 'id' del botón
+    var modalIdGuardar = guardarButton.getAttribute("id");
 
-        // Crea un identificador único para el modal de guardar
-        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    // Crea un identificador único para el modal de guardar
+    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
 
-        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+    // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+    guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
 
-        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modalGuardar = document.querySelector(targetGuardarModalId);
-        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
-    </script>
+    // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+    var modalGuardar = document.querySelector(targetGuardarModalId);
+    modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+</script>
 </body>
 
 </html>

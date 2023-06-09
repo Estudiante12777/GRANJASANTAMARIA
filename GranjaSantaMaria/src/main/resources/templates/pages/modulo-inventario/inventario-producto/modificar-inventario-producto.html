@@ -1,173 +1,172 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <div class="container py-5" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-sm-8 col-12">
-                <div class="card bg-light text-dark">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Inventario</h5>
-                        <form th:action="@{/modulo-inventario/inventario-producto/guardar}" method="post"
-                            th:object="${inventarioProducto}" id="guardarFormulario">
-                            <input type="hidden" name="idInventarioProducto" th:field="*{idInventarioProducto}" />
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg"
-                                    for="detalleProducto.idDetalleProducto">Producto</label>
-                                <div class="col-sm-8">
-                                    <select id="detalleProducto" name="detalleProducto.idDetalleProducto"
-                                        class="form-control" required>
-                                        <option value="">Seleccione un producto</option>
-                                        <option th:each="detalleProducto : ${listaDetalleProductos}"
+<div class="container py-5" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-12">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Inventario</h5>
+                    <form th:action="@{/modulo-inventario/inventario-producto/guardar}" method="post"
+                          th:object="${inventarioProducto}" id="guardarFormulario">
+                        <input type="hidden" name="idInventarioProducto" th:field="*{idInventarioProducto}"/>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
+                                   for="detalleProducto.idDetalleProducto">Producto</label>
+                            <div class="col-sm-8">
+                                <select id="detalleProducto" name="detalleProducto.idDetalleProducto"
+                                        class="form-control" th:field="*{detalleProducto.idDetalleProducto}" required>
+                                    <option th:each="detalleProducto : ${listaDetalleProductos}"
                                             th:value="${detalleProducto.idDetalleProducto}"
                                             th:text="${detalleProducto.producto.nombreProducto + ' (' + detalleProducto.medidaProducto.nombreMedidaProducto + ') - ' + detalleProducto.contenedorProducto.nombreContenedorProducto + ' - ' + detalleProducto.descripcionProducto.nombreDescripcionProducto}"
                                             th:selected="${detalleProducto.idDetalleProducto == detalleProductoSeleccionado}">
-                                        </option>
-                                    </select>
-                                    <span th:if="${#fields.hasErrors('detalleProducto.idDetalleProducto')}"
-                                        class="text-danger" th:errors="*{detalleProducto.idDetalleProducto}">Error
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('detalleProducto.idDetalleProducto')}"
+                                      class="text-danger" th:errors="*{detalleProducto.idDetalleProducto}">Error
                                         Tipo de ganado</span>
-                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="fechaInventarioProducto">Fecha
-                                    inventario:</label>
-                                <input class="form-control form-control-lg" type="date" required
-                                    name="fechaInventarioProducto" th:field="*{fechaInventarioProducto}" />
-                                <span th:if="${#fields.hasErrors('fechaInventarioProducto')}" class="text-danger"
-                                    th:errors="*{fechaInventarioProducto}">Error fecha de la produccion de leche</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="fechaInventarioProducto">Fecha
+                                inventario:</label>
+                            <input class="form-control form-control-lg" type="date" required
+                                   name="fechaInventarioProducto" th:field="*{fechaInventarioProducto}"/>
+                            <span th:if="${#fields.hasErrors('fechaInventarioProducto')}" class="text-danger"
+                                  th:errors="*{fechaInventarioProducto}">Error fecha de la produccion de leche</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="cantidadIngresadaProducto">Cantidad
+                                productos ingresados
+                            </label>
+                            <input type="number" class="form-control form-control-lg" required
+                                   name="cantidadIngresadaProducto" th:field="*{cantidadIngresadaProducto}">
+                            <span th:if="${#fields.hasErrors('cantidadIngresadaProducto')}" class="text-danger"
+                                  th:errors="*{cantidadIngresadaProducto}">Error</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="cantidadEntradaProducto">
+                                Cantidad entrada producto
+                            </label>
+                            <input type="number" class="form-control form-control-lg" required
+                                   name="cantidadEntradaProducto" th:field="*{cantidadEntradaProducto}">
+                            <span th:if="${#fields.hasErrors('cantidadEntradaProducto')}" class="text-danger"
+                                  th:errors="*{cantidadEntradaProducto}">Error</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="cantidadSalidaProducto">
+                                Cantidad salida producto
+                            </label>
+                            <input type="number" class="form-control form-control-lg" required
+                                   name="cantidadSalidaProducto" th:field="*{cantidadSalidaProducto}">
+                            <span th:if="${#fields.hasErrors('cantidadSalidaProducto')}" class="text-danger"
+                                  th:errors="*{cantidadSalidaProducto}">Error</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="cantidadFinalProducto">
+                                Cantidad final productos
+                            </label>
+                            <input type="number" step="0.01" class="form-control form-control-lg" required
+                                   name="cantidadFinalProducto" th:field="*{cantidadFinalProducto}">
+                            <span th:if="${#fields.hasErrors('cantidadFinalProducto')}" class="text-danger"
+                                  th:errors="*{cantidadFinalProducto}">Error</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="fechaIngreso">Fecha
+                                inventario:</label>
+                            <input class="form-control form-control-lg" type="date" required name="fechaIngreso"
+                                   th:field="*{fechaIngreso}"/>
+                            <span th:if="${#fields.hasErrors('fechaIngreso')}" class="text-danger"
+                                  th:errors="*{fechaIngreso}">Error fecha de la produccion de leche</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="cantidadVendidaHastaHoy">
+                                Cantidad Venidada hasta hoy
+                            </label>
+                            <input type="number" step="0.01" class="form-control form-control-lg" required
+                                   name="cantidadVendidaHastaHoy" th:field="*{cantidadVendidaHastaHoy}">
+                            <span th:if="${#fields.hasErrors('cantidadVendidaHastaHoy')}" class="text-danger"
+                                  th:errors="*{cantidadVendidaHastaHoy}">Error</span>
+                        </div>
+                        <input type="hidden" name="estadoInventarioProducto"
+                               th:field="*{estadoInventarioProducto}"/>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a class="btn btn-outline-primary btn-lg btn-block"
+                                   th:href="@{/modulo-inventario/inventario-producto/lista}"><i
+                                        class="fa-solid fa-arrow-left"></i></a>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="cantidadIngresadaProducto">Cantidad
-                                    productos ingresados
-                                </label>
-                                <input type="number" class="form-control form-control-lg" required
-                                    name="cantidadIngresadaProducto" th:field="*{cantidadIngresadaProducto}">
-                                <span th:if="${#fields.hasErrors('cantidadIngresadaProducto')}" class="text-danger"
-                                    th:errors="*{cantidadIngresadaProducto}">Error</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="cantidadEntradaProducto">
-                                    Cantidad entrada producto
-                                </label>
-                                <input type="number" class="form-control form-control-lg" required
-                                    name="cantidadEntradaProducto" th:field="*{cantidadEntradaProducto}">
-                                <span th:if="${#fields.hasErrors('cantidadEntradaProducto')}" class="text-danger"
-                                    th:errors="*{cantidadEntradaProducto}">Error</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="cantidadSalidaProducto">
-                                    Cantidad salida producto
-                                </label>
-                                <input type="number" class="form-control form-control-lg" required
-                                    name="cantidadSalidaProducto" th:field="*{cantidadSalidaProducto}">
-                                <span th:if="${#fields.hasErrors('cantidadSalidaProducto')}" class="text-danger"
-                                    th:errors="*{cantidadSalidaProducto}">Error</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="cantidadFinalProducto">Produccion de
-                                    Cantidad final productos
-                                </label>
-                                <input type="number" step="0.01" class="form-control form-control-lg" required
-                                    name="cantidadFinalProducto" th:field="*{cantidadFinalProducto}">
-                                <span th:if="${#fields.hasErrors('cantidadFinalProducto')}" class="text-danger"
-                                    th:errors="*{cantidadFinalProducto}">Error</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="fechaIngreso">Fecha
-                                    inventario:</label>
-                                <input class="form-control form-control-lg" type="date" required name="fechaIngreso"
-                                    th:field="*{fechaIngreso}" />
-                                <span th:if="${#fields.hasErrors('fechaIngreso')}" class="text-danger"
-                                    th:errors="*{fechaIngreso}">Error fecha de la produccion de leche</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="cantidadVendidaHastaHoy">
-                                    Cantidad Venidada hasta hoy productos
-                                </label>
-                                <input type="number" step="0.01" class="form-control form-control-lg" required
-                                    name="cantidadVendidaHastaHoy" th:field="*{cantidadVendidaHastaHoy}">
-                                <span th:if="${#fields.hasErrors('cantidadVendidaHastaHoy')}" class="text-danger"
-                                    th:errors="*{cantidadVendidaHastaHoy}">Error</span>
-                            </div>
-                            <input type="hidden" name="estadoInventarioProducto"
-                                th:field="*{estadoInventarioProducto}" />
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <a class="btn btn-outline-primary btn-lg btn-block"
-                                        th:href="@{/modulo-inventario/inventario-producto/lista}"><i
-                                            class="fa-solid fa-arrow-left"></i></a>
-                                </div>
-                                <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
-                                    class="col-sm-6 mb-3">
-                                    <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                            <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                                 class="col-sm-6 mb-3">
+                                <button type="button" class="btn btn-outline-success btn-lg btn-block"
                                         data-bs-toggle="modal" data-bs-target="#guardarModal">
-                                        <i class="fa-solid fa-floppy-disk"></i> Guardar
-                                    </button>
-                                    <div class="modal fade" id="guardarModal" tabindex="-1"
-                                        aria-labelledby="guardarModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="guardarModalLabel">Agregar al inventario
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                </button>
+                                <div class="modal fade" id="guardarModal" tabindex="-1"
+                                     aria-labelledby="guardarModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="guardarModalLabel">Agregar al inventario
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>¿Estás seguro de que deseas guardar este registro en el
-                                                        inventario?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <!-- Este es el botón que realiza la acción de guardar -->
-                                                    <button type="submit" class="btn btn-success" name="guardar">
-                                                        Guardar
-                                                    </button>
-                                                    <!-- Este es el botón que cierra el modal -->
-                                                    <button type="button" class="btn btn-secondary"
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro de que deseas guardar este registro en el
+                                                    inventario?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- Este es el botón que realiza la acción de guardar -->
+                                                <button type="submit" class="btn btn-success" name="guardar">
+                                                    Guardar
+                                                </button>
+                                                <!-- Este es el botón que cierra el modal -->
+                                                <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">
-                                                        Cancelar
-                                                    </button>
-                                                </div>
+                                                    Cancelar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <script th:inline="javascript">
-        /* Generar ID único para el modal de guardar */
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para el modal de guardar */
 
-        // Obtén el botón de guardar
-        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    // Obtén el botón de guardar
+    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
 
-        // Obtén el atributo 'data-bs-target' del botón
-        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    // Obtén el atributo 'data-bs-target' del botón
+    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
 
-        // Obtén el atributo 'id' del botón
-        var modalIdGuardar = guardarButton.getAttribute("id");
+    // Obtén el atributo 'id' del botón
+    var modalIdGuardar = guardarButton.getAttribute("id");
 
-        // Crea un identificador único para el modal de guardar
-        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    // Crea un identificador único para el modal de guardar
+    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
 
-        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+    // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+    guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
 
-        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modalGuardar = document.querySelector(targetGuardarModalId);
-        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
-    </script>
+    // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+    var modalGuardar = document.querySelector(targetGuardarModalId);
+    modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+</script>
 </body>
 
 </html>

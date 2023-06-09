@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.controlador;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,10 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
-/**
- *
- * @author gerso
- */
 @Controller
 public class ControladorContenedorProducto {
 
@@ -44,7 +41,7 @@ public class ControladorContenedorProducto {
     @GetMapping("/modulo-producto/contenedor-producto/editar/{idContenedorProducto}")
     public String editarContenedorProducto(ContenedorProducto contenedorProducto, Model model) {
         contenedorProducto = contenedorProductoService.encontrarContenedorProducto(contenedorProducto);
-        model.addAttribute("medidaProducto", contenedorProducto);
+        model.addAttribute("contenedorProducto", contenedorProducto);
         return "/pages/modulo-producto/contenedor-producto/modificar-contenedor-producto";
     }
 

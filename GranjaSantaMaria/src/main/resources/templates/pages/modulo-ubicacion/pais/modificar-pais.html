@@ -18,7 +18,7 @@
                             id="guardarFormulario">
                             <input type="hidden" name="idPais" th:field="*{idPais}" />
                             <div class="mb-3">
-                                <label class="form-label form-label-lg" for="nombrePais">Nombre del pais:</label>
+                                <label class="form-label form-label-lg" for="nombrePais">Pais:</label>
                                 <input class="form-control form-control-lg" type="text" required name="nombrePais"
                                     th:field="*{nombrePais}" />
                                 <span th:if="${#fields.hasErrors('nombrePais')}" class="text-danger"
@@ -42,13 +42,12 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
-                                                        ganado</h5>
+                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar pais</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>¿Estás seguro de que deseas guardar esta categoría de ganado?</p>
+                                                    <p>¿Estás seguro de que deseas guardar este pais?</p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <!-- Este es el botón que realiza la acción de guardar -->
