@@ -35,7 +35,8 @@ public class ControladorDetalleHistorialClinicoMacho {
                 + "FROM detalle_historial_clinico_macho AS dhc "
                 + "INNER JOIN historial_clinico_macho AS h ON h.id_historial_clinico_macho = dhc.id_historial_clinico_macho "
                 + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = h.id_ganado_macho "
-                + "WHERE dhc.id_historial_clinico_macho = :idHistorialClinicoMacho";
+                + "WHERE dhc.id_historial_clinico_macho = :idHistorialClinicoMacho "
+                + "AND dhc.estado_detalle_historial_clinico_macho = 1"; // Agregar la condición para el estado
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idHistorialClinicoMacho", idHistorialClinicoMacho);
         List<Object[]> results = query.getResultList();
@@ -66,22 +67,18 @@ public class ControladorDetalleHistorialClinicoMacho {
     public String editarDetalleHistorialClinicoMacho(@PathVariable("idDetalleHistorialClinicoMacho") Long idDetalleHistorialClinicoMacho, DetalleHistorialClinicoMacho detalleHistorialClinicoMacho, Model model) {
         List<HistorialClinicoMacho> listaGanados = historialClinicioMachoService.obtenerListadoHistorialClinicoMachos();
         model.addAttribute("listaGanados", listaGanados);
+        model.addAttribute("idDetalleHistorialClinicoMacho", idDetalleHistorialClinicoMacho);
         detalleHistorialClinicoMacho = detalleHistorialClinicoMachoService.encontrarDetalleHistorialClinicoMacho(detalleHistorialClinicoMacho);
         model.addAttribute("detalleHistorialClinicoMacho", detalleHistorialClinicoMacho);
-        model.addAttribute("idDetalleHistorialClinicoMacho", idDetalleHistorialClinicoMacho);
         return "/pages/modulo-ganado/detalle-historial-clinico-macho/modificar-detalle-historial-clinico-macho";
     }
 
-    @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/eliminar")
-    public String eliminarDetalleHistorialClinicoMacho(DetalleHistorialClinicoMacho detalleHistorialClinicoMacho) {
-        detalleHistorialClinicoMachoService.eliminarDetalleHistorialClinicoMacho(detalleHistorialClinicoMacho);
-        return "redirect:/modulo-ganado/detalle-historial-clinico-macho/lista";
-    }
-
-    @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/baja")
-    public String darBajaDetalleHistorialClinicoMacho(DetalleHistorialClinicoMacho detalleHistorialClinicoMacho) {
+    @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/baja/{idDetalleHistorialClinicoMacho}")
+    public String darBajaDetalleHistorialClinicoMacho(@PathVariable("idDetalleHistorialClinicoMacho") Long idDetalleHistorialClinicoMacho) {
+        DetalleHistorialClinicoMacho detalleHistorialClinicoMacho = new DetalleHistorialClinicoMacho();
+        detalleHistorialClinicoMacho.setIdDetalleHistorialClinicoMacho(idDetalleHistorialClinicoMacho);
         detalleHistorialClinicoMachoService.darBajaDetalleHistorialClinicoMacho(detalleHistorialClinicoMacho);
-        return "redirect:/modulo-ganado/detalle-historial-clinico-macho/lista";
+        return "redirect:/modulo-ganado/historial-clinico-macho/lista";
     }
 
 }
