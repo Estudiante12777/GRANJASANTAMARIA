@@ -1,21 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title></title>
+    <title></title>
+    <style>
+        .card {
+            border: 2px solid #eaeaea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .milk-icon {
+            font-size: 48px;
+            color: #ffa500;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container-fluid" layout:fragment="page-content">
-    <h1 class="text-center" th:text="${titulo}"></h1>
-  </div>
-
-  <!--OTRO SCRIPTS PARA PAGINAS-->
-  <th:block layout:fragment="page-scripts"> </th:block>
+<div class="container-fluid py-5 row" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
+    <div class="col-sm-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title text-center"><h3><b>Producción de leche</b></h3></div>
+                <i class="fas fa-mug-hot milk-icon"></i>
+                <h5 class="text-center py-5" th:text="${totalProduccionDiaria} + ' Litros de leche'"></h5>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="page-scripts"></th:block>
 </body>
 
 </html>

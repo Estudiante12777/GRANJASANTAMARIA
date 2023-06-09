@@ -1,126 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <div class="container-fluid py-5 row" layout:fragment="page-content">
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Raza de ganado</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion de la raza de ganado
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/raza-ganado/lista}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Tipo de ganado</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion del tipo de ganado
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/tipo-ganado/lista}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Ganado Macho</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion del ganado
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/ganado-macho/lista}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Ganado Hembra</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion del ganado
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/ganado-hembra/lista}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Alimentacion becerros y terneros</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion de la alimentacion abecerros
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/alimentacion-becerro}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Alimentacion becerras y terneras</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion de la alimentacion abecerros
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/alimentacion-becerra}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Historial clinico ganado hembra</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion de la alimentacion abecerros
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/historial-clinico-hembra/lista}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Historial clinico ganado macho</h5>
-                    <p class="card-text">
-                        Aqui puede encontrar informacion de la alimentacion abecerros
-                    </p>
-                    <form method="get" th:action="@{/modulo-ganado/historial-clinico-macho/lista}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
+<div class="container-fluid py-5 row" layout:fragment="page-content">
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Raza de ganado</h5>
+                <form method="get" th:action="@{/modulo-ganado/raza-ganado/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
             </div>
         </div>
     </div>
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tipo de ganado</h5>
+                <form method="get" th:action="@{/modulo-ganado/tipo-ganado/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Ganado Macho</h5>
+                <form method="get" th:action="@{/modulo-ganado/ganado-macho/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Ganado Hembra</h5>
+                <form method="get" th:action="@{/modulo-ganado/ganado-hembra/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Alimentacion becerros y terneros</h5>
+                <form method="get" th:action="@{/modulo-ganado/alimentacion-becerro}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Alimentacion becerras y terneras</h5>
+                <form method="get" th:action="@{/modulo-ganado/alimentacion-becerra}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Historial clinico ganado hembra</h5>
+                <form method="get" th:action="@{/modulo-ganado/historial-clinico-hembra/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Historial clinico ganado macho</h5>
+                <form method="get" th:action="@{/modulo-ganado/historial-clinico-macho/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
