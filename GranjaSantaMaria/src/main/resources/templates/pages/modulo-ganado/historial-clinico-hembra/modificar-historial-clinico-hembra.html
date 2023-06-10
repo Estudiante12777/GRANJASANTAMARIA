@@ -1,143 +1,133 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <div class="container py-5" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-sm-8 col-12">
-                <div class="card bg-light text-dark">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Historial clinico ganado hembra</h5>
-                        <form th:action="@{/modulo-ganado/historial-clinico-hembra/guardar}" method="post"
-                            th:object="${historialClinicoHembra}" id="guardarFormulario">
-                            <input type="hidden" name="idHistorialClinicoHembra"
-                                th:field="*{idHistorialClinicoHembra}" />
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg"
-                                    for="ganadoHembra.nombreGanadoHembra">Nombre:</label>
-                                <div class="col-sm-8">
-                                    <select th:field="*{ganadoHembra.idGanadoHembra}"
+<div class="container py-5" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-12">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Historial clinico ganado hembra</h5>
+                    <form th:action="@{/modulo-ganado/historial-clinico-hembra/guardar}" method="post"
+                          th:object="${historialClinicoHembra}" id="guardarFormulario">
+                        <input type="hidden" name="idHistorialClinicoHembra"
+                               th:field="*{idHistorialClinicoHembra}"/>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
+                                   for="ganadoHembra.nombreGanadoHembra">Nombre:</label>
+                            <div class="col-sm-8">
+                                <select th:field="*{ganadoHembra.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
                                         class="form-select form-select-lg">
-                                        <option th:each="ganadoHembra : ${listaGanados}"
+                                    <option th:each="ganadoHembra : ${listaGanados}"
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"></option>
-                                    </select>
-                                    <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
-                                        class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error
+                                </select>
+                                <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
+                                      class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error
                                         Tipo de ganado</span>
-                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="fechaIngresoGranja">Fecha ingreso
-                                    granja:</label>
-                                <input class=" form-control form-control-lg" type="date" required
-                                    name="fechaIngresoGranja" th:field="*{fechaIngresoGranja}" />
-                                <span th:if="${#fields.hasErrors('fechaIngresoGranja')}" class="text-danger"
-                                    th:errors="*{fechaIngresoGranja}">Error fecha de la produccion de leche</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="procedenciaGanadoHembra">Procedencia:
-                                </label>
-                                <input id="procedenciaGanadoHembra" type="text" class="form-control form-control-lg"
-                                    required name="procedenciaGanadoHembra" th:field="*{procedenciaGanadoHembra}"
-                                    onblur="calcularTotal();">
-                                <span th:if="${#fields.hasErrors('procedenciaGanadoHembra')}" class="text-danger"
-                                    th:errors="*{procedenciaGanadoHembra}">Error produccion de leche en la Mañana</span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label form-label-lg" for="condicionesFisicasRecibida">Condiciones
-                                    fisicas recibida:
-                                </label>
-                                <input id="condicionesFisicasRecibida" type="text" class="form-control form-control-lg"
-                                    required name="condicionesFisicasRecibida" th:field="*{condicionesFisicasRecibida}"
-                                    onblur="calcularTotal();">
-                                <span th:if="${#fields.hasErrors('condicionesFisicasRecibida')}" class="text-danger"
-                                    th:errors="*{condicionesFisicasRecibida}">Error produccion de leche en la
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="fechaIngresoGranja">Fecha ingreso
+                                granja:</label>
+                            <input class=" form-control form-control-lg" type="date" required
+                                   name="fechaIngresoGranja" th:field="*{fechaIngresoGranja}"/>
+                            <span th:if="${#fields.hasErrors('fechaIngresoGranja')}" class="text-danger"
+                                  th:errors="*{fechaIngresoGranja}">Error fecha de la produccion de leche</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="procedenciaGanadoHembra">Procedencia:
+                            </label>
+                            <input id="procedenciaGanadoHembra" type="text" class="form-control form-control-lg"
+                                   required name="procedenciaGanadoHembra" th:field="*{procedenciaGanadoHembra}"
+                                   onblur="calcularTotal();">
+                            <span th:if="${#fields.hasErrors('procedenciaGanadoHembra')}" class="text-danger"
+                                  th:errors="*{procedenciaGanadoHembra}">Error produccion de leche en la Mañana</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="condicionesFisicasRecibida">Condiciones
+                                fisicas recibida:
+                            </label>
+                            <input id="condicionesFisicasRecibida" type="text" class="form-control form-control-lg"
+                                   required name="condicionesFisicasRecibida" th:field="*{condicionesFisicasRecibida}"
+                                   onblur="calcularTotal();">
+                            <span th:if="${#fields.hasErrors('condicionesFisicasRecibida')}" class="text-danger"
+                                  th:errors="*{condicionesFisicasRecibida}">Error produccion de leche en la
                                     tarde</span>
+                        </div>
+                        <input type="hidden" name="estadoHistorialClinicoHembra"
+                               th:field="*{estadoHistorialClinicoHembra}"/>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a class="btn btn-outline-primary btn-lg btn-block"
+                                   th:href="@{/modulo-ganado/historial-clinico-hembra/lista}"><i
+                                        class="fa-solid fa-arrow-left"></i></a>
                             </div>
-                            <input type="hidden" name="estadoHistorialClinicoHembra"
-                                th:field="*{estadoHistorialClinicoHembra}" />
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <a class="btn btn-outline-primary btn-lg btn-block"
-                                        th:href="@{/modulo-ganado/historial-clinico-hembra/lista}"><i
-                                            class="fa-solid fa-arrow-left"></i></a>
-                                </div>
-                                <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
-                                    class="col-sm-6 mb-3">
-                                    <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                            <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                                 class="col-sm-6 mb-3">
+                                <button type="button" class="btn btn-outline-success btn-lg btn-block"
                                         data-bs-toggle="modal" data-bs-target="#guardarModal">
-                                        <i class="fa-solid fa-floppy-disk"></i> Guardar
-                                    </button>
-                                    <div class="modal fade" id="guardarModal" tabindex="-1"
-                                        aria-labelledby="guardarModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="guardarModalLabel">Guardar categoría de
-                                                        ganado</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                </button>
+                                <div class="modal fade" id="guardarModal" tabindex="-1"
+                                     aria-labelledby="guardarModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar historial clinico
+                                                    ganado hembra</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>¿Estás seguro de que deseas guardar este registro de produccion
-                                                        diaria de leche?</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <!-- Este es el botón que realiza la acción de guardar -->
-                                                    <button type="submit" class="btn btn-success" name="guardar">
-                                                        Guardar
-                                                    </button>
-                                                    <!-- Este es el botón que cierra el modal -->
-                                                    <button type="button" class="btn btn-secondary"
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro de que deseas guardar este registro de historial
+                                                    clinico ganado hembra?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- Este es el botón que realiza la acción de guardar -->
+                                                <button type="submit" class="btn btn-success" name="guardar">
+                                                    Guardar
+                                                </button>
+                                                <!-- Este es el botón que cierra el modal -->
+                                                <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">
-                                                        Cancelar
-                                                    </button>
-                                                </div>
+                                                    Cancelar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <script th:inline="javascript">
-        /* Generar ID único para el modal de guardar */
-        // Obtén el botón de guardar
-        var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
-        // Obtén el atributo 'data-bs-target' del botón
-        var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
-        // Obtén el atributo 'id' del botón
-        var modalIdGuardar = guardarButton.getAttribute("id");
-        // Crea un identificador único para el modal de guardar
-        var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
-        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-        guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
-        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modalGuardar = document.querySelector(targetGuardarModalId);
-        modalGuardar.setAttribute("id", uniqueModalIdGuardar);
-    </script>
-    <script>
-        window.onload = function () {
-            function calcularTotal() {
-                var maniana = parseFloat(document.getElementById("procedenciaGanadoHembra").value) || 0;
-                var tarde = parseFloat(document.getElementById("condicionesFisicasRecibida").value) || 0;
-                document.getElementById("totalProduccionLeche").value = maniana + tarde;
-                console.log("El total es " + document.getElementById("totalProduccionLeche").value);
-            }
-        }
-    </script>
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para el modal de guardar */
+    // Obtén el botón de guardar
+    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    // Obtén el atributo 'data-bs-target' del botón
+    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    // Obtén el atributo 'id' del botón
+    var modalIdGuardar = guardarButton.getAttribute("id");
+    // Crea un identificador único para el modal de guardar
+    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+    guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+    // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+    var modalGuardar = document.querySelector(targetGuardarModalId);
+    modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+</script>
 </body>
 
 </html>

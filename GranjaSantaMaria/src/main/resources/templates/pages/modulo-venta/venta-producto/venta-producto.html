@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
@@ -8,228 +8,174 @@
 </head>
 
 <body>
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-5" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <h3 class="text-center">Ventas</h3>
-            <a class="btn btn-outline-success" th:href="@{/modulo-venta/venta-producto/agregar}"><i
-                    class="fa-solid fa-plus"></i> Crear nuevo registro</a>
-        </div>
-        <div th:if="${listadoVentasProducto != null and !listadoVentasProducto.empty}">
-            <table class="table">
-                <thead class="table-dark">
-                    <th>Cliente</th>
-                    <th>Producto</th>
-                    <th>Fecha</th>
-                    <th>Cantidad productos</th>
-                    <th>Precio unidad</th>
-                    <th>Total venta</th>
-                    <th>Descuento</th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        Editar
-                    </th>
-                    <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
-                    <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
-                </thead>
-                <tr th:each="ventaProducto : ${listadoVentasProducto}">
-                    <td th:text="${ventaProducto.cliente.nombreCliente}">
-                        Mostrar Nombre del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.inventarioProducto.detalleProducto}">
-                        Mostrar Nombre del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.fechaVentaProducto}">
-                        Mostrar descripcion del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.cantidadProducto}">
-                        Mostrar descripcion del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.precioPorUnidad}">
-                        Mostrar descripcion del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.totalPrecioProducto}">
-                        Mostrar descripcion del listadoVentasProducto
-                    </td>
-                    <td th:text="${ventaProducto.descuentoProducto}">
-                        Mostrar descripcion del listadoVentasProducto
-                    </td>
-                    <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                        <!-- Botón para abrir el modal de edición -->
-                        <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal_' + ${ventaProducto.idVentaProducto}">
-                            <i class="fa-sharp fa-solid fa-pencil"></i>
-                        </button>
-                        <!-- Modal de edición -->
-                        <div class="modal fade" th:id="'editModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
-                            th:attr="aria-labelledby='editModalLabel_' + ${ventaProducto.idVentaProducto}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'editModalLabel_' + ${ventaProducto.idVentaProducto}">
-                                            ¿Estás seguro de que deseas editar este producto?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                            th:href="@{/modulo-venta/venta-producto/editar/} + ${ventaProducto.idVentaProducto}">Sí,
-                                            quiero editar</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
-                                            cancelar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <!-- Botón para abrir el modal de dar baja -->
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#bajaModal_' + ${ventaProducto.idVentaProducto}">
-                            <i class="fa-sharp fa-solid fa-ban"></i>
-                        </button>
-                        <!-- Modal de dar baja -->
-                        <div class="modal fade" th:id="'bajaModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
-                            th:attr="aria-labelledby='bajaModalLabel_' + ${ventaProducto.idVentaProducto}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'bajaModalLabel_' + ${ventaProducto.idVentaProducto}">
-                                            ¿Estás seguro de que deseas dar de baja este producto?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para dar de baja la categoría de ganado -->
-                                        <a class="btn btn-danger"
-                                            th:href="@{/modulo-venta/venta-producto/baja(idVentaProducto=${ventaProducto.idVentaProducto})}">Sí,
-                                            dar de baja</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                        <!-- Botón para abrir el modal de eliminar -->
-                        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#deleteModal_' + ${ventaProducto.idVentaProducto}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                        <!-- Modal de eliminar -->
-                        <div class="modal fade" th:id="'deleteModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
-                            th:attr="aria-labelledby='deleteModalLabel_' + ${ventaProducto.idVentaProducto}"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            th:id="'deleteModalLabel_' + ${ventaProducto.idVentaProducto}">
-                                            ¿Estás seguro de que deseas eliminar este producto?
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- Enlace para eliminar la categoría de ganado -->
-                                        <a class="btn btn-danger"
-                                            th:href="@{/modulo-venta/producto/eliminar(idVentaProducto=${ventaProducto.idVentaProducto})}">Sí,
-                                            eliminar</a>
-                                        <!-- Botón para cerrar el modal -->
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tfoot></tfoot>
-            </table>
-        </div>
-        <div th:if="${listadoVentasProducto == null or listadoVentasProducto.empty}">
-            <h1>La lista de ventas esta vacia</h1>
-        </div>
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
+        <h3 class="text-center">Ventas</h3>
+        <a class="btn btn-outline-success" th:href="@{/modulo-venta/venta-producto/agregar}"><i
+                class="fa-solid fa-plus"></i> Crear nuevo registro</a>
     </div>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+    <div th:if="${listadoVentasProducto != null and !listadoVentasProducto.empty}">
+        <table class="table">
+            <thead class="table-dark">
+            <th>Cliente</th>
+            <th>Producto</th>
+            <th>Fecha</th>
+            <th>Cantidad productos</th>
+            <th>Precio unidad</th>
+            <th>Total venta</th>
+            <th>Descuento</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                Editar
+            </th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
+            </thead>
+            <tr th:each="ventaProducto : ${listadoVentasProducto}">
+                <td th:text="${ventaProducto.cliente.nombreCliente + ' ' + ventaProducto.cliente.apellidoCliente}">
+                    Mostrar Nombre del listadoVentasProducto
+                </td>
+                <td th:text="${ventaProducto.inventarioProducto.detalleProducto}">
+                    Mostrar Nombre del listadoVentasProducto
+                </td>
+                <td th:text="${ventaProducto.fechaVentaProducto}">
+                    Mostrar descripcion del listadoVentasProducto
+                </td>
+                <td th:text="${ventaProducto.cantidadProducto}">
+                    Mostrar descripcion del listadoVentasProducto
+                </td>
+                <td th:text="${ventaProducto.precioPorUnidad}">
+                    Mostrar descripcion del listadoVentasProducto
+                </td>
+                <td th:text="${ventaProducto.totalPrecioProducto}">
+                    Mostrar descripcion del listadoVentasProducto
+                </td>
+                <td th:text="${ventaProducto.descuentoProducto}">
+                    Mostrar descripcion del listadoVentasProducto
+                </td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de edición -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#editModal_' + ${ventaProducto.idVentaProducto}">
+                        <i class="fa-sharp fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- Modal de edición -->
+                    <div class="modal fade" th:id="'editModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${ventaProducto.idVentaProducto}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'editModalLabel_' + ${ventaProducto.idVentaProducto}">
+                                        ¿Estás seguro de que deseas editar este producto?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-venta/venta-producto/editar/} + ${ventaProducto.idVentaProducto}">Sí,
+                                        quiero editar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de dar baja -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#bajaModal_' + ${ventaProducto.idVentaProducto}">
+                        <i class="fa-sharp fa-solid fa-ban"></i>
+                    </button>
+                    <!-- Modal de dar baja -->
+                    <div class="modal fade" th:id="'bajaModal_' + ${ventaProducto.idVentaProducto}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${ventaProducto.idVentaProducto}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'bajaModalLabel_' + ${ventaProducto.idVentaProducto}">
+                                        ¿Estás seguro de que deseas dar de baja este producto?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para dar de baja la categoría de ganado -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-venta/venta-producto/baja(idVentaProducto=${ventaProducto.idVentaProducto})}">Sí,
+                                        dar de baja</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tfoot></tfoot>
+        </table>
+    </div>
+    <div class="py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block"
+           th:href="@{/modulo-venta}"><i
+                class="fa-solid fa-arrow-left"></i></a>
+    </div>
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de edición */
-        var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de edición */
+    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        editButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de edición
-            var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+        // Crea un identificador único para el modal de edición
+        var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
 
-        /* Obtén todos los botones de dar baja */
-        var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de dar baja */
+    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        deleteButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    deleteButtons.forEach(function (button) {
+        var targetModalId = button.getAttribute("data-bs-target");
+        var modalId = button.getAttribute("th:data-bs-target");
 
-            // Crea un identificador único para el modal de dar baja
-            var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+        // Crea un identificador único para el modal de dar baja
+        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
 
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
-    <script th:inline="javascript">
-        /* Generar ID único para cada modal */
-        /* Inserta este código antes de cerrar la etiqueta </body> */
-
-        /* Obtén todos los botones de eliminar */
-        var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
-
-        /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-        deleteButtons.forEach(function (button) {
-            var targetModalId = button.getAttribute("data-bs-target");
-            var modalId = button.getAttribute("th:data-bs-target");
-
-            // Crea un identificador único para el modal de eliminar
-            var uniqueModalId = "deleteModal_" + modalId.replace("#deleteModal_", "");
-
-            // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-            button.setAttribute("data-bs-target", "#" + uniqueModalId);
-
-            // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-            var modal = document.querySelector(targetModalId);
-            modal.setAttribute("id", uniqueModalId);
-        });
-    </script>
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
 </body>
 
 </html>

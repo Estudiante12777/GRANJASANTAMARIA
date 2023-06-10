@@ -37,7 +37,7 @@ public class ControladorGanadoMacho {
     public String listadoGanadoMachods(@RequestParam(defaultValue = "0") int pagina, Model model) {
         PageRequest pageRequest = PageRequest.of(pagina, 8);
         Page<GanadoMacho> ganadoMachoPage = ganadoMachoService.obtenerGanadoMachoPaginado(pageRequest);
-        model.addAttribute("pageRequest", pageRequest);
+        model.addAttribute("ganadoMachoPage", ganadoMachoPage);
         var ganadosMacho = ganadoMachoPage.getContent().stream()
                 .limit(8)
                 .collect(Collectors.toList());

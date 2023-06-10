@@ -1,133 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title>Venta de Productos</title>
 </head>
 
-<body >
-    <!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
-    <div class="container-fluid py-5" layout:fragment="page-content"
-        sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-        <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-            <h3 class="text-center">Venta</h3>
-        </div>
-        <form th:action="@{/modulo-venta/venta-producto/guardar}" method="post" th:object="${ventaProducto}" id="formularioVenta">
-            <input type="hidden" name="idVentaProducto" th:field="*{idVentaProducto}" />
-            <!-- Campos del formulario para la venta de productos -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="fechaVentaProducto">Fecha de Venta:</label>
-                        <input type="date" id="fechaVentaProducto" name="fechaVentaProducto" class="form-control"
-                            required value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
-                        <span th:if="${#fields.hasErrors('fechaVentaProducto')}" class="text-danger"
-                            th:errors="*{fechaVentaProducto}">Error en la fecha de venta</span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="cliente">Cliente:</label>
-                        <select id="cliente" name="cliente.idCliente" class="form-control" required>
-                            <!-- Opciones para seleccionar un cliente -->
-                            <option value="">Seleccione un cliente</option>
-                            <!-- Iterar sobre la lista de clientes para generar las opciones -->
-                            <option th:each="cliente : ${listadoClientes}" th:value="${cliente.idCliente}"
-                                th:text="${cliente.nombreCliente + ' ' + cliente.apellidoCliente}"></option>
-                        </select>
-                    </div>
+<body>
+<div class="container-fluid py-5" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
+        <h3 class="text-center">Venta</h3>
+    </div>
+    <form th:action="@{/modulo-venta/venta-producto/guardar}" method="post" th:object="${ventaProducto}"
+          id="formularioVenta">
+        <input type="hidden" name="idVentaProducto" th:field="*{idVentaProducto}"/>
+        <!-- Campos del formulario para la venta de productos -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fechaVentaProducto">Fecha de Venta:</label>
+                    <input type="date" id="fechaVentaProducto" name="fechaVentaProducto" class="form-control"
+                           required value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
+                    <span th:if="${#fields.hasErrors('fechaVentaProducto')}" class="text-danger"
+                          th:errors="*{fechaVentaProducto}">Error en la fecha de venta</span>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="producto">Producto:</label>
-                        <select id="producto" name="inventarioProducto.idInventarioProducto" class="form-control"
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="cliente">Cliente:</label>
+                    <select id="cliente" name="cliente.idCliente" class="form-control" required>
+                        <!-- Opciones para seleccionar un cliente -->
+                        <option value="">Seleccione un cliente</option>
+                        <!-- Iterar sobre la lista de clientes para generar las opciones -->
+                        <option th:each="cliente : ${listadoClientes}" th:value="${cliente.idCliente}"
+                                th:text="${cliente.nombreCliente + ' ' + cliente.apellidoCliente}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="producto">Producto:</label>
+                    <select id="producto" name="inventarioProducto.idInventarioProducto" class="form-control"
                             required>
-                            <!-- Opciones para seleccionar un producto -->
-                            <option value="">Seleccione un producto</option>
-                            <!-- Iterar sobre la lista de inventario productos para generar las opciones -->
-                            <option th:each="inventarioProducto : ${listadoInventarioProductos}"
+                        <!-- Opciones para seleccionar un producto -->
+                        <option value="">Seleccione un producto</option>
+                        <!-- Iterar sobre la lista de inventario productos para generar las opciones -->
+                        <option th:each="inventarioProducto : ${listadoInventarioProductos}"
                                 th:value="${inventarioProducto.idInventarioProducto}"
                                 th:text="${inventarioProducto.detalleProducto}">
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="cantidadProducto">Cantidad:</label>
-                        <input type="number" id="cantidadProducto" name="cantidadProducto" class="form-control"
-                            th:field="*{cantidadProducto}" required />
-                    </div>
+                        </option>
+                    </select>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="precioPorUnidad">Precio por unidad:</label>
-                        <input type="number" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
-                            th:field="*{precioPorUnidad}" required />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="totalPrecioProducto">Total:</label>
-                        <input type="number" id="totalPrecioProducto" name="totalPrecioProducto" class="form-control"
-                            required />
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="cantidadProducto">Cantidad:</label>
+                    <input type="number" id="cantidadProducto" name="cantidadProducto" class="form-control"
+                           th:field="*{cantidadProducto}" required/>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="descuentoProducto">Descuento:</label>
-                        <input type="number" id="descuentoProducto" name="descuentoProducto" class="form-control"
-                            required />
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="precioPorUnidad">Precio por unidad:</label>
+                    <input type="number" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
+                           th:field="*{precioPorUnidad}" required/>
                 </div>
             </div>
-            <input type="hidden" name="estadoVentaProducto" th:field="*{estadoVentaProducto}">
-            <br>
-            <div class="row">
-                <div class="col-sm-6 mb-3">
-                    <button type="submit" class="btn btn-outline-success btn-lg btn-block">
-                        Guardar venta
-                    </button>
-                </div>
-                <div class="col-sm-6 mb-3">
-                    <button type="button" class="btn btn-outline-secondary btn-lg btn-block" id="agregarProductoBtn">
-                        Agregar otro producto
-                    </button>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="totalPrecioProducto">Total:</label>
+                    <input type="number" id="totalPrecioProducto" name="totalPrecioProducto" class="form-control"
+                           required/>
                 </div>
             </div>
-        </form>
-    </div>
-    <script th:inline="javascript">
-        /* Calcular el total automáticamente */
-        function calcularTotal() {
-            var cantidadProductoInput = document.getElementById("cantidadProducto");
-            var precioPorUnidadInput = document.getElementById("precioPorUnidad");
-            var totalPrecioProductoInput = document.getElementById("totalPrecioProducto");
-
-            var cantidad = parseInt(cantidadProductoInput.value) || 0;
-            var precioPorUnidad = parseFloat(precioPorUnidadInput.value) || 0;
-            var total = cantidad * precioPorUnidad;
-
-            // Actualizar el valor del campo Total
-            totalPrecioProductoInput.value = total.toFixed(2);
-        }
-
-        // Evento de cambio en los campos Cantidad y Precio por unidad
-        document.getElementById("cantidadProducto").addEventListener("input", calcularTotal);
-        document.getElementById("precioPorUnidad").addEventListener("input", calcularTotal);
-
-        // Calcular el total al cargar la página
-        document.addEventListener("DOMContentLoaded", calcularTotal);
-    </script>
-
-
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="descuentoProducto">Descuento:</label>
+                    <input type="number" id="descuentoProducto" name="descuentoProducto" class="form-control"
+                           required/>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="estadoVentaProducto" th:field="*{estadoVentaProducto}">
+        <br>
+        <div class="row">
+            <div class="col-sm-6 mb-3">
+                <a class="btn btn-outline-primary btn-lg btn-block"
+                   th:href="@{/modulo-venta/venta-producto/lista}"><i
+                        class="fa-solid fa-arrow-left"></i></a>
+            </div>
+            <div class="col-sm-6 mb-3">
+                <button type="submit" class="btn btn-outline-success btn-lg btn-block">
+                    Guardar venta
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 
 </html>

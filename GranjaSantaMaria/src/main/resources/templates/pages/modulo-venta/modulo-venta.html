@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
 </head>
 
 <body>
-    <div class="container-fluid py-5 row" layout:fragment="page-content">
-        <div class="col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Realizar Venta</h5>
-                    <p class="card-text">
-                        Esta es la seccion donde podra encontrar informacion de los productos
-                    </p>
-                    <form method="get" th:action="@{/modulo-venta/venta-producto/lista}">
-                        <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
-                                class="fa-solid fa-arrow-right"></i> Entrar</a>
-                    </form>
-                </div>
+<div class="container-fluid py-5 row" layout:fragment="page-content">
+    <div class="col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Realizar Venta</h5>
+                <form method="get" th:action="@{/modulo-venta/venta-producto/lista}">
+                    <div class="py-3"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </body>
 
 </html>

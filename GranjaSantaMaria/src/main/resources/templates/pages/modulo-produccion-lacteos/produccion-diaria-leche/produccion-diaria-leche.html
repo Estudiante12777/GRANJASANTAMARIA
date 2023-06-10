@@ -40,10 +40,8 @@
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
                 Dar baja
             </th>
-            <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
             </thead>
-            <tr th:each="produccionDiariaLeche, iterStat : ${listaProduccionDiariaLeche}"
-                th:if="${iterStat.index lt 10}">
+            <tr th:each="produccionDiariaLeche : ${listaProduccionDiariaLeche}">
                 <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">
                     Mostrar Nombre del ganado
                 </td>
@@ -211,45 +209,14 @@
                         </div>
                     </div>
                 </td>
-                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                    <!-- Botón para abrir el modal de eliminar -->
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#deleteModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                    <!-- Modal de eliminar -->
-                    <div class="modal fade"
-                         th:id="'deleteModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}" tabindex="-1"
-                         th:attr="aria-labelledby='deleteModalLabel_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title"
-                                        th:id="'deleteModalLabel_' + ${produccionDiariaLeche.idProduccionDiariaLeche}">
-                                        ¿Estás seguro de que deseas eliminar este registro de produccion diaria de
-                                        leche?
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-footer">
-                                    <!-- Enlace para eliminar la categoría de ganado -->
-                                    <a class="btn btn-danger"
-                                       th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/eliminar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">Sí,
-                                        eliminar</a>
-                                    <!-- Botón para cerrar el modal -->
-                                    <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
             </tr>
             <tfoot></tfoot>
         </table>
+    </div>
+    <div class="py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block"
+           th:href="@{/modulo-produccion-lacteos}"><i
+                class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>
 <script th:inline="javascript">
@@ -335,29 +302,6 @@
 
         // Crea un identificador único para el modal de dar baja
         var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
-
-        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
-        button.setAttribute("data-bs-target", "#" + uniqueModalId);
-
-        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
-        modal.setAttribute("id", uniqueModalId);
-    });
-</script>
-<script th:inline="javascript">
-    /* Generar ID único para cada modal */
-    /* Inserta este código antes de cerrar la etiqueta </body> */
-
-    /* Obtén todos los botones de eliminar */
-    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
-
-    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-    deleteButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
-
-        // Crea un identificador único para el modal de eliminar
-        var uniqueModalId = "deleteModal_" + modalId.replace("#deleteModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
