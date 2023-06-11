@@ -36,7 +36,6 @@
                 <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">
                     Mostrar fecha de produccion de leche
                 </td>
-                <tfoot>
             <tr>
                 <td>Total:</td>
                 <td></td>
@@ -44,8 +43,6 @@
                 <td th:text="${#aggregates.sum(listaTotalProduccionDiariaLeche.![produccionManianaLeche +
                             produccionTardeLeche])}"></td>
                 <td></td>
-            </tr>
-            </tfoot>
             </tr>
         </table>
     </div>

@@ -82,7 +82,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para dar de baja el registro -->
                                     <a class="btn btn-danger"
-                                       th:href="@{/modulo-ganado/alimentacion-becerra/baja/} + ${alimentacionBecerra[6]}">Sí,
+                                       th:href="@{/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacionBecerra[6]})}">Sí,
                                         dar de baja</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary"

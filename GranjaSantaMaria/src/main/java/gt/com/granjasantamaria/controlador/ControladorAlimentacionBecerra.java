@@ -35,7 +35,8 @@ public class ControladorAlimentacionBecerra {
                 "FROM alimentacion_becerra AS a " +
                 "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " +
                 "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra " +
-                "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra";
+                "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra " +
+                "AND a.estado_alimentacion_becerra = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerraList", results);
@@ -52,7 +53,8 @@ public class ControladorAlimentacionBecerra {
                 "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " +
                 "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra " +
                 "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra " +
-                "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche";
+                "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " +
+                "AND a.estado_alimentacion_becerra = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
@@ -110,10 +112,12 @@ public class ControladorAlimentacionBecerra {
         return "redirect:/modulo-ganado/alimentacion-becerra/lista";
     }
 
-    @GetMapping("/modulo-ganado/alimentacion-becerra/baja")
-    public String darDeBajaAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra) {
+    @GetMapping("/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}")
+    public String darDeBajaAlimentacionBecerro(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra) {
+        AlimentacionBecerra alimentacionBecerra = new AlimentacionBecerra();
+        alimentacionBecerra.setIdAlimentacionBecerra(idAlimentacionBecerra);
         alimentacionBecerraService.darDeBajaAlimentacionBecerra(alimentacionBecerra);
-        return "redirect:/modulo-ganado/alimentacion-becerra/lista";
+        return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
     }
 
 }
