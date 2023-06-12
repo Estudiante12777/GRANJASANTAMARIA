@@ -45,6 +45,12 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable) {
+        return produccionDiariaLecheDao.findByFechaProduccionLecheBetween(fechaInicio, fechaFin, pageable);
+    }
+
+    @Override
     public void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         produccionDiariaLeche.setEstadoProduccionDiariaLeche(true);
         produccionDiariaLeche.setTotalProduccionLeche(produccionDiariaLeche.getProduccionManianaLeche() + produccionDiariaLeche.getProduccionTardeLeche());

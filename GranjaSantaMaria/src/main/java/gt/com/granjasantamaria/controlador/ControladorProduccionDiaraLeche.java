@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorProduccionDiaraLeche {
 
+    private List<ProduccionDiariaLeche> global;
+
     @Autowired
     private ProduccionDiariaLecheService produccionDiariaLecheService;
 
@@ -70,16 +72,10 @@ public class ControladorProduccionDiaraLeche {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener el número total de registros
-        List<ProduccionDiariaLeche> totalRegistros = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
-        // Llamar al servicio que hace la consulta paginada
-        Page<ProduccionDiariaLeche> produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginado(pageRequest);
+        Page<ProduccionDiariaLeche> produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginadoPorFecha(inicio, fin, pageRequest);
         List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLechePage.getContent(); // Obtener los elementos de la página actual
-        // Añadir los resultados al modelo
-        model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
-        model.addAttribute("totalRegistros", totalRegistros);
         model.addAttribute("totalProduccionesFecha", totalProduccionesFecha);
-        // Devolver el nombre de la vista
+        model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 

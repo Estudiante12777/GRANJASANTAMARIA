@@ -12,15 +12,12 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProduccionDiariaLecheDao extends JpaRepository<ProduccionDiariaLeche, Long> {
 
-    List<ProduccionDiariaLeche> findByEstadoProduccionDiariaLecheIsTrue();
-
     Page<ProduccionDiariaLeche> findAllByEstadoProduccionDiariaLecheIsTrue(Pageable pageable);
 
     List<ProduccionDiariaLeche> findByFechaProduccionLecheAndEstadoProduccionDiariaLecheIsTrue(LocalDate fechaProduccionLeche);
 
     List<ProduccionDiariaLeche> findByFechaProduccionLecheBetween(LocalDate fechaInicio, LocalDate fechaFin);
 
-    @Query("SELECT pdl FROM ProduccionDiariaLeche pdl INNER JOIN pdl.ganadoHembra gh WHERE gh.tipoGanado IN ('novilla', 'vaca')")
-    List<ProduccionDiariaLeche> findProduccionDiariaLecheByTipoGanado();
+    Page<ProduccionDiariaLeche> findByFechaProduccionLecheBetween(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
 
 }

@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
+import org.apache.tomcat.jni.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,6 +17,8 @@ public interface ProduccionDiariaLecheService {
     List<ProduccionDiariaLeche> obtenerListaTotalProduccionDiariaLeche();
 
     Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginado(Pageable pageable);
+
+    Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
 
     void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 

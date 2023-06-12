@@ -50,7 +50,7 @@ public class ReporteProduccionLecheFecha extends AbstractPdfView {
         tablaProduccionLeche.setHeaderRows(1);
 
         // Obtiene la celda por defecto de la tabla
-        PdfPCell cellHeaderId = new PdfPCell(new Phrase("Id"));
+        PdfPCell cellHeaderId = new PdfPCell(new Phrase("No."));
         cellHeaderId.setBackgroundColor(Color.darkGray); // Estable el color de fondo de la celda a blue
         tablaProduccionLeche.addCell(cellHeaderId);
 
