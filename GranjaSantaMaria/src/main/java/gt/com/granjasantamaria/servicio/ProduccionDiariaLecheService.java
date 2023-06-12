@@ -16,8 +16,6 @@ public interface ProduccionDiariaLecheService {
 
     List<ProduccionDiariaLeche> obtenerListaTotalProduccionDiariaLeche();
 
-    Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginado(Pageable pageable);
-
     Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
 
     void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);

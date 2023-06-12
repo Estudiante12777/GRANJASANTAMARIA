@@ -39,25 +39,6 @@ public class ControladorProduccionDiaraLeche {
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/produccion-diaria-leche";
     }
 
-    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche")
-    public String listaTotalProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        var listaTotalProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaProduccionDiariaLeche();
-        model.addAttribute("listaTotalProduccionDiariaLeche", listaTotalProduccionDiariaLeche);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-diaria-leche";
-    }
-
-    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-leche")
-    public String listaTotalProduccionLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model, @RequestParam(defaultValue = "0") int pagina) {
-        PageRequest pageRequest = PageRequest.of(pagina, 10);
-        Page<ProduccionDiariaLeche> produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginado(pageRequest);
-        model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
-        var listaTotalProduccionLeche = produccionDiariaLechePage.getContent().stream()
-                .limit(10)
-                .collect(Collectors.toList());
-        model.addAttribute("listaTotalProduccionLeche", listaTotalProduccionLeche);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-leche";
-    }
-
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha")
     public String listaTotalProduccionFecha(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         var listaTotalProduccionFecha = produccionDiariaLecheService.obtenerListaTotalProduccionLeche();

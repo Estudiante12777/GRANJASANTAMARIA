@@ -40,12 +40,6 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginado(Pageable pageable) {
-        return produccionDiariaLecheDao.findAllByEstadoProduccionDiariaLecheIsTrue(pageable);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable) {
         return produccionDiariaLecheDao.findByFechaProduccionLecheBetween(fechaInicio, fechaFin, pageable);
     }
