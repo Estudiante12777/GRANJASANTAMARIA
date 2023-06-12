@@ -1,10 +1,13 @@
 package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
+import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ControladorProduccionDiaraLeche {
@@ -66,14 +70,34 @@ public class ControladorProduccionDiaraLeche {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
+        // Obtener el número total de registros
+        List<ProduccionDiariaLeche> totalRegistros = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
         // Llamar al servicio que hace la consulta paginada
         Page<ProduccionDiariaLeche> produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginado(pageRequest);
         List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLechePage.getContent(); // Obtener los elementos de la página actual
         // Añadir los resultados al modelo
         model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
+        model.addAttribute("totalRegistros", totalRegistros);
         model.addAttribute("totalProduccionesFecha", totalProduccionesFecha);
         // Devolver el nombre de la vista
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
+    }
+
+    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf")
+    public ModelAndView generarPDFTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
+        // Convertir las fechas de String a LocalDate
+        LocalDate inicio = LocalDate.parse(fechaInicio);
+        LocalDate fin = LocalDate.parse(fechaFin);
+        // Obtener todos los registros de producción de leche para el rango de fechas dado
+        List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
+        // Obtener el número total de registros
+        long totalRegistros = totalProduccionesFecha.size();
+        // Crear el modelo para el PDF
+        Map<String, Object> model = new HashMap<>();
+        model.put("totalRegistros", totalRegistros);
+        model.put("totalProduccionesFecha", totalProduccionesFecha);
+        // Devolver la vista PDF y el modelo
+        return new ModelAndView(new ReporteProduccionLecheFecha(), model);
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")

@@ -86,6 +86,8 @@
                 </li>
             </ul>
         </nav>
+        <a th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf(fechaInicio=${fechaInicio}, fechaFin=${fechaFin})}"
+           target="_self">Generar PDF con todos los datos</a>
     </div>
     <div class="row py-2">
         <div class="col-sm-6">
@@ -95,6 +97,15 @@
         </div>
     </div>
 </div>
+<!-- JavaScript para generar el PDF -->
+    <script>
+        function generarPDF() {
+        var fechaInicio = document.getElementById('fechaInicio').value;
+        var fechaFin = document.getElementById('fechaFin').value;
+        var url = "/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf?fechaInicio=" + fechaInicio + "&fechaFin=" + fechaFin;
+        window.open(url, "_blank");
+    }
+</script>
 </body>
 
 </html>
