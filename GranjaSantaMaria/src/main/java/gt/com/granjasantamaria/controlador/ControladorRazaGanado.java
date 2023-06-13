@@ -2,17 +2,19 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
+import java.util.stream.Collectors;
+
 @Controller
 public class ControladorRazaGanado {
 
@@ -20,8 +22,11 @@ public class ControladorRazaGanado {
     private RazaGanadoService razaGanadoService;
 
     @GetMapping("/modulo-ganado/raza-ganado/lista")
-    public String listadoRazaGanado(Model model) {
-        var razaGanados = razaGanadoService.listadoRazasGanado();
+    public String listadoRazaGanado(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 8);
+        Page<RazaGanado> razaGanadoPage = razaGanadoService.obtenerListadoRazaGanadoPaginado(pageRequest);
+        model.addAttribute("razaGanadoPage", razaGanadoPage);
+        var razaGanados = razaGanadoPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("razaGanados", razaGanados);
         return "/pages/modulo-ganado/raza-ganado/raza-ganado";
     }
