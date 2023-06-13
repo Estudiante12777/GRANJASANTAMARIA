@@ -75,18 +75,41 @@ public class ReporteProduccionLecheFecha extends AbstractPdfView {
         cellHeaderFechaProduccion.setBackgroundColor(Color.darkGray);
         tablaProduccionLeche.addCell(cellHeaderFechaProduccion);
 
+        // Antes de construir la tabla, calcula la suma total de la producción
+        double sumaTotalProduccion = listaProduccionDiariaLeche.stream().mapToDouble(ProduccionDiariaLeche::getTotalProduccionLeche).sum();
+
         // Agrega los datos en cada fila como celdas
         listaProduccionDiariaLeche.forEach(produccionDiariaLeche -> {
             tablaProduccionLeche.addCell(produccionDiariaLeche.getIdProduccionDiariaLeche().toString());
             tablaProduccionLeche.addCell(produccionDiariaLeche.getGanadoHembra().getNombreGanadoHembra());
-            tablaProduccionLeche.addCell(produccionDiariaLeche.getProduccionManianaLeche().toString());
-            tablaProduccionLeche.addCell(produccionDiariaLeche.getProduccionTardeLeche().toString());
-            tablaProduccionLeche.addCell(produccionDiariaLeche.getTotalProduccionLeche().toString());
+            tablaProduccionLeche.addCell(produccionDiariaLeche.getProduccionManianaLeche().toString() + " litros");
+            tablaProduccionLeche.addCell(produccionDiariaLeche.getProduccionTardeLeche().toString() + " litros");
+            tablaProduccionLeche.addCell(produccionDiariaLeche.getTotalProduccionLeche().toString() + " litros");
             tablaProduccionLeche.addCell(produccionDiariaLeche.getFechaProduccionLeche().toString());
         });
 
         document.add(tablaTitulo);
         document.add(tablaProduccionLeche);
+
+        PdfPTable tablaFooter = new PdfPTable(1);
+        tablaFooter.setWidthPercentage(100);
+
+        PdfPCell celdaFooterTotal = new PdfPCell(new Phrase("Total"));
+        celdaFooterTotal.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celdaFooterTotal.setBorder(0);
+        celdaFooterTotal.setPaddingTop(10);
+
+        PdfPCell celdaFooterTotalProduccion = new PdfPCell(new Phrase(String.valueOf(sumaTotalProduccion) + " litros"));
+        celdaFooterTotalProduccion.setHorizontalAlignment(Element.ALIGN_CENTER);
+        celdaFooterTotalProduccion.setVerticalAlignment(Element.ALIGN_CENTER);
+        celdaFooterTotalProduccion.setBorder(0);
+
+        tablaFooter.setSpacingAfter(20);
+        tablaFooter.addCell(celdaFooterTotal);
+        tablaFooter.addCell(celdaFooterTotalProduccion);
+
+        document.add(tablaFooter);
+
     }
 
 }

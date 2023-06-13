@@ -20,11 +20,11 @@
             <thead class="table-dark">
             <th>Cliente</th>
             <th>Producto</th>
-            <th>Fecha</th>
             <th>Cantidad productos</th>
             <th>Precio unidad</th>
             <th>Total venta</th>
             <th>Descuento</th>
+            <th>Fecha</th>
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                 Editar
             </th>
@@ -37,9 +37,6 @@
                 <td th:text="${ventaProducto.inventarioProducto.detalleProducto}">
                     Mostrar Nombre del listadoVentasProducto
                 </td>
-                <td th:text="${ventaProducto.fechaVentaProducto}">
-                    Mostrar descripcion del listadoVentasProducto
-                </td>
                 <td th:text="${ventaProducto.cantidadProducto}">
                     Mostrar descripcion del listadoVentasProducto
                 </td>
@@ -50,6 +47,9 @@
                     Mostrar descripcion del listadoVentasProducto
                 </td>
                 <td th:text="${ventaProducto.descuentoProducto}">
+                    Mostrar descripcion del listadoVentasProducto
+                </td>
+                <td th:text="${ventaProducto.fechaVentaProducto}">
                     Mostrar descripcion del listadoVentasProducto
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">

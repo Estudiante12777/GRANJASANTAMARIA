@@ -13,19 +13,19 @@
     <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Becerro</th>
             <th>Fecha</th>
+            <th>Becerro</th>
             <th>Cantidad mañana</th>
             <th>Cantidad tarde</th>
             <th>Total cantidad</th>
             <th>Madre del Becerro</th>
             </thead>
             <tr th:each="alimentacion : ${alimentacionBecerroList}">
-                <td th:text="${alimentacion[0]}">Mostrar Nombre del becerro</td>
                 <td th:text="${alimentacion[1]}">Mostrar Fecha de Alimentación</td>
-                <td th:text="${alimentacion[2]}">Mostrar Cantidad de Alimentación en la mañana</td>
-                <td th:text="${alimentacion[3]}">Mostrar Cantidad de Alimentación en la tarde</td>
-                <td th:text="${alimentacion[4]}">Mostrar total cantidad alimentacion</td>
+                <td th:text="${alimentacion[0]}">Mostrar Nombre del becerro</td>
+                <td th:text="${alimentacion[2] + ' litros'}">Mostrar Cantidad de Alimentación en la mañana</td>
+                <td th:text="${alimentacion[3] + ' litros'}">Mostrar Cantidad de Alimentación en la tarde</td>
+                <td th:text="${alimentacion[4] + ' litros'}">Mostrar total cantidad alimentacion</td>
                 <td th:text="${alimentacion[5]}">Mostrar Madre del becerro</td>
             </tr>
         </table>

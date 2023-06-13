@@ -13,8 +13,8 @@
     <div th:if="${alimentacionBecerraList != null and !alimentacionBecerraList.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Becerra</th>
             <th>Fecha</th>
+            <th>Becerra</th>
             <th>Cantidad mañana</th>
             <th>Cantidad tarde</th>
             <th>Total cantidad</th>
@@ -23,11 +23,11 @@
             <th>Dar baja</th>
             </thead>
             <tr th:each="alimentacionBecerra : ${alimentacionBecerraList}">
-                <td th:text="${alimentacionBecerra[0]}">Mostrar Nombre del becerralimentacion-becerra</td>
                 <td th:text="${alimentacionBecerra[1]}">Mostrar Fecha</td>
-                <td th:text="${alimentacionBecerra[2]}">Mostrar Cantidad alimentacion mañana</td>
-                <td th:text="${alimentacionBecerra[3]}">Mostrar Cantidad alimentacion tarde</td>
-                <td th:text="${alimentacionBecerra[4]}">Mostrar total cantidad alimentacion</td>
+                <td th:text="${alimentacionBecerra[0]}">Mostrar Nombre del becerralimentacion-becerra</td>
+                <td th:text="${alimentacionBecerra[2] + ' litros'}">Mostrar Cantidad alimentacion mañana</td>
+                <td th:text="${alimentacionBecerra[3] + ' litros'}">Mostrar Cantidad alimentacion tarde</td>
+                <td th:text="${alimentacionBecerra[4] + ' litros'}">Mostrar total cantidad alimentacion</td>
                 <td th:text="${alimentacionBecerra[5]}">Mostrar nombre de la madre</td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->

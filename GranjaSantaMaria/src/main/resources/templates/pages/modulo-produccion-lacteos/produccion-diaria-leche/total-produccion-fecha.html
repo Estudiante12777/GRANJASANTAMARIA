@@ -44,13 +44,13 @@
             <tr th:each="produccionDiariaLeche : ${totalProduccionesFecha}">
                 <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">Mostrar Nombre del ganado
                 </td>
-                <td th:text="${produccionDiariaLeche.produccionManianaLeche}">Mostrar Producción de leche por la
+                <td th:text="${produccionDiariaLeche.produccionManianaLeche + ' litros'}">Mostrar Producción de leche por la
                     mañana
                 </td>
-                <td th:text="${produccionDiariaLeche.produccionTardeLeche}">Mostrar Producción de leche por la
+                <td th:text="${produccionDiariaLeche.produccionTardeLeche + ' litros'}">Mostrar Producción de leche por la
                     tarde
                 </td>
-                <td th:text="${produccionDiariaLeche.totalProduccionLeche}">Mostrar Producción de leche por la
+                <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">Mostrar Producción de leche por la
                     tarde
                 </td>
                 <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">Mostrar fecha de producción de leche
@@ -145,7 +145,7 @@
                 <td></td>
                 <td></td>
                 <td
-                        th:text="${#aggregates.sum(totalProduccionesFecha.![produccionManianaLeche + produccionTardeLeche])}">
+                        th:text="${#aggregates.sum(totalProduccionesFecha.![produccionManianaLeche + produccionTardeLeche]) + ' litros'}">
                 </td>
                 <td></td>
             </tr>

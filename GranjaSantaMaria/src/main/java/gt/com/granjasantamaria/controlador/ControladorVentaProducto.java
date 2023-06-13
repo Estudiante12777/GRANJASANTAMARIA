@@ -2,8 +2,10 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+
 import java.util.List;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -52,12 +54,14 @@ public class ControladorVentaProducto {
         }
     }
 
-    @GetMapping("/modulo-venta/venta-producto/editar/{idProduccionDiariaLeche}")
+    @GetMapping("/modulo-venta/venta-producto/editar/{idVentaProducto}")
     public String editarVentaProducto(VentaProducto ventaProducto, Model model) {
         List<Cliente> listadoClientes = clienteService.listadoClientes();
         model.addAttribute("listadoClientes", listadoClientes);
         List<InventarioProducto> listadoInventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
         model.addAttribute("listadoInventarioProductos", listadoInventarioProductos);
+        ventaProducto = ventaProductoService.encontrarVentaProducto(ventaProducto);
+        model.addAttribute("ventaProducto", ventaProducto);
         return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
     }
 
