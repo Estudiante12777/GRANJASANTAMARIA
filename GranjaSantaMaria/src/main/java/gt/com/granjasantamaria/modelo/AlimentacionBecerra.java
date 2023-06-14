@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "alimentacion_becerra")
@@ -49,6 +46,10 @@ public class AlimentacionBecerra implements Serializable {
     @NotNull
     @Column(name = "id_produccion_diaria_leche", nullable = false)
     private Long idProduccionDiariaLeche;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_produccion_diaria_leche", insertable = false, updatable = false)
+    private ProduccionDiariaLeche produccionDiariaLeche;
 
     @NotNull
     @Column(name = "estado_alimentacion_becerra", nullable = false)

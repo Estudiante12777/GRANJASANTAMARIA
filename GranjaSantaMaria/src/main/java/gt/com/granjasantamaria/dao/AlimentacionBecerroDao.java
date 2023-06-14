@@ -10,8 +10,6 @@ import org.springframework.data.jpa.repository.*;
 
 public interface AlimentacionBecerroDao extends JpaRepository<AlimentacionBecerro, Long> {
 
-    List<AlimentacionBecerro> findByEstadoAlimentacionBecerroIsTrue();
-
     Page<AlimentacionBecerro> findAllByEstadoAlimentacionBecerroIsTrue(Pageable pageable);
 
 }

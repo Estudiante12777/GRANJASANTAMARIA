@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,19 +25,20 @@ public class ControladorAlimentacionBecerra {
     @Autowired
     private GanadoHembraService ganadoHembraService;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    /*@PersistenceContext
+    private EntityManager entityManager;*/
 
     @GetMapping("/modulo-ganado/alimentacion-becerra")
-    public String obtenerListadoAlimentacionBecerras(Model model) {
-        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra AS a " + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra " + "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra " + "AND a.estado_alimentacion_becerra = 1";
-        Query query = entityManager.createNativeQuery(sqlQuery);
-        List<Object[]> results = query.getResultList();
-        model.addAttribute("alimentacionBecerraList", results);
+    public String obtenerListadoAlimentacionBecerras(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 8);
+        Page<AlimentacionBecerra> alimentacionBecerraPage = alimentacionBecerraService.obtenerAlimentacionBecerraPaginado(pageRequest);
+        model.addAttribute("alimentacionBecerraPage", alimentacionBecerraPage);
+        var alimentacionBecerra = alimentacionBecerraPage.getContent().stream().limit(8).collect(Collectors.toList());
+        model.addAttribute("alimentacionBecerra", alimentacionBecerra);
         return "/pages/modulo-ganado/alimentacion-becerra/alimentacion";
     }
 
-    @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
+    /*@GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
         String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra AS a " + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra " + "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
@@ -43,7 +46,7 @@ public class ControladorAlimentacionBecerra {
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerraList", results);
         return "/pages/modulo-ganado/alimentacion-becerra/alimentacion-becerra";
-    }
+    }*/
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/agregar")
     public String agregarAlimentacionBecerro(AlimentacionBecerra alimentacionBecerra, Model model) {

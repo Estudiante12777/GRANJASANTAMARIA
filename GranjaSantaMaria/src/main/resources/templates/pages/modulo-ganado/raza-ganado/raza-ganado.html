@@ -11,7 +11,6 @@
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Razas de ganado</h5>
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-        <!-- Enlace para crear un nuevo registro -->
         <a class="btn btn-outline-success" th:href="@{/modulo-ganado/raza-ganado/agregar}">+ Crear un nuevo
             registro</a>
     </div>

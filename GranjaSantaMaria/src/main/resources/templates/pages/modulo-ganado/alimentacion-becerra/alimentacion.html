@@ -10,7 +10,7 @@
 <div class="container-fluid py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Alimentación de becerras y terneras</h5>
-    <div th:if="${alimentacionBecerraList != null and !alimentacionBecerraList.empty}">
+    <div th:if="${alimentacionBecerra != null and !alimentacionBecerra.empty}">
         <table class="table">
             <thead class="table-dark">
             <th>Fecha</th>
@@ -20,15 +20,48 @@
             <th>Total cantidad</th>
             <th>Madre de la Becerra</th>
             </thead>
-            <tr th:each="alimentacion : ${alimentacionBecerraList}">
-                <td th:text="${alimentacion[1]}">Mostrar Fecha de Alimentación</td>
-                <td th:text="${alimentacion[0]}">Mostrar Nombre de la Becerra</td>
-                <td th:text="${alimentacion[2] + ' litros'}">Mostrar Cantidad de Alimentación en la mañana</td>
-                <td th:text="${alimentacion[3] + ' litros'}">Mostrar Cantidad de Alimentación en la tarde</td>
-                <td th:text="${alimentacion[4] + ' litros'}">Mostrar total cantidad alimentacion</td>
-                <td th:text="${alimentacion[5]}">Mostrar Madre de la Becerra</td>
+            <tr th:each="alimentacion : ${alimentacionBecerra}">
+                <td th:text="${alimentacion.getFechaAlimentacionBecerra()}">Mostrar Fecha de Alimentación</td>
+                <td th:text="${alimentacion.getGanadoHembra().getNombreGanadoHembra()}">Mostrar Nombre de la Becerra
+                </td>
+                <td th:text="${alimentacion.getCantidadManianaAlimentacion() + ' litros'}">Mostrar Cantidad de
+                    Alimentación en la mañana
+                </td>
+                <td th:text="${alimentacion.getCantidadTardeAlimentacion() + ' litros'}">Mostrar Cantidad de
+                    Alimentación en la tarde
+                </td>
+                <td th:text="${alimentacion.getTotalAlimentacionBecerra() + ' litros'}">Mostrar total cantidad
+                    alimentacion
+                </td>
+                <td th:text="${alimentacion.getProduccionDiariaLeche().getGanadoHembra().getNombreGanadoHembra()}">
+                    Mostrar Madre de la Becerra
+                </td>
             </tr>
         </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <!-- Si hay una página anterior, mostrar el enlace -->
+                <li th:if="${alimentacionBecerraPage.hasPrevious()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ganado/alimentacion-becerra(pagina=${alimentacionBecerraPage.getNumber()-1})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+                <!-- Mostrar el número de la página actual -->
+                <li class="page-item active"><a class="page-link"
+                                                th:text="${alimentacionBecerraPage.getNumber()+1}"></a>
+                </li>
+                <!-- Si hay una página siguiente, mostrar el enlace -->
+                <li th:if="${alimentacionBecerraPage.hasNext()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ganado/alimentacion-becerra(pagina=${alimentacionBecerraPage.getNumber()+1})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div class="py-3">
         <a class="btn btn-outline-primary btn-lg btn-block"
