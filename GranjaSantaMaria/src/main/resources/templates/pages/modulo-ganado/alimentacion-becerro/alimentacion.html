@@ -10,7 +10,7 @@
 <div class="container-fluid py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Alimentación de becerros y terneros</h5>
-    <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
+    <div th:if="${alimentacionBecerroQuery != null and !alimentacionBecerroQuery.empty}">
         <table class="table">
             <thead class="table-dark">
             <th>Fecha</th>
@@ -20,7 +20,8 @@
             <th>Total cantidad</th>
             <th>Madre del Becerro</th>
             </thead>
-            <tr th:each="alimentacion : ${alimentacionBecerroList}">
+            <tr th:each="alimentacion, iterStat : ${alimentacionBecerroQuery}"
+                th:if="${iterStat.index lt 8}">
                 <td th:text="${alimentacion[1]}">Mostrar Fecha de Alimentación</td>
                 <td th:text="${alimentacion[0]}">Mostrar Nombre del becerro</td>
                 <td th:text="${alimentacion[2] + ' litros'}">Mostrar Cantidad de Alimentación en la mañana</td>
@@ -29,6 +30,30 @@
                 <td th:text="${alimentacion[5]}">Mostrar Madre del becerro</td>
             </tr>
         </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <!-- Si hay una página anterior, mostrar el enlace -->
+                <li th:if="${alimentacionBecerroPage.hasPrevious()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ganado/alimentacion-becerro(pagina=${alimentacionBecerroPage.getNumber()-1})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+                <!-- Mostrar el número de la página actual -->
+                <li class="page-item active"><a class="page-link"
+                                                th:text="${alimentacionBecerroPage.getNumber()+1}"></a>
+                </li>
+                <!-- Si hay una página siguiente, mostrar el enlace -->
+                <li th:if="${alimentacionBecerroPage.hasNext()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ganado/alimentacion-becerro(pagina=${alimentacionBecerroPage.getNumber()+1})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div class="py-3">
         <a class="btn btn-outline-primary btn-lg btn-block"

@@ -10,6 +10,8 @@ import javax.persistence.Query;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,33 +31,22 @@ public class ControladorAlimentacionBecerro {
     private EntityManager entityManager;
 
     @GetMapping("/modulo-ganado/alimentacion-becerro")
-    public String obtenerListadoAlimentacionBecerros(Model model) {
-        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
-                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerro, g.nombre_ganado_hembra AS nombre_madre, "
-                + "a.id_alimentacion_becerro "
-                + "FROM alimentacion_becerro AS a "
-                + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
-                + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho "
-                + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra "
-                + "AND a.estado_alimentacion_becerro = 1";
+    public String obtenerListadoAlimentacionBecerros(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 8);
+        Page<AlimentacionBecerro> alimentacionBecerroPage = alimentacionBecerroService.obtenerListadoAlimentacionBecerroPaginado(pageRequest);
+        model.addAttribute("alimentacionBecerroPage", alimentacionBecerroPage);
+        var alimentacionBecerroList = alimentacionBecerroPage.getContent().stream().limit(8).collect(Collectors.toList());
+        model.addAttribute("alimentacionBecerroList", alimentacionBecerroList);
+        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, " + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerro, g.nombre_ganado_hembra AS nombre_madre, " + "a.id_alimentacion_becerro " + "FROM alimentacion_becerro AS a " + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho " + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra " + "AND a.estado_alimentacion_becerro = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
         List<Object[]> results = query.getResultList();
-        model.addAttribute("alimentacionBecerroList", results);
+        model.addAttribute("alimentacionBecerroQuery", results);
         return "/pages/modulo-ganado/alimentacion-becerro/alimentacion";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/lista")
     public String obtenerListadoAlimentacionBecerros(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, "
-                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerro, g.nombre_ganado_hembra AS nombre_madre, "
-                + "a.id_alimentacion_becerro "
-                + "FROM alimentacion_becerro AS a "
-                + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
-                + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho "
-                + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra "
-                + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche "
-                + "AND a.estado_alimentacion_becerro = 1"; // Agrega esta condición para filtrar solo los registros activos
-
+        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, " + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerro, g.nombre_ganado_hembra AS nombre_madre, " + "a.id_alimentacion_becerro " + "FROM alimentacion_becerro AS a " + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho " + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerro = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
@@ -67,8 +58,7 @@ public class ControladorAlimentacionBecerro {
     public String agregarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro, Model model) {
         List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
         // Filtrar la lista de ganado para mostrar solo vacas y novillas
-        List<GanadoMacho> listaTernerosBecerros = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternero")
-                || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerro")).collect(Collectors.toList());
+        List<GanadoMacho> listaTernerosBecerros = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternero") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerro")).collect(Collectors.toList());
         System.out.println("Lista de ganados: " + listaGanados);
         System.out.println("Lista de Terneras y Becerras: " + listaTernerosBecerros);
         model.addAttribute("listaGanados", listaTernerosBecerros);
@@ -97,8 +87,7 @@ public class ControladorAlimentacionBecerro {
     public String editarAlimentacionBecerro(@PathVariable("idAlimentacionBecerro") Long idAlimentacionBecerro, AlimentacionBecerro alimentacionBecerro, Model model) {
         List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
         // Filtrar la lista de ganado para mostrar solo vacas y novillas
-        List<GanadoMacho> listaTernerosBecerros = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternero")
-                || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerro")).collect(Collectors.toList());
+        List<GanadoMacho> listaTernerosBecerros = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternero") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerro")).collect(Collectors.toList());
         System.out.println("Lista de ganados: " + listaGanados);
         System.out.println("Lista de Terneras y Becerras: " + listaTernerosBecerros);
         model.addAttribute("listaGanados", listaTernerosBecerros);

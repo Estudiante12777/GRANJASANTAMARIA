@@ -1,19 +1,16 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.AlimentacionBecerro;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
-/**
- *
- * @author gerso
- */
 public interface AlimentacionBecerroService {
 
-    public List<AlimentacionBecerro> obtenerListadoAlimentacionBecerros();
+    public Page<AlimentacionBecerro> obtenerListadoAlimentacionBecerroPaginado(Pageable pageable);
 
     public void guardarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro);
-
-    public void eliminarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro);
 
     public AlimentacionBecerro encontrarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro);
 

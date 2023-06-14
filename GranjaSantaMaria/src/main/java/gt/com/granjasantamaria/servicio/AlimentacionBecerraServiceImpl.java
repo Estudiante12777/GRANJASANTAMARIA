@@ -2,15 +2,16 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.AlimentacionBecerraDao;
 import gt.com.granjasantamaria.modelo.AlimentacionBecerra;
+
 import java.util.List;
+
+import gt.com.granjasantamaria.modelo.AlimentacionBecerro;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraService {
 
@@ -19,8 +20,8 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
 
     @Override
     @Transactional(readOnly = true)
-    public List<AlimentacionBecerra> obtenerListadoAlimentacionBecerras() {
-        return alimentacionBecerraDao.findByEstadoAlimentacionBecerraIsTrue();
+    public Page<AlimentacionBecerra> obtenerAlimentacionBecerraPaginado(Pageable pageable) {
+        return alimentacionBecerraDao.findAllByEstadoAlimentacionBecerraIsTrue(pageable);
     }
 
     @Override
