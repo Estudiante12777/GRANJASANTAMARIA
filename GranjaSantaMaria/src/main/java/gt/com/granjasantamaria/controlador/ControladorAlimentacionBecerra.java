@@ -25,8 +25,8 @@ public class ControladorAlimentacionBecerra {
     @Autowired
     private GanadoHembraService ganadoHembraService;
 
-    /*@PersistenceContext
-    private EntityManager entityManager;*/
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @GetMapping("/modulo-ganado/alimentacion-becerra")
     public String obtenerListadoAlimentacionBecerras(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -38,7 +38,7 @@ public class ControladorAlimentacionBecerra {
         return "/pages/modulo-ganado/alimentacion-becerra/alimentacion";
     }
 
-    /*@GetMapping("/modulo-ganado/alimentacion-becerra/lista")
+    @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
         String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra AS a " + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra " + "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
@@ -46,7 +46,7 @@ public class ControladorAlimentacionBecerra {
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerraList", results);
         return "/pages/modulo-ganado/alimentacion-becerra/alimentacion-becerra";
-    }*/
+    }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/agregar")
     public String agregarAlimentacionBecerro(AlimentacionBecerra alimentacionBecerra, Model model) {

@@ -27,8 +27,8 @@ public class ControladorAlimentacionBecerro {
     @Autowired
     private GanadoMachoService ganadoMachoService;
 
-    /*@PersistenceContext
-    private EntityManager entityManager;*/
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @GetMapping("/modulo-ganado/alimentacion-becerro")
     public String obtenerListadoAlimentacionBecerros(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -40,7 +40,7 @@ public class ControladorAlimentacionBecerro {
         return "/pages/modulo-ganado/alimentacion-becerro/alimentacion";
     }
 
-    /*@GetMapping("/modulo-ganado/alimentacion-becerro/lista")
+    @GetMapping("/modulo-ganado/alimentacion-becerro/lista")
     public String obtenerListadoAlimentacionBecerros(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
         String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_becerro, a.fecha_alimentacion_becerro, " + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerro, g.nombre_ganado_hembra AS nombre_madre, " + "a.id_alimentacion_becerro " + "FROM alimentacion_becerro AS a " + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = a.id_ganado_macho " + "INNER JOIN ganado_hembra AS g ON g.id_ganado_hembra = p.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerro = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
@@ -48,7 +48,7 @@ public class ControladorAlimentacionBecerro {
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerroList", results);
         return "/pages/modulo-ganado/alimentacion-becerro/alimentacion-becerro";
-    }*/
+    }
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/agregar")
     public String agregarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro, Model model) {
