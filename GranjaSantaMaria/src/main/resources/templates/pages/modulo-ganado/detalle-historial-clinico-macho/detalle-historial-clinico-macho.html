@@ -13,8 +13,8 @@
     <div th:if="${detalleHistorialClinicoMachoList != null and !detalleHistorialClinicoMachoList.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th class="col-sm-2">Ganado</th>
             <th class="col-sm-2">Fecha</th>
+            <th class="col-sm-2">Ganado</th>
             <th class="col-sm-6">Descripción</th>
             <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
                 Editar
@@ -24,24 +24,24 @@
             </th>
             </thead>
             <tr th:each="detalleHistorialClinicoMacho, iterStat : ${detalleHistorialClinicoMachoList}">
-                <td th:text="${detalleHistorialClinicoMacho[0]}">Mostrar Nombre del Ganado</td>
                 <td th:text="${detalleHistorialClinicoMacho[1]}">Mostrar Fecha de Registro</td>
+                <td th:text="${detalleHistorialClinicoMacho[0]}">Mostrar Nombre del Ganado</td>
                 <td th:text="${detalleHistorialClinicoMacho[2]}">Mostrar Descripción</td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal_' + ${iterStat.index}">
+                            th:data-bs-target="'#editModal_' + ${detalleHistorialClinicoMacho[3]}">
                         <i class="fa-sharp fa-solid fa-pencil"></i>
                     </button>
                     <!-- Modal de edición -->
-                    <div class="modal fade" th:id="'editModal_' + ${iterStat.index}" tabindex="-1"
-                         th:attr="aria-labelledby='editModalLabel_' + ${iterStat.index}"
+                    <div class="modal fade" th:id="'editModal_' + ${detalleHistorialClinicoMacho[3]}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${detalleHistorialClinicoMacho[3]}"
                          aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title"
-                                        th:id="'editModalLabel_' + ${iterStat.index}">
+                                        th:id="'editModalLabel_' + ${detalleHistorialClinicoMacho[3]}">
                                         ¿Estás seguro de que deseas editar este registro?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -50,7 +50,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/editar/{idDetalleHistorialClinicoMacho}(idDetalleHistorialClinicoMacho=${iterStat.index + 1})}">Sí,
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/editar/{idDetalleHistorialClinicoMacho}(idDetalleHistorialClinicoMacho=${detalleHistorialClinicoMacho[3]})}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -64,18 +64,18 @@
                 <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                     <!-- Botón para abrir el modal de dar baja -->
                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#bajaModal_' + ${iterStat.index}">
+                            th:data-bs-target="'#bajaModal_' + ${detalleHistorialClinicoMacho[3]}">
                         <i class="fa-sharp fa-solid fa-ban"></i>
                     </button>
                     <!-- Modal de dar baja -->
-                    <div class="modal fade" th:id="'bajaModal_' + ${iterStat.index}" tabindex="-1"
-                         th:attr="aria-labelledby='bajaModalLabel_' + ${iterStat.index}"
+                    <div class="modal fade" th:id="'bajaModal_' + ${detalleHistorialClinicoMacho[3]}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${detalleHistorialClinicoMacho[3]}"
                          aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title"
-                                        th:id="'bajaModalLabel_' + ${iterStat.index}">
+                                        th:id="'bajaModalLabel_' + ${detalleHistorialClinicoMacho[3]}">
                                         ¿Estás seguro de que deseas dar de baja este registro?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -84,8 +84,9 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para dar de baja el registro -->
                                     <a class="btn btn-danger"
-                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/baja/} + ${iterStat.index}">Sí,
-                                        dar de baja</a>
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-macho/editar/{idDetalleHistorialClinicoMacho}(idDetalleHistorialClinicoMacho=${detalleHistorialClinicoMacho[3]})}">
+                                        Sí, dar de baja
+                                    </a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar
@@ -109,25 +110,31 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
     /* Obtén todos los botones de edición */
     var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    /* Obtén todos los botones de dar baja */
+    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        // Genera un identificador único para el modal
-        var uniqueId = targetModalId.substring(targetModalId.lastIndexOf("_") + 1);
-        // Asigna el identificador único al atributo "id" del modal correspondiente
-        document.querySelector(targetModalId).setAttribute("id", "editModal_" + uniqueId);
+        asignarIdUnicoModal(button);
+    });
+    deleteButtons.forEach(function (button) {
+        asignarIdUnicoModal(button);
     });
 
-    /* Obtén todos los botones de dar baja */
-    var bajaButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
-    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
-    bajaButtons.forEach(function (button) {
+    function asignarIdUnicoModal(button) {
         var targetModalId = button.getAttribute("data-bs-target");
-        // Genera un identificador único para el modal
-        var uniqueId = targetModalId.substring(targetModalId.lastIndexOf("_") + 1);
-        // Asigna el identificador único al atributo "id" del modal correspondiente
-        document.querySelector(targetModalId).setAttribute("id", "bajaModal_" + uniqueId);
-    });
+        var modalId = button.getAttribute("th:data-bs-target");
+        // Extrae el tipo de modal ("editModal" o "bajaModal")
+        var modalType = targetModalId.substring(1, targetModalId.indexOf("_"));
+        // Extrae el ID del modal sin el prefijo ("editModal_" o "bajaModal_")
+        var modalIdSuffix = modalId.replace("#" + modalType + "Modal_", "");
+        // Crea un identificador único para el modal
+        var uniqueModalId = modalType + "_" + modalIdSuffix;
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        var modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    }
 </script>
 </body>
 

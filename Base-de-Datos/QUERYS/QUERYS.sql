@@ -1,3 +1,3 @@
 USE granja_santa_maria;
 
-SELECT * FROM alimentacion_becerra;
+SELECT * FROM detalle_historial_clinico_macho;
