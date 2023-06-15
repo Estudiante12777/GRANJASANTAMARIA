@@ -11,11 +11,11 @@
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Dieta terneras y terneros</h5>
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
-        <a class="btn btn-outline-success" th:href="@{/modulo-ganado/tipo-ganado/agregar}"><i
+        <a class="btn btn-outline-success" th:href="@{/modulo-ganado/dieta-ternera-ternero/agregar}"><i
                 class="fa-solid fa-plus"></i>
             Crear nuevo registro</a>
     </div>
-    <div th:if="${tipoDeGanados != null and !tipoDeGanados.empty}">
+    <div th:if="${dietaTerneraTernero != null and !dietaTerneraTernero.empty}">
         <table class="table">
             <thead class="table-dark">
             <th class="col-sm-10">Tipo</th>
@@ -26,25 +26,25 @@
                 Dar baja
             </th>
             </thead>
-            <tr th:each="tipoDeGanado, iterStat : ${tipoDeGanados}" th:if="${iterStat.index lt 8}">
-                <td class="col-sm-9" th:text="${tipoDeGanado.nombreTipoGanado}">
+            <tr th:each="dieta, iterStat : ${dietaTerneraTernero}" th:if="${iterStat.index lt 8}">
+                <td class="col-sm-9" th:text="${dieta.descripcionDieta}">
                     Mostrar Nombre del tipo de ganado
                 </td>
                 <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal_' + ${tipoDeGanado.idTipoGanado}">
+                            th:data-bs-target="'#editModal_' + ${dieta.idDietaTerneraTernero}">
                         <i class="fa-sharp fa-solid fa-pencil"></i>
                     </button>
                     <!-- Modal de edición -->
-                    <div class="modal fade" th:id="'editModal_' + ${tipoDeGanado.idTipoGanado}" tabindex="-1"
-                         th:attr="aria-labelledby='editModalLabel_' + ${tipoDeGanado.idTipoGanado}"
+                    <div class="modal fade" th:id="'editModal_' + ${dieta.idDietaTerneraTernero}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${dieta.idDietaTerneraTernero}"
                          aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title"
-                                        th:id="'editModalLabel_' + ${tipoDeGanado.idTipoGanado}">
+                                        th:id="'editModalLabel_' + ${dieta.idDietaTerneraTernero}">
                                         ¿Estás seguro de que deseas editar este tipo de ganado?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -53,7 +53,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/tipo-ganado/editar/} + ${tipoDeGanado.idTipoGanado}">Sí,
+                                       th:href="@{/modulo-ganado/dieta-ternera-ternero/editar/} + ${dieta.idDietaTerneraTernero}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -67,18 +67,18 @@
                 <td class="col-sm-1" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
                     <!-- Botón para abrir el modal de dar baja -->
                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#bajaModal_' + ${tipoDeGanado.idTipoGanado}">
+                            th:data-bs-target="'#bajaModal_' + ${dieta.idDietaTerneraTernero}">
                         <i class="fa-sharp fa-solid fa-ban"></i>
                     </button>
                     <!-- Modal de dar baja -->
-                    <div class="modal fade" th:id="'bajaModal_' + ${tipoDeGanado.idTipoGanado}" tabindex="-1"
-                         th:attr="aria-labelledby='bajaModalLabel_' + ${tipoDeGanado.idTipoGanado}"
+                    <div class="modal fade" th:id="'bajaModal_' + ${dieta.idDietaTerneraTernero}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${dieta.idDietaTerneraTernero}"
                          aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title"
-                                        th:id="'bajaModalLabel_' + ${tipoDeGanado.idTipoGanado}">
+                                        th:id="'bajaModalLabel_' + ${dieta.idDietaTerneraTernero}">
                                         ¿Estás seguro de que deseas dar de baja este tipo de ganado?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -87,7 +87,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para dar de baja la categoría de ganado -->
                                     <a class="btn btn-danger"
-                                       th:href="@{/modulo-ganado/tipo-ganado/baja(idTipoGanado=${tipoDeGanado.idTipoGanado})}">Sí,
+                                       th:href="@{/modulo-ganado/dieta-ternera-ternero/baja(idDietaTerneraTernero=${dieta.idDietaTerneraTernero})}">Sí,
                                         dar de baja</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary"
@@ -104,20 +104,21 @@
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <!-- Si hay una página anterior, mostrar el enlace -->
-                <li th:if="${tipoGanadoPage.hasPrevious()}" class="page-item">
+                <li th:if="${dietaTerneraTerneroPage.hasPrevious()}" class="page-item">
                     <a class="page-link"
-                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${tipoGanadoPage.getNumber()-1})}"
+                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${dietaTerneraTerneroPage.getNumber()-1})}"
                        aria-label="Previous">
                         <span aria-hidden="true">«</span>
                     </a>
                 </li>
                 <!-- Mostrar el número de la página actual -->
-                <li class="page-item active"><a class="page-link" th:text="${tipoGanadoPage.getNumber()+1}"></a>
+                <li class="page-item active"><a class="page-link"
+                                                th:text="${dietaTerneraTerneroPage.getNumber()+1}"></a>
                 </li>
                 <!-- Si hay una página siguiente, mostrar el enlace -->
-                <li th:if="${tipoGanadoPage.hasNext()}" class="page-item">
+                <li th:if="${dietaTerneraTerneroPage.hasNext()}" class="page-item">
                     <a class="page-link"
-                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${tipoGanadoPage.getNumber()+1})}"
+                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${dietaTerneraTerneroPage.getNumber()+1})}"
                        aria-label="Next">
                         <span aria-hidden="true">»</span>
                     </a>
