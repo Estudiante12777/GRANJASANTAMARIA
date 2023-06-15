@@ -21,4 +21,6 @@ public class DietaTerneraTernero implements Serializable {
     @Column(name = "descripcion_dieta")
     private String descripcionDieta;
 
+    
+
 }
