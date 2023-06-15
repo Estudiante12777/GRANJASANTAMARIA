@@ -18,9 +18,11 @@ public class DietaTerneraTernero implements Serializable {
     private Long idDietaTerneraTernero;
 
     @NotNull
-    @Column(name = "descripcion_dieta")
+    @Column(name = "descripcion_dieta", nullable = false)
     private String descripcionDieta;
 
-    
+    @NotNull
+    @Column(name = "estado_dieta_ternera_ternero", nullable = false)
+    private boolean estadoDietaTerneraTernero;
 
 }
