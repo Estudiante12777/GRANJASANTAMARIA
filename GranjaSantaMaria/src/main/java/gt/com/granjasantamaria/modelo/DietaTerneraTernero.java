@@ -3,12 +3,9 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "dieta_ternera_ternero")
@@ -23,7 +20,5 @@ public class DietaTerneraTernero implements Serializable {
     @NotNull
     @Column(name = "descripcion_dieta")
     private String descripcionDieta;
-    
-    
 
 }

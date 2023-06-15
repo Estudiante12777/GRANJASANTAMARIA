@@ -119,6 +119,23 @@ CREATE TABLE historial_clinico_hembra (
     CONSTRAINT fk_historial_clinico_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE detalle_historial_clinico_hembra (
+    id_detalle_historial_clinico_hembra INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_historial_clinico_hembra INT NOT NULL,
+    fecha_registro_historial_clinico DATE NOT NULL,
+    descripcion_historial_clinico TEXT NOT NULL,
+    estado_detalle_historial_clinico_hembra TINYINT NOT NULL,
+    CONSTRAINT fk_detalle_historial_clinico_hembra_historial_clinico_hembra FOREIGN KEY (id_historial_clinico_hembra) REFERENCES historial_clinico_hembra (id_historial_clinico_hembra) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE TABLE prenies_ganado_hembra (
+    id_prenies_ganado_hembra INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_ganado_hembra INT NOT NULL,
+    fecha_prenies DATE NOT NULL,
+    promedio_gestacion INT NOT NULL,
+    estado_prenies_ganado_hembra TINYINT NOT NULL,
+    CONSTRAINT fk_preñes_ganado_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 /* TABLAS PARA PRODUCCION DE LACTEOS */
 CREATE TABLE produccion_diaria_leche(
 	id_produccion_diaria_leche INT PRIMARY KEY NOT NULL AUTO_INCREMENT, 
