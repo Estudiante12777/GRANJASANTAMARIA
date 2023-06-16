@@ -13,19 +13,20 @@
         <div class="col-md-6 col-sm-8 col-12">
             <div class="card bg-light text-dark">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Informacion sobre el tipo ganado</h5>
+                    <h5 class="card-title text-center">Informacion sobre la dieta de terneras y terneros</h5>
                     <form th:action="@{/modulo-ganado/dieta-ternera-ternero/guardar}" method="post"
-                          th:object="${tipoGanado}"
+                          th:object="${dietaTerneraTernero}"
                           id="guardarFormulario">
-                        <input type="hidden" name="idTipoGanado" th:field="*{idTipoGanado}"/>
+                        <input type="hidden" name="idDietaTerneraTernero" th:field="*{idDietaTerneraTernero}"/>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="nombreTipoGanado">Nombre:</label>
-                            <input class="form-control form-control-lg" type="text" required name="nombreTipoGanado"
-                                   th:field="*{nombreTipoGanado}"/>
-                            <span th:if="${#fields.hasErrors('nombreTipoGanado')}" class="text-danger"
-                                  th:errors="*{nombreTipoGanado}">Error nombre</span>
+                            <label class="form-label form-label-lg" for="descripcionDieta">Descripción de la
+                                dieta:</label>
+                            <textarea class="form-control form-control-lg" required name="descripcionDieta"
+                                      th:field="*{descripcionDieta}"></textarea>
+                            <span th:if="${#fields.hasErrors('descripcionDieta')}" class="text-danger"
+                                  th:errors="*{descripcionDieta}">Error en la descripción de la dieta</span>
                         </div>
-                        <input type="hidden" name="estadoTipoGanado" th:field="*{estadoTipoGanado}">
+                        <input type="hidden" name="estadoDietaTerneraTernero" th:field="*{estadoDietaTerneraTernero}">
                         <div class="row">
                             <div class="col-sm-6 mb-3">
                                 <a class="btn btn-outline-primary btn-lg btn-block"
@@ -43,13 +44,14 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="guardarModalLabel">Guardar tipo de
-                                                    ganado</h5>
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar descripcion de
+                                                    la dieta para terneras y terneros</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>¿Estás seguro de que deseas guardar este tipo de ganado?</p>
+                                                <p>¿Estás seguro de que deseas guardar la descripcion de
+                                                    la dieta para terneras y terneros?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <!-- Este es el botón que realiza la acción de guardar -->
