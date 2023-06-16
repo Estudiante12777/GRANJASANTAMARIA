@@ -106,7 +106,7 @@
                 <!-- Si hay una página anterior, mostrar el enlace -->
                 <li th:if="${dietaTerneraTerneroPage.hasPrevious()}" class="page-item">
                     <a class="page-link"
-                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${dietaTerneraTerneroPage.getNumber()-1})}"
+                       th:href="@{/modulo-ganado/dieta-ternera-ternero/lista(pagina=${dietaTerneraTerneroPage.getNumber()-1})}"
                        aria-label="Previous">
                         <span aria-hidden="true">«</span>
                     </a>
@@ -118,7 +118,7 @@
                 <!-- Si hay una página siguiente, mostrar el enlace -->
                 <li th:if="${dietaTerneraTerneroPage.hasNext()}" class="page-item">
                     <a class="page-link"
-                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${dietaTerneraTerneroPage.getNumber()+1})}"
+                       th:href="@{/modulo-ganado/dieta-ternera-ternero/lista(pagina=${dietaTerneraTerneroPage.getNumber()+1})}"
                        aria-label="Next">
                         <span aria-hidden="true">»</span>
                     </a>
