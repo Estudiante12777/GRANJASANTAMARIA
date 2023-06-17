@@ -18,17 +18,18 @@
     <div th:if="${historialClinicoHembras != null and !historialClinicoHembras.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Ganado</th>
-            <th>Fecha ingreso granja</th>
+            <th>Hembra</th>
+            <th>Ingreso granja</th>
             <th>Procedencia</th>
-            <th>Condiciones fisicas recibidas</th>
+            <th>Condiciones fisicas recibida</th>
+            <th>Descripcion</th>
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                 Historial clinico
             </th>
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                 Editar
             </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR',)">
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
                 Dar baja
             </th>
             </thead>
@@ -37,13 +38,16 @@
                     Mostrar Nombre del ganado
                 </td>
                 <td th:text="${historialClinicoHembra.fechaIngresoGranja}">
-                    Mostrar fecha de produccion de leche
+                    Mostrar fecha de ingreso
                 </td>
                 <td th:text="${historialClinicoHembra.procedenciaGanadoHembra}">
-                    Mostrar Produccion de leche por la mañana
+                    Mostrar procedencia
                 </td>
-                <td th:text="${historialClinicoHembra.condicionesFisicasRecibida}">Mostrar Produccion de leche por
-                    la tarde
+                <td th:text="${historialClinicoHembra.condicionesFisicasRecibida}">
+                    Mostrar condiciones fisicas
+                </td>
+                <td th:text="${historialClinicoHembra.descripcionHistorialClinicoHembra}">
+                    Mostrar descripcion
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de alimentacion becerro -->

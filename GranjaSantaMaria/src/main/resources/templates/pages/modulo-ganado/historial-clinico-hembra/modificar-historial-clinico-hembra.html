@@ -62,6 +62,18 @@
                                   th:errors="*{condicionesFisicasRecibida}">Error produccion de leche en la
                                     tarde</span>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="descripcionHistorialClinicoHembra">Descripcion:
+                            </label>
+                            <input id="descripcionHistorialClinicoHembra" type="text"
+                                   class="form-control form-control-lg"
+                                   required name="descripcionHistorialClinicoHembra"
+                                   th:field="*{descripcionHistorialClinicoHembra}"
+                                   onblur="calcularTotal();">
+                            <span th:if="${#fields.hasErrors('descripcionHistorialClinicoHembra')}" class="text-danger"
+                                  th:errors="*{descripcionHistorialClinicoHembra}">Error produccion de leche en la
+                                    tarde</span>
+                        </div>
                         <input type="hidden" name="estadoHistorialClinicoHembra"
                                th:field="*{estadoHistorialClinicoHembra}"/>
                         <div class="row">

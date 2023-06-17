@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "historial_clinico_hembra")
@@ -38,6 +35,10 @@ public class HistorialClinicoHembra implements Serializable {
     @NotNull
     @Column(name = "condiciones_fisicas_recibida", nullable = false)
     private String condicionesFisicasRecibida;
+
+    @NotNull
+    @Column(name = "descripcion_historial_clinico_hembra", nullable = false)
+    private String descripcionHistorialClinicoHembra;
 
     @NotNull
     @Column(name = "estado_historial_clinico_hembra", nullable = false)

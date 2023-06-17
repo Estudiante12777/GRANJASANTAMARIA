@@ -1,6 +1,8 @@
-CREATE DATABASE granja_santa_maria;
+CREATE
+DATABASE granja_santa_maria;
 
-USE granja_santa_maria;
+USE
+granja_santa_maria;
 
 /** TABLAS PARA USUARIOS **/
 CREATE TABLE usuario
@@ -124,12 +126,13 @@ CREATE TABLE ganado_hembra
 );
 CREATE TABLE historial_clinico_hembra
 (
-    id_historial_clinico_hembra     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    id_ganado_hembra                INT             NOT NULL,
-    fecha_ingreso_granja            DATE            NOT NULL,
-    procedencia_ganado_hembra       VARCHAR(150)    NOT NULL,
-    condiciones_fisicas_recibida    VARCHAR(150)    NOT NULL,
-    estado_historial_clinico_hembra TINYINT         NOT NULL,
+    id_historial_clinico_hembra          INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_ganado_hembra                     INT             NOT NULL,
+    fecha_ingreso_granja                 DATE            NOT NULL,
+    procedencia_ganado_hembra            VARCHAR(150)    NOT NULL,
+    condiciones_fisicas_recibida         VARCHAR(150)    NOT NULL,
+    descripcion_historial_clinico_hembra VARCHAR(255)    NOT NULL,
+    estado_historial_clinico_hembra      TINYINT         NOT NULL,
     CONSTRAINT fk_historial_clinico_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -137,8 +140,8 @@ CREATE TABLE detalle_historial_clinico_hembra
 (
     id_detalle_historial_clinico_hembra     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     id_historial_clinico_hembra             INT             NOT NULL,
-    fecha_registro_historial_clinico        DATE            NOT NULL,
-    descripcion_historial_clinico           TEXT            NOT NULL,
+    fecha_registro_detalle_historial_clinico        DATE            NOT NULL,
+    descripcion_detalle_historial_clinico           TEXT            NOT NULL,
     estado_detalle_historial_clinico_hembra TINYINT         NOT NULL,
     CONSTRAINT fk_detalle_historial_clinico_hembra_historial_clinico_hembra FOREIGN KEY (id_historial_clinico_hembra) REFERENCES historial_clinico_hembra (id_historial_clinico_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );

@@ -28,7 +28,6 @@
             // Seleccionar el elemento del botón y el elemento de la barra de navegación con jQuery
             var sidebarToggle = $("#sidebarToggle");
             var sidebar = $("#sidebar");
-
             // Agregar un evento de clic al botón con el método on
             sidebarToggle.on("click", function () {
                 // Mostrar u ocultar la barra de navegación con el método toggle
@@ -117,12 +116,22 @@
     </div>
 </div>
 <!-- Bootstrap core JS-->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}">
+</script>
 <!-- Core theme JS-->
 <script th:src="@{/js/scripts.js}"></script>
 
 <!--OTRO SCRIPTS PARA PAGINAS-->
-<th:block layout:fragment="page-scripts"></th:block>
+<th:block layout:fragment="page-scripts">
+    <script>
+        function calcularTotalProduccionLeche() {
+            var produccionManiana = parseFloat(document.getElementById('produccionManianaLeche').value);
+            var produccionTarde = parseFloat(document.getElementById('produccionTardeLeche').value);
+            var total = (isNaN(produccionManiana) ? 0 : produccionManiana) + (isNaN(produccionTarde) ? 0 : produccionTarde);
+            document.getElementById('totalProduccionLeche').value = total;
+        }
+    </script>
+</th:block>
 </body>
 
 </html>

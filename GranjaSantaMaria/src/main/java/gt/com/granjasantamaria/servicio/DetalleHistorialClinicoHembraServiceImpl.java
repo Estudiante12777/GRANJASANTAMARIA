@@ -2,15 +2,15 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.DetalleHistorialClinicoHembraDao;
 import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoHembra;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class DetalleHistorialClinicoHembraServiceImpl implements DetalleHistorialClinicoHembraService {
 
@@ -19,8 +19,8 @@ public class DetalleHistorialClinicoHembraServiceImpl implements DetalleHistoria
 
     @Override
     @Transactional(readOnly = true)
-    public List<DetalleHistorialClinicoHembra> obtenerListadoDetalleHistorialClinicoHembras() {
-        return detalleHistorialClinicoHembraDao.findByEstadoDetalleHistorialClinicoHembraIsTrue();
+    public Page<DetalleHistorialClinicoHembra> obtenerListadoDetalleHistorialClinicoHembraPaginado(Pageable pageable) {
+        return detalleHistorialClinicoHembraDao.findAllByEstadoDetalleHistorialClinicoHembraIsTrue(pageable);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class DetalleHistorialClinicoHembraServiceImpl implements DetalleHistoria
         DetalleHistorialClinicoHembra detalleHistorialClinicoHembraExistente = detalleHistorialClinicoHembraDao.findById(detalleHistorialClinicoHembra.getIdDetalleHistorialClinicoHembra()).orElse(null);
         if (detalleHistorialClinicoHembraExistente != null) {
             detalleHistorialClinicoHembraExistente.setEstadoDetalleHistorialClinicoHembra(false);
-            detalleHistorialClinicoHembraDao.save(detalleHistorialClinicoHembra);
+            detalleHistorialClinicoHembraDao.save(detalleHistorialClinicoHembraExistente);
         }
     }
 

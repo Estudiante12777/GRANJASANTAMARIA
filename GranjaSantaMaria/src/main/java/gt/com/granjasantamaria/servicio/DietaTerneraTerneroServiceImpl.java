@@ -44,8 +44,8 @@ public class DietaTerneraTerneroServiceImpl implements DietaTerneraTerneroServic
     public void darBajaDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero) {
         DietaTerneraTernero dietaTerneraTerneroExistente = dietaTerneraTerneroDao.findById(dietaTerneraTernero.getIdDietaTerneraTernero()).orElse(null);
         if (dietaTerneraTerneroExistente != null) {
-            dietaTerneraTernero.setEstadoDietaTerneraTernero(false);
-            dietaTerneraTerneroDao.save(dietaTerneraTernero);
+            dietaTerneraTerneroExistente.setEstadoDietaTerneraTernero(false);
+            dietaTerneraTerneroDao.save(dietaTerneraTerneroExistente);
         }
     }
 

@@ -19,22 +19,22 @@ public class DetalleHistorialClinicoHembra implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDetalleHistorialClinicoHembra;
 
+    @NotNull
+    @Column(name = "id_historial_clinico_hembra", nullable = false)
+    private Long idHistorialClinicoHembra;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_historial_clinico_hembra")
+    @JoinColumn(name = "id_historial_clinico_hembra", insertable = false, updatable = false)
     private HistorialClinicoHembra historialClinicoHembra;
 
     @NotNull
-    @Column(name = "observaciones_adicionales", nullable = false)
-    private String observacionesAdicionales;
-
-    @NotNull
-    @Column(name = "fecha_registro_historial_clinico", nullable = false)
+    @Column(name = "fecha_registro_detalle_historial_clinico", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaRegistroHistorialClinico;
+    private LocalDate fechaRegistroDetalleHistorialClinico;
 
     @NotNull
-    @Column(name = "descripcion_historial_clinico", nullable = false)
-    private String descripcionHistorialClinico;
+    @Column(name = "descripcion_detalle_historial_clinico", nullable = false)
+    private String descripcionDetalleHistorialClinico;
 
     @NotNull
     @Column(name = "estado_detalle_historial_clinico_hembra", nullable = false)
