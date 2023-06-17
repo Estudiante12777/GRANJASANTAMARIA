@@ -23,6 +23,10 @@ public class DetalleHistorialClinicoMacho implements Serializable {
     @Column(name = "id_historial_clinico_macho", nullable = false)
     private Long idHistorialClinicoMacho;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_historial_clinico_macho", insertable = false, updatable = false)
+    private HistorialClinicoMacho historialClinicoMacho;
+
     @NotNull
     @Column(name = "fecha_registro_historial_clinico", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

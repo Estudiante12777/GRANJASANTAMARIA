@@ -18,8 +18,8 @@
     <div th:if="${historialClinicoHembras != null and !historialClinicoHembras.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Hembra</th>
             <th>Ingreso granja</th>
+            <th>Hembra</th>
             <th>Procedencia</th>
             <th>Condiciones fisicas recibida</th>
             <th>Descripcion</th>
@@ -34,11 +34,11 @@
             </th>
             </thead>
             <tr th:each="historialClinicoHembra : ${historialClinicoHembras}">
-                <td th:text="${historialClinicoHembra.ganadoHembra.nombreGanadoHembra}">
-                    Mostrar Nombre del ganado
-                </td>
                 <td th:text="${historialClinicoHembra.fechaIngresoGranja}">
                     Mostrar fecha de ingreso
+                </td>
+                <td th:text="${historialClinicoHembra.ganadoHembra.nombreGanadoHembra}">
+                    Mostrar Nombre del ganado
                 </td>
                 <td th:text="${historialClinicoHembra.procedenciaGanadoHembra}">
                     Mostrar procedencia
@@ -103,7 +103,8 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title"
                                         th:id="'verModalAlimentacion_' + ${historialClinicoHembra.idHistorialClinicoHembra}">
-                                        ¿Estás seguro de que deseas ver el registro de alimentacion becerro?
+                                        ¿Estás seguro de que deseas ver el registro de los detalles del historial
+                                        clinico?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -112,7 +113,7 @@
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
                                        th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/lista(idHistorialClinicoHembra=${historialClinicoHembra.idHistorialClinicoHembra})}">
-                                        becerro
+                                        ver
                                     </a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -175,8 +176,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title"
                                         th:id="'bajaModalLabel_' + ${historialClinicoHembra.idHistorialClinicoHembra}">
-                                        ¿Estás seguro de que deseas dar de baja este registro de produccion diaria
-                                        de leche?
+                                        ¿Estás seguro de que deseas dar de baja este registro?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>

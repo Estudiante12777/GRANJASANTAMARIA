@@ -13,28 +13,73 @@
         <div class="col-md-6 col-sm-8 col-12">
             <div class="card bg-light text-dark">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Información sobre el detalle del historial clínico macho</h5>
+                    <h5 class="card-title text-center">Mas informacion sobre el historial clinico del macho</h5>
                     <form th:action="@{/modulo-ganado/detalle-historial-clinico-macho/guardar}" method="post"
                           th:object="${detalleHistorialClinicoMacho}" id="guardarFormulario">
                         <input type="hidden" name="idDetalleHistorialClinicoMacho"
                                th:field="*{idDetalleHistorialClinicoMacho}"/>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="fechaRegistroHistorialClinicoMacho">Fecha de registro clinico</label>
-                                <input type="date" class="form-control" id="fechaRegistroHistorialClinicoMacho"
-                                       name="fechaRegistroHistorialClinicoMacho"
-                                       th:field="*{fechaRegistroHistorialClinicoMacho}">
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
+                                   for="fechaRegistroHistorialClinicoMacho">Fecha:</label>
+                            <input class="form-control form-control-lg" type="date" required
+                                   name="fechaRegistroHistorialClinicoMacho"
+                                   th:field="*{fechaRegistroHistorialClinicoMacho}"/>
+                            <span th:if="${#fields.hasErrors('fechaRegistroHistorialClinicoMacho')}"
+                                  class="text-danger"
+                                  th:errors="*{fechaRegistroHistorialClinicoMacho}">Error fecha de la produccion de leche</span>
+                        </div>
+                        <div>
+                            <label class="form-label form-label-lg" for="descripcionHistorialClinico">
+                                Descripcion:
+                            </label>
+                            <input type="text" class="form-control form-control-lg" required
+                                   name="descripcionHistorialClinico"
+                                   th:field="*{descripcionHistorialClinico}">
+                            <span th:if="${#fields.hasErrors('descripcionHistorialClinico')}" class="text-danger"
+                                  th:errors="*{descripcionHistorialClinico}">Error produccion de leche en la
+                                    tarde</span>
+                        </div>
+                        <input type="hidden" name="idHistorialClinicoMacho" th:field="*{idHistorialClinicoMacho}">
+                        <input type="hidden" name="estadoDetalleHistorialClinicoMacho"
+                               th:field="*{estadoDetalleHistorialClinicoMacho}">
+                        <div class="row py-1">
+                            <div class="col-sm-6 mb-3">
+                                <a class="btn btn-outline-primary btn-lg btn-block"
+                                   th:href="@{/modulo-ganado/historial-clinico-macho/lista}"><i
+                                        class="fa-solid fa-arrow-left"></i></a>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="descripcionHistorialClinico">Descripcion</label>
-                                <input type="text" class="form-control" id="descripcionHistorialClinico"
-                                       name="descripcionHistorialClinico" th:value="*{descripcionHistorialClinico}">
-                            </div>
-                            <input type="hidden" name="idHistorialClinicoMacho" th:field="*{idHistorialClinicoMacho}">
-                            <input type="hidden" name="estadoDetalleHistorialClinicoMacho"
-                                   th:field="*{estadoDetalleHistorialClinicoMacho}">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                                 class="col-sm-6 mb-3">
+                                <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                                        data-bs-toggle="modal" data-bs-target="#guardarModal">
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                </button>
+                                <div class="modal fade" id="guardarModal" tabindex="-1"
+                                     aria-labelledby="guardarModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro de que deseas guardar este registro?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- Este es el botón que realiza la acción de guardar -->
+                                                <button type="submit" class="btn btn-success" name="guardar">
+                                                    Guardar
+                                                </button>
+                                                <!-- Este es el botón que cierra el modal -->
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

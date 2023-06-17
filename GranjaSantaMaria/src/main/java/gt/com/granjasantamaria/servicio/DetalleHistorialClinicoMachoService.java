@@ -1,15 +1,14 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoMacho;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
-/**
- *
- * @author gerso
- */
 public interface DetalleHistorialClinicoMachoService {
 
-    public List<DetalleHistorialClinicoMacho> obtenerListadoDetalleHistorialClinicoMachos();
+    public Page<DetalleHistorialClinicoMacho> obtenerListadoDetalleHistorialClinicoMachos(Long idHistorialClinicoMacho, Pageable pageable);
 
     public void guardarDetalleHistorialClinicoMacho(DetalleHistorialClinicoMacho detalleHistorialClinicoMacho);
 

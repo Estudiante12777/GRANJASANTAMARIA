@@ -9,26 +9,27 @@
 <body>
 <div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-    <h5 class="text-center">Tipos de ganado</h5>
+    <h5 class="text-center">Detalle historial clinico hembra</h5>
     <div th:if="${detalleHistorialClinicoHembras != null and !detalleHistorialClinicoHembras.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th class="col-sm-10">Tipo</th>
-            <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+            <th>Fecha</th>
+            <th>Hembra</th>
+            <th>Descripcion</th>
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                 Editar
             </th>
-            <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
                 Dar baja
             </th>
             </thead>
             <tr th:each="detalleHistorialClinicoHembra, iterStat : ${detalleHistorialClinicoHembras}"
                 th:if="${iterStat.index lt 10}">
-                <td class="col-sm-9"
-                    th:text="${detalleHistorialClinicoHembra.historialClinicoHembra.ganadoHembra.nombreGanadoHembra}">
-                    Mostrar Nombre de la hembra
-                </td>
                 <td th:text="${detalleHistorialClinicoHembra.fechaRegistroDetalleHistorialClinico}">
                     Mostrar la fecha de registro detalle historial clinico hembra
+                </td>
+                <td th:text="${detalleHistorialClinicoHembra.historialClinicoHembra.ganadoHembra.nombreGanadoHembra}">
+                    Mostrar Nombre de la hembra
                 </td>
                 <td th:text="${detalleHistorialClinicoHembra.descripcionDetalleHistorialClinico}">
                     Mostrar descripcion del detalle del historial clinico de la hembra
@@ -58,7 +59,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/tipo-ganado/editar/} + ${detalleHistorialClinicoHembra.idDetalleHistorialClinicoHembra}">Sí,
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/editar/} + ${detalleHistorialClinicoHembra.idDetalleHistorialClinicoHembra}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -86,7 +87,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title"
                                         th:id="'bajaModalLabel_' + ${detalleHistorialClinicoHembra.idDetalleHistorialClinicoHembra}">
-                                        ¿Estás seguro de que deseas dar de baja este tipo de ganado?
+                                        ¿Estás seguro de que deseas dar de baja este registro?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -94,7 +95,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para dar de baja la categoría de ganado -->
                                     <a class="btn btn-danger"
-                                       th:href="@{/modulo-ganado/tipo-ganado/baja(idTipoGanado=${detalleHistorialClinicoHembra.idDetalleHistorialClinicoHembra})}">Sí,
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/baja(idDetalleHistorialClinicoHembra=${detalleHistorialClinicoHembra.idDetalleHistorialClinicoHembra})}">Sí,
                                         dar de baja</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary"
@@ -113,19 +114,21 @@
                 <!-- Si hay una página anterior, mostrar el enlace -->
                 <li th:if="${detalleHistorialClinicoHembraPage.hasPrevious()}" class="page-item">
                     <a class="page-link"
-                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${detalleHistorialClinicoHembraPage.getNumber()-1})}"
+                       th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/lista(idHistorialClinicoHembra=${idHistorialClinicoHembra},pagina=${detalleHistorialClinicoHembraPage.getNumber()-1})}"
                        aria-label="Previous">
                         <span aria-hidden="true">«</span>
                     </a>
                 </li>
                 <!-- Mostrar el número de la página actual -->
-                <li class="page-item active"><a class="page-link"
-                                                th:text="${detalleHistorialClinicoHembraPage.getNumber()+1}"></a>
+                <li class="page-item active">
+                    <a class="page-link"
+                       th:text="${detalleHistorialClinicoHembraPage.getNumber()+1}">
+                    </a>
                 </li>
                 <!-- Si hay una página siguiente, mostrar el enlace -->
                 <li th:if="${detalleHistorialClinicoHembraPage.hasNext()}" class="page-item">
                     <a class="page-link"
-                       th:href="@{/modulo-ganado/tipo-ganado/lista(pagina=${detalleHistorialClinicoHembraPage.getNumber()+1})}"
+                       th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/lista(idHistorialClinicoHembra=${idHistorialClinicoHembra},pagina=${detalleHistorialClinicoHembraPage.getNumber()+1})}"
                        aria-label="Next">
                         <span aria-hidden="true">»</span>
                     </a>
@@ -135,7 +138,7 @@
     </div>
     <div class="py-3">
         <a class="btn btn-outline-primary btn-lg btn-block"
-           th:href="@{/modulo-ganado}"><i
+           th:href="@{/modulo-ganado/historial-clinico-hembra/lista}"><i
                 class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>

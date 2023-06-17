@@ -30,12 +30,13 @@ public class ControladorDetalleHistorialClinicoHembra {
     private HistorialClinicoHembraService historialClinicoHembraService;
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-hembra/lista")
-    public String obtenerListadoDetalleHistorialClinicoHembra(@RequestParam("idHistorialClinicoHembra") Long idHistorialClinicoHembra, @RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String obtenerListadoDetalleHistorialClinicoHembra(@RequestParam("idHistorialClinicoHembra") Long idHistorialClinicoHembra, @RequestParam(defaultValue = "0", required = false) int pagina, Model model) {
         PageRequest pageRequest = PageRequest.of(pagina, 10);
-        Page<DetalleHistorialClinicoHembra> detalleHistorialClinicoHembraPage = detalleHistorialClinicoHembraService.obtenerListadoDetalleHistorialClinicoHembraPaginado(pageRequest);
+        Page<DetalleHistorialClinicoHembra> detalleHistorialClinicoHembraPage = detalleHistorialClinicoHembraService.obtenerListadoDetalleHistorialClinicoHembraPaginado(idHistorialClinicoHembra, pageRequest);
         model.addAttribute("detalleHistorialClinicoHembraPage", detalleHistorialClinicoHembraPage);
         var detalleHistorialClinicoHembras = detalleHistorialClinicoHembraPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("detalleHistorialClinicoHembras", detalleHistorialClinicoHembras);
+        model.addAttribute("idHistorialClinicoHembra", idHistorialClinicoHembra);
         return "/pages/modulo-ganado/detalle-historial-clinico-hembra/detalle-historial-clinico-hembra";
     }
 
@@ -54,7 +55,7 @@ public class ControladorDetalleHistorialClinicoHembra {
             throw new Exception("Error el campo, " + fieldName + " no puede estar vacío el campo");
         } else {
             detalleHistorialClinicoHembraService.guardarDetalleHistorialClinicoHembra(detalleHistorialClinicoHembra);
-            return "redirect:/modulo-ganado/detalle-historial-clinico-hembra/lista";
+            return "redirect:/modulo-ganado/historial-clinico-hembra/lista";
         }
     }
 
@@ -76,7 +77,7 @@ public class ControladorDetalleHistorialClinicoHembra {
     @GetMapping("/modulo-ganado/detalle-historial-clinico-hembra/baja")
     public String darBajaDetalleHistorialClinicoHembra(DetalleHistorialClinicoHembra detalleHistorialClinicoHembra) {
         detalleHistorialClinicoHembraService.darBajaDetalleHistorialClinicoHembra(detalleHistorialClinicoHembra);
-        return "redirect:/modulo-ganado/detalle-historial-clinico-hembra/lista";
+        return "redirect:/modulo-ganado/historial-clinico-hembra/lista";
     }
 
 }

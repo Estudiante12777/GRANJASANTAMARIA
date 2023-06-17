@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DetalleHistorialClinicoHembraService {
 
-    public Page<DetalleHistorialClinicoHembra> obtenerListadoDetalleHistorialClinicoHembraPaginado(Pageable pageable);
+    public Page<DetalleHistorialClinicoHembra> obtenerListadoDetalleHistorialClinicoHembraPaginado(Long idHistorialClinicoHembra, Pageable pageable);
 
     public void guardarDetalleHistorialClinicoHembra(DetalleHistorialClinicoHembra detalleHistorialClinicoHembra);
 

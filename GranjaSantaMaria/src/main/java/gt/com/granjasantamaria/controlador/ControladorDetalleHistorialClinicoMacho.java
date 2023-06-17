@@ -1,14 +1,18 @@
 package gt.com.granjasantamaria.controlador;
 
+import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoHembra;
 import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoMacho;
 import gt.com.granjasantamaria.modelo.HistorialClinicoMacho;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.*;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,18 +33,13 @@ public class ControladorDetalleHistorialClinicoMacho {
     private EntityManager entityManager;
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/lista")
-    public String obtenerListadoDetalleHistorialClinicoMacho(@RequestParam("idHistorialClinicoMacho") Long idHistorialClinicoMacho, Model model) {
-        String sqlQuery = "SELECT gm.nombre_ganado_macho AS nombre_ganado, dhc.fecha_registro_historial_clinico, "
-                + "dhc.descripcion_historial_clinico, dhc.id_detalle_historial_clinico_macho "
-                + "FROM detalle_historial_clinico_macho AS dhc "
-                + "INNER JOIN historial_clinico_macho AS h ON h.id_historial_clinico_macho = dhc.id_historial_clinico_macho "
-                + "INNER JOIN ganado_macho AS gm ON gm.id_ganado_macho = h.id_ganado_macho "
-                + "WHERE dhc.id_historial_clinico_macho = :idHistorialClinicoMacho "
-                + "AND dhc.estado_detalle_historial_clinico_macho = 1"; // Agregar la condición para el estado
-        Query query = entityManager.createNativeQuery(sqlQuery);
-        query.setParameter("idHistorialClinicoMacho", idHistorialClinicoMacho);
-        List<Object[]> results = query.getResultList();
-        model.addAttribute("detalleHistorialClinicoMachoList", results);
+    public String obtenerListadoDetalleHistorialClinicoHembra(@RequestParam("idHistorialClinicoMacho") Long idHistorialClinicoMacho, @RequestParam(defaultValue = "0", required = false) int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 10);
+        Page<DetalleHistorialClinicoMacho> detalleHistorialClinicoMachoPage = detalleHistorialClinicoMachoService.obtenerListadoDetalleHistorialClinicoMachos(idHistorialClinicoMacho, pageRequest);
+        model.addAttribute("detalleHistorialClinicoMachoPage", detalleHistorialClinicoMachoPage);
+        var detalleHistorialClinicoMachos = detalleHistorialClinicoMachoPage.getContent().stream().limit(10).collect(Collectors.toList());
+        model.addAttribute("detalleHistorialClinicoMachos", detalleHistorialClinicoMachos);
+        model.addAttribute("idHistorialClinicoMacho", idHistorialClinicoMacho);
         return "/pages/modulo-ganado/detalle-historial-clinico-macho/detalle-historial-clinico-macho";
     }
 

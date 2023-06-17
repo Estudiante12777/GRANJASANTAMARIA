@@ -19,8 +19,8 @@ public class DetalleHistorialClinicoHembraServiceImpl implements DetalleHistoria
 
     @Override
     @Transactional(readOnly = true)
-    public Page<DetalleHistorialClinicoHembra> obtenerListadoDetalleHistorialClinicoHembraPaginado(Pageable pageable) {
-        return detalleHistorialClinicoHembraDao.findAllByEstadoDetalleHistorialClinicoHembraIsTrue(pageable);
+    public Page<DetalleHistorialClinicoHembra> obtenerListadoDetalleHistorialClinicoHembraPaginado(Long idHistorialClinicoHembra, Pageable pageable) {
+        return detalleHistorialClinicoHembraDao.findAllByIdHistorialClinicoHembraAndEstadoDetalleHistorialClinicoHembraIsTrue(idHistorialClinicoHembra, pageable);
     }
 
     @Override
