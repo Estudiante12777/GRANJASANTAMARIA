@@ -2,12 +2,18 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @Controller
 public class ControladorDescripcionProducto {
@@ -16,8 +22,11 @@ public class ControladorDescripcionProducto {
     private DescripcionProductoService descripcionProductoService;
 
     @GetMapping("/modulo-producto/descripcion-producto/lista")
-    public String obtenerListadoDescripcionProductos(Model model) {
-        var descripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
+    public String obtenerListadoDescripcionProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 10);
+        Page<DescripcionProducto> descripcionProductoPage = descripcionProductoService.obtenerListadoDescripcionProductoPaginado(pageRequest);
+        model.addAttribute("descripcionProductoPage", descripcionProductoPage);
+        var descripcionProductos = descripcionProductoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("descripcionProductos", descripcionProductos);
         return "/pages/modulo-producto/descripcion-producto/descripcion-producto";
     }

@@ -2,43 +2,52 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.DescripcionProductoDao;
 import gt.com.granjasantamaria.modelo.DescripcionProducto;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DescripcionProductoServiceImpl implements DescripcionProductoService {
 
     @Autowired
-    private DescripcionProductoDao descripcionProductoDAO;
+    private DescripcionProductoDao descripcionProductoDao;
 
     @Override
     public List<DescripcionProducto> obtenerListadoDescripcionProductos() {
-        return descripcionProductoDAO.findByEstadoDescripcionProductoIsTrue();
+        return descripcionProductoDao.findByEstadoDescripcionProductoIsTrue();
+    }
+
+    @Override
+    public Page<DescripcionProducto> obtenerListadoDescripcionProductoPaginado(Pageable pageable) {
+        return descripcionProductoDao.findAllByEstadoDescripcionProductoIsTrue(pageable);
     }
 
     @Override
     public void guardarDescripcionProducto(DescripcionProducto descripcionProducto) {
         descripcionProducto.setEstadoDescripcionProducto(true);
-        descripcionProductoDAO.save(descripcionProducto);
+        descripcionProductoDao.save(descripcionProducto);
     }
 
     @Override
     public void eliminarDescripcionProducto(DescripcionProducto descripcionProducto) {
-        descripcionProductoDAO.delete(descripcionProducto);
+        descripcionProductoDao.delete(descripcionProducto);
     }
 
     @Override
     public DescripcionProducto encontrarDescripcionProducto(DescripcionProducto descripcionProducto) {
-        return descripcionProductoDAO.findById(descripcionProducto.getIdDescripcionProducto()).orElse(null);
+        return descripcionProductoDao.findById(descripcionProducto.getIdDescripcionProducto()).orElse(null);
     }
 
     @Override
     public void darBajaDescripcionProducto(DescripcionProducto descripcionProducto) {
-        DescripcionProducto descripcionProductoExistente = descripcionProductoDAO.findById(descripcionProducto.getIdDescripcionProducto()).orElse(null);
+        DescripcionProducto descripcionProductoExistente = descripcionProductoDao.findById(descripcionProducto.getIdDescripcionProducto()).orElse(null);
         if (descripcionProductoExistente != null) {
             descripcionProductoExistente.setEstadoDescripcionProducto(false);
-            descripcionProductoDAO.save(descripcionProductoExistente);
+            descripcionProductoDao.save(descripcionProductoExistente);
         }
     }
 
