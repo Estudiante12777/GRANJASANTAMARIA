@@ -2,6 +2,8 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.*;
 import gt.com.granjasantamaria.modelo.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,12 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     @Transactional(readOnly = true)
     public List<VentaProducto> obtenerListadoVentaProductos() {
         return ventaProductoDao.findByEstadoVentaProductoIsTrue();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VentaProducto> obtenerListadoVentaProductoPaginado(Pageable pageable) {
+        return ventaProductoDao.findAllByEstadoVentaProductoIsTrue(pageable);
     }
 
     @Override

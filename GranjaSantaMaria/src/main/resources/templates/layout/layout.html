@@ -129,6 +129,14 @@
             var total = (isNaN(produccionManiana) ? 0 : produccionManiana) + (isNaN(produccionTarde) ? 0 : produccionTarde);
             document.getElementById('totalProduccionLeche').value = total;
         }
+
+        function calcularTotalVenta() {
+            var cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
+            var precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
+            var descuento = parseFloat(document.getElementById('totalPrecioProducto').value);
+            var totalVenta = (isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad) - (isNaN(descuento) ? 0 : descuento);
+            document.getElementById('totalPrecioProducto').value = totalVenta;
+        }
     </script>
 </th:block>
 </body>

@@ -1,14 +1,16 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.VentaProducto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
-/**
- * Servicio para gestionar las ventas de productos.
- */
 public interface VentaProductoService {
 
     public List<VentaProducto> obtenerListadoVentaProductos();
+
+    public Page<VentaProducto> obtenerListadoVentaProductoPaginado(Pageable pageable);
 
     public void guardarVentaProducto(VentaProducto ventaProducto);
 

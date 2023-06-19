@@ -29,7 +29,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="cliente">Cliente:</label>
-                    <select id="cliente" name="cliente.idCliente" class="form-control" th:field="*{cliente.idCliente}" required>
+                    <select id="cliente" name="cliente.idCliente" class="form-control" th:field="*{cliente.idCliente}"
+                            required>
                         <!-- Opciones para seleccionar un cliente -->
                         <option value="">Seleccione un cliente</option>
                         <!-- Iterar sobre la lista de clientes para generar las opciones -->
@@ -59,7 +60,7 @@
                 <div class="form-group">
                     <label for="cantidadProducto">Cantidad:</label>
                     <input type="number" id="cantidadProducto" name="cantidadProducto" class="form-control"
-                           th:field="*{cantidadProducto}" required/>
+                           th:field="*{cantidadProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
         </div>
@@ -68,14 +69,14 @@
                 <div class="form-group">
                     <label for="precioPorUnidad">Precio por unidad:</label>
                     <input type="number" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
-                           th:field="*{precioPorUnidad}" required/>
+                           th:field="*{precioPorUnidad}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="totalPrecioProducto">Total:</label>
                     <input type="number" id="totalPrecioProducto" name="totalPrecioProducto" class="form-control"
-                           th:field="*{totalPrecioProducto}" required/>
+                           th:field="*{totalPrecioProducto}" required readonly/>
                 </div>
             </div>
         </div>
@@ -84,7 +85,7 @@
                 <div class="form-group">
                     <label for="descuentoProducto">Descuento:</label>
                     <input type="number" id="descuentoProducto" name="descuentoProducto" class="form-control"
-                           th:field="*{descuentoProducto}" required/>
+                           th:field="*{descuentoProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
         </div>

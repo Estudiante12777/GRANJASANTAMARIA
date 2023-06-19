@@ -3,9 +3,14 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.DetalleProducto;
 import gt.com.granjasantamaria.modelo.InventarioProducto;
 import gt.com.granjasantamaria.servicio.*;
+
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +27,11 @@ public class ControladorInventarioProducto {
     private DetalleProductoService detalleProductoService;
 
     @GetMapping("/modulo-inventario/inventario-producto/lista")
-    public String obtenerListadoInventarioProductos(Model model) {
-        List<InventarioProducto> inventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
+    public String obtenerListadoInventarioProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 10);
+        Page<InventarioProducto> inventarioProductoPage = inventarioProductoService.obtenerListadoInventarioProductoPaginado(pageRequest);
+        model.addAttribute("inventarioProductoPage", inventarioProductoPage);
+        List<InventarioProducto> inventarioProductos = inventarioProductoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("inventarioProductos", inventarioProductos);
         return "pages/modulo-inventario/inventario-producto/inventario-producto";
     }
