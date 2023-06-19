@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DescripcionProductoServiceImpl implements DescripcionProductoService {
@@ -17,32 +18,38 @@ public class DescripcionProductoServiceImpl implements DescripcionProductoServic
     private DescripcionProductoDao descripcionProductoDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<DescripcionProducto> obtenerListadoDescripcionProductos() {
         return descripcionProductoDao.findByEstadoDescripcionProductoIsTrue();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<DescripcionProducto> obtenerListadoDescripcionProductoPaginado(Pageable pageable) {
         return descripcionProductoDao.findAllByEstadoDescripcionProductoIsTrue(pageable);
     }
 
     @Override
+    @Transactional
     public void guardarDescripcionProducto(DescripcionProducto descripcionProducto) {
         descripcionProducto.setEstadoDescripcionProducto(true);
         descripcionProductoDao.save(descripcionProducto);
     }
 
     @Override
+    @Transactional
     public void eliminarDescripcionProducto(DescripcionProducto descripcionProducto) {
         descripcionProductoDao.delete(descripcionProducto);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DescripcionProducto encontrarDescripcionProducto(DescripcionProducto descripcionProducto) {
         return descripcionProductoDao.findById(descripcionProducto.getIdDescripcionProducto()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void darBajaDescripcionProducto(DescripcionProducto descripcionProducto) {
         DescripcionProducto descripcionProductoExistente = descripcionProductoDao.findById(descripcionProducto.getIdDescripcionProducto()).orElse(null);
         if (descripcionProductoExistente != null) {

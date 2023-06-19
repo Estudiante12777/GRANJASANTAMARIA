@@ -3,12 +3,9 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "detalle_producto")
@@ -42,8 +39,7 @@ public class DetalleProducto implements Serializable {
 
     @Override
     public String toString() {
-        return producto.getNombreProducto() + " - " + medidaProducto.getNombreMedidaProducto() + " - "
-                + contenedorProducto.getNombreContenedorProducto() + " - " + descripcionProducto.getNombreDescripcionProducto();
+        return producto.getNombreProducto() + " - " + medidaProducto.getNombreMedidaProducto() + " - " + contenedorProducto.getNombreContenedorProducto() + " - " + descripcionProducto.getNombreDescripcionProducto();
     }
 
 }
