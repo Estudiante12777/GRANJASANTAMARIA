@@ -1,16 +1,17 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.Departamento;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
-/**
- *
- * @author gerso
- */
 public interface DepartamentoService {
 
     // METODOS A IMPLEMENTAR
     public List<Departamento> listadoDepartamento();
+
+    public Page<Departamento> listadoDepartamentoPaginado(Pageable pageable);
 
     public void guardarDepartamento(Departamento departamento);
 

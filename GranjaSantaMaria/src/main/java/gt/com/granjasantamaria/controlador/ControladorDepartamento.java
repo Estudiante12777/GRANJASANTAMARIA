@@ -2,18 +2,19 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
 @Controller
 public class ControladorDepartamento {
 
@@ -24,8 +25,11 @@ public class ControladorDepartamento {
     private PaisService paisService;
 
     @GetMapping("/modulo-ubicacion/departamento/lista")
-    public String listadoDepartamentos(Model model) {
-        var departamentos = departamentoService.listadoDepartamento();
+    public String listadoDepartamentos(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 10);
+        Page<Departamento> departamentoPage = departamentoService.listadoDepartamentoPaginado(pageRequest);
+        model.addAttribute("departamentoPage", departamentoPage);
+        var departamentos = departamentoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("departamentos", departamentos);
         return "/pages/modulo-ubicacion/departamento/departamento";
     }

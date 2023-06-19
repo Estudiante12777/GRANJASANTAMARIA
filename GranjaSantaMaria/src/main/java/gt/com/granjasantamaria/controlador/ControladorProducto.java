@@ -2,17 +2,19 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.Producto;
 import gt.com.granjasantamaria.servicio.ProductoService;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
+import java.util.stream.Collectors;
+
 @Controller
 public class ControladorProducto {
 
@@ -20,8 +22,11 @@ public class ControladorProducto {
     private ProductoService productoService;
 
     @GetMapping("/modulo-producto/producto/lista")
-    public String obtenerListadoProductos(Model model) {
-        var productos = productoService.obtenerListadoProductos();
+    public String obtenerListadoProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 10);
+        Page<Producto> productoPage = productoService.obtenerListadoProductoPaginado(pageRequest);
+        model.addAttribute("productoPage", productoPage);
+        var productos = productoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("productos", productos);
         return "/pages/modulo-producto/producto/producto";
     }

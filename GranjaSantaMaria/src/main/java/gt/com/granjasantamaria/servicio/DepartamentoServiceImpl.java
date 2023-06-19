@@ -2,15 +2,15 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.*;
 import gt.com.granjasantamaria.modelo.*;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class DepartamentoServiceImpl implements DepartamentoService {
 
@@ -21,6 +21,12 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     @Transactional(readOnly = true)
     public List<Departamento> listadoDepartamento() {
         return departamentoDao.findByEstadoDepartamentoIsTrue();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Departamento> listadoDepartamentoPaginado(Pageable pageable) {
+        return departamentoDao.findAllByEstadoDepartamentoIsTrue(pageable);
     }
 
     @Override
