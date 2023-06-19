@@ -74,18 +74,18 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="totalPrecioProducto">Total:</label>
-                    <input type="number" id="totalPrecioProducto" name="totalPrecioProducto" class="form-control"
-                           th:field="*{totalPrecioProducto}" required readonly/>
+                    <label for="descuentoProducto">Descuento:</label>
+                    <input type="number" id="descuentoProducto" name="descuentoProducto" class="form-control"
+                           th:field="*{descuentoProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="descuentoProducto">Descuento:</label>
-                    <input type="number" id="descuentoProducto" name="descuentoProducto" class="form-control"
-                           th:field="*{descuentoProducto}" required onchange="calcularTotalVenta()"/>
+                    <label for="totalPrecioProducto">Total:</label>
+                    <input type="number" id="totalPrecioProducto" name="totalPrecioProducto" class="form-control"
+                           th:field="*{totalPrecioProducto}" required readonly/>
                 </div>
             </div>
         </div>
