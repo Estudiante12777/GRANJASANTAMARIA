@@ -24,7 +24,7 @@
             </th>
             <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
             </thead>
-            <tr th:each="contenedorProducto : ${contenedorProductos}">
+            <tr th:each="contenedorProducto, iterStat : ${contenedorProductos}" th:if="${iterStat.index lt 10}">
                 <td th:text="${contenedorProducto.nombreContenedorProducto}">
                     Mostrar Nombre del contenedor de productos
                 </td>
@@ -101,6 +101,29 @@
             </tr>
             <tfoot></tfoot>
         </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <!-- Si hay una página anterior, mostrar el enlace -->
+                <li th:if="${contenedorProductoPage.hasPrevious()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-producto/contenedor-producto/lista(pagina=${contenedorProductoPage.getNumber()-1})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+                <!-- Mostrar el número de la página actual -->
+                <li class="page-item active"><a class="page-link" th:text="${contenedorProductoPage.getNumber()+1}"></a>
+                </li>
+                <!-- Si hay una página siguiente, mostrar el enlace -->
+                <li th:if="${contenedorProductoPage.hasNext()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-producto/contenedor-producto/lista(pagina=${contenedorProductoPage.getNumber()+1})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div class="py-3">
         <a class="btn btn-outline-primary btn-lg btn-block"

@@ -2,8 +2,12 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.ContenedorProductoDao;
 import gt.com.granjasantamaria.modelo.ContenedorProducto;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,12 @@ public class ContenedorProductoServiceImpl implements ContenedorProductoService 
     @Transactional(readOnly = true)
     public List<ContenedorProducto> obtenerListadoContenedorProductos() {
         return contenedorProductoDao.findByEstadoContenedorProductoIsTrue();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ContenedorProducto> obtenerListadoContenedorProductoPaginado(Pageable pageable) {
+        return contenedorProductoDao.findAllByEstadoContenedorProductoIsTrue(pageable);
     }
 
     @Override
