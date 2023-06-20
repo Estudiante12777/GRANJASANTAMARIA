@@ -254,7 +254,6 @@ CREATE TABLE inventario_producto
     id_detalle_producto         INT             NOT NULL,
     fecha_inventario_producto   DATE            NOT NULL,
     cantidad_ingresada_producto INT             NOT NULL,
-    cantidad_entrada_producto   INT             NOT NULL,
     cantidad_salida_producto    INT             NOT NULL,
     cantidad_final_producto     INT             NOT NULL,
     fecha_ingreso               DATE            NOT NULL,

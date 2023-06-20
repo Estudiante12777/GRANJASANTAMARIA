@@ -29,7 +29,7 @@
                             </label>
                             <input id="unidadesAdquiridas" type="number" class="form-control form-control-lg"
                                    required name="unidadesAdquiridas" th:field="*{unidadesAdquiridas}"
-                                   onblur="calcularTotal();">
+                                   onchange="calcularTotalDiarioGasto()">
                             <span th:if="${#fields.hasErrors('unidadesAdquiridas')}" class="text-danger"
                                   th:errors="*{unidadesAdquiridas}">Error produccion de leche en la tarde</span>
                         </div>
@@ -45,7 +45,8 @@
                             <label class="form-label form-label-lg" for="valorUnitario">Valor unitario:
                             </label>
                             <input id="valorUnitario" type="number" step="0.01" class="form-control form-control-lg"
-                                   required name="valorUnitario" th:field="*{valorUnitario}" onblur="calcularTotal();">
+                                   required name="valorUnitario" th:field="*{valorUnitario}"
+                                   onchange="calcularTotalDiarioGasto()">
                             <span th:if="${#fields.hasErrors('valorUnitario')}" class="text-danger"
                                   th:errors="*{valorUnitario}">Error produccion de leche en la tarde</span>
                         </div>
@@ -53,7 +54,7 @@
                             <label class="form-label form-label-lg" for="valorTotal">Valor total:
                             </label>
                             <input id="valorTotal" type="number" step="0.01" class="form-control form-control-lg"
-                                   required name="valorTotal" th:field="*{valorTotal}">
+                                   required name="valorTotal" th:field="*{valorTotal}" readonly>
                             <span th:if="${#fields.hasErrors('valorTotal')}" class="text-danger"
                                   th:errors="*{valorTotal}">Error produccion de leche en la tarde</span>
                         </div>
@@ -75,12 +76,14 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="guardarModalLabel">Guardar diario de gasto</h5>
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar diario de
+                                                    gasto</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>¿Estás seguro de que deseas guardar este registro de diario de gasto?</p>
+                                                <p>¿Estás seguro de que deseas guardar este registro de diario de
+                                                    gasto?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <!-- Este es el botón que realiza la acción de guardar -->
@@ -119,16 +122,6 @@
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
     var modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
-</script>
-<script>
-    window.onload = function () {
-        function calcularTotal() {
-            var maniana = parseFloat(document.getElementById("detalleInversion").value) || 0;
-            var tarde = parseFloat(document.getElementById("valorUnitario").value) || 0;
-            document.getElementById("valorTotal").value = maniana + tarde;
-            console.log("El total es " + document.getElementById("valorTotal").value);
-        }
-    }
 </script>
 </body>
 

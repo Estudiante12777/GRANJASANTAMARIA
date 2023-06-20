@@ -137,6 +137,13 @@
             var totalVenta = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
             document.getElementById('totalPrecioProducto').value = totalVenta;
         }
+
+        function calcularTotalDiarioGasto() {
+            var cantidad = parseFloat(document.getElementById('unidadesAdquiridas').value);
+            var valorUnitario = parseFloat(document.getElementById('valorUnitario').value);
+            var valorTotal = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
+            document.getElementById('valorTotal').value = valorTotal;
+        }
     </script>
 </th:block>
 </body>

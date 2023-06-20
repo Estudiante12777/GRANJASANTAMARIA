@@ -2,15 +2,17 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.DiarioGastoGranjaDao;
 import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
+
+import java.time.LocalDate;
 import java.util.List;
+
+import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
 
@@ -20,7 +22,27 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
     @Override
     @Transactional(readOnly = true)
     public List<DiarioGastoGranja> obtenerListadoDiarioGastosGranja() {
-        return diarioGastoGranjaDao.findByEstadoDiarioGastoGranjaIsTrue();
+        LocalDate fechaActual = LocalDate.now();
+        return diarioGastoGranjaDao.findByFechaGastoAndEstadoDiarioGastoGranjaIsTrue(fechaActual);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DiarioGastoGranja> obtenerListaDiarioGastoGranja() {
+        return diarioGastoGranjaDao.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<DiarioGastoGranja> obtenerListaTotalDiarioGastoGranja() {
+        LocalDate fechaActual = LocalDate.now();
+        return diarioGastoGranjaDao.findByFechaGastoAndEstadoDiarioGastoGranjaIsTrue(fechaActual);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<DiarioGastoGranja> obtenerListaTotalDiarioGastoGranjaPaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable) {
+        return diarioGastoGranjaDao.findByFechaGastoBetween(fechaInicio, fechaFin, pageable);
     }
 
     @Override
@@ -40,6 +62,11 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
     @Transactional(readOnly = true)
     public DiarioGastoGranja encontrarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja) {
         return diarioGastoGranjaDao.findById(diarioGastoGranja.getIdDiarioGastoGranja()).orElse(null);
+    }
+
+    @Override
+    public List<DiarioGastoGranja> encontrarTotalDiarioGastoGranja(LocalDate fechaInicio, LocalDate fechaFin) {
+        return diarioGastoGranjaDao.findByFechaGastoBetween(fechaInicio, fechaFin);
     }
 
     @Override

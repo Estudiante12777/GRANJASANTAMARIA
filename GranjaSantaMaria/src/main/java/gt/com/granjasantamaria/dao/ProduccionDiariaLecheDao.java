@@ -12,8 +12,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProduccionDiariaLecheDao extends JpaRepository<ProduccionDiariaLeche, Long> {
 
-    Page<ProduccionDiariaLeche> findAllByEstadoProduccionDiariaLecheIsTrue(Pageable pageable);
-
     List<ProduccionDiariaLeche> findByFechaProduccionLecheAndEstadoProduccionDiariaLecheIsTrue(LocalDate fechaProduccionLeche);
 
     List<ProduccionDiariaLeche> findByFechaProduccionLecheBetween(LocalDate fechaInicio, LocalDate fechaFin);
