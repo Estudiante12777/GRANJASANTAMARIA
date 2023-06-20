@@ -41,11 +41,6 @@ public class InventarioProducto implements Serializable {
     private Integer cantidadFinalProducto;
 
     @NotNull
-    @Column(name = "fecha_ingreso")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaIngreso;
-
-    @NotNull
     @Column(name = "cantidad_vendida_hasta_hoy")
     private Integer cantidadVendidaHastaHoy;
 

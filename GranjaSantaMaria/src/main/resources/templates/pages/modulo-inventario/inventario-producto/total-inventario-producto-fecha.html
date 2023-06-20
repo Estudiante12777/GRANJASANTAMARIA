@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title></title>
+</head>
+
+<body>
+<!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
+<div class="container-fluid py-2" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div class="form-control">
+        <form th:action="@{/modulo-inventario/inventario-producto/encontrar-total-inventario-producto-fecha(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
+              method="get">
+            <label for="fechaInicio">Fecha inicio</label>
+            <input type="date" id="fechaInicio" name="fechaInicio" required>
+            <label for="fechaFin">Fecha finalización</label>
+            <input type="date" id="fechaFin" name="fechaFin" required>
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <div th:if="${totalInventarioProductoFecha != null and !totalInventarioProductoFecha.empty}" class="py-2">
+        <div style="text-align: right">
+            <a th:href="@{/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
+               target="_blank" class="btn btn-outline-info">Generar PDF</a>
+        </div>
+        <div class="py-2"></div>
+        <table class="table">
+            <thead class="table-dark">
+            <th>Producto</th>
+            <th>Fecha inventario</th>
+            <th>Cantidad ingresada</th>
+            <th>Cantidad salida</th>
+            <th>Cantidad final</th>
+            <th>Vendido hasta hoy</th>
+            </thead>
+            <tbody>
+            <tr th:each="totalInventarioProducto : ${totalInventarioProductoFecha}">
+                <td>
+                        <span
+                                th:text="${totalInventarioProducto.detalleProducto.producto.nombreProducto + ' (' + totalInventarioProducto.detalleProducto.medidaProducto.nombreMedidaProducto + ') - ' + totalInventarioProducto.detalleProducto.contenedorProducto.nombreContenedorProducto + ' - ' + totalInventarioProducto.detalleProducto.descripcionProducto.nombreDescripcionProducto}"></span>
+                </td>
+                <td th:text="${totalInventarioProducto.fechaInventarioProducto}">
+                    Mostrar fecha del inventario
+                </td>
+                <td th:text="${totalInventarioProducto.cantidadIngresadaProducto}">
+                    Mostrar Nombre de la descripcion de producto
+                </td>
+                <td th:text="${totalInventarioProducto.cantidadSalidaProducto}">
+                    Mostrar Nombre de la descripcion de producto
+                </td>
+                <td th:text="${totalInventarioProducto.cantidadFinalProducto}">
+                    Mostrar Nombre de la descripcion de producto
+                </td>
+                <td th:text="${totalInventarioProducto.cantidadVendidaHastaHoy}">
+                    Mostrar Nombre de la descripcion de producto
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li th:if="${inventarioProductoPage.hasPrevious()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-inventario/inventario-producto/encontrar-total-inventario-producto-fecha(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, pagina=${inventarioProductoPage.previousPageable().pageNumber})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" th:text="${inventarioProductoPage.getNumber()+1}"></a>
+                </li>
+                <li th:if="${inventarioProductoPage.hasNext()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-inventario/inventario-producto/encontrar-total-inventario-producto-fecha(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, pagina=${inventarioProductoPage.nextPageable().pageNumber})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="row py-2">
+        <div class="col-sm-6">
+            <a class="btn btn-outline-primary btn-lg btn-block"
+               th:href="@{/modulo-inventario/inventario-producto/lista}"><i
+                    class="fa-solid fa-arrow-left"></i></a>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

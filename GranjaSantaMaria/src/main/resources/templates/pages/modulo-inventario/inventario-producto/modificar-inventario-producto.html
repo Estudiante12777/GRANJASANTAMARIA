@@ -70,14 +70,6 @@
                                   th:errors="*{cantidadFinalProducto}">Error</span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="fechaIngreso">Fecha
-                                inventario:</label>
-                            <input class="form-control form-control-lg" type="date" required name="fechaIngreso"
-                                   th:field="*{fechaIngreso}"/>
-                            <span th:if="${#fields.hasErrors('fechaIngreso')}" class="text-danger"
-                                  th:errors="*{fechaIngreso}">Error fecha de la produccion de leche</span>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label form-label-lg" for="cantidadVendidaHastaHoy">
                                 Cantidad Venidada hasta hoy
                             </label>

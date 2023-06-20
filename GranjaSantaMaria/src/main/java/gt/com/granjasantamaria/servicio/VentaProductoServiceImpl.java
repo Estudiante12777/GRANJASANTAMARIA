@@ -6,12 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 @Service
@@ -28,14 +28,22 @@ public class VentaProductoServiceImpl implements VentaProductoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<VentaProducto> obtenerListadoVentaProductos() {
-        return ventaProductoDao.findByEstadoVentaProductoIsTrue();
+    public List<VentaProducto> obtenerListadoVentaProducto() {
+        LocalDate fechaActual = LocalDate.now();
+        return ventaProductoDao.findByFechaVentaProductoAndEstadoVentaProductoIsTrue(fechaActual);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<VentaProducto> obtenerListadoVentaProductoPaginado(Pageable pageable) {
-        return ventaProductoDao.findAllByEstadoVentaProductoIsTrue(pageable);
+    public List<VentaProducto> obtenerListaTotalVentaProducto() {
+        LocalDate fechaActual = LocalDate.now();
+        return ventaProductoDao.findByFechaVentaProductoAndEstadoVentaProductoIsTrue(fechaActual);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VentaProducto> obtenerListaTotalVentaProductoPaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable) {
+        return ventaProductoDao.findByFechaVentaProductoBetween(fechaInicio, fechaFin, pageable);
     }
 
     @Override
@@ -66,6 +74,11 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     @Transactional(readOnly = true)
     public VentaProducto encontrarVentaProducto(VentaProducto ventaProducto) {
         return ventaProductoDao.findById(ventaProducto.getIdVentaProducto()).orElse(null);
+    }
+
+    @Override
+    public List<VentaProducto> encontrarTotalVentaProducto(LocalDate fechaInicio, LocalDate fechaFin) {
+        return ventaProductoDao.findByFechaVentaProductoBetween(fechaInicio, fechaFin);
     }
 
     @Override

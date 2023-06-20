@@ -14,6 +14,9 @@
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <a class="btn btn-outline-success" th:href="@{/modulo-inventario/inventario-producto/agregar}"><i
                 class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+        <a class="btn btn-outline-primary"
+           th:href="@{/modulo-inventario/inventario-producto/total-inventario-producto-fecha}">
+            Total inventario producto por fecha</a>
     </div>
     <div th:if="${inventarioProductos != null and !inventarioProductos.empty}">
         <table class="table">
@@ -23,7 +26,6 @@
             <th>Cantidad ingresada</th>
             <th>Cantidad salida</th>
             <th>Cantidad final</th>
-            <th>Fecha ingreso</th>
             <th>Vendido hasta hoy</th>
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                 Editar
@@ -45,9 +47,6 @@
                     Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${inventarioProducto.cantidadFinalProducto}">
-                    Mostrar Nombre de la descripcion de producto
-                </td>
-                <td th:text="${inventarioProducto.fechaIngreso}">
                     Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${inventarioProducto.cantidadVendidaHastaHoy}">

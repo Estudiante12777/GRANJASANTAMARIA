@@ -1,8 +1,8 @@
 CREATE
-DATABASE granja_santa_maria;
+    DATABASE granja_santa_maria;
 
 USE
-granja_santa_maria;
+    granja_santa_maria;
 
 /** TABLAS PARA USUARIOS **/
 CREATE TABLE usuario
@@ -138,11 +138,11 @@ CREATE TABLE historial_clinico_hembra
 
 CREATE TABLE detalle_historial_clinico_hembra
 (
-    id_detalle_historial_clinico_hembra     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    id_historial_clinico_hembra             INT             NOT NULL,
-    fecha_registro_detalle_historial_clinico        DATE            NOT NULL,
-    descripcion_detalle_historial_clinico           TEXT            NOT NULL,
-    estado_detalle_historial_clinico_hembra TINYINT         NOT NULL,
+    id_detalle_historial_clinico_hembra      INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_historial_clinico_hembra              INT             NOT NULL,
+    fecha_registro_detalle_historial_clinico DATE            NOT NULL,
+    descripcion_detalle_historial_clinico    TEXT            NOT NULL,
+    estado_detalle_historial_clinico_hembra  TINYINT         NOT NULL,
     CONSTRAINT fk_detalle_historial_clinico_hembra_historial_clinico_hembra FOREIGN KEY (id_historial_clinico_hembra) REFERENCES historial_clinico_hembra (id_historial_clinico_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE prenies_ganado_hembra
@@ -256,7 +256,6 @@ CREATE TABLE inventario_producto
     cantidad_ingresada_producto INT             NOT NULL,
     cantidad_salida_producto    INT             NOT NULL,
     cantidad_final_producto     INT             NOT NULL,
-    fecha_ingreso               DATE            NOT NULL,
     cantidad_vendida_hasta_hoy  INT             NOT NULL,
     estado_inventario_producto  TINYINT         NOT NULL,
     CONSTRAINT fk_inventario_detalle_producto FOREIGN KEY (id_detalle_producto) REFERENCES detalle_producto (id_detalle_producto) ON DELETE CASCADE ON UPDATE CASCADE

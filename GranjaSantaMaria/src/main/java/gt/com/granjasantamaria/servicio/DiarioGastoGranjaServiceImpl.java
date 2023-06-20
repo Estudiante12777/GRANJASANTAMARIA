@@ -28,12 +28,6 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<DiarioGastoGranja> obtenerListaDiarioGastoGranja() {
-        return diarioGastoGranjaDao.findAll();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public List<DiarioGastoGranja> obtenerListaTotalDiarioGastoGranja() {
         LocalDate fechaActual = LocalDate.now();
         return diarioGastoGranjaDao.findByFechaGastoAndEstadoDiarioGastoGranjaIsTrue(fechaActual);

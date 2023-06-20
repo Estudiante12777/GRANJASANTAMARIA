@@ -2,8 +2,10 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.InventarioProductoDao;
 import gt.com.granjasantamaria.modelo.DetalleProducto;
+import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import gt.com.granjasantamaria.modelo.InventarioProducto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,12 @@ public class InventarioProductoServiceImpl implements InventarioProductoService 
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<InventarioProducto> obtenerListaTotalInventarioProductoPaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable) {
+        return inventarioProductoDao.findByFechaInventarioProductoBetween(fechaInicio, fechaFin, pageable);
+    }
+
+    @Override
     @Transactional
     public void guardarInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProducto.setEstadoInventarioProducto(true);
@@ -47,6 +55,11 @@ public class InventarioProductoServiceImpl implements InventarioProductoService 
     @Transactional(readOnly = true)
     public InventarioProducto encontrarInventarioProducto(InventarioProducto inventarioProducto) {
         return inventarioProductoDao.findById(inventarioProducto.getIdInventarioProducto()).orElse(null);
+    }
+
+    @Override
+    public List<InventarioProducto> encontrarTotalInventarioProducto(LocalDate fechaInicio, LocalDate fechaFin) {
+        return inventarioProductoDao.findByFechaInventarioProductoBetween(fechaInicio, fechaFin);
     }
 
     @Override
