@@ -33,10 +33,6 @@ public class InventarioProducto implements Serializable {
     private Integer cantidadIngresadaProducto;
 
     @NotNull
-    @Column(name = "cantidad_entrada_producto", nullable = false)
-    private Integer cantidadEntradaProducto;
-
-    @NotNull
     @Column(name = "cantidad_salida_producto", nullable = false)
     private Integer cantidadSalidaProducto;
 

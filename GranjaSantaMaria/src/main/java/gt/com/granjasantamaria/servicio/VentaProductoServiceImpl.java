@@ -11,8 +11,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 @Service
 public class VentaProductoServiceImpl implements VentaProductoService {
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     @Autowired
     private VentaProductoDao ventaProductoDao;
@@ -36,16 +42,18 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     @Transactional
     public void guardarVentaProducto(VentaProducto ventaProducto) {
         ventaProducto.setEstadoVentaProducto(true);
-        ventaProductoDao.save(ventaProducto);
-        // Obtenemos el producto correspondiente
-        InventarioProducto inventarioProducto = inventarioProductoDao.findById(ventaProducto.getIdVentaProducto()).orElse(null);
+        InventarioProducto inventarioProducto = inventarioProductoDao.findById(ventaProducto.getInventarioProducto().getIdInventarioProducto()).orElse(null);
         if (inventarioProducto != null) {
-            // Se actualiza el inventario
+            // Calcula los valores actualizados
+            int cantidadVendida = inventarioProducto.getCantidadVendidaHastaHoy() + ventaProducto.getCantidadProducto();
+            int cantidadFinal = inventarioProducto.getCantidadIngresadaProducto() - cantidadVendida;
+            // Actualiza el inventario
             inventarioProducto.setCantidadSalidaProducto(inventarioProducto.getCantidadSalidaProducto() + ventaProducto.getCantidadProducto());
-            inventarioProducto.setCantidadFinalProducto(inventarioProducto.getCantidadFinalProducto() + ventaProducto.getCantidadProducto());
-            inventarioProducto.setCantidadVendidaHastaHoy(inventarioProducto.getCantidadVendidaHastaHoy() + ventaProducto.getCantidadProducto());
+            inventarioProducto.setCantidadVendidaHastaHoy(cantidadVendida);
+            inventarioProducto.setCantidadFinalProducto(cantidadFinal);
             inventarioProductoDao.save(inventarioProducto);
         }
+        ventaProductoDao.save(ventaProducto);
     }
 
     @Override

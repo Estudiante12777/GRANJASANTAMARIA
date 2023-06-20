@@ -58,13 +58,20 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                    <label for="cantidadDisponible">Cantidad Disponible:</label>
+                    <input type="number" id="cantidadDisponible" name="cantidadDisponible" class="form-control"
+                           readonly/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
                     <label for="cantidadProducto">Cantidad:</label>
                     <input type="number" id="cantidadProducto" name="cantidadProducto" class="form-control"
                            th:field="*{cantidadProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="precioPorUnidad">Precio por unidad:</label>
@@ -72,6 +79,8 @@
                            th:field="*{precioPorUnidad}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="descuentoProducto">Descuento:</label>
@@ -79,8 +88,6 @@
                            th:field="*{descuentoProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="totalPrecioProducto">Total:</label>

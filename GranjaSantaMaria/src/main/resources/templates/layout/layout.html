@@ -133,8 +133,8 @@
         function calcularTotalVenta() {
             var cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
             var precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
-            var descuento = parseFloat(document.getElementById('totalPrecioProducto').value);
-            var totalVenta = (isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad) - (isNaN(descuento) ? 0 : descuento);
+            var descuento = parseFloat(document.getElementById('descuentoProducto').value);
+            var totalVenta = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
             document.getElementById('totalPrecioProducto').value = totalVenta;
         }
     </script>

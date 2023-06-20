@@ -52,15 +52,6 @@
                                   th:errors="*{cantidadIngresadaProducto}">Error</span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="cantidadEntradaProducto">
-                                Cantidad entrada producto
-                            </label>
-                            <input type="number" class="form-control form-control-lg" required
-                                   name="cantidadEntradaProducto" th:field="*{cantidadEntradaProducto}">
-                            <span th:if="${#fields.hasErrors('cantidadEntradaProducto')}" class="text-danger"
-                                  th:errors="*{cantidadEntradaProducto}">Error</span>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label form-label-lg" for="cantidadSalidaProducto">
                                 Cantidad salida producto
                             </label>
