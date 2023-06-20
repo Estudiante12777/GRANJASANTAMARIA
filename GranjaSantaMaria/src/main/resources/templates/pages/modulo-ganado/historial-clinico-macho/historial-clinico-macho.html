@@ -18,8 +18,8 @@
     <div th:if="${historialClinicoMachos != null and !historialClinicoMachos.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Ganado</th>
             <th>Fecha ingreso granja</th>
+            <th>Ganado</th>
             <th>Procedencia</th>
             <th>Condiciones fisicas recibido</th>
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
@@ -28,16 +28,16 @@
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                 Editar
             </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR',)">
+            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
                 Dar baja
             </th>
             </thead>
             <tr th:each="historialClinicoMacho : ${historialClinicoMachos}">
-                <td th:text="${historialClinicoMacho.ganadoMacho.nombreGanadoMacho}">
-                    Mostrar Nombre del ganado
-                </td>
                 <td th:text="${historialClinicoMacho.fechaIngresoGranja}">
                     Mostrar fecha de produccion de leche
+                </td>
+                <td th:text="${historialClinicoMacho.ganadoMacho.nombreGanadoMacho}">
+                    Mostrar Nombre del ganado
                 </td>
                 <td th:text="${historialClinicoMacho.procedenciaGanadoMacho}">
                     Mostrar Produccion de leche por la mañana

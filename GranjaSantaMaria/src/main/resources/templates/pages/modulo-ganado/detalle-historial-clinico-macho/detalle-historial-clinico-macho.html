@@ -13,13 +13,13 @@
     <div th:if="${detalleHistorialClinicoMachos != null and !detalleHistorialClinicoMachos.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Fecha</th>
-            <th>Macho</th>
-            <th>Descripcion</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+            <th class="col-sm-2">Fecha</th>
+            <th class="col-sm-2">Ganado</th>
+            <th class="col-sm-6">Descripcion</th>
+            <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                 Editar
             </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+            <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
                 Dar baja
             </th>
             </thead>

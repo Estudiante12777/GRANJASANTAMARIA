@@ -144,6 +144,20 @@
             var valorTotal = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
             document.getElementById('valorTotal').value = valorTotal;
         }
+
+        function calcularTotalAlimentacionBecerrasTerneras() {
+            var alimentacionManianaBecerrasTerneras = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerraTernera').value);
+            var alimentacionTardeBecerrasTerneras = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerraTernera').value);
+            var totalAlimentacionBecerrasTerneras = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
+            document.getElementById('totalAlimentacionBecerraTernera').value = totalAlimentacionBecerrasTerneras;
+        }
+
+        function calcularTotalAlimentacionBecerrosTerneros() {
+            var alimentacionManianaBecerrosTerneros = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerroTernero').value);
+            var alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
+            var totalAlimentacionBecerrosTerneros = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
+            document.getElementById('totalAlimentacionBecerroTernero').value = totalAlimentacionBecerrosTerneros;
+        }
     </script>
 </th:block>
 </body>
