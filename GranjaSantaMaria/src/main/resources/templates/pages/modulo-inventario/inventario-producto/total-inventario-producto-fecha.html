@@ -29,8 +29,8 @@
         <div class="py-2"></div>
         <table class="table">
             <thead class="table-dark">
-            <th>Producto</th>
             <th>Fecha inventario</th>
+            <th>Producto</th>
             <th>Cantidad ingresada</th>
             <th>Cantidad salida</th>
             <th>Cantidad final</th>
@@ -38,12 +38,12 @@
             </thead>
             <tbody>
             <tr th:each="totalInventarioProducto : ${totalInventarioProductoFecha}">
+                <td th:text="${totalInventarioProducto.fechaInventarioProducto}">
+                    Mostrar fecha del inventario
+                </td>
                 <td>
                         <span
                                 th:text="${totalInventarioProducto.detalleProducto.producto.nombreProducto + ' (' + totalInventarioProducto.detalleProducto.medidaProducto.nombreMedidaProducto + ') - ' + totalInventarioProducto.detalleProducto.contenedorProducto.nombreContenedorProducto + ' - ' + totalInventarioProducto.detalleProducto.descripcionProducto.nombreDescripcionProducto}"></span>
-                </td>
-                <td th:text="${totalInventarioProducto.fechaInventarioProducto}">
-                    Mostrar fecha del inventario
                 </td>
                 <td th:text="${totalInventarioProducto.cantidadIngresadaProducto}">
                     Mostrar Nombre de la descripcion de producto

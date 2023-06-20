@@ -21,8 +21,8 @@
     <div th:if="${inventarioProductos != null and !inventarioProductos.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Producto</th>
             <th>Fecha inventario</th>
+            <th>Producto</th>
             <th>Cantidad ingresada</th>
             <th>Cantidad salida</th>
             <th>Cantidad final</th>
@@ -33,12 +33,12 @@
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
             </thead>
             <tr th:each="inventarioProducto, iterStat : ${inventarioProductos}" th:if="${iterStat.index lt 10}">
+                <td th:text="${inventarioProducto.fechaInventarioProducto}">
+                    Mostrar fecha del inventario
+                </td>
                 <td>
                         <span
                                 th:text="${inventarioProducto.detalleProducto.producto.nombreProducto + ' (' + inventarioProducto.detalleProducto.medidaProducto.nombreMedidaProducto + ') - ' + inventarioProducto.detalleProducto.contenedorProducto.nombreContenedorProducto + ' - ' + inventarioProducto.detalleProducto.descripcionProducto.nombreDescripcionProducto}"></span>
-                </td>
-                <td th:text="${inventarioProducto.fechaInventarioProducto}">
-                    Mostrar fecha del inventario
                 </td>
                 <td th:text="${inventarioProducto.cantidadIngresadaProducto}">
                     Mostrar Nombre de la descripcion de producto
