@@ -87,18 +87,12 @@ public class ControladorVentaProducto {
         List<Cliente> listadoClientes = clienteService.listadoClientes();
         model.addAttribute("listadoClientes", listadoClientes);
         List<InventarioProducto> listadoInventarioProductos = inventarioProductoService.obtenerListadoInventarioProductos();
-        System.out.println("listadoInventario" + listadoInventarioProductos);
-        // Filtrar los productos que ya han sido completamente vendidos
         List<InventarioProducto> productosDisponibles = new ArrayList<>();
         for (InventarioProducto inventarioProducto : listadoInventarioProductos) {
             if (inventarioProducto.getCantidadIngresadaProducto() > inventarioProducto.getCantidadVendidaHastaHoy()) {
                 productosDisponibles.add(inventarioProducto);
             }
-            // Imprimir los valores de cantidadEntradaProducto y cantidadVendidaHastaHoy
-            System.out.println("Cantidad Entrada: " + inventarioProducto.getCantidadIngresadaProducto());
-            System.out.println("Cantidad Vendida: " + inventarioProducto.getCantidadVendidaHastaHoy());
         }
-        System.out.println("Productos disponibles" + productosDisponibles);
         model.addAttribute("listadoInventarioProductos", productosDisponibles);
         return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
     }

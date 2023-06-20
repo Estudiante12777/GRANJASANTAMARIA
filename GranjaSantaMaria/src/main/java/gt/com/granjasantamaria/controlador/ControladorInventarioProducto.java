@@ -37,7 +37,7 @@ public class ControladorInventarioProducto {
         PageRequest pageRequest = PageRequest.of(pagina, 10);
         Page<InventarioProducto> inventarioProductoPage = inventarioProductoService.obtenerListadoInventarioProductoPaginado(pageRequest);
         model.addAttribute("inventarioProductoPage", inventarioProductoPage);
-        List<InventarioProducto> inventarioProductos = inventarioProductoPage.getContent().stream().limit(10).collect(Collectors.toList());
+        List<InventarioProducto> inventarioProductos = inventarioProductoPage.getContent().stream().filter(inventarioProducto -> inventarioProducto.getCantidadIngresadaProducto() > inventarioProducto.getCantidadVendidaHastaHoy()).limit(10).collect(Collectors.toList());
         model.addAttribute("inventarioProductos", inventarioProductos);
         return "/pages/modulo-inventario/inventario-producto/inventario-producto";
     }
