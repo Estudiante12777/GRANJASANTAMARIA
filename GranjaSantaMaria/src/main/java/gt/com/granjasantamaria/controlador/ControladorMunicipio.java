@@ -4,9 +4,12 @@ import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,8 +28,11 @@ public class ControladorMunicipio {
     private PaisService paisService;
 
     @GetMapping("/modulo-ubicacion/municipio/lista")
-    public String listadoMunicipios(Model model) {
-        var municipios = municipioService.listadoMunicipios();
+    public String listadoMunicipios(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 10);
+        Page<Municipio> municipioPage = municipioService.listadoMunicipioPaginado(pageRequest);
+        model.addAttribute("municipioPage", municipioPage);
+        var municipios = municipioPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("municipios", municipios);
         return "/pages/modulo-ubicacion/municipio/municipio";
     }

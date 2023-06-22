@@ -48,6 +48,24 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg"
+                                   for="departamento.nombreDepartamento">Departamento:</label>
+                            <div class="col-sm-8">
+                                <select th:field="*{departamento.idDepartamento}"
+                                        name="departamento.nombreDepartamento" required
+                                        class="form-select form-select-lg" onchange="obtenerMunicipios()">
+                                    <option th:each="departamento : ${listadoDepartamentos}"
+                                            th:value="${departamento.idDepartamento}"
+                                            th:text="${departamento.nombreDepartamento}">
+                                    </option>
+                                    </option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('departamento.nombreDepartamento')}"
+                                      class="text-danger" th:errors="*{departamento.nombreDepartamento}">Error
+                                        Departamento</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
                                    for="municipio.nombreMunicipio">Municipio:</label>
                             <div class="col-sm-8">
                                 <select th:field="*{municipio.idMunicipio}" name="municipio.nombreMunicipio"
@@ -60,24 +78,6 @@
                                 <span th:if="${#fields.hasErrors('municipio.nombreMunicipio')}" class="text-danger"
                                       th:errors="*{municipio.nombreMunicipio}">Error
                                         Municipio</span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label form-label-lg"
-                                   for="departamento.nombreDepartamento">Departamento:</label>
-                            <div class="col-sm-8">
-                                <select th:field="*{departamento.idDepartamento}"
-                                        name="departamento.nombreDepartamento" required
-                                        class="form-select form-select-lg">
-                                    <option th:each="departamento : ${listadoDepartamentos}"
-                                            th:value="${departamento.idDepartamento}"
-                                            th:text="${departamento.nombreDepartamento}">
-                                    </option>
-                                    </option>
-                                </select>
-                                <span th:if="${#fields.hasErrors('departamento.nombreDepartamento')}"
-                                      class="text-danger" th:errors="*{departamento.nombreDepartamento}">Error
-                                        Departamento</span>
                             </div>
                         </div>
                         <input type="hidden" name="estadoCliente" th:field="*{estadoCliente}">

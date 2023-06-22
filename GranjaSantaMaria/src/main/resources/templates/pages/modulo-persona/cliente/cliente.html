@@ -28,7 +28,6 @@
                 Editar
             </th>
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
-            <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Eliminar</th>
             </thead>
             <tr th:each="cliente : ${clientes}">
                 <td th:text="${cliente.nombreCliente}">
@@ -104,38 +103,6 @@
                                     <a class="btn btn-danger"
                                        th:href="@{/modulo-persona/cliente/baja(idCliente=${cliente.idCliente})}">Sí,
                                         dar de baja</a>
-                                    <!-- Botón para cerrar el modal -->
-                                    <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                    <!-- Botón para abrir el modal de eliminar -->
-                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#deleteModal_' + ${cliente.idCliente}">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                    <!-- Modal de eliminar -->
-                    <div class="modal fade" th:id="'deleteModal_' + ${cliente.idCliente}" tabindex="-1"
-                         th:attr="aria-labelledby='deleteModalLabel_' + ${cliente.idCliente}" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" th:id="'deleteModalLabel_' + ${cliente.idCliente}">
-                                        ¿Estás seguro de que deseas eliminar este cliente?
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-footer">
-                                    <!-- Enlace para eliminar la categoría de ganado -->
-                                    <a class="btn btn-danger"
-                                       th:href="@{/modulo-persona/cliente/eliminar(idCliente=${cliente.idCliente})}">Sí,
-                                        eliminar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar

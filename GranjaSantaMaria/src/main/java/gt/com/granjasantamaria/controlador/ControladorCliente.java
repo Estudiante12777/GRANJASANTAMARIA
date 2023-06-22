@@ -2,18 +2,16 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+
 import java.util.List;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
 @Controller
 public class ControladorCliente {
 
@@ -31,6 +29,13 @@ public class ControladorCliente {
         var clientes = clienteService.listadoClientes();
         model.addAttribute("clientes", clientes);
         return "/pages/modulo-persona/cliente/cliente";
+    }
+
+    @GetMapping("/modulo-persona/cliente/municipios/{idDepartamento}")
+    @ResponseBody
+    public List<Municipio> obtenerMunicipiosPorDepartamento(@PathVariable("idDepartamento") Long idDepartamento) {
+        List<Municipio> municipios = municipioService.obtenerMunicipiosPorDepartamento(idDepartamento);
+        return municipios;
     }
 
     @GetMapping("/modulo-persona/cliente/agregar")

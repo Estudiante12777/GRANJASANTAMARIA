@@ -3,12 +3,9 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "departamento")
@@ -24,7 +21,7 @@ public class Departamento implements Serializable {
     @Column(name = "nombre_departamento")
     private String nombreDepartamento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pais")
     private Pais pais;
 

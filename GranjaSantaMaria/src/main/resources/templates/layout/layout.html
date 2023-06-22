@@ -158,6 +158,23 @@
             var totalAlimentacionBecerrosTerneros = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
             document.getElementById('totalAlimentacionBecerroTernero').value = totalAlimentacionBecerrosTerneros;
         }
+
+        function obtenerMunicipios() {
+            var departamentoId = $('select[name="departamento.idDepartamento"]').val();
+            console.log(departamentoId);
+            $.ajax({
+                url: '/modulo-persona/cliente/municipios/' + departamentoId,
+                type: 'GET',
+                success: function (data) {
+                    $('select[name="municipio.idMunicipio"]').empty();
+                    $.each(data, function (index, municipio) {
+                        $('select[name="municipio.idMunicipio"]').append('<option value="' + municipio.idMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+                    });
+                },
+                error: function () {
+                }
+            });
+        }
     </script>
 </th:block>
 </body>
