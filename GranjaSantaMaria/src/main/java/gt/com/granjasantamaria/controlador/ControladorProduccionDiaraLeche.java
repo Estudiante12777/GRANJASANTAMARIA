@@ -85,8 +85,6 @@ public class ControladorProduccionDiaraLeche {
                 .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
                         || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
                 .collect(Collectors.toList());
-        System.out.println("Lista de ganados: " + listaGanados);
-        System.out.println("Lista de vacas y novillas: " + listaVacasNovillas);
         model.addAttribute("listaGanados", listaVacasNovillas);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
     }
@@ -109,8 +107,6 @@ public class ControladorProduccionDiaraLeche {
                 .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
                         || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
                 .collect(Collectors.toList());
-        System.out.println("Lista de ganados: " + listaGanados);
-        System.out.println("Lista de vacas y novillas: " + listaVacasNovillas);
         model.addAttribute("listaGanados", listaVacasNovillas);
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);
         model.addAttribute("produccionDiariaLeche", produccionDiariaLeche);

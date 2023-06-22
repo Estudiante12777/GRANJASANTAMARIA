@@ -5,10 +5,12 @@ import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "prenies_ganado_hembra")
 public class PreniesGanadoHembra implements Serializable {
@@ -24,13 +26,17 @@ public class PreniesGanadoHembra implements Serializable {
     private GanadoHembra ganadoHembra;
 
     @NotNull
-    @Column(name = "fecha_concepcion", nullable = false)
+    @Column(name = "fecha_prenies", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaConcepcion;
+    private LocalDate fechaPrenies;
 
     @NotNull
     @Column(name = "promedio_gestacion", nullable = false)
     private Integer promedioGestacion;
+
+    @Column(name = "fecha_concepcion")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaConcepcion;
 
     @NotNull
     @Column(name = "estado_prenies_ganado_hembra")
