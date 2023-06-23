@@ -1,5 +1,6 @@
 package gt.com.granjasantamaria.servicio;
 
+import gt.com.granjasantamaria.modelo.GanadoHembra;
 import gt.com.granjasantamaria.modelo.PreniesGanadoHembra;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,5 +20,7 @@ public interface PreniesGanadoHembraService {
     public PreniesGanadoHembra encontrarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
     public void darBajaPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
+
+    public List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPorGanadoHembra(GanadoHembra ganadoHembra);
 
 }

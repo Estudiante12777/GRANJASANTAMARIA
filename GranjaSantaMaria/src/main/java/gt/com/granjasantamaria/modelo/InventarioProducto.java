@@ -48,4 +48,9 @@ public class InventarioProducto implements Serializable {
     @Column(name = "estado_inventario_producto", nullable = false)
     private boolean estadoInventarioProducto;
 
+    public int getCantidadExistencia() {
+        int cantidadExistencia = cantidadIngresadaProducto - cantidadSalidaProducto;
+        return cantidadExistencia;
+    }
+
 }

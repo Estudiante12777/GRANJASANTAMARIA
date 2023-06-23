@@ -20,4 +20,6 @@ public interface GanadoHembraService {
 
     public void darBajaGanadoHembra(GanadoHembra ganadoHembra);
 
+    public GanadoHembra encontrarGanadoHembraPorId(Long id);
+
 }

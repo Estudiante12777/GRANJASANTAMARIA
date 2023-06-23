@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.PreniesGanadoHembraDao;
+import gt.com.granjasantamaria.modelo.GanadoHembra;
 import gt.com.granjasantamaria.modelo.PreniesGanadoHembra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -55,6 +56,11 @@ public class PreniesGanadoHembraServiceImpl implements PreniesGanadoHembraServic
             preniesGanadoHembraExistente.setEstadoPreniesGanadoHembra(false);
             preniesGanadoHembraDao.save(preniesGanadoHembraExistente);
         }
+    }
+
+    @Override
+    public List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPorGanadoHembra(GanadoHembra ganadoHembra) {
+        return preniesGanadoHembraDao.findByGanadoHembra(ganadoHembra);
     }
 
 }

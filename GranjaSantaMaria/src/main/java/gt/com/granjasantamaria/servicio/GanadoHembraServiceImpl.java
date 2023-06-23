@@ -4,7 +4,9 @@ import gt.com.granjasantamaria.dao.GanadoHembraDao;
 import gt.com.granjasantamaria.modelo.GanadoHembra;
 
 import java.util.List;
+import java.util.Optional;
 
+import gt.com.granjasantamaria.modelo.PreniesGanadoHembra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,8 +56,14 @@ public class GanadoHembraServiceImpl implements GanadoHembraService {
         GanadoHembra ganadoHembraExistente = ganadoHembraDao.findById(ganadoHembra.getIdGanadoHembra()).orElse(null);
         if (ganadoHembraExistente != null) {
             ganadoHembraExistente.setEstadoGanadoHembra(false);
-            ganadoHembraDao.save(ganadoHembra);
+            ganadoHembraDao.save(ganadoHembraExistente);
         }
+    }
+
+    @Override
+    public GanadoHembra encontrarGanadoHembraPorId(Long id) {
+        Optional<GanadoHembra> ganadoHembraOptional = ganadoHembraDao.findById(id);
+        return ganadoHembraOptional.orElse(null);
     }
 
 }

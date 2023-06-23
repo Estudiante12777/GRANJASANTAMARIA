@@ -5,6 +5,7 @@ import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,9 @@ public class ControladorProduccionDiaraLeche {
 
     @Autowired
     private GanadoHembraService ganadoHembraService;
+
+    @Autowired
+    private PreniesGanadoHembraService preniesGanadoHembraService;
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/lista")
     public String listaProduccionDiariaLeche(Model model) {
@@ -87,6 +91,30 @@ public class ControladorProduccionDiaraLeche {
                 .collect(Collectors.toList());
         model.addAttribute("listaGanados", listaVacasNovillas);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
+    }
+
+    @GetMapping("/verificar-prenes/{idGanadoHembra}")
+    @ResponseBody
+    public int verificarPrenez(@PathVariable("idGanadoHembra") Long idGanadoHembra) {
+        GanadoHembra ganadoHembra = ganadoHembraService.encontrarGanadoHembraPorId(idGanadoHembra);
+        int prenado = 0; //Variable para guardar el número de días
+        if (ganadoHembra != null) {
+            List<PreniesGanadoHembra> prenies = preniesGanadoHembraService.obtenerListadoPreniesGanadoHembraPorGanadoHembra(ganadoHembra);
+            for (PreniesGanadoHembra prenie : prenies) {
+                if (prenie.isEstadoPreniesGanadoHembra()) {
+                    //Obtener la fecha actual
+                    LocalDate hoy = LocalDate.now();
+                    //Calcular el número de días desde la fecha de preñes
+                    long dias = ChronoUnit.DAYS.between(prenie.getFechaPrenies(), hoy);
+                    //Comparar el número de días con los límites
+                    if (dias == 189 || dias == 210) {
+                        prenado = (int) dias; //Asignar el número de días a la variable
+                    }
+                    break;
+                }
+            }
+        }
+        return prenado;
     }
 
     @PostMapping("/modulo-produccion-lacteos/produccion-diaria-leche/guardar")

@@ -175,6 +175,26 @@
                 }
             });
         }
+
+        function obtenerGandoHembra(idGanadoHembra) {
+            $.ajax({
+                url: '/verificar-prenes/' + idGanadoHembra,
+                type: 'GET',
+                success: function (response) {
+                    var prenado = response;
+                    if (prenado == 189) {
+                        $('#estado-preniez').html('<p>Hoy es el último día que se puede ordeñar al ganado en la tarde!.</p>');
+                    } else if (prenado == 210) {
+                        $('#estado-preniez').html('<p>Hoy es el último día que se puede ordeñar al ganado en la mañana!.</p>');
+                    } else {
+                        $('#estado-preniez').html('<p>No hay ningún aviso de ordeño.</p>');
+                    }
+                },
+                error: function () {
+                    console.log('Error al realizar la petición AJAX');
+                }
+            });
+        }
     </script>
 </th:block>
 </body>

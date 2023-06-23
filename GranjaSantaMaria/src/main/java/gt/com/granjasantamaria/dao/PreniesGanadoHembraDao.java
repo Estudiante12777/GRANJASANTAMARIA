@@ -14,4 +14,6 @@ public interface PreniesGanadoHembraDao extends JpaRepository<PreniesGanadoHembr
 
     List<PreniesGanadoHembra> findByEstadoPreniesGanadoHembraIsTrue();
 
+    List<PreniesGanadoHembra> findByGanadoHembra(GanadoHembra ganadoHembra);
+
 }

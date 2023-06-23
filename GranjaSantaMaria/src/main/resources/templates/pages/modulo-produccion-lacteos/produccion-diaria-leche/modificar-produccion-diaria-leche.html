@@ -18,12 +18,12 @@
                           th:object="${produccionDiariaLeche}" id="guardarFormulario">
                         <input type="hidden" name="idProduccionDiariaLeche" th:field="*{idProduccionDiariaLeche}"/>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="ganadoHembra.nombreGanadoHembra">Nombre de
-                                la vaca:</label>
+                            <label class="form-label form-label-lg" for="ganadoHembra.nombreGanadoHembra">Nombre de la
+                                vaca:</label>
                             <div class="col-sm-8">
                                 <select th:field="*{ganadoHembra.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
-                                        class="form-select form-select-lg">
+                                        class="form-select form-select-lg" onchange="obtenerGandoHembra(this.value)">
                                     <option th:each="ganadoHembra : ${listaGanados}"
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"
@@ -31,10 +31,10 @@
                                     </option>
                                 </select>
                                 <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
-                                      class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error Tipo de
-                                        ganado</span>
+                                      class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error Tipo de ganado</span>
                             </div>
                         </div>
+                        <div id="estado-preniez"></div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaProduccionLeche">Fecha de
                                 produccion:</label>
