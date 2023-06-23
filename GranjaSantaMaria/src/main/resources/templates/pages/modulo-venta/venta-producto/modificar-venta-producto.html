@@ -56,8 +56,6 @@
                     </select>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="cantidadProducto">Cantidad:</label>
@@ -65,26 +63,30 @@
                            th:field="*{cantidadProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="precioPorUnidad">Precio por unidad:</label>
-                    <input type="number" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
+                    <input type="number" step="0.01" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
                            th:field="*{precioPorUnidad}" required onchange="calcularTotalVenta()"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="descuentoProducto">Descuento:</label>
+                    <input type="number" step="0.01" id="descuentoProducto" name="descuentoProducto"
+                           class="form-control"
+                           th:field="*{descuentoProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="descuentoProducto">Descuento:</label>
-                    <input type="number" id="descuentoProducto" name="descuentoProducto" class="form-control"
-                           th:field="*{descuentoProducto}" required onchange="calcularTotalVenta()"/>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
                     <label for="totalPrecioProducto">Total:</label>
-                    <input type="number" id="totalPrecioProducto" name="totalPrecioProducto" class="form-control"
+                    <input type="number" step="0.01" id="totalPrecioProducto" name="totalPrecioProducto"
+                           class="form-control"
                            th:field="*{totalPrecioProducto}" required readonly/>
                 </div>
             </div>
