@@ -17,7 +17,7 @@ public interface GanadoHembraService {
     public void eliminarGanadoHembra(GanadoHembra ganadoHembra);
 
     public GanadoHembra encontrarGanadoHembra(GanadoHembra ganadoHembra);
-    
-    public void darBajaGanadoHembra(GanadoHembra ganadoHembra); 
+
+    public void darBajaGanadoHembra(GanadoHembra ganadoHembra);
 
 }

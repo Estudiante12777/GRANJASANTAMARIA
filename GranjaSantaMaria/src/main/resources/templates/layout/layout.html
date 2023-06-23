@@ -175,6 +175,29 @@
                 }
             });
         }
+
+        function mostrarAlerta(selectElement) {
+            var promedioGestacion = selectElement.options[selectElement.selectedIndex].getAttribute('data-promedio-gestacion'); // Obtén el promedio de gestación desde el atributo 'data-promedio-gestacion' del elemento seleccionado
+            var fechaPrenies = selectElement.options[selectElement.selectedIndex].getAttribute('data-fecha-prenies'); // Obtén la fecha de prenies desde el atributo 'data-fecha-prenies' del elemento seleccionado
+            var diasGestacion = calcularDiasGestacion(fechaPrenies); // Calcula los días de gestación
+            // Verificar si se alcanzaron los días de aviso para ordeñar en la mañana (189 días)
+            if (diasGestacion >= (promedioGestacion - 94)) {
+                alert("¡Aviso! Último día para ordeñar en la mañana.");
+            }
+            // Verificar si se alcanzaron los días de aviso para ordeñar en la tarde (210 días)
+            if (diasGestacion >= (promedioGestacion - 73)) {
+                alert("¡Aviso! Último día para ordeñar en la tarde.");
+            }
+        }
+
+        function calcularDiasGestacion(fechaPrenies) {
+            var fechaActual = new Date(); // Obtén la fecha actual
+            var fechaPreniesDate = new Date(fechaPrenies); // Convierte la fecha de prenies a objeto Date
+            var diferenciaTiempo = fechaActual.getTime() - fechaPreniesDate.getTime(); // Calcula la diferencia de tiempo en milisegundos
+            var diasTranscurridos = Math.floor(diferenciaTiempo / (1000 * 3600 * 24)); // Calcula los días transcurridos redondeando hacia abajo
+
+            return diasTranscurridos;
+        }
     </script>
 </th:block>
 </body>

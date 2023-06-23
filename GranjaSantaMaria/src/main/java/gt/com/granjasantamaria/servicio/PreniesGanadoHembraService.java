@@ -1,5 +1,6 @@
 package gt.com.granjasantamaria.servicio;
 
+import gt.com.granjasantamaria.modelo.GanadoHembra;
 import gt.com.granjasantamaria.modelo.PreniesGanadoHembra;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
