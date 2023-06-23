@@ -18,6 +18,12 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     @Autowired
     private ProduccionDiariaLecheDao produccionDiariaLecheDao;
 
+    @Autowired
+    private PreniesGanadoHembraService preniesGanadoHembraService;
+
+    @Autowired
+    private GanadoHembraService ganadoHembraService;
+
     @Override
     @Transactional(readOnly = true)
     public List<ProduccionDiariaLeche> obtenerListaProduccionDiariaLeche() {

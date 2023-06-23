@@ -5,7 +5,6 @@ import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +31,6 @@ public class ControladorProduccionDiaraLeche {
 
     @Autowired
     private GanadoHembraService ganadoHembraService;
-
-    @Autowired
-    private PreniesGanadoHembraService preniesGanadoHembraService;
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/lista")
     public String listaProduccionDiariaLeche(Model model) {
@@ -84,6 +80,7 @@ public class ControladorProduccionDiaraLeche {
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")
     public String agregarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
+        // Filtrar la lista de ganado para mostrar solo vacas y novillas
         List<GanadoHembra> listaVacasNovillas = listaGanados.stream()
                 .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
                         || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))

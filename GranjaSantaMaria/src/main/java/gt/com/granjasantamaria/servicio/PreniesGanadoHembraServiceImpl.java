@@ -1,13 +1,14 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.PreniesGanadoHembraDao;
-import gt.com.granjasantamaria.modelo.GanadoHembra;
 import gt.com.granjasantamaria.modelo.PreniesGanadoHembra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class PreniesGanadoHembraServiceImpl implements PreniesGanadoHembraService {
@@ -19,6 +20,12 @@ public class PreniesGanadoHembraServiceImpl implements PreniesGanadoHembraServic
     @Transactional(readOnly = true)
     public Page<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPaginado(Pageable pageable) {
         return preniesGanadoHembraDao.findAllByEstadoPreniesGanadoHembraIsTrue(pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembra() {
+        return preniesGanadoHembraDao.findByEstadoPreniesGanadoHembraIsTrue();
     }
 
     @Override
