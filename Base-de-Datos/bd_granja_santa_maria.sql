@@ -1,8 +1,6 @@
-CREATE
-    DATABASE granja_santa_maria;
+CREATE DATABASE granja_santa_maria;
 
-USE
-    granja_santa_maria;
+USE granja_santa_maria;
 
 /** TABLAS PARA USUARIOS **/
 CREATE TABLE usuario
@@ -88,6 +86,7 @@ CREATE TABLE ganado_macho
     id_ganado_macho     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     fotografia          VARCHAR(100)    NOT NULL,
     nombre_ganado_macho VARCHAR(50)     NOT NULL UNIQUE,
+    fecha_nacimiento    DATE            NOT NULL,
     id_tipo_ganado      INT             NOT NULL,
     id_raza_ganado      INT             NOT NULL,
     estado_ganado_macho TINYINT         NOT NULL,
@@ -118,6 +117,7 @@ CREATE TABLE ganado_hembra
     id_ganado_hembra     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     fotografia           VARCHAR(100)    NOT NULL,
     nombre_ganado_hembra VARCHAR(50)     NOT NULL UNIQUE,
+    fecha_nacimiento     DATE            NOT NULL,
     id_tipo_ganado       INT             NOT NULL,
     id_raza_ganado       INT             NOT NULL,
     estado_ganado_hembra TINYINT         NOT NULL,

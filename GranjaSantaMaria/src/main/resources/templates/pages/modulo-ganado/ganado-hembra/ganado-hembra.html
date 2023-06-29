@@ -20,6 +20,7 @@
             <thead class="table-dark">
             <th>Fotografia</th>
             <th>Nombre</th>
+            <th>Fecha nacimiento</th>
             <th>Tipo de ganado</th>
             <th>Categoria de ganado</th>
             <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
@@ -36,6 +37,9 @@
                 </td>
                 <td th:text="${ganado.nombreGanadoHembra}">
                     Mostrar Nombre de ganado
+                </td>
+                <td th:text="${ganado.fechaNacimiento}">
+                    Mostrar fecha de nacimiento ganado hembra
                 </td>
                 <td th:text="${ganado.tipoGanado.nombreTipoGanado}">
                     Mostrar Nombre de tipo de ganado
