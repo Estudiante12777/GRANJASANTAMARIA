@@ -12,7 +12,7 @@
     <artifactId>GranjaSantaMaria</artifactId>
     <version>1.0</version>
     <name>GranjaSantaMaria</name>
-    <description>HolaMundo con Spring</description>
+    <description>Proyecto Granja Santa Maria</description>
 
     <properties>
         <java.version>11</java.version>
