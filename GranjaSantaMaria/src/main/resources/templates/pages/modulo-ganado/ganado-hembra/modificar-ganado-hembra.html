@@ -19,7 +19,7 @@
                         <input type="hidden" name="idGanadoHembra" th:field="*{idGanadoHembra}"/>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="image">Imagen:</label>
-                            <input type="file" name="image" accept="image/*" class="form-control-file" required>
+                            <input type="file" name="image" accept="image/*" th:value="${ganadoHembra.fotografia}" class="form-control-file" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="nombreGanadoHembra">Nombre:</label>

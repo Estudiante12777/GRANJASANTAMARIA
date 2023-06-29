@@ -8,7 +8,6 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
@@ -43,7 +42,7 @@ public class ReporteProduccionLecheFecha extends AbstractPdfView {
 
         PdfPTable tablaProduccionLeche = new PdfPTable(6);
 
-        float[] columnWidths = {1f, 1f, 1.5f, 1f, 1f, 1f};
+        float[] columnWidths = {0.5f, 1f, 1f, 1.5f, 1f, 1f};
         tablaProduccionLeche.setWidths(columnWidths);
 
         // Establece que la primera linea sera el header
@@ -51,29 +50,29 @@ public class ReporteProduccionLecheFecha extends AbstractPdfView {
 
         // Obtiene la celda por defecto de la tabla
         PdfPCell cellHeaderId = new PdfPCell(new Phrase("No."));
-        cellHeaderId.setBackgroundColor(Color.darkGray); // Estable el color de fondo de la celda a blue
+        cellHeaderId.setBackgroundColor(Color.LIGHT_GRAY); // Estable el color de fondo de la celda a blue
         tablaProduccionLeche.addCell(cellHeaderId);
 
+        PdfPCell cellHeaderFechaProduccion = new PdfPCell(new Phrase("Fecha"));
+        cellHeaderFechaProduccion.setBackgroundColor(Color.LIGHT_GRAY);
+        tablaProduccionLeche.addCell(cellHeaderFechaProduccion);
+
         PdfPCell cellHeaderProductora = new PdfPCell(new Phrase("Productora"));
-        cellHeaderProductora.setBackgroundColor(Color.darkGray);
+        cellHeaderProductora.setBackgroundColor(Color.LIGHT_GRAY);
         tablaProduccionLeche.addCell(cellHeaderProductora);
 
         PdfPCell cellHeaderProduccionManiana = new PdfPCell(new Phrase("Produccion mañana"));
-        cellHeaderProduccionManiana.setBackgroundColor(Color.darkGray);
+        cellHeaderProduccionManiana.setBackgroundColor(Color.LIGHT_GRAY);
         cellHeaderProduccionManiana.setNoWrap(true);
         tablaProduccionLeche.addCell(cellHeaderProduccionManiana);
 
         PdfPCell cellHeaderProduccionTarde = new PdfPCell(new Phrase("Produccion tarde"));
-        cellHeaderProduccionTarde.setBackgroundColor(Color.darkGray);
+        cellHeaderProduccionTarde.setBackgroundColor(Color.LIGHT_GRAY);
         tablaProduccionLeche.addCell(cellHeaderProduccionTarde);
 
         PdfPCell cellHeaderTotalProduccion = new PdfPCell(new Phrase("Total produccion"));
-        cellHeaderTotalProduccion.setBackgroundColor(Color.darkGray);
+        cellHeaderTotalProduccion.setBackgroundColor(Color.LIGHT_GRAY);
         tablaProduccionLeche.addCell(cellHeaderTotalProduccion);
-
-        PdfPCell cellHeaderFechaProduccion = new PdfPCell(new Phrase("Fecha"));
-        cellHeaderFechaProduccion.setBackgroundColor(Color.darkGray);
-        tablaProduccionLeche.addCell(cellHeaderFechaProduccion);
 
         // Antes de construir la tabla, calcula la suma total de la producción
         double sumaTotalProduccion = listaProduccionDiariaLeche.stream().mapToDouble(ProduccionDiariaLeche::getTotalProduccionLeche).sum();
@@ -81,11 +80,11 @@ public class ReporteProduccionLecheFecha extends AbstractPdfView {
         // Agrega los datos en cada fila como celdas
         listaProduccionDiariaLeche.forEach(produccionDiariaLeche -> {
             tablaProduccionLeche.addCell(produccionDiariaLeche.getIdProduccionDiariaLeche().toString());
+            tablaProduccionLeche.addCell(produccionDiariaLeche.getFechaProduccionLeche().toString());
             tablaProduccionLeche.addCell(produccionDiariaLeche.getGanadoHembra().getNombreGanadoHembra());
             tablaProduccionLeche.addCell(produccionDiariaLeche.getProduccionManianaLeche().toString() + " litros");
             tablaProduccionLeche.addCell(produccionDiariaLeche.getProduccionTardeLeche().toString() + " litros");
             tablaProduccionLeche.addCell(produccionDiariaLeche.getTotalProduccionLeche().toString() + " litros");
-            tablaProduccionLeche.addCell(produccionDiariaLeche.getFechaProduccionLeche().toString());
         });
 
         document.add(tablaTitulo);

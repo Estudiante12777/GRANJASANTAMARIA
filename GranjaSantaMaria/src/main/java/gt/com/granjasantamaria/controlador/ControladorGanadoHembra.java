@@ -76,7 +76,11 @@ public class ControladorGanadoHembra {
     @GetMapping("/modulo-ganado/ganado-hembra/editar/{idGanadoHembra}")
     public String editarGanadoHembra(GanadoHembra ganadoHembra, Model model) {
         List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado();
-        model.addAttribute("listaTiposGanado", listaTiposGanado);
+        List<TipoGanado> listadoTiposGanadoHembra = listaTiposGanado.stream().filter(ganado -> {
+            String tipoGanado = ganado.getNombreTipoGanado();
+            return tipoGanado.equals("Vaca") || tipoGanado.equals("Novilla") || tipoGanado.equals("Ternera") || tipoGanado.equals("Becerra");
+        }).collect(Collectors.toList());
+        model.addAttribute("listaTiposGanado", listadoTiposGanadoHembra);
         List<RazaGanado> listaRazasGanado = razaGanadoService.listadoRazasGanado();
         model.addAttribute("listaRazasGanado", listaRazasGanado);
         ganadoHembra = ganadoHembraService.encontrarGanadoHembra(ganadoHembra);
