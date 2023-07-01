@@ -7,7 +7,6 @@
 </head>
 
 <body>
-<!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
 <div class="container-fluid py-2" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div class="form-control">
@@ -25,6 +24,8 @@
         <div style="text-align: right">
             <a th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
                target="_blank" class="btn btn-outline-info">Generar PDF</a>
+            <a th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/excel(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
+               class="btn btn-outline-success">Generar Excel</a>
         </div>
         <div class="py-2"></div>
         <table class="table">
@@ -44,13 +45,16 @@
             <tr th:each="produccionDiariaLeche : ${totalProduccionesFecha}">
                 <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">Mostrar Nombre del ganado
                 </td>
-                <td th:text="${produccionDiariaLeche.produccionManianaLeche + ' litros'}">Mostrar Producción de leche por la
+                <td th:text="${produccionDiariaLeche.produccionManianaLeche + ' litros'}">Mostrar Producción de leche
+                    por la
                     mañana
                 </td>
-                <td th:text="${produccionDiariaLeche.produccionTardeLeche + ' litros'}">Mostrar Producción de leche por la
+                <td th:text="${produccionDiariaLeche.produccionTardeLeche + ' litros'}">Mostrar Producción de leche por
+                    la
                     tarde
                 </td>
-                <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">Mostrar Producción de leche por la
+                <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">Mostrar Producción de leche por
+                    la
                     tarde
                 </td>
                 <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">Mostrar fecha de producción de leche

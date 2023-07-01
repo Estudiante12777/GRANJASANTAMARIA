@@ -21,10 +21,18 @@ public class ReporteProduccionLecheFechaExcel extends AbstractXlsxView {
 
         Sheet reporteProduccionLeche = workbook.createSheet("Produccion-Leche");
 
-        // Establecer estilos
+        // Establecer estilos para el encabezado
         CellStyle headerStyle = workbook.createCellStyle();
         headerStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
         headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        Font headerFont = workbook.createFont();
+        headerFont.setColor(IndexedColors.WHITE.getIndex());
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        // Establecer estilos para los datos
+        CellStyle dataStyle = workbook.createCellStyle();
+        dataStyle.setAlignment(HorizontalAlignment.CENTER);
 
         // Crear la fila del encabezado
         Row headerRow = reporteProduccionLeche.createRow(0);
@@ -47,9 +55,12 @@ public class ReporteProduccionLecheFechaExcel extends AbstractXlsxView {
             row.createCell(0).setCellValue(produccionDiariaLeche.getIdProduccionDiariaLeche());
             row.createCell(1).setCellValue(produccionDiariaLeche.getFechaProduccionLeche().toString());
             row.createCell(2).setCellValue(produccionDiariaLeche.getGanadoHembra().getNombreGanadoHembra());
-            row.createCell(3).setCellValue(produccionDiariaLeche.getProduccionManianaLeche() + " litros");
-            row.createCell(4).setCellValue(produccionDiariaLeche.getProduccionTardeLeche() + " litros");
-            row.createCell(5).setCellValue(produccionDiariaLeche.getTotalProduccionLeche() + " litros");
+            row.createCell(3).setCellValue(produccionDiariaLeche.getProduccionManianaLeche());
+            row.createCell(4).setCellValue(produccionDiariaLeche.getProduccionTardeLeche());
+            row.createCell(5).setCellValue(produccionDiariaLeche.getTotalProduccionLeche());
+            for (Cell cell : row) {
+                cell.setCellStyle(dataStyle);
+            }
         }
 
         // Ajustar el tamaño de las columnas
@@ -58,15 +69,22 @@ public class ReporteProduccionLecheFechaExcel extends AbstractXlsxView {
         }
 
         // Calcular la suma total de la producción de leche
-        double sumaTotalProduccion = 0.0;
-        for (ProduccionDiariaLeche produccionDiariaLeche : listaProduccionDiariaLeche) {
-            sumaTotalProduccion += produccionDiariaLeche.getTotalProduccionLeche();
-        }
+        double sumaTotalProduccion = listaProduccionDiariaLeche.stream()
+                .mapToDouble(ProduccionDiariaLeche::getTotalProduccionLeche)
+                .sum();
 
-        // Nueva fila para el total
+        // Crear la fila para el total
         Row totalRow = reporteProduccionLeche.createRow(rowNum);
         totalRow.createCell(0).setCellValue("Total produccion de leche");
-        totalRow.createCell(5).setCellValue(String.valueOf(sumaTotalProduccion) + " litros");
+        CellStyle totalLabelStyle = workbook.createCellStyle();
+        Font totalLabelFont = workbook.createFont();
+        totalLabelFont.setBold(true);
+        totalLabelStyle.setFont(totalLabelFont);
+        totalRow.getCell(0).setCellStyle(totalLabelStyle);
+        CellStyle totalValueStyle = workbook.createCellStyle();
+        totalValueStyle.setAlignment(HorizontalAlignment.CENTER);
+        totalRow.createCell(5).setCellValue(sumaTotalProduccion);
+        totalRow.getCell(5).setCellStyle(totalValueStyle);
     }
 
 }

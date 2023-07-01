@@ -2,6 +2,7 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
+import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFechaExcel;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.time.LocalDate;
@@ -79,6 +80,23 @@ public class ControladorProduccionDiaraLeche {
         model.put("totalProduccionesFecha", totalProduccionesFecha);
         // Devolver la vista PDF y el modelo
         return new ModelAndView(new ReporteProduccionLecheFecha(), model);
+    }
+
+    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/excel")
+    public ModelAndView generarExcelTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
+        // Convertir las fechas de String a LocalDate
+        LocalDate inicio = LocalDate.parse(fechaInicio);
+        LocalDate fin = LocalDate.parse(fechaFin);
+        // Obtener todos los registros de producción de leche para el rango de fechas dado
+        List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
+        // Obtener el número total de registros
+        long totalRegistros = totalProduccionesFecha.size();
+        // Crear el modelo para el PDF
+        Map<String, Object> model = new HashMap<>();
+        model.put("totalRegistros", totalRegistros);
+        model.put("totalProduccionesFecha", totalProduccionesFecha);
+        // Devolver la vista PDF y el modelo
+        return new ModelAndView(new ReporteProduccionLecheFechaExcel(), model);
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")
