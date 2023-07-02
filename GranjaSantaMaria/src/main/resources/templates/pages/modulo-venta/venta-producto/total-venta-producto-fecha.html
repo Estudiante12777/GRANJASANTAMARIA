@@ -7,7 +7,6 @@
 </head>
 
 <body>
-<!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
 <div class="container-fluid py-2" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div class="form-control">
@@ -17,6 +16,13 @@
             <input type="date" id="fechaInicio" name="fechaInicio" required>
             <label for="fechaFin">Fecha finalización</label>
             <input type="date" id="fechaFin" name="fechaFin" required>
+            <!-- Campo de selección para filtrar registros por producto detallado -->
+            <label class="form-label form-label-lg" for="detalleProducto">Producto:</label>
+            <select id="detalleProducto" name="detalleProducto">
+                <option value="0">Todos</option>
+                <option th:each="producto : ${obtenerListaProductoDetalle}" th:value="${producto.idDetalleProducto}"
+                        th:text="${producto.toString()}"></option>
+            </select>
             <button type="submit">Buscar</button>
         </form>
     </div>

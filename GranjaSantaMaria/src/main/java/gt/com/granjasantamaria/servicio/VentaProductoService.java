@@ -16,14 +16,16 @@ public interface VentaProductoService {
 
     Page<VentaProducto> obtenerListaTotalVentaProductoPaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
 
-    public void guardarVentaProducto(VentaProducto ventaProducto);
+    Page<VentaProducto> obtenerListaTotalVentaProductoPaginadoPorFechaAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto, Pageable pageable);
 
-    public void eliminarVentaProducto(VentaProducto ventaProducto);
+    void guardarVentaProducto(VentaProducto ventaProducto);
 
-    public VentaProducto encontrarVentaProducto(VentaProducto ventaProducto);
+    void eliminarVentaProducto(VentaProducto ventaProducto);
+
+    VentaProducto encontrarVentaProducto(VentaProducto ventaProducto);
 
     List<VentaProducto> encontrarTotalVentaProducto(LocalDate fechaInicio, LocalDate fechaFin);
 
-    public void darBajaVentaProducto(VentaProducto ventaProducto);
+    void darBajaVentaProducto(VentaProducto ventaProducto);
 
 }

@@ -47,6 +47,12 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<VentaProducto> obtenerListaTotalVentaProductoPaginadoPorFechaAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto, Pageable pageable) {
+        return ventaProductoDao.findByFechaVentaProductoAndDetalleProducto(fechaInicio, fechaFin, idDetalleProducto, pageable);
+    }
+
+    @Override
     @Transactional
     public void guardarVentaProducto(VentaProducto ventaProducto) {
         ventaProducto.setEstadoVentaProducto(true);
@@ -77,6 +83,7 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<VentaProducto> encontrarTotalVentaProducto(LocalDate fechaInicio, LocalDate fechaFin) {
         return ventaProductoDao.findByFechaVentaProductoBetween(fechaInicio, fechaFin);
     }

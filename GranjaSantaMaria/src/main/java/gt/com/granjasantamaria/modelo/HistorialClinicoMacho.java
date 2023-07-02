@@ -7,10 +7,6 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-/**
- *
- * @author gerso
- */
 @Data
 @Entity
 @Table(name = "historial_clinico_macho")

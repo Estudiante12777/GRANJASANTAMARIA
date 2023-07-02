@@ -27,8 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorProduccionDiaraLeche {
 
-    private List<ProduccionDiariaLeche> global;
-
     @Autowired
     private ProduccionDiariaLecheService produccionDiariaLecheService;
 

@@ -5,10 +5,7 @@ import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 
@@ -48,17 +45,27 @@ public class ControladorVentaProducto {
     public String obtenerListaVentaProducto(VentaProducto ventaProducto, Model model) {
         var listaTotalVentaProducto = ventaProductoService.obtenerListaTotalVentaProducto();
         model.addAttribute("listaTotalVentaProducto", listaTotalVentaProducto);
+        var obtenerListaProductoDetalle = detalleProductoService.obtenerListadoDetalleProductos();
+        model.addAttribute("obtenerListaProductoDetalle", obtenerListaProductoDetalle);
         return "/pages/modulo-venta/venta-producto/total-venta-producto-fecha";
     }
 
     @GetMapping("/modulo-venta/venta-producto/encontrar-total-venta-producto-fecha")
-    public String encontrarTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String encontrarTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio,
+                                              @RequestParam("fechaFin") String fechaFin,
+                                              @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto,
+                                              @RequestParam(defaultValue = "0") int pagina, Model model) {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
-        Page<VentaProducto> ventaProductoPage = ventaProductoService.obtenerListaTotalVentaProductoPaginadoPorFecha(inicio, fin, pageRequest);
+        Page<VentaProducto> ventaProductoPage;
+        if (Objects.isNull(idDetalleProducto) || idDetalleProducto.equals(Long.valueOf("0"))) {
+            ventaProductoPage = ventaProductoService.obtenerListaTotalVentaProductoPaginadoPorFecha(inicio, fin, pageRequest);
+        } else {
+            ventaProductoPage = ventaProductoService.obtenerListaTotalVentaProductoPaginadoPorFechaAndIdDetalleProducto(inicio, fin, idDetalleProducto, pageRequest);
+        }
         List<VentaProducto> totalVentaProductoFecha = ventaProductoPage.getContent(); // Obtener los elementos de la página actual
         model.addAttribute("totalVentaProductoFecha", totalVentaProductoFecha);
         model.addAttribute("ventaProductoPage", ventaProductoPage);

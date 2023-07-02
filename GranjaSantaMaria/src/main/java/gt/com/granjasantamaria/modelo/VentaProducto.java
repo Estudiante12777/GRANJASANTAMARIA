@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import org.hibernate.annotations.JoinFormula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
