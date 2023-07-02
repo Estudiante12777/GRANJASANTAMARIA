@@ -17,4 +17,6 @@ public interface ProduccionDiariaLecheDao extends JpaRepository<ProduccionDiaria
 
     Page<ProduccionDiariaLeche> findByFechaProduccionLecheBetween(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
 
+    Page<ProduccionDiariaLeche> findByFechaProduccionLecheBetweenAndGanadoHembra_IdGanadoHembra(LocalDate fechaInicio, LocalDate fechaFin, Long idGanadoHembra, Pageable pageable);
+
 }

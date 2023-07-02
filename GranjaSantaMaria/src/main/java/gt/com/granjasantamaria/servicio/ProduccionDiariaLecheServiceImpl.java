@@ -18,12 +18,6 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     @Autowired
     private ProduccionDiariaLecheDao produccionDiariaLecheDao;
 
-    @Autowired
-    private PreniesGanadoHembraService preniesGanadoHembraService;
-
-    @Autowired
-    private GanadoHembraService ganadoHembraService;
-
     @Override
     @Transactional(readOnly = true)
     public List<ProduccionDiariaLeche> obtenerListaProduccionDiariaLeche() {
@@ -45,9 +39,14 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable) {
         return produccionDiariaLecheDao.findByFechaProduccionLecheBetween(fechaInicio, fechaFin, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginadoPorFechaAndIdGanadoHembra(LocalDate fechaInicio, LocalDate fechaFin, Long idGanadoHembra, Pageable pageable) {
+        return produccionDiariaLecheDao.findByFechaProduccionLecheBetweenAndGanadoHembra_IdGanadoHembra(fechaInicio, fechaFin, idGanadoHembra, pageable);
     }
 
     @Override
@@ -80,5 +79,4 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
             produccionDiariaLecheDao.save(produccionDiariaLecheExistente);
         }
     }
-
 }

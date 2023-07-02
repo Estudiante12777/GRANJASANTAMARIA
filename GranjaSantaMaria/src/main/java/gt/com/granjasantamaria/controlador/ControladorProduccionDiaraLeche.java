@@ -10,6 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 
@@ -48,17 +49,32 @@ public class ControladorProduccionDiaraLeche {
     public String listaTotalProduccionFecha(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         var listaTotalProduccionFecha = produccionDiariaLecheService.obtenerListaTotalProduccionLeche();
         model.addAttribute("listaTotalProduccionFecha", listaTotalProduccionFecha);
+        var listadoGanadoHembra = ganadoHembraService.obtenerListadoGanadosHembra();
+        List<GanadoHembra> listaVacasNovillas = listadoGanadoHembra.stream()
+                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
+                        || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
+                .collect(Collectors.toList());
+        model.addAttribute("listadoGanadoHembra", listaVacasNovillas);
         return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/encontrar-total-produccion-fecha")
-    public String encontrarTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String encontrarTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio,
+                                                @RequestParam("fechaFin") String fechaFin,
+                                                @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra,
+                                                @RequestParam(defaultValue = "0") int pagina,
+                                                Model model) {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
-        Page<ProduccionDiariaLeche> produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginadoPorFecha(inicio, fin, pageRequest);
+        Page<ProduccionDiariaLeche> produccionDiariaLechePage;
+        if (Objects.isNull(idGanadoHembra) || idGanadoHembra.equals(Long.valueOf("0"))) {
+            produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginadoPorFecha(inicio, fin, pageRequest);
+        } else {
+            produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginadoPorFechaAndIdGanadoHembra(inicio, fin, idGanadoHembra, pageRequest);
+        }
         List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLechePage.getContent(); // Obtener los elementos de la página actual
         model.addAttribute("totalProduccionesFecha", totalProduccionesFecha);
         model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);

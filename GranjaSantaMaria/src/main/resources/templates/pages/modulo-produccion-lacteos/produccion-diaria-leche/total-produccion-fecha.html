@@ -16,6 +16,13 @@
             <input type="date" id="fechaInicio" name="fechaInicio" required>
             <label for="fechaFin">Fecha finalización</label>
             <input type="date" id="fechaFin" name="fechaFin" required>
+            <!-- Campo de selección para filtrar registros por ganado -->
+            <label class="form-label form-label-lg" for="ganadoHembra">Nombre de la vaca:</label>
+            <select id="ganadoHembra" name="ganadoHembra">
+                <option value="0">Todos</option>
+                <option th:each="ganado : ${listadoGanadoHembra}" th:value="${ganado.idGanadoHembra}"
+                        th:text="${ganado.nombreGanadoHembra}"></option>
+            </select>
             <button type="submit">Buscar</button>
         </form>
     </div>
