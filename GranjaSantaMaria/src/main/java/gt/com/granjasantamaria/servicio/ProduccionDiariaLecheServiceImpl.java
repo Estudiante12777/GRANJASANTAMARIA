@@ -39,6 +39,7 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ProduccionDiariaLeche> obtenerProduccionDiaraLechePaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable) {
         return produccionDiariaLecheDao.findByFechaProduccionLecheBetween(fechaInicio, fechaFin, pageable);
     }
@@ -50,6 +51,7 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
+    @Transactional
     public void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         produccionDiariaLeche.setEstadoProduccionDiariaLeche(true);
         produccionDiariaLeche.setTotalProduccionLeche(produccionDiariaLeche.getProduccionManianaLeche() + produccionDiariaLeche.getProduccionTardeLeche());
@@ -57,21 +59,31 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     }
 
     @Override
+    @Transactional
     public void eliminarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         produccionDiariaLecheDao.delete(produccionDiariaLeche);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProduccionDiariaLeche encontrarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         return produccionDiariaLecheDao.findById(produccionDiariaLeche.getIdProduccionDiariaLeche()).orElse(null);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProduccionDiariaLeche> encontrarTotalProduccionFecha(LocalDate fechaInicio, LocalDate fechaFin) {
         return produccionDiariaLecheDao.findByFechaProduccionLecheBetween(fechaInicio, fechaFin);
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<ProduccionDiariaLeche> encontrarTotalProduccionFechaAndIdGanadoHembra(LocalDate fechaInicio, LocalDate fechaFin, Long idGanadoHembra) {
+        return produccionDiariaLecheDao.findByFechaProduccionLecheBetweenAndGanadoHembra_IdGanadoHembra(fechaInicio, fechaFin, idGanadoHembra);
+    }
+
+    @Override
+    @Transactional
     public void darDeBajaProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         ProduccionDiariaLeche produccionDiariaLecheExistente = produccionDiariaLecheDao.findById(produccionDiariaLeche.getIdProduccionDiariaLeche()).orElse(null);
         if (produccionDiariaLecheExistente != null) {

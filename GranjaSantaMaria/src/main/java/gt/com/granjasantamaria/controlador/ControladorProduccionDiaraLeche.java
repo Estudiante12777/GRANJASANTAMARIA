@@ -82,12 +82,19 @@ public class ControladorProduccionDiaraLeche {
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf")
-    public ModelAndView generarPDFTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
+    public ModelAndView generarPDFTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio,
+                                                       @RequestParam("fechaFin") String fechaFin,
+                                                       @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
+        // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
+        List<ProduccionDiariaLeche> totalProduccionesFecha;
+        if (Objects.isNull(idGanadoHembra) || idGanadoHembra.equals(Long.valueOf("0"))) {
+            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
+        } else {
+            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFechaAndIdGanadoHembra(inicio, fin, idGanadoHembra);
+        }
         // Obtener el número total de registros
         long totalRegistros = totalProduccionesFecha.size();
         // Crear el modelo para el PDF
@@ -99,19 +106,26 @@ public class ControladorProduccionDiaraLeche {
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/excel")
-    public ModelAndView generarExcelTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
+    public ModelAndView generarExcelTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio,
+                                                         @RequestParam("fechaFin") String fechaFin,
+                                                         @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
+        // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
+        List<ProduccionDiariaLeche> totalProduccionesFecha;
+        if (Objects.isNull(idGanadoHembra) || idGanadoHembra.equals(Long.valueOf("0"))) {
+            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
+        } else {
+            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFechaAndIdGanadoHembra(inicio, fin, idGanadoHembra);
+        }
         // Obtener el número total de registros
         long totalRegistros = totalProduccionesFecha.size();
-        // Crear el modelo para el PDF
+        // Crear el modelo para el Excel
         Map<String, Object> model = new HashMap<>();
         model.put("totalRegistros", totalRegistros);
         model.put("totalProduccionesFecha", totalProduccionesFecha);
-        // Devolver la vista PDF y el modelo
+        // Devolver la vista Excel y el modelo
         return new ModelAndView(new ReporteProduccionLecheFechaExcel(), model);
     }
 
@@ -152,7 +166,8 @@ public class ControladorProduccionDiaraLeche {
     }
 
     @PostMapping("/modulo-produccion-lacteos/produccion-diaria-leche/guardar")
-    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ProduccionDiariaLeche produccionDiariaLeche, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ProduccionDiariaLeche produccionDiariaLeche,
+                                               BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {

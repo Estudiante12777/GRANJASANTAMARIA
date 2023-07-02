@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
+import org.apache.poi.ss.usermodel.PageOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -26,6 +27,8 @@ public interface ProduccionDiariaLecheService {
     ProduccionDiariaLeche encontrarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 
     List<ProduccionDiariaLeche> encontrarTotalProduccionFecha(LocalDate fechaInicio, LocalDate fechaFin);
+
+    List<ProduccionDiariaLeche> encontrarTotalProduccionFechaAndIdGanadoHembra(LocalDate fechaInicio, LocalDate fechaFin, Long idGanadoHembra);
 
     void darDeBajaProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 
