@@ -2,6 +2,7 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
+import gt.com.granjasantamaria.reportes.ReporteVentaProductoFecha;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.time.LocalDate;
@@ -73,12 +74,19 @@ public class ControladorVentaProducto {
     }
 
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/pdf")
-    public ModelAndView generarPDFTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
+    public ModelAndView generarPDFTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio,
+                                                     @RequestParam("fechaFin") String fechaFin,
+                                                     @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<VentaProducto> totalVentaProductoFecha = ventaProductoService.encontrarTotalVentaProducto(inicio, fin);
+        List<VentaProducto> totalVentaProductoFecha;
+        if (Objects.isNull(idDetalleProducto) || idDetalleProducto.equals(Long.valueOf("0"))) {
+            totalVentaProductoFecha = ventaProductoService.encontrarTotalVentaProducto(inicio, fin);
+        } else {
+            totalVentaProductoFecha = ventaProductoService.encontrarTotalVentaProductoAndIdDetalleProducto(inicio, fin, idDetalleProducto);
+        }
         // Obtener el número total de registros
         long totalRegistros = totalVentaProductoFecha.size();
         // Crear el modelo para el PDF
@@ -86,7 +94,7 @@ public class ControladorVentaProducto {
         model.put("totalRegistros", totalRegistros);
         model.put("totalVentaProductoFecha", totalVentaProductoFecha);
         // Devolver la vista PDF y el modelo
-        return new ModelAndView(new ReporteProduccionLecheFecha(), model);
+        return new ModelAndView(new ReporteVentaProductoFecha(), model);
     }
 
     @GetMapping("/modulo-venta/venta-producto/agregar")

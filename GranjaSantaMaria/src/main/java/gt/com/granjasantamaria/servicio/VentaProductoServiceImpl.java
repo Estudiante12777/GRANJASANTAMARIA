@@ -89,6 +89,12 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<VentaProducto> encontrarTotalVentaProductoAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto) {
+        return ventaProductoDao.findByFechaVentaProductoAndDetalleProducto(fechaInicio, fechaFin, idDetalleProducto);
+    }
+
+    @Override
     @Transactional
     public void darBajaVentaProducto(VentaProducto ventaProducto) {
         VentaProducto ventaProductoExistente = ventaProductoDao.findById(ventaProducto.getIdVentaProducto()).orElse(null);

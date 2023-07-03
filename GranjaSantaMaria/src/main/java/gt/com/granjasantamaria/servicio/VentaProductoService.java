@@ -26,6 +26,8 @@ public interface VentaProductoService {
 
     List<VentaProducto> encontrarTotalVentaProducto(LocalDate fechaInicio, LocalDate fechaFin);
 
+    List<VentaProducto> encontrarTotalVentaProductoAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto);
+
     void darBajaVentaProducto(VentaProducto ventaProducto);
 
 }

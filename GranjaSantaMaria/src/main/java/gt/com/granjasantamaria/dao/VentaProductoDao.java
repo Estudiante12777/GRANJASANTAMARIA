@@ -28,4 +28,11 @@ public interface VentaProductoDao extends JpaRepository<VentaProducto, Long> {
                                                                    @Param("idDetalleProducto") Long idDetalleProducto,
                                                                    Pageable pageable);
 
+    @Query("SELECT v FROM VentaProducto v JOIN v.inventarioProducto i JOIN i.detalleProducto d " +
+            "WHERE v.fechaVentaProducto BETWEEN :fechaInicio AND :fechaFin " +
+            "AND (d.idDetalleProducto = :idDetalleProducto OR :idDetalleProducto IS NULL)")
+    List<VentaProducto> findByFechaVentaProductoAndDetalleProducto(@Param("fechaInicio") LocalDate fechaInicio,
+                                                                   @Param("fechaFin") LocalDate fechaFin,
+                                                                   @Param("idDetalleProducto") Long idDetalleProducto);
+
 }
