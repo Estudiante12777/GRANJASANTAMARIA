@@ -31,7 +31,7 @@
         <div style="text-align: right">
             <a th:href="@{/modulo-venta/venta-producto/total-venta-producto-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, detalleProducto=${#request.getParameter('detalleProducto')})}"
                target="_blank" class="btn btn-outline-info">Generar PDF</a>
-            <a th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/excel(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, detalleProducto=${#request.getParameter('detalleProducto')})}"
+            <a th:href="@{/modulo-venta/venta-producto/total-venta-producto-fecha/excel(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, detalleProducto=${#request.getParameter('detalleProducto')})}"
                class="btn btn-outline-success">Generar Excel</a>
         </div>
         <div class="py-2"></div>

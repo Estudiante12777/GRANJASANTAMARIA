@@ -17,7 +17,7 @@ public class ReporteProduccionLecheFechaExcel extends AbstractXlsxView {
     protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<ProduccionDiariaLeche> listaProduccionDiariaLeche = (List<ProduccionDiariaLeche>) model.get("totalProduccionesFecha");
 
-        response.setHeader("Content-Disposition", "attachment; filename=\"totalProduccionesFecha.xlsx\"");
+        response.setHeader("Content-Disposition", "attachment; filename=\"reporte-produccion-de-leche.xlsx\"");
 
         Sheet reporteProduccionLeche = workbook.createSheet("Produccion-Leche");
 
