@@ -80,10 +80,10 @@ public class ReporteInventarioProductoFecha extends AbstractPdfView {
         tablaInventarioProducto.addCell(cellHeaderCantidadVendida);
 
         // Calcular la suma de productos ingresados
-        double sumaProductosIngresados = listaInventarioProducto.stream().mapToDouble(InventarioProducto::getCantidadIngresadaProducto).sum();
+        long sumaProductosIngresados = listaInventarioProducto.stream().mapToLong(InventarioProducto::getCantidadIngresadaProducto).sum();
 
         // Calcular la suma de productos vendidos
-        double sumaProductosVendidos = listaInventarioProducto.stream().mapToDouble(InventarioProducto::getCantidadVendidaHastaHoy).sum();
+        long sumaProductosVendidos = listaInventarioProducto.stream().mapToLong(InventarioProducto::getCantidadVendidaHastaHoy).sum();
 
         listaInventarioProducto.forEach(inventarioProducto -> {
             tablaInventarioProducto.addCell(inventarioProducto.getIdInventarioProducto().toString());
