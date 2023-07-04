@@ -55,7 +55,7 @@ public class ReporteInventarioProductoFechaExcel extends AbstractXlsxView {
         for (InventarioProducto inventarioProducto : listaInventarioProducto) {
             Row row = reporteInventarioProducto.createRow(rowNum++);
             row.createCell(0).setCellValue(inventarioProducto.getIdInventarioProducto());
-            row.createCell(1).setCellValue(inventarioProducto.getFechaInventarioProducto());
+            row.createCell(1).setCellValue(inventarioProducto.getFechaInventarioProducto().toString());
             row.createCell(2).setCellValue(inventarioProducto.getDetalleProducto().toString());
             row.createCell(3).setCellValue(inventarioProducto.getCantidadIngresadaProducto());
             row.createCell(4).setCellValue(inventarioProducto.getCantidadSalidaProducto());
@@ -91,8 +91,8 @@ public class ReporteInventarioProductoFechaExcel extends AbstractXlsxView {
         totalRow1.getCell(0).setCellStyle(totalLabelStyle1);
         CellStyle totalValueStyle1 = workbook.createCellStyle();
         totalValueStyle1.setAlignment(HorizontalAlignment.CENTER);
-        totalRow1.createCell(3).setCellValue(sumaTotalCantidadIngresada);
-        totalRow1.getCell(3).setCellStyle(totalValueStyle1);
+        totalRow1.createCell(6).setCellValue(sumaTotalCantidadIngresada);
+        totalRow1.getCell(6).setCellStyle(totalValueStyle1);
 
         // Crear la fila para el total de productos vendidos
         Row totalRow2 = reporteInventarioProducto.createRow(rowNum + 1);
@@ -104,8 +104,8 @@ public class ReporteInventarioProductoFechaExcel extends AbstractXlsxView {
         totalRow2.getCell(0).setCellStyle(totalLabelStyle2);
         CellStyle totalValueStyle2 = workbook.createCellStyle();
         totalValueStyle2.setAlignment(HorizontalAlignment.CENTER);
-        totalRow2.createCell(3).setCellValue(sumaTotalCantidadVendida);
-        totalRow2.getCell(3).setCellStyle(totalValueStyle2);
+        totalRow2.createCell(6).setCellValue(sumaTotalCantidadVendida);
+        totalRow2.getCell(6).setCellStyle(totalValueStyle2);
 
     }
 

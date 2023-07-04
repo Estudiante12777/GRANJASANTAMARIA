@@ -55,7 +55,7 @@ public class ReporteVentaProductoFechaExcel extends AbstractXlsxView {
         for (VentaProducto ventaProducto : listaVentaProducto) {
             Row row = reporteVentaProducto.createRow(rowNum++);
             row.createCell(0).setCellValue(ventaProducto.getIdVentaProducto());
-            row.createCell(1).setCellValue(ventaProducto.getFechaVentaProducto());
+            row.createCell(1).setCellValue(ventaProducto.getFechaVentaProducto().toString());
             row.createCell(2).setCellValue(ventaProducto.getCliente().getNombreCliente() + " " + ventaProducto.getCliente().getApellidoCliente());
             row.createCell(3).setCellValue(ventaProducto.getInventarioProducto().getDetalleProducto().toString());
             row.createCell(4).setCellValue(ventaProducto.getCantidadProducto());
