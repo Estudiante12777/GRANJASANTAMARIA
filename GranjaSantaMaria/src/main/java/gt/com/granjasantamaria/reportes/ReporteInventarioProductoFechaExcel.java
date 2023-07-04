@@ -91,7 +91,7 @@ public class ReporteInventarioProductoFechaExcel extends AbstractXlsxView {
         totalRow1.getCell(0).setCellStyle(totalLabelStyle1);
         CellStyle totalValueStyle1 = workbook.createCellStyle();
         totalValueStyle1.setAlignment(HorizontalAlignment.CENTER);
-        totalRow1.createCell(6).setCellValue(sumaTotalCantidadIngresada);
+        totalRow1.createCell(6).setCellValue(sumaTotalCantidadIngresada + " Productos.");
         totalRow1.getCell(6).setCellStyle(totalValueStyle1);
 
         // Crear la fila para el total de productos vendidos
@@ -104,7 +104,7 @@ public class ReporteInventarioProductoFechaExcel extends AbstractXlsxView {
         totalRow2.getCell(0).setCellStyle(totalLabelStyle2);
         CellStyle totalValueStyle2 = workbook.createCellStyle();
         totalValueStyle2.setAlignment(HorizontalAlignment.CENTER);
-        totalRow2.createCell(6).setCellValue(sumaTotalCantidadVendida);
+        totalRow2.createCell(6).setCellValue(sumaTotalCantidadVendida + " Productos.");
         totalRow2.getCell(6).setCellStyle(totalValueStyle2);
 
     }

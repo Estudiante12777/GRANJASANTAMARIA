@@ -83,7 +83,7 @@ public class ReporteProduccionLecheFechaExcel extends AbstractXlsxView {
         totalRow.getCell(0).setCellStyle(totalLabelStyle);
         CellStyle totalValueStyle = workbook.createCellStyle();
         totalValueStyle.setAlignment(HorizontalAlignment.CENTER);
-        totalRow.createCell(5).setCellValue(sumaTotalProduccion);
+        totalRow.createCell(5).setCellValue(sumaTotalProduccion + " Litros.");
         totalRow.getCell(5).setCellStyle(totalValueStyle);
     }
 

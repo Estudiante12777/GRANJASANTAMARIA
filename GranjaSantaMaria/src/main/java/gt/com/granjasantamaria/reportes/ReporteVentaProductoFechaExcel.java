@@ -87,7 +87,7 @@ public class ReporteVentaProductoFechaExcel extends AbstractXlsxView {
         totalRow.getCell(0).setCellStyle(totalLabelStyle);
         CellStyle totalValueStyle = workbook.createCellStyle();
         totalValueStyle.setAlignment(HorizontalAlignment.CENTER);
-        totalRow.createCell(7).setCellValue(sumaTotalVentaProducto);
+        totalRow.createCell(7).setCellValue("Q. " + sumaTotalVentaProducto);
         totalRow.getCell(7).setCellStyle(totalValueStyle);
     }
 
