@@ -19,6 +19,7 @@ import java.util.Map;
 
 @Component("/pages/modulo-venta/venta-producto/total-venta-producto-fecha")
 public class ReporteVentaProductoFecha extends AbstractPdfView {
+
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<VentaProducto> listaVentaProducto = (List<VentaProducto>) model.get("totalVentaProductoFecha");

@@ -1,8 +1,6 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.InventarioProductoDao;
-import gt.com.granjasantamaria.modelo.DetalleProducto;
-import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import gt.com.granjasantamaria.modelo.InventarioProducto;
 
 import java.time.LocalDate;
@@ -39,6 +37,12 @@ public class InventarioProductoServiceImpl implements InventarioProductoService 
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Page<InventarioProducto> obtenerListaTotalInventarioProductoPaginadoPorFechaAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto, Pageable pageable) {
+        return inventarioProductoDao.findByFechaInventarioProductoBetweenAndDetalleProducto_IdDetalleProducto(fechaInicio, fechaFin, idDetalleProducto, pageable);
+    }
+
+    @Override
     @Transactional
     public void guardarInventarioProducto(InventarioProducto inventarioProducto) {
         inventarioProducto.setEstadoInventarioProducto(true);
@@ -58,8 +62,15 @@ public class InventarioProductoServiceImpl implements InventarioProductoService 
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<InventarioProducto> encontrarTotalInventarioProducto(LocalDate fechaInicio, LocalDate fechaFin) {
         return inventarioProductoDao.findByFechaInventarioProductoBetween(fechaInicio, fechaFin);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<InventarioProducto> encontrarTotalInventarioProductoAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto) {
+        return inventarioProductoDao.findByFechaInventarioProductoBetweenAndDetalleProducto_IdDetalleProducto(fechaInicio, fechaFin, idDetalleProducto);
     }
 
     @Override

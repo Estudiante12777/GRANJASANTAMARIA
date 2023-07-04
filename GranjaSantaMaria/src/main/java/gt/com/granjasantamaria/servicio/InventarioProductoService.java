@@ -1,7 +1,5 @@
 package gt.com.granjasantamaria.servicio;
 
-import gt.com.granjasantamaria.modelo.DetalleProducto;
-import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import gt.com.granjasantamaria.modelo.InventarioProducto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,20 +9,24 @@ import java.util.List;
 
 public interface InventarioProductoService {
 
-    public List<InventarioProducto> obtenerListadoInventarioProductos();
+    List<InventarioProducto> obtenerListadoInventarioProductos();
 
-    public Page<InventarioProducto> obtenerListadoInventarioProductoPaginado(Pageable pageable);
+    Page<InventarioProducto> obtenerListadoInventarioProductoPaginado(Pageable pageable);
 
     Page<InventarioProducto> obtenerListaTotalInventarioProductoPaginadoPorFecha(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
 
-    public void guardarInventarioProducto(InventarioProducto inventarioProducto);
+    Page<InventarioProducto> obtenerListaTotalInventarioProductoPaginadoPorFechaAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto, Pageable pageable);
 
-    public void eliminarInventarioProducto(InventarioProducto inventarioProducto);
+    void guardarInventarioProducto(InventarioProducto inventarioProducto);
 
-    public InventarioProducto encontrarInventarioProducto(InventarioProducto inventarioProducto);
+    void eliminarInventarioProducto(InventarioProducto inventarioProducto);
+
+    InventarioProducto encontrarInventarioProducto(InventarioProducto inventarioProducto);
 
     List<InventarioProducto> encontrarTotalInventarioProducto(LocalDate fechaInicio, LocalDate fechaFin);
 
-    public void darBajaInventarioProducto(InventarioProducto inventarioProducto);
+    List<InventarioProducto> encontrarTotalInventarioProductoAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto);
+
+    void darBajaInventarioProducto(InventarioProducto inventarioProducto);
 
 }

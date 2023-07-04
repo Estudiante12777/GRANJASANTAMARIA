@@ -17,6 +17,10 @@ public interface InventarioProductoDao extends JpaRepository<InventarioProducto,
 
     List<InventarioProducto> findByFechaInventarioProductoBetween(LocalDate fechaInicio, LocalDate fechaFin);
 
+    List<InventarioProducto> findByFechaInventarioProductoBetweenAndDetalleProducto_IdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto);
+
     Page<InventarioProducto> findByFechaInventarioProductoBetween(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
+
+    Page<InventarioProducto> findByFechaInventarioProductoBetweenAndDetalleProducto_IdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto, Pageable pageable);
 
 }
