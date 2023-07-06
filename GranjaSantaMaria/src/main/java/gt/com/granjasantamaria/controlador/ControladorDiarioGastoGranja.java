@@ -1,6 +1,8 @@
 package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
+import gt.com.granjasantamaria.reportes.ReporteGastoGranjaFecha;
+import gt.com.granjasantamaria.reportes.ReporteGastoGranjaFechaExcel;
 import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.servicio.DiarioGastoGranjaService;
 
@@ -42,7 +44,9 @@ public class ControladorDiarioGastoGranja {
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/encontrar-total-gasto-diario-fecha")
-    public String encontrarTotalDiarioGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String encontrarTotalDiarioGastoGranja(@RequestParam("fechaInicio") String fechaInicio,
+                                                  @RequestParam("fechaFin") String fechaFin,
+                                                  @RequestParam(defaultValue = "0") int pagina, Model model) {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
@@ -56,7 +60,8 @@ public class ControladorDiarioGastoGranja {
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf")
-    public ModelAndView generarPDFTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
+    public ModelAndView generarPDFTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio,
+                                                        @RequestParam("fechaFin") String fechaFin) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
@@ -69,7 +74,25 @@ public class ControladorDiarioGastoGranja {
         model.put("totalRegistros", totalRegistros);
         model.put("totalDiarioGastoFecha", totalDiarioGastoFecha);
         // Devolver la vista PDF y el modelo
-        return new ModelAndView(new ReporteProduccionLecheFecha(), model);
+        return new ModelAndView(new ReporteGastoGranjaFecha(), model);
+    }
+
+    @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/excel")
+    public ModelAndView generarExcelTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio,
+                                                        @RequestParam("fechaFin") String fechaFin) {
+        // Convertir las fechas de String a LocalDate
+        LocalDate inicio = LocalDate.parse(fechaInicio);
+        LocalDate fin = LocalDate.parse(fechaFin);
+        // Obtener todos los registros de producción de leche para el rango de fechas dado
+        List<DiarioGastoGranja> totalDiarioGastoFecha = diarioGastoGranjaService.encontrarTotalDiarioGastoGranja(inicio, fin);
+        // Obtener el número total de registros
+        long totalRegistros = totalDiarioGastoFecha.size();
+        // Crear el modelo para el PDF
+        Map<String, Object> model = new HashMap<>();
+        model.put("totalRegistros", totalRegistros);
+        model.put("totalDiarioGastoFecha", totalDiarioGastoFecha);
+        // Devolver la vista PDF y el modelo
+        return new ModelAndView(new ReporteGastoGranjaFechaExcel(), model);
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/agregar")

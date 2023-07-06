@@ -22,6 +22,12 @@
     </div>
 
     <div th:if="${totalDiarioGastoFecha != null and !totalDiarioGastoFecha.empty}" class="py-2">
+        <div style="text-align: right">
+            <a th:href="@{/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
+               target="_blank" class="btn btn-outline-info">Generar PDF</a>
+            <a th:href="@{/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/excel(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
+               class="btn btn-outline-success">Generar Excel</a>
+        </div>
         <div class="py-2"></div>
         <table class="table">
             <thead class="table-dark">
