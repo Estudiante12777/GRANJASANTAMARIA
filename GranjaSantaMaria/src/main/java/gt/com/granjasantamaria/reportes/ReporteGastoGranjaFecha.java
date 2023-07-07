@@ -91,18 +91,13 @@ public class ReporteGastoGranjaFecha extends AbstractPdfView {
         PdfPTable tablaFooter = new PdfPTable(1);
         tablaFooter.setWidthPercentage(100);
 
-        PdfPCell celdaFooterTotal = new PdfPCell(new Phrase("Valor total"));
-        celdaFooterTotal.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celdaFooterTotal.setBorder(0);
-        celdaFooterTotal.setPadding(10);
-
-        PdfPCell celdaTotalGasto = new PdfPCell(new Phrase("Gasto total: " + String.valueOf(sumaGastoGranja)));
+        PdfPCell celdaTotalGasto = new PdfPCell(new Phrase("Gasto total: " + String.valueOf(sumaGastoGranja) + " Quetzales"));
+        celdaTotalGasto.setPaddingTop(15);
         celdaTotalGasto.setHorizontalAlignment(Element.ALIGN_CENTER);
         celdaTotalGasto.setVerticalAlignment(Element.ALIGN_CENTER);
         celdaTotalGasto.setBorder(0);
 
         tablaFooter.setSpacingAfter(20);
-        tablaFooter.addCell(celdaFooterTotal);
         tablaFooter.addCell(celdaTotalGasto);
 
         document.add(tablaFooter);

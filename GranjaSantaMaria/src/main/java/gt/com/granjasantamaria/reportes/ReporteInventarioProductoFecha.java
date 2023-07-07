@@ -101,23 +101,19 @@ public class ReporteInventarioProductoFecha extends AbstractPdfView {
         PdfPTable tablaFooter = new PdfPTable(1);
         tablaFooter.setWidthPercentage(100);
 
-        PdfPCell celdaFooterTotal = new PdfPCell(new Phrase("Total Productos"));
-        celdaFooterTotal.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celdaFooterTotal.setBorder(0);
-        celdaFooterTotal.setPadding(10);
-
         PdfPCell celdaFooterTotalIngreso = new PdfPCell(new Phrase("Productos Ingresados: " + String.valueOf(sumaProductosIngresados)));
+        celdaFooterTotalIngreso.setPaddingTop(15);
         celdaFooterTotalIngreso.setHorizontalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalIngreso.setVerticalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalIngreso.setBorder(0);
 
         PdfPCell celdaFooterTotalVendido = new PdfPCell(new Phrase("Productos Vendidos: " + String.valueOf(sumaProductosVendidos)));
+        celdaFooterTotalVendido.setPaddingTop(5);
         celdaFooterTotalVendido.setHorizontalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalVendido.setVerticalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalVendido.setBorder(0);
 
         tablaFooter.setSpacingAfter(20);
-        tablaFooter.addCell(celdaFooterTotal);
         tablaFooter.addCell(celdaFooterTotalIngreso);
         tablaFooter.addCell(celdaFooterTotalVendido);
 

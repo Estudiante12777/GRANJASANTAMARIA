@@ -15,7 +15,6 @@
     <form th:action="@{/modulo-venta/venta-producto/guardar}" method="post" th:object="${ventaProducto}"
           id="formularioVenta">
         <input type="hidden" name="idVentaProducto" th:field="*{idVentaProducto}"/>
-        <!-- Campos del formulario para la venta de productos -->
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -45,7 +44,8 @@
                 <div class="form-group">
                     <label for="producto">Producto:</label>
                     <select id="producto" name="inventarioProducto.idInventarioProducto" class="form-control"
-                            th:field="*{inventarioProducto.idInventarioProducto}" required>
+                            th:field="*{inventarioProducto.idInventarioProducto}" required
+                            onchange="mostrarExistencia(this.value)">
                         <!-- Opciones para seleccionar un producto -->
                         <option value="">Seleccione un producto</option>
                         <!-- Iterar sobre la lista de inventario productos para generar las opciones -->
@@ -55,6 +55,7 @@
                         </option>
                     </select>
                 </div>
+                <div id="existencia"></div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">

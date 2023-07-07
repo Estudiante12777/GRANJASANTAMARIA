@@ -103,18 +103,13 @@ public class ReporteVentaProductoFecha extends AbstractPdfView {
         PdfPTable tablaFooter = new PdfPTable(1);
         tablaFooter.setWidthPercentage(100);
 
-        PdfPCell celdaFooterTotal = new PdfPCell(new Phrase("Total Venta"));
-        celdaFooterTotal.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celdaFooterTotal.setBorder(0);
-        celdaFooterTotal.setPaddingTop(10);
-
-        PdfPCell celdaFooterTotalVenta = new PdfPCell(new Phrase(String.valueOf(sumaTotalVentaProducto) + " Quetzales"));
+        PdfPCell celdaFooterTotalVenta = new PdfPCell(new Phrase("Total venta: " +String.valueOf(sumaTotalVentaProducto) + " Quetzales"));
+        celdaFooterTotalVenta.setPaddingTop(15);
         celdaFooterTotalVenta.setHorizontalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalVenta.setVerticalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalVenta.setBorder(0);
 
         tablaFooter.setSpacingAfter(20);
-        tablaFooter.addCell(celdaFooterTotal);
         tablaFooter.addCell(celdaFooterTotalVenta);
 
         document.add(tablaFooter);

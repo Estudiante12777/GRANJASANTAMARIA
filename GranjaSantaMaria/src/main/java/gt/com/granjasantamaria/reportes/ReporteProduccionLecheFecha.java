@@ -93,18 +93,13 @@ public class ReporteProduccionLecheFecha extends AbstractPdfView {
         PdfPTable tablaFooter = new PdfPTable(1);
         tablaFooter.setWidthPercentage(100);
 
-        PdfPCell celdaFooterTotal = new PdfPCell(new Phrase("Total"));
-        celdaFooterTotal.setHorizontalAlignment(Element.ALIGN_CENTER);
-        celdaFooterTotal.setBorder(0);
-        celdaFooterTotal.setPaddingTop(10);
-
-        PdfPCell celdaFooterTotalProduccion = new PdfPCell(new Phrase(String.valueOf(sumaTotalProduccion) + " litros"));
+        PdfPCell celdaFooterTotalProduccion = new PdfPCell(new Phrase("Total produccion: " + String.valueOf(sumaTotalProduccion) + " litros"));
+        celdaFooterTotalProduccion.setPaddingTop(15);
         celdaFooterTotalProduccion.setHorizontalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalProduccion.setVerticalAlignment(Element.ALIGN_CENTER);
         celdaFooterTotalProduccion.setBorder(0);
 
         tablaFooter.setSpacingAfter(20);
-        tablaFooter.addCell(celdaFooterTotal);
         tablaFooter.addCell(celdaFooterTotalProduccion);
 
         document.add(tablaFooter);

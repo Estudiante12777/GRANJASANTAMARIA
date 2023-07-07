@@ -63,6 +63,17 @@ public class InventarioProductoServiceImpl implements InventarioProductoService 
 
     @Override
     @Transactional(readOnly = true)
+    public int obtenerExistenciaProducto(Long idInventarioProducto) {
+        InventarioProducto inventario = inventarioProductoDao.findById(idInventarioProducto).orElse(null);
+        if (inventario != null) {
+            return inventario.getCantidadIngresadaProducto() - inventario.getCantidadVendidaHastaHoy();
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<InventarioProducto> encontrarTotalInventarioProducto(LocalDate fechaInicio, LocalDate fechaFin) {
         return inventarioProductoDao.findByFechaInventarioProductoBetween(fechaInicio, fechaFin);
     }

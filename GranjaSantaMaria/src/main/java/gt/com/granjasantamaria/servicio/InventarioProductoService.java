@@ -23,6 +23,8 @@ public interface InventarioProductoService {
 
     InventarioProducto encontrarInventarioProducto(InventarioProducto inventarioProducto);
 
+    int obtenerExistenciaProducto(Long idInventarioProducto);
+
     List<InventarioProducto> encontrarTotalInventarioProducto(LocalDate fechaInicio, LocalDate fechaFin);
 
     List<InventarioProducto> encontrarTotalInventarioProductoAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto);

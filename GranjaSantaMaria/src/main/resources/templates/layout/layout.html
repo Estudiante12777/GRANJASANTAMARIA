@@ -195,6 +195,19 @@
                 }
             });
         }
+
+        function mostrarExistencia(idInventarioProducto) {
+            $.ajax({
+                url: "/modulo-venta/venta-producto/existencia/" + idInventarioProducto,
+                type: "GET",
+                success: function (data) {
+                    $("#existencia").html("<div class='alert alert-primary' role='alert'>Hay " + data + " unidades disponibles</div>");
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
     </script>
 </th:block>
 </body>

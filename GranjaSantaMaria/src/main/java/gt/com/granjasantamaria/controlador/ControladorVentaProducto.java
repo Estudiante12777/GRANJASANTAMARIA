@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -120,6 +121,12 @@ public class ControladorVentaProducto {
         return new ModelAndView(new ReporteVentaProductoFechaExcel(), model);
     }
 
+    @GetMapping("/modulo-venta/venta-producto/existencia/{idInventarioProducto}")
+    public ResponseEntity<Integer> obtenerExistenciaProducto(@PathVariable("idInventarioProducto") Long idInventarioProducto) {
+        int existencia = inventarioProductoService.obtenerExistenciaProducto(idInventarioProducto);
+        return ResponseEntity.ok(existencia);
+    }
+
     @GetMapping("/modulo-venta/venta-producto/agregar")
     public String agregarVentaProducto(VentaProducto ventaProducto, Model model) {
         List<Cliente> listadoClientes = clienteService.listadoClientes();
@@ -136,7 +143,8 @@ public class ControladorVentaProducto {
     }
 
     @PostMapping("/modulo-venta/venta-producto/guardar")
-    public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto,
+                                       BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
