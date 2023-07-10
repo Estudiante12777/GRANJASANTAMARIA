@@ -6,9 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "diario_gasto_granja")
 public class DiarioGastoGranja implements Serializable {

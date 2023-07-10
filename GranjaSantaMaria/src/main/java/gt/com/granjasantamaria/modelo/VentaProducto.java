@@ -6,10 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.JoinFormula;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "venta_producto")
 public class VentaProducto implements Serializable {

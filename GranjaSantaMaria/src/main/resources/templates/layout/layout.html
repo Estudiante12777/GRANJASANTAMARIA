@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head th:fragment="head">
     <meta charset="utf-8">
@@ -71,6 +71,10 @@
             <form method="get" th:action="@{/modulo-inventario}">
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
                    onclick="this.parentNode.submit();">Inventario productos</a>
+            </form>
+            <form method="get" th:action="@{/modulo-balance}">
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
+                   onclick="this.parentNode.submit();">Balance</a>
             </form>
             <form method="get" th:action="@{/modulo-persona}">
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
