@@ -25,4 +25,6 @@ public interface DiarioGastoGranjaService {
 
     public void darBajaDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja);
 
+    Double obtenerTotalGasto();
+
 }

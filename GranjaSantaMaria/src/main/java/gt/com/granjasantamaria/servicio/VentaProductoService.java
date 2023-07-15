@@ -1,6 +1,5 @@
 package gt.com.granjasantamaria.servicio;
 
-import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import gt.com.granjasantamaria.modelo.VentaProducto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +9,7 @@ import java.util.List;
 
 public interface VentaProductoService {
 
+    //
     public List<VentaProducto> obtenerListadoVentaProducto();
 
     List<VentaProducto> obtenerListaTotalVentaProducto();
@@ -29,5 +29,7 @@ public interface VentaProductoService {
     List<VentaProducto> encontrarTotalVentaProductoAndIdDetalleProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto);
 
     void darBajaVentaProducto(VentaProducto ventaProducto);
+
+    Double obtenerTotalVentas();
 
 }

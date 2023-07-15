@@ -118,7 +118,17 @@
                     </div>
                 </td>
             </tr>
-            <tfoot></tfoot>
+            <tfoot>
+            <tr>
+                <td>Total:</td>
+                <td></td>
+                <td></td>
+                <td
+                        th:text="${#aggregates.sum(listaDiarioGastosGranja.![valorTotal]) + ' Quetzales'}">
+                </td>
+                <td></td>
+            </tr>
+            </tfoot>
         </table>
     </div>
     <div class="py-3">

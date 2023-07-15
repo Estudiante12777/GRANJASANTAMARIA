@@ -7,8 +7,42 @@
 </head>
 
 <body>
-<div class="container-fluid py-5 row" layout:fragment="page-content">
-    <h1>Hola</h1>
+<div class="container-fluid py-5 row" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+    <div class="col-md-4">
+        <div class="card bg-success text-white"
+             th:classappend="${totalVentas == 0} ? 'bg-warning' : (${totalVentas > 0} ? 'bg-success' : 'bg-danger')">
+            <div class="card-body">
+                <h3 class="card-title">Total Ventas</h3>
+                <!-- FORMATO PARA MONEDA -->
+                <p class="card-text">
+                    <span th:text="${#numbers.formatDecimal(totalVentas, 0, 'COMMA', 2, 'POINT' )}"> Q</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white"
+             th:classappend="${totalGastos == 0} ? 'bg-warning' : (${totalGastos > 0} ? 'bg-success' : 'bg-danger')">
+            <div class="card-body">
+                <h3 class="card-title">Total Gastos</h3>
+                <p class="card-text">
+                    <span th:text="${#numbers.formatDecimal(totalGastos, 0, 'COMMA', 2, 'POINT')}"> Q</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white"
+             th:classappend="${balanceVentasGastos == 0} ? 'bg-warning' : (${balanceVentasGastos > 0} ? 'bg-success' : 'bg-danger')">
+            <div class="card-body">
+                <h3 class="card-title">Balance</h3>
+                <p class="card-text">
+                    <span th:text="${#numbers.formatDecimal(balanceVentasGastos, 0, 'COMMA', 2, 'POINT')}"> Q</span>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 

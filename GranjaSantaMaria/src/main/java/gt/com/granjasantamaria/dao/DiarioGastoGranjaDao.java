@@ -9,6 +9,7 @@ import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface DiarioGastoGranjaDao extends JpaRepository<DiarioGastoGranja, Long> {
 
@@ -17,5 +18,8 @@ public interface DiarioGastoGranjaDao extends JpaRepository<DiarioGastoGranja, L
     List<DiarioGastoGranja> findByFechaGastoBetween(LocalDate fechaInicio, LocalDate fechaFin);
 
     Page<DiarioGastoGranja> findByFechaGastoBetween(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
+
+    @Query("SELECT SUM(d.valorTotal) FROM DiarioGastoGranja d WHERE d.fechaGasto = CURRENT_DATE")
+    Double obtenerTotalVentas();
 
 }

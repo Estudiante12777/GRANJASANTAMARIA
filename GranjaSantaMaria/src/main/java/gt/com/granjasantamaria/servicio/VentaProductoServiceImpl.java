@@ -26,6 +26,7 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     @Autowired
     private InventarioProductoDao inventarioProductoDao;
 
+    //
     @Override
     @Transactional(readOnly = true)
     public List<VentaProducto> obtenerListadoVentaProducto() {
@@ -102,6 +103,12 @@ public class VentaProductoServiceImpl implements VentaProductoService {
             ventaProductoExistente.setEstadoVentaProducto(false);
             ventaProductoDao.save(ventaProductoExistente);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Double obtenerTotalVentas() {
+        return ventaProductoDao.obtenerTotalVentas();
     }
 
 }

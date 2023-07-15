@@ -73,4 +73,9 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
         }
     }
 
+    @Override
+    public Double obtenerTotalGasto() {
+        return diarioGastoGranjaDao.obtenerTotalVentas();
+    }
+
 }

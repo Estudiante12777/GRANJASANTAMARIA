@@ -1,6 +1,5 @@
 package gt.com.granjasantamaria.dao;
 
-import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import gt.com.granjasantamaria.modelo.VentaProducto;
 
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface VentaProductoDao extends JpaRepository<VentaProducto, Long> {
 
-    List<VentaProducto> findByFechaVentaProductoAndEstadoVentaProductoIsTrue(LocalDate fechaProduccionLeche);
+    List<VentaProducto> findByFechaVentaProductoAndEstadoVentaProductoIsTrue(LocalDate fechaActual);
 
     List<VentaProducto> findByFechaVentaProductoBetween(LocalDate fechaInicio, LocalDate fechaFin);
 
@@ -34,5 +33,8 @@ public interface VentaProductoDao extends JpaRepository<VentaProducto, Long> {
     List<VentaProducto> findByFechaVentaProductoAndDetalleProducto(@Param("fechaInicio") LocalDate fechaInicio,
                                                                    @Param("fechaFin") LocalDate fechaFin,
                                                                    @Param("idDetalleProducto") Long idDetalleProducto);
+
+    @Query("SELECT SUM(v.totalPrecioProducto) FROM VentaProducto v WHERE v.fechaVentaProducto = CURRENT_DATE ")
+    Double obtenerTotalVentas();
 
 }
