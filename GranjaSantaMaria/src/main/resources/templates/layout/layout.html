@@ -180,26 +180,6 @@
             });
         }
 
-        function obtenerGandoHembra(idGanadoHembra) {
-            $.ajax({
-                url: '/verificar-prenes/' + idGanadoHembra,
-                type: 'GET',
-                success: function (response) {
-                    var prenado = response;
-                    if (prenado == 189) {
-                        $('#estado-preniez').html('<div class="alert alert-warning" role="alert">Hoy es el último día que se puede ordeñar al ganado en la tarde!.</div>');
-                    } else if (prenado == 210) {
-                        $('#estado-preniez').html('<div class="alert alert-danger" role="alert">Hoy es el último día que se puede ordeñar al ganado en la mañana!.</div>');
-                    } else {
-                        $('#estado-preniez').html('<div class="alert alert-success" role="alert">No hay ningún aviso de ordeño.</div>');
-                    }
-                },
-                error: function () {
-                    console.log('Error al realizar la petición AJAX');
-                }
-            });
-        }
-
         function mostrarExistencia(idInventarioProducto) {
             $.ajax({
                 url: "/modulo-venta/venta-producto/existencia/" + idInventarioProducto,

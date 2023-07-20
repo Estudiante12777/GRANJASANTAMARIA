@@ -23,7 +23,8 @@
                             <div class="col-sm-8">
                                 <select th:field="*{ganadoHembra.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
-                                        class="form-select form-select-lg" onchange="obtenerGandoHembra(this.value)">
+                                        class="form-select form-select-lg" onchange="obtenerGandoHembra(this.value)"
+                                        id="ganadoSelect">
                                     <option th:each="ganadoHembra : ${listaGanados}"
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"
@@ -136,6 +137,49 @@
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
     var modalGuardar = document.querySelector(targetGuardarModalId);
 </script>
+<th:block layout:fragment="page-scripts">
+    <script>
+        // Función para inicializar el formulario
+        function inicializarFormulario() {
+            // Obtén el ID del ganado seleccionado inicialmente
+            var initialGanadoId = document.getElementById("ganadoSelect").value;
+            // Llama a la función para obtener el estado de preñez del ganado seleccionado inicialmente
+            obtenerGandoHembra(initialGanadoId);
+        }
+
+        // Función para obtener el estado de preñez del ganado seleccionado
+        function obtenerGandoHembra(idGanadoHembra) {
+            $('#estado-preniez').empty(); // Vaciar el contenido antes de actualizarlo
+
+            if (idGanadoHembra !== null) {
+                // Realizar una llamada AJAX para obtener el estado de preñez del ganado
+                $.ajax({
+                    url: '/verificar-prenes/' + idGanadoHembra,
+                    type: 'GET',
+                    success: function (response) {
+                        var prenado = response;
+                        // Actualizar el contenido del elemento 'estado-preniez' con la alerta correspondiente
+                        if (prenado == 189) {
+                            $('#estado-preniez').html('<div class="alert alert-warning" role="alert">Hoy es el último día que se puede ordeñar al ganado en la tarde!.</div>');
+                        } else if (prenado == 210) {
+                            $('#estado-preniez').html('<div class="alert alert-danger" role="alert">Hoy es el último día que se puede ordeñar al ganado en la mañana!.</div>');
+                        } else {
+                            $('#estado-preniez').html('<div class="alert alert-success" role="alert">No hay ningún aviso de ordeño.</div>');
+                        }
+                    },
+                    error: function () {
+                        console.log('Error al realizar la petición AJAX');
+                    }
+                });
+            }
+        }
+
+        // Cuando se carga el formulario, inicializar y obtener el estado del ganado seleccionado
+        $(document).ready(function () {
+            inicializarFormulario();
+        });
+    </script>
+</th:block>
 </body>
 
 </html>
