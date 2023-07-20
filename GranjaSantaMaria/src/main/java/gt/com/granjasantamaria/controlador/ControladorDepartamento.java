@@ -55,7 +55,6 @@ public class ControladorDepartamento {
     public String editarDepartamento(Departamento departamento, Model model) {
         List<Pais> listadoPaises = paisService.listadoPais();
         model.addAttribute("listadoPaises", listadoPaises);
-
         departamento = departamentoService.encontrarDepartamento(departamento);
         model.addAttribute("departamento", departamento);
         return "/pages/modulo-ubicacion/departamento/modificar-departamento";
