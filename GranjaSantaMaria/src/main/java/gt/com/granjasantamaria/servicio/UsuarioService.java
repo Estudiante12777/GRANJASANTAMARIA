@@ -15,8 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UsuarioService implements UserDetailsService {
 
+    private final UsuarioDao usuarioDao;
+
     @Autowired
-    private UsuarioDao usuarioDao;
+    public UsuarioService(UsuarioDao usuarioDao) {
+        this.usuarioDao = usuarioDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

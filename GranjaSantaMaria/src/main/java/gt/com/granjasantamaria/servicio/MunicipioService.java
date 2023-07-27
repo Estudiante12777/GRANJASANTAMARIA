@@ -8,18 +8,18 @@ import java.util.List;
 
 public interface MunicipioService {
 
-    public List<Municipio> listadoMunicipios();
+    List<Municipio> listadoMunicipios();
 
-    public Page<Municipio> listadoMunicipioPaginado(Pageable pageable);
+    Page<Municipio> listadoMunicipioPaginado(Pageable pageable);
 
-    public void guardarMunicipio(Municipio municipio);
+    void guardarMunicipio(Municipio municipio);
 
-    public void eliminarMunicipio(Municipio municipio);
+    void eliminarMunicipio(Municipio municipio);
 
-    public Municipio encontrarMunicipio(Municipio municipio);
+    Municipio encontrarMunicipio(Municipio municipio);
 
-    public List<Municipio> obtenerMunicipiosPorDepartamento(Long idDepartamento);
+    List<Municipio> obtenerMunicipiosPorDepartamento(Long idDepartamento);
 
-    public void darBajaMunicipio(Municipio municipio);
+    void darBajaMunicipio(Municipio municipio);
 
 }

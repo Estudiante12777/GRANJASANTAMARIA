@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface TipoGanadoService {
 
-    public List<TipoGanado> listadoTiposGanado();
+    List<TipoGanado> listadoTiposGanado();
 
-    public Page<TipoGanado> obtenerListadoTipoGanadoPaginado(Pageable pageable);
+    Page<TipoGanado> obtenerListadoTipoGanadoPaginado(Pageable pageable);
 
-    public void guardarTipoGanado(TipoGanado tipoGanado);
+    void guardarTipoGanado(TipoGanado tipoGanado);
 
-    public void eliminarTipoGanado(TipoGanado tipoGanado);
+    void eliminarTipoGanado(TipoGanado tipoGanado);
 
-    public TipoGanado encontrarTipoGanado(TipoGanado tipoGanado);
+    TipoGanado encontrarTipoGanado(TipoGanado tipoGanado);
 
-    public void darBajaTipoGanado(TipoGanado tipoGanado);
+    void darBajaTipoGanado(TipoGanado tipoGanado);
 
 }

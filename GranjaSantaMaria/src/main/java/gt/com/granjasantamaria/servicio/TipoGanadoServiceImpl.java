@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TipoGanadoServiceImpl implements TipoGanadoService {
 
+    private final TipoGanadoDao tipoGanadoDao;
+
     @Autowired
-    private TipoGanadoDao tipoGanadoDao;
+    public TipoGanadoServiceImpl(TipoGanadoDao tipoGanadoDao) {
+        this.tipoGanadoDao = tipoGanadoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

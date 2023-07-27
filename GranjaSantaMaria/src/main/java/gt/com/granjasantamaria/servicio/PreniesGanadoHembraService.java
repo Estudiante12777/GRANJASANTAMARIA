@@ -9,18 +9,18 @@ import java.util.List;
 
 public interface PreniesGanadoHembraService {
 
-    public Page<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPaginado(Pageable pageable);
+    Page<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPaginado(Pageable pageable);
 
-    public List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembra();
+    List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembra();
 
-    public void guardarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
+    void guardarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
-    public void eliminarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
+    void eliminarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
-    public PreniesGanadoHembra encontrarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
+    PreniesGanadoHembra encontrarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
-    public void darBajaPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
+    void darBajaPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
-    public List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPorGanadoHembra(GanadoHembra ganadoHembra);
+    List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPorGanadoHembra(GanadoHembra ganadoHembra);
 
 }

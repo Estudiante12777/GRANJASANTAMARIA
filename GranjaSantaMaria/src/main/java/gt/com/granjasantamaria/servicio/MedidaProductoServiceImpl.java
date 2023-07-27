@@ -13,8 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MedidaProductoServiceImpl implements MedidaProductoService {
 
+    private final MedidaProductoDao medidaProductoDao;
+
     @Autowired
-    private MedidaProductoDao medidaProductoDao;
+    public MedidaProductoServiceImpl(MedidaProductoDao medidaProductoDao) {
+        this.medidaProductoDao = medidaProductoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

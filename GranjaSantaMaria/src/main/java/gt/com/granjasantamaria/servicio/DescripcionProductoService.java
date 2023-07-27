@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface DescripcionProductoService {
 
-    public List<DescripcionProducto> obtenerListadoDescripcionProductos();
+    List<DescripcionProducto> obtenerListadoDescripcionProductos();
 
-    public Page<DescripcionProducto> obtenerListadoDescripcionProductoPaginado(Pageable pageable);
+    Page<DescripcionProducto> obtenerListadoDescripcionProductoPaginado(Pageable pageable);
 
-    public void guardarDescripcionProducto(DescripcionProducto descripcionProducto);
+    void guardarDescripcionProducto(DescripcionProducto descripcionProducto);
 
-    public void eliminarDescripcionProducto(DescripcionProducto descripcionProducto);
+    void eliminarDescripcionProducto(DescripcionProducto descripcionProducto);
 
-    public DescripcionProducto encontrarDescripcionProducto(DescripcionProducto descripcionProducto);
+    DescripcionProducto encontrarDescripcionProducto(DescripcionProducto descripcionProducto);
 
-    public void darBajaDescripcionProducto(DescripcionProducto descripcionProducto);
+    void darBajaDescripcionProducto(DescripcionProducto descripcionProducto);
 
 }

@@ -12,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
+    private final ClienteDao clienteDao;
+
     @Autowired
-    private ClienteDao clienteDao;
+    public ClienteServiceImpl(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

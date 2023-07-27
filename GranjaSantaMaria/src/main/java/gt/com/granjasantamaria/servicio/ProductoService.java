@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface ProductoService {
 
-    public List<Producto> obtenerListadoProductos();
+    List<Producto> obtenerListadoProductos();
 
-    public Page<Producto> obtenerListadoProductoPaginado(Pageable pageable);
+    Page<Producto> obtenerListadoProductoPaginado(Pageable pageable);
 
-    public void guardarProducto(Producto producto);
+    void guardarProducto(Producto producto);
 
-    public void eliminarProducto(Producto producto);
+    void eliminarProducto(Producto producto);
 
-    public Producto encontranProducto(Producto producto);
+    Producto encontranProducto(Producto producto);
 
-    public void darBajaProducto(Producto producto);
+    void darBajaProducto(Producto producto);
 
 }

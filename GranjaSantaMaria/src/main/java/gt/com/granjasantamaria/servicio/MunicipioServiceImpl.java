@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MunicipioServiceImpl implements MunicipioService {
 
+    private final MunicipioDao municipioDao;
+
     @Autowired
-    private MunicipioDao municipioDao;
+    public MunicipioServiceImpl(MunicipioDao municipioDao) {
+        this.municipioDao = municipioDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

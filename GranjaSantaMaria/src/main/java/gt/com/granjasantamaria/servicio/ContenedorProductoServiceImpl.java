@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ContenedorProductoServiceImpl implements ContenedorProductoService {
 
+    private final ContenedorProductoDao contenedorProductoDao;
+
     @Autowired
-    private ContenedorProductoDao contenedorProductoDao;
+    public ContenedorProductoServiceImpl(ContenedorProductoDao contenedorProductoDao) {
+        this.contenedorProductoDao = contenedorProductoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

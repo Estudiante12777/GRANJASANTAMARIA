@@ -8,17 +8,16 @@ import java.util.List;
 
 public interface DepartamentoService {
 
-    // METODOS A IMPLEMENTAR
-    public List<Departamento> listadoDepartamento();
+    List<Departamento> listadoDepartamento();
 
-    public Page<Departamento> listadoDepartamentoPaginado(Pageable pageable);
+    Page<Departamento> listadoDepartamentoPaginado(Pageable pageable);
 
-    public void guardarDepartamento(Departamento departamento);
+    void guardarDepartamento(Departamento departamento);
 
-    public void eliminarDepartamento(Departamento departamento);
+    void eliminarDepartamento(Departamento departamento);
 
-    public Departamento encontrarDepartamento(Departamento departamento);
+    Departamento encontrarDepartamento(Departamento departamento);
 
-    public void darBajaDepartamento(Departamento departamento);
+    void darBajaDepartamento(Departamento departamento);
 
 }

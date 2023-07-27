@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class HistorialClinicoHembraServiceImpl implements HistorialClinicoHembraService {
 
+    private final HistorialClinicoHembraDao historialClinicoHembraDao;
+
     @Autowired
-    private HistorialClinicoHembraDao historialClinicoHembraDao;
+    public HistorialClinicoHembraServiceImpl(HistorialClinicoHembraDao historialClinicoHembraDao) {
+        this.historialClinicoHembraDao = historialClinicoHembraDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

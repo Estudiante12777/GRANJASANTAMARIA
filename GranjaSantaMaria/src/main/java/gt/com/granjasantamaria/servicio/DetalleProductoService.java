@@ -8,16 +8,16 @@ import org.springframework.data.domain.Pageable;
 
 public interface DetalleProductoService {
 
-    public List<DetalleProducto> obtenerListadoDetalleProductos();
+    List<DetalleProducto> obtenerListadoDetalleProductos();
 
-    public Page<DetalleProducto> obtenerListadoDetalleProductoPaginado(Pageable pageable);
+    Page<DetalleProducto> obtenerListadoDetalleProductoPaginado(Pageable pageable);
 
-    public void guardarDetalleProducto(DetalleProducto detalleProducto);
+    void guardarDetalleProducto(DetalleProducto detalleProducto);
 
-    public void eliminarDetalleProducto(DetalleProducto detalleProducto);
+    void eliminarDetalleProducto(DetalleProducto detalleProducto);
 
-    public DetalleProducto encontrarDetalleProducto(DetalleProducto detalleProducto);
+    DetalleProducto encontrarDetalleProducto(DetalleProducto detalleProducto);
 
-    public void darBajaDetalleProducto(DetalleProducto detalleProducto);
+    void darBajaDetalleProducto(DetalleProducto detalleProducto);
 
 }

@@ -12,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AlimentacionBecerroServiceImpl implements AlimentacionBecerroService {
 
+    private final AlimentacionBecerroDao alimentacionBecerroDao;
+
     @Autowired
-    private AlimentacionBecerroDao alimentacionBecerroDao;
+    public AlimentacionBecerroServiceImpl(AlimentacionBecerroDao alimentacionBecerroDao) {
+        this.alimentacionBecerroDao = alimentacionBecerroDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

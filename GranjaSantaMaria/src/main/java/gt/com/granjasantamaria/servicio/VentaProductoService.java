@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface VentaProductoService {
 
-    //
-    public List<VentaProducto> obtenerListadoVentaProducto();
+    List<VentaProducto> obtenerListadoVentaProducto();
 
     List<VentaProducto> obtenerListaTotalVentaProducto();
 

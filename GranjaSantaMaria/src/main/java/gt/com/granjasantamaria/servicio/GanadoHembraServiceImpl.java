@@ -6,7 +6,6 @@ import gt.com.granjasantamaria.modelo.GanadoHembra;
 import java.util.List;
 import java.util.Optional;
 
-import gt.com.granjasantamaria.modelo.PreniesGanadoHembra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GanadoHembraServiceImpl implements GanadoHembraService {
 
+    private final GanadoHembraDao ganadoHembraDao;
+
     @Autowired
-    private GanadoHembraDao ganadoHembraDao;
+    public GanadoHembraServiceImpl(GanadoHembraDao ganadoHembraDao) {
+        this.ganadoHembraDao = ganadoHembraDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -61,6 +64,7 @@ public class GanadoHembraServiceImpl implements GanadoHembraService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public GanadoHembra encontrarGanadoHembraPorId(Long id) {
         Optional<GanadoHembra> ganadoHembraOptional = ganadoHembraDao.findById(id);
         return ganadoHembraOptional.orElse(null);

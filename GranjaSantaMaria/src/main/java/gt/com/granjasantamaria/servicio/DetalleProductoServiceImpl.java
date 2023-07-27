@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DetalleProductoServiceImpl implements DetalleProductoService {
 
+    private final DetalleProductoDao detalleProductoDao;
+
     @Autowired
-    private DetalleProductoDao detalleProductoDao;
+    public DetalleProductoServiceImpl(DetalleProductoDao detalleProductoDao) {
+        this.detalleProductoDao = detalleProductoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

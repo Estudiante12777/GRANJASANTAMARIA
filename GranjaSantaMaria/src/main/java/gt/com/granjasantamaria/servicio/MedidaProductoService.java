@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface MedidaProductoService {
 
-    public List<MedidaProducto> obtenerListadoMedidaProductos();
+    List<MedidaProducto> obtenerListadoMedidaProductos();
 
-    public Page<MedidaProducto> obtenerListadoMedidaProductoPaginado(Pageable pageable);
+    Page<MedidaProducto> obtenerListadoMedidaProductoPaginado(Pageable pageable);
 
-    public void guardarMedidaProducto(MedidaProducto medidaProducto);
+    void guardarMedidaProducto(MedidaProducto medidaProducto);
 
-    public void eliminarMedidaProducto(MedidaProducto medidaProducto);
+    void eliminarMedidaProducto(MedidaProducto medidaProducto);
 
-    public MedidaProducto encontrarMedidaProducto(MedidaProducto medidaProducto);
+    MedidaProducto encontrarMedidaProducto(MedidaProducto medidaProducto);
 
-    public void darBajaMedidaProducto(MedidaProducto medidaProducto);
+    void darBajaMedidaProducto(MedidaProducto medidaProducto);
 
 }

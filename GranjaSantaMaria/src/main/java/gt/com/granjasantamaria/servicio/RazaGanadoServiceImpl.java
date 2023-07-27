@@ -12,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RazaGanadoServiceImpl implements RazaGanadoService {
 
+    private final RazaGanadoDao razaGanadoDao;
+
     @Autowired
-    private RazaGanadoDao razaGanadoDao;
+    public RazaGanadoServiceImpl(RazaGanadoDao razaGanadoDao) {
+        this.razaGanadoDao = razaGanadoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

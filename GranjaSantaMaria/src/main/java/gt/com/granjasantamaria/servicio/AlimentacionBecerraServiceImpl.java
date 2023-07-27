@@ -3,9 +3,6 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.dao.AlimentacionBecerraDao;
 import gt.com.granjasantamaria.modelo.AlimentacionBecerra;
 
-import java.util.List;
-
-import gt.com.granjasantamaria.modelo.AlimentacionBecerro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraService {
 
+    private final AlimentacionBecerraDao alimentacionBecerraDao;
+
     @Autowired
-    private AlimentacionBecerraDao alimentacionBecerraDao;
+    public AlimentacionBecerraServiceImpl(AlimentacionBecerraDao alimentacionBecerraDao) {
+        this.alimentacionBecerraDao = alimentacionBecerraDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -44,6 +45,7 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
     }
 
     @Override
+    @Transactional
     public void darDeBajaAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra) {
         AlimentacionBecerra alimentacionBecerraExistente = alimentacionBecerraDao.findById(alimentacionBecerra.getIdAlimentacionBecerra()).orElse(null);
         if (alimentacionBecerraExistente != null) {

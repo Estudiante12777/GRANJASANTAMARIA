@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author gerso
- */
 @Service
 public class PaisServiceImpl implements PaisService {
 
+    private final PaisDao paisDao;
+
     @Autowired
-    private PaisDao paisDao;
+    public PaisServiceImpl(PaisDao paisDao) {
+        this.paisDao = paisDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

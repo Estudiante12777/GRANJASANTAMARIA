@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface GanadoMachoService {
 
-    public List<GanadoMacho> obtenerListadoGanadoMachos();
+    List<GanadoMacho> obtenerListadoGanadoMachos();
 
-    public Page<GanadoMacho> obtenerGanadoMachoPaginado(Pageable pageable);
+    Page<GanadoMacho> obtenerGanadoMachoPaginado(Pageable pageable);
 
-    public void guardarGanadoMacho(GanadoMacho ganadoMacho);
+    void guardarGanadoMacho(GanadoMacho ganadoMacho);
 
-    public void eliminarGanadoMacho(GanadoMacho ganadoMacho);
+    void eliminarGanadoMacho(GanadoMacho ganadoMacho);
 
-    public GanadoMacho encontrarGanadoMacho(GanadoMacho ganadoMacho);
+    GanadoMacho encontrarGanadoMacho(GanadoMacho ganadoMacho);
     
-    public void darBajaGanadoMacho(GanadoMacho ganadoMacho); 
+    void darBajaGanadoMacho(GanadoMacho ganadoMacho);
 
 }

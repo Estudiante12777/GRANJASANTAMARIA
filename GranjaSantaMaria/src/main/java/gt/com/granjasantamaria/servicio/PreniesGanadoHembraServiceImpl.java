@@ -14,8 +14,12 @@ import java.util.List;
 @Service
 public class PreniesGanadoHembraServiceImpl implements PreniesGanadoHembraService {
 
+    private final PreniesGanadoHembraDao preniesGanadoHembraDao;
+
     @Autowired
-    private PreniesGanadoHembraDao preniesGanadoHembraDao;
+    public PreniesGanadoHembraServiceImpl(PreniesGanadoHembraDao preniesGanadoHembraDao) {
+        this.preniesGanadoHembraDao = preniesGanadoHembraDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -59,6 +63,7 @@ public class PreniesGanadoHembraServiceImpl implements PreniesGanadoHembraServic
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPorGanadoHembra(GanadoHembra ganadoHembra) {
         return preniesGanadoHembraDao.findByGanadoHembra(ganadoHembra);
     }

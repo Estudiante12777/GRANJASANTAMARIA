@@ -15,8 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheService {
 
+    private final ProduccionDiariaLecheDao produccionDiariaLecheDao;
+
     @Autowired
-    private ProduccionDiariaLecheDao produccionDiariaLecheDao;
+    public ProduccionDiariaLecheServiceImpl(ProduccionDiariaLecheDao produccionDiariaLecheDao) {
+        this.produccionDiariaLecheDao = produccionDiariaLecheDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

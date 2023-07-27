@@ -12,21 +12,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManagerFactory;
-
 @Service
 public class VentaProductoServiceImpl implements VentaProductoService {
 
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
+    private final VentaProductoDao ventaProductoDao;
+
+    private final InventarioProductoDao inventarioProductoDao;
 
     @Autowired
-    private VentaProductoDao ventaProductoDao;
+    public VentaProductoServiceImpl(VentaProductoDao ventaProductoDao, InventarioProductoDao inventarioProductoDao) {
+        this.ventaProductoDao = ventaProductoDao;
+        this.inventarioProductoDao = inventarioProductoDao;
+    }
 
-    @Autowired
-    private InventarioProductoDao inventarioProductoDao;
-
-    //
     @Override
     @Transactional(readOnly = true)
     public List<VentaProducto> obtenerListadoVentaProducto() {

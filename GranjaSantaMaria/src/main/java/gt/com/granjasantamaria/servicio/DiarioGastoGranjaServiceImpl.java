@@ -6,7 +6,6 @@ import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import java.time.LocalDate;
 import java.util.List;
 
-import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
 
+    private final DiarioGastoGranjaDao diarioGastoGranjaDao;
+
     @Autowired
-    private DiarioGastoGranjaDao diarioGastoGranjaDao;
+    public DiarioGastoGranjaServiceImpl(DiarioGastoGranjaDao diarioGastoGranjaDao) {
+        this.diarioGastoGranjaDao = diarioGastoGranjaDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -59,6 +62,7 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DiarioGastoGranja> encontrarTotalDiarioGastoGranja(LocalDate fechaInicio, LocalDate fechaFin) {
         return diarioGastoGranjaDao.findByFechaGastoBetween(fechaInicio, fechaFin);
     }
@@ -74,6 +78,7 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Double obtenerTotalGasto() {
         return diarioGastoGranjaDao.obtenerTotalVentas();
     }

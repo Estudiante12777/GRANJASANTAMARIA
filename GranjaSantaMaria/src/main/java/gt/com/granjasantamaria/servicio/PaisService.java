@@ -3,21 +3,16 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.modelo.Pais;
 import java.util.List;
 
-/**
- *
- * @author gerso
- */
 public interface PaisService {
 
-    // METODOS A IMPLEMENTAR 
-    public List<Pais> listadoPais();
+     List<Pais> listadoPais();
 
-    public void guardarPais(Pais pais);
+     void guardarPais(Pais pais);
 
-    public void eliminarPais(Pais pais);
+     void eliminarPais(Pais pais);
 
-    public Pais encontrarPais(Pais pais);
+     Pais encontrarPais(Pais pais);
 
-    public void darBajaPais(Pais pais);
+     void darBajaPais(Pais pais);
 
 }

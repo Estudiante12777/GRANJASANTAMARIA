@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GanadoMachoServiceImpl implements GanadoMachoService {
 
+    private final GanadoMachoDao ganadoMachoDao;
+
     @Autowired
-    private GanadoMachoDao ganadoMachoDao;
+    public GanadoMachoServiceImpl(GanadoMachoDao ganadoMachoDao) {
+        this.ganadoMachoDao = ganadoMachoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -43,12 +47,13 @@ public class GanadoMachoServiceImpl implements GanadoMachoService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public GanadoMacho encontrarGanadoMacho(GanadoMacho ganadoMacho) {
         return ganadoMachoDao.findById(ganadoMacho.getIdGanadoMacho()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void darBajaGanadoMacho(GanadoMacho ganadoMacho) {
         GanadoMacho ganadoMachoExistente = ganadoMachoDao.findById(ganadoMacho.getIdGanadoMacho()).orElse(null);
         if (ganadoMachoExistente != null) {

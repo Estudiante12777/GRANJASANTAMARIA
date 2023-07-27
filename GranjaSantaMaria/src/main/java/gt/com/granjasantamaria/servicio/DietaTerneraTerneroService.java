@@ -6,14 +6,14 @@ import org.springframework.data.domain.Pageable;
 
 public interface DietaTerneraTerneroService {
 
-    public Page<DietaTerneraTernero> obtenerListadoDietaTerneraTerneroPaginado(Pageable pageable);
+    Page<DietaTerneraTernero> obtenerListadoDietaTerneraTerneroPaginado(Pageable pageable);
 
-    public void guardarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
+    void guardarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
 
-    public void eliminarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
+    void eliminarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
 
-    public DietaTerneraTernero encontrarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
+    DietaTerneraTernero encontrarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
 
-    public void darBajaDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
+    void darBajaDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
 
 }

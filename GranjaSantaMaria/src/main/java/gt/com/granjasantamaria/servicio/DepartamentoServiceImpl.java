@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DepartamentoServiceImpl implements DepartamentoService {
 
+    private final DepartamentoDao departamentoDao;
+
     @Autowired
-    private DepartamentoDao departamentoDao;
+    public DepartamentoServiceImpl(DepartamentoDao departamentoDao) {
+        this.departamentoDao = departamentoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)

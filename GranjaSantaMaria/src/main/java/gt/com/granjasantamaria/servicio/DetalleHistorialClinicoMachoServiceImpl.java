@@ -3,8 +3,6 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.dao.DetalleHistorialClinicoMachoDao;
 import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoMacho;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DetalleHistorialClinicoMachoServiceImpl implements DetalleHistorialClinicoMachoService {
 
+    private final DetalleHistorialClinicoMachoDao detalleHistorialClinicoMachoDao;
+
     @Autowired
-    private DetalleHistorialClinicoMachoDao detalleHistorialClinicoMachoDao;
+    public DetalleHistorialClinicoMachoServiceImpl(DetalleHistorialClinicoMachoDao detalleHistorialClinicoMachoDao) {
+        this.detalleHistorialClinicoMachoDao = detalleHistorialClinicoMachoDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -28,12 +30,6 @@ public class DetalleHistorialClinicoMachoServiceImpl implements DetalleHistorial
     public void guardarDetalleHistorialClinicoMacho(DetalleHistorialClinicoMacho detalleHistorialClinicoMacho) {
         detalleHistorialClinicoMacho.setEstadoDetalleHistorialClinicoMacho(true);
         detalleHistorialClinicoMachoDao.save(detalleHistorialClinicoMacho);
-    }
-
-    @Override
-    @Transactional
-    public void eliminarDetalleHistorialClinicoMacho(DetalleHistorialClinicoMacho detalleHistorialClinicoMacho) {
-        detalleHistorialClinicoMachoDao.delete(detalleHistorialClinicoMacho);
     }
 
     @Override
