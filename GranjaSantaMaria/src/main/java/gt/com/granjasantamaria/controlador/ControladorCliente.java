@@ -4,9 +4,12 @@ import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,8 +28,11 @@ public class ControladorCliente {
     private DepartamentoService departamentoService;
 
     @GetMapping("/modulo-persona/cliente/lista")
-    public String listadoClientes(Model model) {
-        var clientes = clienteService.listadoClientes();
+    public String listadoClientes(@RequestParam(defaultValue = "0") int pagina, Model model) {
+        PageRequest pageRequest = PageRequest.of(pagina, 10);
+        Page<Cliente> clientePage = clienteService.obtenerClientePaginado(pageRequest);
+        model.addAttribute("clientePage", clientePage);
+        var clientes = clientePage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("clientes", clientes);
         return "/pages/modulo-persona/cliente/cliente";
     }

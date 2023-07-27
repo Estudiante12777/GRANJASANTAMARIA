@@ -28,7 +28,7 @@ public class GanadoHembraServiceImpl implements GanadoHembraService {
     @Override
     @Transactional(readOnly = true)
     public Page<GanadoHembra> obtenerGanadoHembraPaginado(Pageable pageable) {
-        return (Page<GanadoHembra>) ganadoHembraDao.findAllByEstadoGanadoHembraIsTrue(pageable);
+        return ganadoHembraDao.findAllByEstadoGanadoHembraIsTrue(pageable);
     }
 
     @Override

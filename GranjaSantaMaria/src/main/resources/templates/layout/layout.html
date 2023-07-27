@@ -127,13 +127,6 @@
 <!--OTRO SCRIPTS PARA PAGINAS-->
 <th:block layout:fragment="page-scripts">
     <script>
-        function calcularTotalProduccionLeche() {
-            var produccionManiana = parseFloat(document.getElementById('produccionManianaLeche').value);
-            var produccionTarde = parseFloat(document.getElementById('produccionTardeLeche').value);
-            var total = (isNaN(produccionManiana) ? 0 : produccionManiana) + (isNaN(produccionTarde) ? 0 : produccionTarde);
-            document.getElementById('totalProduccionLeche').value = total;
-        }
-
         function calcularTotalVenta() {
             var cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
             var precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
@@ -161,23 +154,6 @@
             var alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
             var totalAlimentacionBecerrosTerneros = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
             document.getElementById('totalAlimentacionBecerroTernero').value = totalAlimentacionBecerrosTerneros;
-        }
-
-        function obtenerMunicipios() {
-            var departamentoId = $('select[name="departamento.idDepartamento"]').val();
-            console.log(departamentoId);
-            $.ajax({
-                url: '/modulo-persona/cliente/municipios/' + departamentoId,
-                type: 'GET',
-                success: function (data) {
-                    $('select[name="municipio.idMunicipio"]').empty();
-                    $.each(data, function (index, municipio) {
-                        $('select[name="municipio.idMunicipio"]').append('<option value="' + municipio.idMunicipio + '">' + municipio.nombreMunicipio + '</option>');
-                    });
-                },
-                error: function () {
-                }
-            });
         }
 
         function mostrarExistencia(idInventarioProducto) {

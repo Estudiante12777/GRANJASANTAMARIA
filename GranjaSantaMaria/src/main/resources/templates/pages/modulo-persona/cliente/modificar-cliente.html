@@ -52,7 +52,8 @@
                             <div class="col-sm-8">
                                 <select th:field="*{departamento.idDepartamento}"
                                         name="departamento.nombreDepartamento" required
-                                        class="form-select form-select-lg" onchange="obtenerMunicipios()">
+                                        class="form-select form-select-lg" onchange="obtenerMunicipios()"
+                                        id="departamentoSelect">
                                     <option th:each="departamento : ${listadoDepartamentos}"
                                             th:value="${departamento.idDepartamento}"
                                             th:text="${departamento.nombreDepartamento}">
@@ -149,6 +150,39 @@
     var modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
+<th:block layout:fragment="page-scripts">
+    <script>
+        // Funcion para inicializar el formulario
+        function inicializarFormularioCliente() {
+            // Obtener el ID departamento seleccionado inicialmente
+            var initialDepartamentoId = document.getElementById("departamentoSelect").value;
+            // Llama a la función para obtener el estado de preñez del ganado seleccionado inicialmente
+            obtenerMunicipios(initialDepartamentoId);
+        }
+
+        function obtenerMunicipios() {
+            var departamentoId = $('select[name="departamento.idDepartamento"]').val();
+            console.log(departamentoId);
+            $.ajax({
+                url: '/modulo-persona/cliente/municipios/' + departamentoId,
+                type: 'GET',
+                success: function (data) {
+                    $('select[name="municipio.idMunicipio"]').empty();
+                    $.each(data, function (index, municipio) {
+                        $('select[name="municipio.idMunicipio"]').append('<option value="' + municipio.idMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+                    });
+                },
+                error: function () {
+                }
+            });
+        }
+
+        // Cuando se carga el formulario, inicializar y obtener el municipio del departamento seleccionado
+        $(document).ready(function () {
+            inicializarFormularioCliente();
+        });
+    </script>
+</th:block>
 </body>
 
 </html>

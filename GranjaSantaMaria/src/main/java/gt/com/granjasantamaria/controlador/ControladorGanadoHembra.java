@@ -38,9 +38,7 @@ public class ControladorGanadoHembra {
         PageRequest pageRequest = PageRequest.of(pagina, 8);
         Page<GanadoHembra> ganadoHembraPage = ganadoHembraService.obtenerGanadoHembraPaginado(pageRequest);
         model.addAttribute("ganadoHembraPage", ganadoHembraPage);
-        var ganadosHembra = ganadoHembraPage.getContent().stream()
-                .limit(8)
-                .collect(Collectors.toList());
+        var ganadosHembra = ganadoHembraPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("ganadosHembra", ganadosHembra);
         return "/pages/modulo-ganado/ganado-hembra/ganado-hembra";
     }
