@@ -3,10 +3,13 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import lombok.Data;
+import javax.validation.constraints.NotNull;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {

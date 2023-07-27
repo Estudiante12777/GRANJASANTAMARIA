@@ -55,19 +55,6 @@ CREATE TABLE cliente
     CONSTRAINT fk_cliente_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_cliente_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE TABLE proveedor
-(
-    id_proveedor        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    nombre_proveedor    VARCHAR(50)     NOT NULL,
-    apellido_proveedor  VARCHAR(50)     NOT NULL,
-    telefono_proveedor  VARCHAR(15)     NOT NULL,
-    direccion_proveedor VARCHAR(100)    NOT NULL,
-    id_municipio        INT             NOT NULL,
-    id_departamento     INT             NOT NULL,
-    estado_proveedor    TINYINT         NOT NULL,
-    CONSTRAINT fk_proveedor_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_proveedor_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
-);
 /*TABLAS PARA GANADO*/
 CREATE TABLE raza_ganado
 (
@@ -135,7 +122,6 @@ CREATE TABLE historial_clinico_hembra
     estado_historial_clinico_hembra      TINYINT         NOT NULL,
     CONSTRAINT fk_historial_clinico_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 CREATE TABLE detalle_historial_clinico_hembra
 (
     id_detalle_historial_clinico_hembra      INT PRIMARY KEY NOT NULL AUTO_INCREMENT,

@@ -5,10 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JoinFormula;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
@@ -21,7 +19,6 @@ public class VentaProducto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_venta_producto")
     private Long idVentaProducto;
 
     @ManyToOne(fetch = FetchType.LAZY)

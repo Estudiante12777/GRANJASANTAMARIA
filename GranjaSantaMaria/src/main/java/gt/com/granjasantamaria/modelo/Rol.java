@@ -3,13 +3,11 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- *
- * @author gerso
- */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "rol")
 public class Rol implements Serializable {

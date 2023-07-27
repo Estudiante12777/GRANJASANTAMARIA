@@ -14,21 +14,34 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserDetailsService userDetailsService;
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder build) throws Exception {
         build.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/editar/**", "/agregar/**", "/eliminar").hasRole("ADMINISTRADOR").antMatchers("/").hasAnyRole("USUARIO", "ADMINISTRADOR").and().formLogin().loginPage("/login").and().exceptionHandling().accessDeniedPage("/errores/403");
+        http.authorizeRequests()
+                .antMatchers("/editar/**", "/agregar/**", "/eliminar")
+                .hasRole("ADMINISTRADOR").antMatchers("/")
+                .hasAnyRole("USUARIO", "ADMINISTRADOR")
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/errores/403");
     }
 }
