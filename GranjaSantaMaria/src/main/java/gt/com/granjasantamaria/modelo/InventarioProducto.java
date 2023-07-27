@@ -5,10 +5,12 @@ import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "inventario_producto")
 public class InventarioProducto implements Serializable {
@@ -41,16 +43,11 @@ public class InventarioProducto implements Serializable {
     private Integer cantidadFinalProducto;
 
     @NotNull
-    @Column(name = "cantidad_vendida_hasta_hoy")
+    @Column(name = "cantidad_vendida_hasta_hoy", nullable = false)
     private Integer cantidadVendidaHastaHoy;
 
     @NotNull
     @Column(name = "estado_inventario_producto", nullable = false)
     private boolean estadoInventarioProducto;
-
-    public int getCantidadExistencia() {
-        int cantidadExistencia = cantidadIngresadaProducto - cantidadSalidaProducto;
-        return cantidadExistencia;
-    }
 
 }

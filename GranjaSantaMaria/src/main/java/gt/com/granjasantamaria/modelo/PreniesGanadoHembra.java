@@ -34,12 +34,12 @@ public class PreniesGanadoHembra implements Serializable {
     @Column(name = "promedio_gestacion", nullable = false)
     private Integer promedioGestacion;
 
-    @Column(name = "fecha_concepcion")
+    @Column(name = "fecha_concepcion", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaConcepcion;
 
     @NotNull
-    @Column(name = "estado_prenies_ganado_hembra")
+    @Column(name = "estado_prenies_ganado_hembra", nullable = false)
     private boolean estadoPreniesGanadoHembra;
 
 }

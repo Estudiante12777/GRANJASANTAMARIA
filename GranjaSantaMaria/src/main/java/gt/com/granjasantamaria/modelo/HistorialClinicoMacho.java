@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "historial_clinico_macho")
 public class HistorialClinicoMacho implements Serializable {

@@ -4,9 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "departamento")
 public class Departamento implements Serializable {
@@ -18,7 +20,7 @@ public class Departamento implements Serializable {
     private Long idDepartamento;
 
     @NotNull
-    @Column(name = "nombre_departamento")
+    @Column(name = "nombre_departamento", nullable = false)
     private String nombreDepartamento;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -26,7 +28,7 @@ public class Departamento implements Serializable {
     private Pais pais;
 
     @NotNull
-    @Column(name = "estado_departamento")
+    @Column(name = "estado_departamento", nullable = false)
     private boolean estadoDepartamento;
 
 }

@@ -5,8 +5,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "dieta_ternera_ternero")
 public class DietaTerneraTernero implements Serializable {

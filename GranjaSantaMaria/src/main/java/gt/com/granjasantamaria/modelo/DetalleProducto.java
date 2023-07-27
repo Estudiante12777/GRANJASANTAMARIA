@@ -4,9 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "detalle_producto")
 public class DetalleProducto implements Serializable {
@@ -34,7 +36,7 @@ public class DetalleProducto implements Serializable {
     private DescripcionProducto descripcionProducto;
 
     @NotNull
-    @Column(name = "estadoDetalleProducto")
+    @Column(name = "estado_detalle_producto", nullable = false)
     private boolean estadoDetalleProducto;
 
     @Override

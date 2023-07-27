@@ -30,24 +30,24 @@ public class VentaProducto implements Serializable {
     private InventarioProducto inventarioProducto;
 
     @NotNull
-    @Column(name = "fecha_venta_producto")
+    @Column(name = "fecha_venta_producto", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaVentaProducto;
 
     @NotNull
-    @Column(name = "cantidad_producto")
+    @Column(name = "cantidad_producto", nullable = false)
     private Integer cantidadProducto;
 
     @NotNull
-    @Column(name = "precio_por_unidad")
+    @Column(name = "precio_por_unidad", nullable = false)
     private Double precioPorUnidad;
 
     @NotNull
-    @Column(name = "total_precio_producto")
+    @Column(name = "total_precio_producto", nullable = false)
     private Double totalPrecioProducto;
 
     @NotNull
-    @Column(name = "descuento_producto")
+    @Column(name = "descuento_producto", nullable = false)
     private Double descuentoProducto;
 
     @NotNull

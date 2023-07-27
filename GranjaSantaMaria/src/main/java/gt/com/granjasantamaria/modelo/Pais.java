@@ -4,9 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "pais")
 public class Pais implements Serializable {
@@ -22,7 +24,7 @@ public class Pais implements Serializable {
     private String nombrePais;
 
     @NotNull
-    @Column(name = "estado_pais")
+    @Column(name = "estado_pais", nullable = false)
     private boolean estadoPais;
 
 }
