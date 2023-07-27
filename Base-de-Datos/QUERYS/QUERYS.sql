@@ -1,3 +1,4 @@
 USE granja_santa_maria;
 
-SHOW TABLES;
+SELECT * FROM detalle_producto;
+
