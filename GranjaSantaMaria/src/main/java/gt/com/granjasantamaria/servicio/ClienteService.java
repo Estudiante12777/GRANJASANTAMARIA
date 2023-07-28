@@ -14,8 +14,6 @@ public interface ClienteService {
 
     void guardarCliente(Cliente cliente);
 
-    void eliminarCliente(Cliente cliente);
-
     Cliente encontrarCliente(Cliente cliente);
 
     void darBajaCliente(Cliente cliente);

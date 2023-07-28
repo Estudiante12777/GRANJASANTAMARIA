@@ -18,14 +18,18 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorCliente {
 
-    @Autowired
-    private ClienteService clienteService;
+    private final DepartamentoService departamentoService;
+
+    private final MunicipioService municipioService;
+
+    private final ClienteService clienteService;
 
     @Autowired
-    private MunicipioService municipioService;
-
-    @Autowired
-    private DepartamentoService departamentoService;
+    public ControladorCliente(DepartamentoService departamentoService, MunicipioService municipioService, ClienteService clienteService) {
+        this.departamentoService = departamentoService;
+        this.municipioService = municipioService;
+        this.clienteService = clienteService;
+    }
 
     @GetMapping("/modulo-persona/cliente/lista")
     public String listadoClientes(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -40,8 +44,7 @@ public class ControladorCliente {
     @GetMapping("/modulo-persona/cliente/municipios/{idDepartamento}")
     @ResponseBody
     public List<Municipio> obtenerMunicipiosPorDepartamento(@PathVariable("idDepartamento") Long idDepartamento) {
-        List<Municipio> municipios = municipioService.obtenerMunicipiosPorDepartamento(idDepartamento);
-        return municipios;
+        return municipioService.obtenerMunicipiosPorDepartamento(idDepartamento);
     }
 
     @GetMapping("/modulo-persona/cliente/agregar")
@@ -72,12 +75,6 @@ public class ControladorCliente {
         cliente = clienteService.encontrarCliente(cliente);
         model.addAttribute("cliente", cliente);
         return "/pages/modulo-persona/cliente/modificar-cliente";
-    }
-
-    @GetMapping("/modulo-persona/cliente/eliminar")
-    public String eliminarCliente(Cliente cliente) {
-        clienteService.eliminarCliente(cliente);
-        return "redirect:/modulo-persona/cliente/lista";
     }
 
     @GetMapping("/modulo-persona/cliente/baja")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -19,21 +19,24 @@
                         <input type="hidden" name="idCliente" th:field="*{idCliente}"/>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="nombreCliente">Nombre cliente:</label>
-                            <input class="form-control form-control-lg" type="text" required name="nombreCliente"
+                            <input id="nombreCliente" class="form-control form-control-lg" type="text" required
+                                   name="nombreCliente"
                                    th:field="*{nombreCliente}"/>
                             <span th:if="${#fields.hasErrors('nombreCliente')}" class="text-danger"
                                   th:errors="*{nombreCliente}">Error nombre del cliente</span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="apellidoCliente">Apellido cliente:</label>
-                            <input class="form-control form-control-lg" type="text" required name="apellidoCliente"
+                            <input id="apellidoCliente" class="form-control form-control-lg" type="text" required
+                                   name="apellidoCliente"
                                    th:field="*{apellidoCliente}"/>
                             <span th:if="${#fields.hasErrors('apellidoCliente')}" class="text-danger"
                                   th:errors="*{apellidoCliente}">Error apellido del cliente</span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="telefonoCliente">Telefono:</label>
-                            <input class="form-control form-control-lg" type="tel" required name="telefonoCliente"
+                            <input id="telefonoCliente" class="form-control form-control-lg" type="tel" required
+                                   name="telefonoCliente"
                                    th:field="*{telefonoCliente}"/>
                             <span th:if="${#fields.hasErrors('telefonoCliente')}" class="text-danger"
                                   th:errors="*{telefonoCliente}">Error apellido del cliente</span>
@@ -41,7 +44,8 @@
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="direccionCliente">Direccion
                                 cliente:</label>
-                            <input class="form-control form-control-lg" type="text" required name="direccionCliente"
+                            <input id="direccionCliente" class="form-control form-control-lg" type="text" required
+                                   name="direccionCliente"
                                    th:field="*{direccionCliente}"/>
                             <span th:if="${#fields.hasErrors('direccionCliente')}" class="text-danger"
                                   th:errors="*{direccionCliente}">Error direccion del cliente</span>
@@ -54,7 +58,8 @@
                                         name="departamento.nombreDepartamento" required
                                         class="form-select form-select-lg" onchange="obtenerMunicipios()"
                                         id="departamentoSelect">
-                                    <option th:each="departamento : ${listadoDepartamentos}"
+                                    <option id="departamento.nombreDepartamento"
+                                            th:each="departamento : ${listadoDepartamentos}"
                                             th:value="${departamento.idDepartamento}"
                                             th:text="${departamento.nombreDepartamento}">
                                     </option>
@@ -71,7 +76,7 @@
                             <div class="col-sm-8">
                                 <select th:field="*{municipio.idMunicipio}" name="municipio.nombreMunicipio"
                                         required class="form-select form-select-lg">
-                                    <option th:each="municipio : ${listadoMunicipios}"
+                                    <option id="municipio.nombreMunicipio" th:each="municipio : ${listadoMunicipios}"
                                             th:value="${municipio.idMunicipio}" th:text="${municipio.nombreMunicipio}">
                                     </option>
                                     </option>
@@ -167,10 +172,13 @@
                 url: '/modulo-persona/cliente/municipios/' + departamentoId,
                 type: 'GET',
                 success: function (data) {
+                    var municipioIdActual = $('select[name="municipio.idMunicipio"]').val(); // Obtener el municipio actual del cliente
                     $('select[name="municipio.idMunicipio"]').empty();
                     $.each(data, function (index, municipio) {
+                        // Agregar opciones al campo de selección de municipios
                         $('select[name="municipio.idMunicipio"]').append('<option value="' + municipio.idMunicipio + '">' + municipio.nombreMunicipio + '</option>');
                     });
+                    $('select[name="municipio.idMunicipio"]').val(municipioIdActual); // Seleccionar automáticamente el municipio actual
                 },
                 error: function () {
                 }
