@@ -9,15 +9,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- * @author gerso
- */
 @Controller
 public class ControladorPais {
 
+    private final PaisService paisService;
+
     @Autowired
-    private PaisService paisService;
+    public ControladorPais(PaisService paisService) {
+        this.paisService = paisService;
+    }
 
     @GetMapping("/modulo-ubicacion/pais/lista")
     public String listaPais(Model model) {
@@ -48,11 +48,6 @@ public class ControladorPais {
         return "/pages/modulo-ubicacion/pais/modificar-pais";
     }
 
-    @GetMapping("/modulo-ubicacion/pais/eliminar")
-    public String eliminarPais(Pais pais) {
-        paisService.eliminarPais(pais);
-        return "redirect:/modulo-ubicacion/pais/lista";
-    }
 
     @GetMapping("/modulo-ubicacion/pais/baja")
     public String darBajaPais(Pais pais) {

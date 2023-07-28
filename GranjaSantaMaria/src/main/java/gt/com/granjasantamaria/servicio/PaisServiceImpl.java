@@ -31,12 +31,6 @@ public class PaisServiceImpl implements PaisService {
     }
 
     @Override
-    @Transactional
-    public void eliminarPais(Pais pais) {
-        paisDao.delete(pais);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public Pais encontrarPais(Pais pais) {
         return paisDao.findById(pais.getIdPais()).orElse(null);

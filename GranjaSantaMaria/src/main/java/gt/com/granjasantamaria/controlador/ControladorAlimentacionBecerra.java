@@ -19,11 +19,15 @@ import org.springframework.validation.BindingResult;
 @Controller
 public class ControladorAlimentacionBecerra {
 
-    @Autowired
-    private AlimentacionBecerraService alimentacionBecerraService;
+    private final AlimentacionBecerraService alimentacionBecerraService;
+
+    private final GanadoHembraService ganadoHembraService;
 
     @Autowired
-    private GanadoHembraService ganadoHembraService;
+    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, GanadoHembraService ganadoHembraService) {
+        this.alimentacionBecerraService = alimentacionBecerraService;
+        this.ganadoHembraService = ganadoHembraService;
+    }
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -40,7 +44,14 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra AS a " + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra " + "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = 1";
+        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, "
+                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, "
+                + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra "
+                + "FROM alimentacion_becerra AS a "
+                + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
+                + "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra "
+                + "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra "
+                + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = 1";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();

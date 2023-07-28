@@ -9,8 +9,6 @@ public interface PaisService {
 
      void guardarPais(Pais pais);
 
-     void eliminarPais(Pais pais);
-
      Pais encontrarPais(Pais pais);
 
      void darBajaPais(Pais pais);
