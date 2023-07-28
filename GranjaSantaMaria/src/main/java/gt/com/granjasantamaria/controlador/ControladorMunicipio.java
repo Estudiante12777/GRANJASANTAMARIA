@@ -18,14 +18,18 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorMunicipio {
 
-    @Autowired
-    private MunicipioService municipioService;
+    private final PaisService paisService;
+
+    private final DepartamentoService departamentoService;
+
+    private final MunicipioService municipioService;
 
     @Autowired
-    private DepartamentoService departamentoService;
-
-    @Autowired
-    private PaisService paisService;
+    public ControladorMunicipio(PaisService paisService, DepartamentoService departamentoService, MunicipioService municipioService) {
+        this.paisService = paisService;
+        this.departamentoService = departamentoService;
+        this.municipioService = municipioService;
+    }
 
     @GetMapping("/modulo-ubicacion/municipio/lista")
     public String listadoMunicipios(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -65,12 +69,6 @@ public class ControladorMunicipio {
         municipio = municipioService.encontrarMunicipio(municipio);
         model.addAttribute("municipio", municipio);
         return "/pages/modulo-ubicacion/municipio/modificar-municipio";
-    }
-
-    @GetMapping("/modulo-ubicacion/municipio/eliminar")
-    public String eliminarMunicipio(Municipio municipio) {
-        municipioService.eliminarMunicipio(municipio);
-        return "redirect:/modulo-ubicacion/municipio/lista";
     }
 
     @GetMapping("/modulo-ubicacion/municipio/baja")

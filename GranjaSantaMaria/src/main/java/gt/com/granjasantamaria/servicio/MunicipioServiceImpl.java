@@ -41,12 +41,6 @@ public class MunicipioServiceImpl implements MunicipioService {
     }
 
     @Override
-    @Transactional
-    public void eliminarMunicipio(Municipio municipio) {
-        municipioDao.delete(municipio);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public Municipio encontrarMunicipio(Municipio municipio) {
         return municipioDao.findById(municipio.getIdMunicipio()).orElse(municipio);

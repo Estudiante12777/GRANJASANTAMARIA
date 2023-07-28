@@ -14,8 +14,6 @@ public interface MunicipioService {
 
     void guardarMunicipio(Municipio municipio);
 
-    void eliminarMunicipio(Municipio municipio);
-
     Municipio encontrarMunicipio(Municipio municipio);
 
     List<Municipio> obtenerMunicipiosPorDepartamento(Long idDepartamento);
