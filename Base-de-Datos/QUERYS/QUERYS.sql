@@ -1,4 +1,4 @@
 USE granja_santa_maria;
 
-SELECT * FROM detalle_producto;
-
+SELECT * FROM pais;
+SELECT * FROM departamento;

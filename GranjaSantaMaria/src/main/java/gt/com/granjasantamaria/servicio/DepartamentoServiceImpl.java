@@ -41,12 +41,6 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarDepartamento(Departamento departamento) {
-        departamentoDao.delete(departamento);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public Departamento encontrarDepartamento(Departamento departamento) {
         return departamentoDao.findById(departamento.getIdDepartamento()).orElse(null);

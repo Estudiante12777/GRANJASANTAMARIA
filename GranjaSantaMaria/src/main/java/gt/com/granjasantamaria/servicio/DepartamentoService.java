@@ -14,8 +14,6 @@ public interface DepartamentoService {
 
     void guardarDepartamento(Departamento departamento);
 
-    void eliminarDepartamento(Departamento departamento);
-
     Departamento encontrarDepartamento(Departamento departamento);
 
     void darBajaDepartamento(Departamento departamento);

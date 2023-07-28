@@ -18,11 +18,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorDepartamento {
 
-    @Autowired
-    private DepartamentoService departamentoService;
+    private final PaisService paisService;
+
+    private final DepartamentoService departamentoService;
 
     @Autowired
-    private PaisService paisService;
+    public ControladorDepartamento(PaisService paisService, DepartamentoService departamentoService) {
+        this.paisService = paisService;
+        this.departamentoService = departamentoService;
+    }
 
     @GetMapping("/modulo-ubicacion/departamento/lista")
     public String listadoDepartamentos(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -58,12 +62,6 @@ public class ControladorDepartamento {
         departamento = departamentoService.encontrarDepartamento(departamento);
         model.addAttribute("departamento", departamento);
         return "/pages/modulo-ubicacion/departamento/modificar-departamento";
-    }
-
-    @GetMapping("/modulo-ubicacion/departamento/eliminar")
-    public String eliminarDepartamento(Departamento departamento) {
-        departamentoService.eliminarDepartamento(departamento);
-        return "redirect:/modulo-ubicacion/departamento/lista";
     }
 
     @GetMapping("/modulo-ubicacion/departamento/baja")
