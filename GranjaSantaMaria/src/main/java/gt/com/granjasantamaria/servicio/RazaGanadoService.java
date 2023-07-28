@@ -14,8 +14,6 @@ public interface RazaGanadoService {
 
     void guardarRazaGanado(RazaGanado razaGanado);
 
-    void eliminarRazaGanado(RazaGanado razaGanado);
-
     RazaGanado encontrarRazaGando(RazaGanado razaGanado);
 
     void darBajaRazaGanado(RazaGanado razaGanado);

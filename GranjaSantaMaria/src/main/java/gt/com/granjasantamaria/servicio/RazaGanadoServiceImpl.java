@@ -39,12 +39,6 @@ public class RazaGanadoServiceImpl implements RazaGanadoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarRazaGanado(RazaGanado razaGanado) {
-        razaGanadoDao.delete(razaGanado);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public RazaGanado encontrarRazaGando(RazaGanado razaGanado) {
         return razaGanadoDao.findById(razaGanado.getIdRazaGanado()).orElse(null);

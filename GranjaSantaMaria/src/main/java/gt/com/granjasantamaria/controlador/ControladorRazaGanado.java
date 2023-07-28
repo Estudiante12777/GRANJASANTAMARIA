@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorRazaGanado {
 
+    private final RazaGanadoService razaGanadoService;
+
     @Autowired
-    private RazaGanadoService razaGanadoService;
+    public ControladorRazaGanado(RazaGanadoService razaGanadoService) {
+        this.razaGanadoService = razaGanadoService;
+    }
 
     @GetMapping("/modulo-ganado/raza-ganado/lista")
     public String listadoRazaGanado(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -51,12 +55,6 @@ public class ControladorRazaGanado {
         razaGanado = razaGanadoService.encontrarRazaGando(razaGanado);
         model.addAttribute("razaGanado", razaGanado);
         return "/pages/modulo-ganado/raza-ganado/modificar-raza-ganado";
-    }
-
-    @GetMapping("/modulo-ganado/raza-ganado/eliminar")
-    public String eliminarRazaGanado(RazaGanado razaGanado) {
-        razaGanadoService.eliminarRazaGanado(razaGanado);
-        return "redirect:/modulo-ganado/raza-ganado/lista";
     }
 
     @GetMapping("/modulo-ganado/raza-ganado/baja")

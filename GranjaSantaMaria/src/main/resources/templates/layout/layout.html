@@ -26,8 +26,8 @@
                 $("#navbarSupportedContent").toggle();
             });
             // Seleccionar el elemento del botón y el elemento de la barra de navegación con jQuery
-            var sidebarToggle = $("#sidebarToggle");
-            var sidebar = $("#sidebar");
+            let sidebarToggle = $("#sidebarToggle");
+            let sidebar = $("#sidebar");
             // Agregar un evento de clic al botón con el método on
             sidebarToggle.on("click", function () {
                 // Mostrar u ocultar la barra de navegación con el método toggle
@@ -60,6 +60,10 @@
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
                    onclick="this.parentNode.submit();">Productos</a>
             </form>
+            <form method="get" th:action="@{/modulo-inventario}">
+                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
+                   onclick="this.parentNode.submit();">Inventario productos</a>
+            </form>
             <form method="get" th:action="@{/modulo-venta}">
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
                    onclick="this.parentNode.submit();">Ventas</a>
@@ -67,10 +71,6 @@
             <form method="get" th:action="@{/modulo-gasto}">
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
                    onclick="this.parentNode.submit();">Gastos granja</a>
-            </form>
-            <form method="get" th:action="@{/modulo-inventario}">
-                <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
-                   onclick="this.parentNode.submit();">Inventario productos</a>
             </form>
             <form method="get" th:action="@{/modulo-balance}">
                 <a class="list-group-item list-group-item-action list-group-item-dark p-3" href="#"
@@ -128,31 +128,31 @@
 <th:block layout:fragment="page-scripts">
     <script>
         function calcularTotalVenta() {
-            var cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
-            var precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
-            var descuento = parseFloat(document.getElementById('descuentoProducto').value);
-            var totalVenta = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
+            let cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
+            let precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
+            let descuento = parseFloat(document.getElementById('descuentoProducto').value);
+            let totalVenta = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
             document.getElementById('totalPrecioProducto').value = totalVenta;
         }
 
         function calcularTotalDiarioGasto() {
-            var cantidad = parseFloat(document.getElementById('unidadesAdquiridas').value);
-            var valorUnitario = parseFloat(document.getElementById('valorUnitario').value);
-            var valorTotal = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
+            let cantidad = parseFloat(document.getElementById('unidadesAdquiridas').value);
+            let valorUnitario = parseFloat(document.getElementById('valorUnitario').value);
+            let valorTotal = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
             document.getElementById('valorTotal').value = valorTotal;
         }
 
         function calcularTotalAlimentacionBecerrasTerneras() {
-            var alimentacionManianaBecerrasTerneras = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerraTernera').value);
-            var alimentacionTardeBecerrasTerneras = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerraTernera').value);
-            var totalAlimentacionBecerrasTerneras = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
+            let alimentacionManianaBecerrasTerneras = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerraTernera').value);
+            let alimentacionTardeBecerrasTerneras = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerraTernera').value);
+            let totalAlimentacionBecerrasTerneras = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
             document.getElementById('totalAlimentacionBecerraTernera').value = totalAlimentacionBecerrasTerneras;
         }
 
         function calcularTotalAlimentacionBecerrosTerneros() {
-            var alimentacionManianaBecerrosTerneros = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerroTernero').value);
-            var alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
-            var totalAlimentacionBecerrosTerneros = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
+            let alimentacionManianaBecerrosTerneros = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerroTernero').value);
+            let alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
+            let totalAlimentacionBecerrosTerneros = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
             document.getElementById('totalAlimentacionBecerroTernero').value = totalAlimentacionBecerrosTerneros;
         }
 
