@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorTipoGanado {
 
+    private final TipoGanadoService tipoGanadoService;
+
     @Autowired
-    private TipoGanadoService tipoGanadoService;
+    ControladorTipoGanado(TipoGanadoService tipoGanadoService) {
+        this.tipoGanadoService = tipoGanadoService;
+    }
 
     @GetMapping("/modulo-ganado/tipo-ganado/lista")
     public String listaTipoGanado(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -51,12 +55,6 @@ public class ControladorTipoGanado {
         tipoGanado = tipoGanadoService.encontrarTipoGanado(tipoGanado);
         model.addAttribute("tipoGanado", tipoGanado);
         return "/pages/modulo-ganado/tipo-ganado/modificar-tipo-ganado";
-    }
-
-    @GetMapping("/modulo-ganado/tipo-ganado/eliminar")
-    public String eliminarTipoGanado(TipoGanado tipoGando) {
-        tipoGanadoService.eliminarTipoGanado(tipoGando);
-        return "redirect:/modulo-ganado/tipo-ganado/lista";
     }
 
     @GetMapping("/modulo-ganado/tipo-ganado/baja")

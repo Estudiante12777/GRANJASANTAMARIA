@@ -41,12 +41,6 @@ public class TipoGanadoServiceImpl implements TipoGanadoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarTipoGanado(TipoGanado tipoGanado) {
-        tipoGanadoDao.delete(tipoGanado);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public TipoGanado encontrarTipoGanado(TipoGanado tipoGanado) {
         return tipoGanadoDao.findById(tipoGanado.getIdTipoGanado()).orElse(null);

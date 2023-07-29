@@ -14,8 +14,6 @@ public interface TipoGanadoService {
 
     void guardarTipoGanado(TipoGanado tipoGanado);
 
-    void eliminarTipoGanado(TipoGanado tipoGanado);
-
     TipoGanado encontrarTipoGanado(TipoGanado tipoGanado);
 
     void darBajaTipoGanado(TipoGanado tipoGanado);
