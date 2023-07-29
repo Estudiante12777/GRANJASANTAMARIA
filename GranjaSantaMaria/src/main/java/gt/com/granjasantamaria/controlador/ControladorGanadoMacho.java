@@ -24,23 +24,25 @@ public class ControladorGanadoMacho {
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/images";
 
-    @Autowired
-    private GanadoMachoService ganadoMachoService;
+    private final RazaGanadoService razaGanadoService;
+
+    private final TipoGanadoService tipoGanadoService;
+
+    private final GanadoMachoService ganadoMachoService;
 
     @Autowired
-    private TipoGanadoService tipoGanadoService;
-
-    @Autowired
-    private RazaGanadoService razaGanadoService;
+    public ControladorGanadoMacho(RazaGanadoService razaGanadoService, TipoGanadoService tipoGanadoService, GanadoMachoService ganadoMachoService) {
+        this.razaGanadoService = razaGanadoService;
+        this.tipoGanadoService = tipoGanadoService;
+        this.ganadoMachoService = ganadoMachoService;
+    }
 
     @GetMapping("/modulo-ganado/ganado-macho/lista")
     public String listadoGanadoMachods(@RequestParam(defaultValue = "0") int pagina, Model model) {
         PageRequest pageRequest = PageRequest.of(pagina, 8);
         Page<GanadoMacho> ganadoMachoPage = ganadoMachoService.obtenerGanadoMachoPaginado(pageRequest);
         model.addAttribute("ganadoMachoPage", ganadoMachoPage);
-        var ganadosMacho = ganadoMachoPage.getContent().stream()
-                .limit(8)
-                .collect(Collectors.toList());
+        var ganadosMacho = ganadoMachoPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("ganadosMacho", ganadosMacho);
         return "/pages/modulo-ganado/ganado-macho/ganado-macho";
     }
@@ -63,35 +65,26 @@ public class ControladorGanadoMacho {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            StringBuilder fileNames = new StringBuilder();
             Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
-            fileNames.append(file.getOriginalFilename());
             Files.write(fileNameAndPath, file.getBytes());
             ganadoMacho.setFotografia(file.getOriginalFilename());
             ganadoMachoService.guardarGanadoMacho(ganadoMacho);
             return "redirect:/modulo-ganado/ganado-macho/lista";
         }
     }
-
+    
     @GetMapping("/modulo-ganado/ganado-macho/editar/{idGanadoMacho}")
     public String editarGanadoMacho(GanadoMacho ganadoMacho, Model model) {
-        List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado();
-        List<TipoGanado> listadoTiposGanadoMacho = listaTiposGanado.stream().filter(ganado -> {
+        List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado().stream().filter(ganado -> {
             String tipoGanado = ganado.getNombreTipoGanado();
             return tipoGanado.equals("Toro racero") || tipoGanado.equals("Torete") || tipoGanado.equals("Ternero") || tipoGanado.equals("Becerro");
         }).collect(Collectors.toList());
-        model.addAttribute("listaTiposGanado", listadoTiposGanadoMacho);
+        model.addAttribute("listaTiposGanado", listaTiposGanado);
         List<RazaGanado> listaRazasGanado = razaGanadoService.listadoRazasGanado();
         model.addAttribute("listaRazasGanado", listaRazasGanado);
         ganadoMacho = ganadoMachoService.encontrarGanadoMacho(ganadoMacho);
         model.addAttribute("ganadoMacho", ganadoMacho);
         return "/pages/modulo-ganado/ganado-macho/modificar-ganado-macho";
-    }
-
-    @GetMapping("/modulo-ganado/ganado-macho/eliminar")
-    public String eliminarGanadoMacho(GanadoMacho ganadoMacho) {
-        ganadoMachoService.eliminarGanadoMacho(ganadoMacho);
-        return "redirect:/modulo-ganado/ganado-macho/lista";
     }
 
     @GetMapping("/modulo-ganado/ganado-macho/baja")

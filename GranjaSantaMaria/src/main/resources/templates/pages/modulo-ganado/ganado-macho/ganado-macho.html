@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -9,28 +9,29 @@
 <body>
 <div class="container-fluid py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-    <h5 class="text-center">Ganado Macho</h5>
+    <h5 class="text-center">Ganado macho</h5>
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <a class="btn btn-outline-success" th:href="@{/modulo-ganado/ganado-macho/agregar}"><i
-                class="fa-solid fa-plus"></i> Crear
-            nuevo registro</a>
+                class="fa-solid fa-plus"></i> Agregar ganado macho</a>
     </div>
     <div th:if="${ganadosMacho != null and !ganadosMacho.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Fotografia</th>
-            <th>Nombre</th>
-            <th>Fecha nacimiento</th>
-            <th>Tipo de ganado</th>
-            <th>Categoria de ganado</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                Editar
-            </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
-                Dar baja
-            </th>
+            <tr>
+                <th>Fotografia</th>
+                <th>Nombre</th>
+                <th>Fecha nacimiento</th>
+                <th>Tipo de ganado</th>
+                <th>Categoria de ganado</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    Editar
+                </th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                    Dar baja
+                </th>
+            </tr>
             </thead>
-            <tr th:each="ganado, iterStat : ${ganadosMacho}" th:if="${iterStat.index lt 8}">
+            <tr th:each="ganado, iterStat : ${ganadosMacho}">
                 <td>
                     <img th:src="@{'/images/' + ${ganado.fotografia}}" alt="Fotografía del ganado" width="100"
                          height="100">
@@ -60,7 +61,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" th:id="'editModalLabel_' + ${ganado.idGanadoMacho}">
-                                        ¿Estás seguro de que deseas editar este ganado?
+                                        ¿Estás seguro de que deseas editar este ganado macho?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -92,7 +93,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" th:id="'bajaModalLabel_' + ${ganado.idGanadoMacho}">
-                                        ¿Estás seguro de que deseas dar de baja este ganado?
+                                        ¿Estás seguro de que deseas dar de baja este ganado macho?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -149,21 +150,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de edición */
-    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de edición
-        var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+        let uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>
@@ -172,21 +173,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de dar baja */
-    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    let deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     deleteButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de dar baja
-        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+        let uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>

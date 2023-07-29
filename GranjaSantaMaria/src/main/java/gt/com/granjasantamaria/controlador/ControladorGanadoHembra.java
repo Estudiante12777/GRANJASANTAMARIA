@@ -24,14 +24,18 @@ public class ControladorGanadoHembra {
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/images";
 
-    @Autowired
-    private GanadoHembraService ganadoHembraService;
+    private final RazaGanadoService razaGanadoService;
+
+    private final TipoGanadoService tipoGanadoService;
+
+    private final GanadoHembraService ganadoHembraService;
 
     @Autowired
-    private TipoGanadoService tipoGanadoService;
-
-    @Autowired
-    private RazaGanadoService razaGanadoService;
+    public ControladorGanadoHembra(RazaGanadoService razaGanadoService, TipoGanadoService tipoGanadoService, GanadoHembraService ganadoHembraService) {
+        this.razaGanadoService = razaGanadoService;
+        this.tipoGanadoService = tipoGanadoService;
+        this.ganadoHembraService = ganadoHembraService;
+    }
 
     @GetMapping("/modulo-ganado/ganado-hembra/lista")
     public String listadoGanadosHembra(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -45,12 +49,11 @@ public class ControladorGanadoHembra {
 
     @GetMapping("/modulo-ganado/ganado-hembra/agregar")
     public String agregarGanadoHembra(GanadoHembra ganadoHembra, Model model) {
-        List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado();
-        List<TipoGanado> listadoTiposGanadoHembra = listaTiposGanado.stream().filter(ganado -> {
+        List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado().stream().filter(ganado -> {
             String tipoGanado = ganado.getNombreTipoGanado();
             return tipoGanado.equals("Vaca") || tipoGanado.equals("Novilla") || tipoGanado.equals("Ternera") || tipoGanado.equals("Becerra");
         }).collect(Collectors.toList());
-        model.addAttribute("listaTiposGanado", listadoTiposGanadoHembra);
+        model.addAttribute("listaTiposGanado", listaTiposGanado);
         List<RazaGanado> listaRazasGanado = razaGanadoService.listadoRazasGanado();
         model.addAttribute("listaRazasGanado", listaRazasGanado);
         return "/pages/modulo-ganado/ganado-hembra/modificar-ganado-hembra";

@@ -41,12 +41,6 @@ public class GanadoMachoServiceImpl implements GanadoMachoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarGanadoMacho(GanadoMacho ganadoMacho) {
-        ganadoMachoDao.delete(ganadoMacho);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public GanadoMacho encontrarGanadoMacho(GanadoMacho ganadoMacho) {
         return ganadoMachoDao.findById(ganadoMacho.getIdGanadoMacho()).orElse(null);
