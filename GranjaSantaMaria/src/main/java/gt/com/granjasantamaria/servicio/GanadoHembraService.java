@@ -14,8 +14,6 @@ public interface GanadoHembraService {
 
     void guardarGanadoHembra(GanadoHembra ganadoHembra);
 
-    void eliminarGanadoHembra(GanadoHembra ganadoHembra);
-
     GanadoHembra encontrarGanadoHembra(GanadoHembra ganadoHembra);
 
     void darBajaGanadoHembra(GanadoHembra ganadoHembra);

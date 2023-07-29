@@ -64,9 +64,7 @@ public class ControladorGanadoHembra {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            StringBuilder fileNames = new StringBuilder();
             Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
-            fileNames.append(file.getOriginalFilename());
             Files.write(fileNameAndPath, file.getBytes());
             ganadoHembra.setFotografia(file.getOriginalFilename());
             ganadoHembraService.guardarGanadoHembra(ganadoHembra);
@@ -87,12 +85,6 @@ public class ControladorGanadoHembra {
         ganadoHembra = ganadoHembraService.encontrarGanadoHembra(ganadoHembra);
         model.addAttribute("ganadoHembra", ganadoHembra);
         return "/pages/modulo-ganado/ganado-hembra/modificar-ganado-hembra";
-    }
-
-    @GetMapping("/modulo-ganado/ganado-hembra/eliminar")
-    public String eliminarGanadoHembra(GanadoHembra ganadoHembra) {
-        ganadoHembraService.eliminarGanadoHembra(ganadoHembra);
-        return "redirect:/modulo-ganado/ganado-hembra/lista";
     }
 
     @GetMapping("/modulo-ganado/ganado-hembra/baja")

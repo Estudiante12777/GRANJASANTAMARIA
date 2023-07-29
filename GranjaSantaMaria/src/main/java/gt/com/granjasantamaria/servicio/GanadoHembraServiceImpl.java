@@ -42,12 +42,6 @@ public class GanadoHembraServiceImpl implements GanadoHembraService {
     }
 
     @Override
-    @Transactional
-    public void eliminarGanadoHembra(GanadoHembra ganadoHembra) {
-        ganadoHembraDao.delete(ganadoHembra);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public GanadoHembra encontrarGanadoHembra(GanadoHembra ganadoHembra) {
         return ganadoHembraDao.findById(ganadoHembra.getIdGanadoHembra()).orElse(null);
