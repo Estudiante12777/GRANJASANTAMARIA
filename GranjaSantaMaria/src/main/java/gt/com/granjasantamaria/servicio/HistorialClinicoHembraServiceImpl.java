@@ -31,12 +31,6 @@ public class HistorialClinicoHembraServiceImpl implements HistorialClinicoHembra
     }
 
     @Override
-    @Transactional
-    public void eliminarHistorialClinicoHembra(HistorialClinicoHembra historialClinicoHembra) {
-        historialClinicoHembraDao.delete(historialClinicoHembra);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public HistorialClinicoHembra encontrarHistorialClincioHembra(HistorialClinicoHembra historialClinicoHembra) {
         return historialClinicoHembraDao.findById(historialClinicoHembra.getIdHistorialClinicoHembra()).orElse(null);

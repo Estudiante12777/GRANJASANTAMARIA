@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorHistorialClinicoHembra {
 
-    @Autowired
-    private HistorialClinicoHembraService historialClinicoHembraService;
+    private final GanadoHembraService ganadoHembraService;
+
+    private final HistorialClinicoHembraService historialClinicoHembraService;
 
     @Autowired
-    private GanadoHembraService ganadoHembraService;
+    public ControladorHistorialClinicoHembra(GanadoHembraService ganadoHembraService, HistorialClinicoHembraService historialClinicoHembraService) {
+        this.ganadoHembraService = ganadoHembraService;
+        this.historialClinicoHembraService = historialClinicoHembraService;
+    }
 
     @GetMapping("/modulo-ganado/historial-clinico-hembra/lista")
     public String obtenerListadoHistorialClinicoHembras(Model model) {
@@ -37,7 +41,7 @@ public class ControladorHistorialClinicoHembra {
     }
 
     @PostMapping("/modulo-ganado/historial-clinico-hembra/guardar")
-    public String guardarHistorialClinicoHembra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) HistorialClinicoHembra historialClinicoHembra, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarHistorialClinicoHembra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) HistorialClinicoHembra historialClinicoHembra, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
@@ -53,12 +57,6 @@ public class ControladorHistorialClinicoHembra {
         historialClinicoHembra = historialClinicoHembraService.encontrarHistorialClincioHembra(historialClinicoHembra);
         model.addAttribute("historialClinicoHembra", historialClinicoHembra);
         return "/pages/modulo-ganado/historial-clinico-hembra/modificar-historial-clinico-hembra";
-    }
-
-    @GetMapping("/modulo-ganado/historial-clinico-hembra/eliminar")
-    public String eliminarHistorialClinicoHembra(HistorialClinicoHembra historialClinicoHembra) {
-        historialClinicoHembraService.eliminarHistorialClinicoHembra(historialClinicoHembra);
-        return "redirect:/modulo-ganado/historial-clinico-hembra/lista";
     }
 
     @GetMapping("/modulo-ganado/historial-clinico-hembra/baja")

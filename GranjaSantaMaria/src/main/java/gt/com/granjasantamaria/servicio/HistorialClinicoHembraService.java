@@ -9,8 +9,6 @@ public interface HistorialClinicoHembraService {
 
     void guardarHistorialClinicoHembra(HistorialClinicoHembra historialClinicoHembra);
 
-    void eliminarHistorialClinicoHembra(HistorialClinicoHembra historialClinicoHembra);
-
     HistorialClinicoHembra encontrarHistorialClincioHembra(HistorialClinicoHembra historialClinicoHembra);
 
     void darBajaHistorialClinicoHembra(HistorialClinicoHembra historialClinicoHembra);
