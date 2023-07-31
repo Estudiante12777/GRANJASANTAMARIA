@@ -31,12 +31,6 @@ public class HistorialClinicioMachoServiceImpl implements HistorialClinicioMacho
     }
 
     @Override
-    @Transactional
-    public void eliminarHistorialClinicoMacho(HistorialClinicoMacho historialClinicoMacho) {
-        historialClinicoMachoDao.delete(historialClinicoMacho);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public HistorialClinicoMacho encontrarHistorialClinicoMacho(HistorialClinicoMacho historialClinicoMacho) {
         return historialClinicoMachoDao.findById(historialClinicoMacho.getIdHistorialClinicoMacho()).orElse(null);

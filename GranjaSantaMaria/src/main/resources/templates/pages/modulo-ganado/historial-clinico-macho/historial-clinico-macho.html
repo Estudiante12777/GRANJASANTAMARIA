@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -13,37 +13,35 @@
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <a class="btn btn-outline-success" th:href="@{/modulo-ganado/historial-clinico-macho/agregar}"><i
                 class="fa-solid fa-plus"></i>
-            Crear nuevo registro</a>
+            Agregar historial clinico ganado macho</a>
     </div>
     <div th:if="${historialClinicoMachos != null and !historialClinicoMachos.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Fecha ingreso granja</th>
-            <th>Ganado</th>
-            <th>Procedencia</th>
-            <th>Condiciones fisicas recibido</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                Historial clinico
-            </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                Editar
-            </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
-                Dar baja
-            </th>
+            <tr>
+                <th>Fecha ingreso granja</th>
+                <th>Ganado</th>
+                <th>Procedencia</th>
+                <th>Condiciones fisicas recibido</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    Historial clinico
+                </th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    Editar
+                </th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                    Dar baja
+                </th>
+            </tr>
             </thead>
             <tr th:each="historialClinicoMacho : ${historialClinicoMachos}">
                 <td th:text="${historialClinicoMacho.fechaIngresoGranja}">
-                    Mostrar fecha de produccion de leche
                 </td>
                 <td th:text="${historialClinicoMacho.ganadoMacho.nombreGanadoMacho}">
-                    Mostrar Nombre del ganado
                 </td>
                 <td th:text="${historialClinicoMacho.procedenciaGanadoMacho}">
-                    Mostrar Produccion de leche por la mañana
                 </td>
-                <td th:text="${historialClinicoMacho.condicionesFisicasRecibido}">Mostrar Produccion de leche por
-                    la tarde
+                <td th:text="${historialClinicoMacho.condicionesFisicasRecibido}">
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de alimentacion becerro -->
@@ -206,21 +204,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de edición */
-    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de edición
-        var uniqueModalId = "alimentacionModal_" + modalId.replace("#alimentacionModal_", "");
+        let uniqueModalId = "alimentacionModal_" + modalId.replace("#alimentacionModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>
@@ -229,21 +227,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de edición */
-    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de edición
-        var uniqueModalId = "verModalAlimentacion_" + modalId.replace("#verModalAlimentacion_", "");
+        let uniqueModalId = "verModalAlimentacion_" + modalId.replace("#verModalAlimentacion_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>
@@ -252,21 +250,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de edición */
-    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de edición
-        var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+        let uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>
@@ -275,21 +273,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de dar baja */
-    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    let deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     deleteButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de dar baja
-        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+        let uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>

@@ -2,8 +2,10 @@ package gt.com.granjasantamaria.controlador;
 
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
+
 import java.util.List;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -14,11 +16,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorHistorialClinicioMacho {
 
-    @Autowired
-    private HistorialClinicioMachoService historialClinicioMachoService;
+    private final GanadoMachoService ganadoMachoService;
+
+    private final HistorialClinicioMachoService historialClinicioMachoService;
 
     @Autowired
-    private GanadoMachoService ganadoMachoService;
+    public ControladorHistorialClinicioMacho(GanadoMachoService ganadoMachoService, HistorialClinicioMachoService historialClinicioMachoService) {
+        this.ganadoMachoService = ganadoMachoService;
+        this.historialClinicioMachoService = historialClinicioMachoService;
+    }
 
     @GetMapping("/modulo-ganado/historial-clinico-macho/lista")
     public String obtenerListadoHistorialClinicoMachos(Model model) {
@@ -35,7 +41,7 @@ public class ControladorHistorialClinicioMacho {
     }
 
     @PostMapping("/modulo-ganado/historial-clinico-macho/guardar")
-    public String guardarHistorialClinicoMacho(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) HistorialClinicoMacho historialClinicoMacho, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarHistorialClinicoMacho(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) HistorialClinicoMacho historialClinicoMacho, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
@@ -51,12 +57,6 @@ public class ControladorHistorialClinicioMacho {
         historialClinicoMacho = historialClinicioMachoService.encontrarHistorialClinicoMacho(historialClinicoMacho);
         model.addAttribute("historialClinicoMacho", historialClinicoMacho);
         return "/pages/modulo-ganado/historial-clinico-macho/modificar-historial-clinico-macho";
-    }
-
-    @GetMapping("/modulo-ganado/historial-clinico-macho/eliminar")
-    public String eliminarHistorialClinicoMacho(HistorialClinicoMacho historialClinicoMacho) {
-        historialClinicioMachoService.eliminarHistorialClinicoMacho(historialClinicoMacho);
-        return "redirect:/modulo-ganado/historial-clinico-macho/lista";
     }
 
     @GetMapping("/modulo-ganado/historial-clinico-macho/baja")

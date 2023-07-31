@@ -9,8 +9,6 @@ public interface HistorialClinicioMachoService {
 
     void guardarHistorialClinicoMacho(HistorialClinicoMacho historialClinicoMacho);
 
-    void eliminarHistorialClinicoMacho(HistorialClinicoMacho historialClinicoMacho);
-
     HistorialClinicoMacho encontrarHistorialClinicoMacho(HistorialClinicoMacho historialClinicoMacho);
 
     void darBajaHistorialClinicoMacho(HistorialClinicoMacho historialClinicoMacho);

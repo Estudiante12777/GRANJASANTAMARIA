@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -21,7 +21,7 @@
                             <label class="form-label form-label-lg"
                                    for="ganadoMacho.nombreGanadoMacho">Nombre:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{ganadoMacho.idGanadoMacho}"
+                                <select id="ganadoMacho.nombreGanadoMacho" th:field="*{ganadoMacho.idGanadoMacho}"
                                         name="ganadoMacho.nombreGanadoMacho" required
                                         class="form-select form-select-lg">
                                     <option th:each="ganadoMacho : ${listaGanados}"
@@ -36,7 +36,7 @@
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaIngresoGranja">Fecha ingreso
                                 granja:</label>
-                            <input class=" form-control form-control-lg" type="date" required
+                            <input id="fechaIngresoGranja" class=" form-control form-control-lg" type="date" required
                                    name="fechaIngresoGranja" th:field="*{fechaIngresoGranja}"/>
                             <span th:if="${#fields.hasErrors('fechaIngresoGranja')}" class="text-danger"
                                   th:errors="*{fechaIngresoGranja}">Error fecha de la produccion de leche</span>
@@ -45,8 +45,7 @@
                             <label class="form-label form-label-lg" for="procedenciaGanadoMacho">Procedencia:
                             </label>
                             <input id="procedenciaGanadoMacho" type="text" class="form-control form-control-lg"
-                                   required name="procedenciaGanadoMacho" th:field="*{procedenciaGanadoMacho}"
-                                   onblur="calcularTotal();">
+                                   required name="procedenciaGanadoMacho" th:field="*{procedenciaGanadoMacho}">
                             <span th:if="${#fields.hasErrors('procedenciaGanadoMacho')}" class="text-danger"
                                   th:errors="*{procedenciaGanadoMacho}">Error produccion de leche en la Mañana</span>
                         </div>
@@ -55,8 +54,7 @@
                                 fisicas recibida:
                             </label>
                             <input id="condicionesFisicasRecibido" type="text" class="form-control form-control-lg"
-                                   required name="condicionesFisicasRecibido" th:field="*{condicionesFisicasRecibido}"
-                                   onblur="calcularTotal();">
+                                   required name="condicionesFisicasRecibido" th:field="*{condicionesFisicasRecibido}">
                             <span th:if="${#fields.hasErrors('condicionesFisicasRecibido')}" class="text-danger"
                                   th:errors="*{condicionesFisicasRecibido}">Error produccion de leche en la
                                     tarde</span>
@@ -114,17 +112,17 @@
 <script th:inline="javascript">
     /* Generar ID único para el modal de guardar */
     // Obtén el botón de guardar
-    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
     // Obtén el atributo 'data-bs-target' del botón
-    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
     // Obtén el atributo 'id' del botón
-    var modalIdGuardar = guardarButton.getAttribute("id");
+    let modalIdGuardar = guardarButton.getAttribute("id");
     // Crea un identificador único para el modal de guardar
-    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
     // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-    var modalGuardar = document.querySelector(targetGuardarModalId);
+    let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
 </body>
