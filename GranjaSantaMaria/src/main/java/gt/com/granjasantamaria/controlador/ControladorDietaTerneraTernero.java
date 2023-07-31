@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorDietaTerneraTernero {
 
+    private final DietaTerneraTerneroService dietaTerneraTerneroService;
+
     @Autowired
-    private DietaTerneraTerneroService dietaTerneraTerneroService;
+    public ControladorDietaTerneraTernero(DietaTerneraTerneroService dietaTerneraTerneroService) {
+        this.dietaTerneraTerneroService = dietaTerneraTerneroService;
+    }
 
     @GetMapping("/modulo-ganado/dieta-ternera-ternero/lista")
     public String obtenerListadoDietaTerneraTerneroPaginado(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -51,12 +55,6 @@ public class ControladorDietaTerneraTernero {
         dietaTerneraTernero = dietaTerneraTerneroService.encontrarDietaTerneraTernero(dietaTerneraTernero);
         model.addAttribute("dietaTerneraTernero", dietaTerneraTernero);
         return "/pages/modulo-ganado/dieta-ternera-ternero/modificar-dieta-ternera-ternero";
-    }
-
-    @GetMapping("/modulo-ganado/dieta-ternera-ternero/eliminar")
-    public String eliminarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero) {
-        dietaTerneraTerneroService.eliminarDietaTerneraTernero(dietaTerneraTernero);
-        return "redirect:/modulo-ganado/dieta-ternera-ternero/lista";
     }
 
     @GetMapping("/modulo-ganado/dieta-ternera-ternero/baja")

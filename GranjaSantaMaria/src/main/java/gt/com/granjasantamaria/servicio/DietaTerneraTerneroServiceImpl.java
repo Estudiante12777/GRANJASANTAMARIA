@@ -32,12 +32,6 @@ public class DietaTerneraTerneroServiceImpl implements DietaTerneraTerneroServic
     }
 
     @Override
-    @Transactional
-    public void eliminarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero) {
-        dietaTerneraTerneroDao.delete(dietaTerneraTernero);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public DietaTerneraTernero encontrarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero) {
         return dietaTerneraTerneroDao.findById(dietaTerneraTernero.getIdDietaTerneraTernero()).orElse(null);

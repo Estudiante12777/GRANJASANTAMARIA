@@ -10,8 +10,6 @@ public interface DietaTerneraTerneroService {
 
     void guardarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
 
-    void eliminarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
-
     DietaTerneraTernero encontrarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
 
     void darBajaDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero);
