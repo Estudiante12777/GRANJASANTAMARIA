@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -13,18 +13,20 @@
     <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Fecha</th>
-            <th>Becerro</th>
-            <th>Cantidad mañana</th>
-            <th>Cantidad tarde</th>
-            <th>Total cantidad</th>
-            <th>Madre del becerro</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                Editar
-            </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
-                Dar baja
-            </th>
+            <tr>
+                <th>Fecha</th>
+                <th>Becerro</th>
+                <th>Cantidad mañana</th>
+                <th>Cantidad tarde</th>
+                <th>Total cantidad</th>
+                <th>Madre del becerro</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    Editar
+                </th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                    Dar baja
+                </th>
+            </tr>
             </thead>
             <tr th:each="alimentacionBecerro : ${alimentacionBecerroList}">
                 <td th:text="${alimentacionBecerro[1]}">Mostrar Fecha</td>
@@ -112,9 +114,9 @@
     /* Generar ID único para cada modal */
     /* Inserta este código antes de cerrar la etiqueta </body> */
     /* Obtén todos los botones de edición */
-    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
     /* Obtén todos los botones de dar baja */
-    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    let deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
         asignarIdUnicoModal(button);
@@ -124,18 +126,18 @@
     });
 
     function asignarIdUnicoModal(button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
         // Extrae el tipo de modal ("editModal" o "bajaModal")
-        var modalType = targetModalId.substring(1, targetModalId.indexOf("_"));
+        let modalType = targetModalId.substring(1, targetModalId.indexOf("_"));
         // Extrae el ID del modal sin el prefijo ("editModal_" o "bajaModal_")
-        var modalIdSuffix = modalId.replace("#" + modalType + "Modal_", "");
+        let modalIdSuffix = modalId.replace("#" + modalType + "Modal_", "");
         // Crea un identificador único para el modal
-        var uniqueModalId = modalType + "_" + modalIdSuffix;
+        let uniqueModalId = modalType + "_" + modalIdSuffix;
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     }
 </script>

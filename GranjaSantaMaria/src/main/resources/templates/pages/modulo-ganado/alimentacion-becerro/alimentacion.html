@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -13,12 +13,14 @@
     <div th:if="${alimentacionBecerro != null and !alimentacionBecerro.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Fecha</th>
-            <th>Becerro</th>
-            <th>Cantidad mañana</th>
-            <th>Cantidad tarde</th>
-            <th>Total cantidad</th>
-            <th>Madre del Becerro</th>
+            <tr>
+                <th>Fecha</th>
+                <th>Becerro</th>
+                <th>Cantidad mañana</th>
+                <th>Cantidad tarde</th>
+                <th>Total cantidad</th>
+                <th>Madre del Becerro</th>
+            </tr>
             </thead>
             <tr th:each="alimentacion, iterStat : ${alimentacionBecerro}"
                 th:if="${iterStat.index lt 8}">
