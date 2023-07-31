@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -13,15 +13,15 @@
         <div class="col-md-6 col-sm-8 col-12">
             <div class="card bg-light text-dark">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Inforarmacion sobre la alimentacion para la becerra</h5>
+                    <h5 class="card-title text-center">Alimentacion para becerra y terneras</h5>
                     <form th:action="@{/modulo-ganado/alimentacion-becerra/guardar}" method="post"
                           th:object="${alimentacionBecerra}" id="guardarFormulario">
                         <input type="hidden" name="idAlimentacionBecerra" th:field="*{idAlimentacionBecerra}"/>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="ganadoHembra.idGanadoHembra">Nombre de la
+                            <label class="form-label form-label-lg" for="ganadoHembra.nombreGanadoHembra">Nombre de la
                                 becerra:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{ganadoHembra.idGanadoHembra}"
+                                <select id="ganadoHembra.nombreGanadoHembra" th:field="*{ganadoHembra.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
                                         class="form-select form-select-lg">
                                     <option th:each="ganadoHembra : ${listaGanados}"
@@ -35,13 +35,14 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaAlimentacionBecerra">Fecha:</label>
-                            <input class="form-control form-control-lg" type="date" required
+                            <input id="fechaAlimentacionBecerra" class="form-control form-control-lg" type="date"
+                                   required
                                    name="fechaAlimentacionBecerra" th:field="*{fechaAlimentacionBecerra}"/>
                             <span th:if="${#fields.hasErrors('fechaAlimentacionBecerra')}" class="text-danger"
                                   th:errors="*{fechaAlimentacionBecerra}">Error fecha de la produccion de leche</span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="cantidadManianaAlimentacion">Cantidad
+                            <label class="form-label form-label-lg" for="cantidadManianaAlimentacionBecerraTernera">Cantidad
                                 alimentacion en la mañana:
                             </label>
                             <input id="cantidadManianaAlimentacionBecerraTernera" type="number" step="0.01"
@@ -53,7 +54,7 @@
                                     mañana</span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="cantidadTardeAlimentacion">
+                            <label class="form-label form-label-lg" for="cantidadTardeAlimentacionBecerraTernera">
                                 Cantidad alimentacion en la tarde:
                             </label>
                             <input id="cantidadTardeAlimentacionBecerraTernera" type="number" step="0.01"
@@ -65,7 +66,7 @@
                                     tarde</span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="totalAlimentacionBecerra">
+                            <label class="form-label form-label-lg" for="totalAlimentacionBecerraTernera">
                                 Total cantidad alimentacion:
                             </label>
                             <input id="totalAlimentacionBecerraTernera" type="number" step="0.01"
@@ -129,22 +130,22 @@
     /* Generar ID único para el modal de guardar */
 
     // Obtén el botón de guardar
-    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
 
     // Obtén el atributo 'data-bs-target' del botón
-    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
 
     // Obtén el atributo 'id' del botón
-    var modalIdGuardar = guardarButton.getAttribute("id");
+    let modalIdGuardar = guardarButton.getAttribute("id");
 
     // Crea un identificador único para el modal de guardar
-    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
 
     // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
 
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-    var modalGuardar = document.querySelector(targetGuardarModalId);
+    let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
 </body>

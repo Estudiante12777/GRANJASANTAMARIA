@@ -44,15 +44,9 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, a.fecha_alimentacion_becerra, "
-                + "a.cantidad_maniana_alimentacion, a.cantidad_tarde_alimentacion, a.total_alimentacion_becerra, "
-                + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra "
-                + "FROM alimentacion_becerra AS a "
-                + "INNER JOIN produccion_diaria_leche AS p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche "
-                + "INNER JOIN ganado_hembra AS gh ON gh.id_ganado_hembra = a.id_ganado_hembra "
-                + "INNER JOIN ganado_hembra AS m ON m.id_ganado_hembra = p.id_ganado_hembra "
-                + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = 1";
-        Query query = entityManager.createNativeQuery(sqlQuery);
+        String jpqlQuery = "SELECT gh.nombreGanadoHembra AS nombreBecerra, a.fechaAlimentacionBecerra, " + "a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, " + "m.nombreGanadoHembra AS madreBecerra, " + "a.idAlimentacionBecerra " + "FROM AlimentacionBecerra AS a " + "INNER JOIN a.produccionDiariaLeche AS p " + "INNER JOIN a.ganadoHembra AS gh " + "INNER JOIN p.ganadoHembra AS m " + "WHERE p.idProduccionDiariaLeche = :idProduccionDiariaLeche " + "AND a.estadoAlimentacionBecerra = TRUE"; // Usamos TRUE para la propiedad booleana
+
+        TypedQuery<Object[]> query = entityManager.createQuery(jpqlQuery, Object[].class);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerraList", results);
@@ -61,12 +55,8 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/agregar")
     public String agregarAlimentacionBecerro(AlimentacionBecerra alimentacionBecerra, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
-        // Filtrar la lista de ganado para mostrar solo vacas y novillas
-        List<GanadoHembra> listaTernerasBecerras = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
-        System.out.println("Lista de ganados: " + listaGanados);
-        System.out.println("Lista de Terneras y Becerras: " + listaTernerasBecerras);
-        model.addAttribute("listaGanados", listaTernerasBecerras);
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra().stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
+        model.addAttribute("listaGanados", listaGanados);
         return "/pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
     }
 
@@ -100,12 +90,6 @@ public class ControladorAlimentacionBecerra {
         alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerra(alimentacionBecerra);
         model.addAttribute("alimentacionBecerra", alimentacionBecerra);
         return "/pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
-    }
-
-    @GetMapping("/modulo-ganado/alimentacion-becerra/eliminar")
-    public String eliminarAlimentacionBecerro(AlimentacionBecerra alimentacionBecerra) {
-        alimentacionBecerraService.eliminarAlimentacionBecerra(alimentacionBecerra);
-        return "redirect:/modulo-ganado/alimentacion-becerra/lista";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}")

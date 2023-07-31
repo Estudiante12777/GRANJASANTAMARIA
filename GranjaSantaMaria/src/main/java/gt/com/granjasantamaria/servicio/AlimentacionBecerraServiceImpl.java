@@ -33,12 +33,6 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
     }
 
     @Override
-    @Transactional
-    public void eliminarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra) {
-        alimentacionBecerraDao.delete(alimentacionBecerra);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public AlimentacionBecerra encontrarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra) {
         return alimentacionBecerraDao.findById(alimentacionBecerra.getIdAlimentacionBecerra()).orElse(null);
