@@ -5,9 +5,6 @@ import gt.com.granjasantamaria.servicio.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +20,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorDetalleHistorialClinicoHembra {
 
-    @Autowired
-    private DetalleHistorialClinicoHembraService detalleHistorialClinicoHembraService;
+    private final HistorialClinicoHembraService historialClinicoHembraService;
+
+    private final DetalleHistorialClinicoHembraService detalleHistorialClinicoHembraService;
 
     @Autowired
-    private HistorialClinicoHembraService historialClinicoHembraService;
+    public ControladorDetalleHistorialClinicoHembra(HistorialClinicoHembraService historialClinicoHembraService, DetalleHistorialClinicoHembraService detalleHistorialClinicoHembraService) {
+        this.historialClinicoHembraService = historialClinicoHembraService;
+        this.detalleHistorialClinicoHembraService = detalleHistorialClinicoHembraService;
+    }
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-hembra/lista")
     public String obtenerListadoDetalleHistorialClinicoHembra(@RequestParam("idHistorialClinicoHembra") Long idHistorialClinicoHembra, @RequestParam(defaultValue = "0", required = false) int pagina, Model model) {
@@ -48,7 +49,7 @@ public class ControladorDetalleHistorialClinicoHembra {
     }
 
     @PostMapping("/modulo-ganado/detalle-historial-clinico-hembra/guardar")
-    public String guardarDetalleHistorialClinicoHembra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DetalleHistorialClinicoHembra detalleHistorialClinicoHembra, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarDetalleHistorialClinicoHembra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DetalleHistorialClinicoHembra detalleHistorialClinicoHembra, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             String fieldName = fieldError.getField();

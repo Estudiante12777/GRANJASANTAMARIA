@@ -1,13 +1,11 @@
 package gt.com.granjasantamaria.controlador;
 
-import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoHembra;
 import gt.com.granjasantamaria.modelo.DetalleHistorialClinicoMacho;
 import gt.com.granjasantamaria.modelo.HistorialClinicoMacho;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.*;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +21,15 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorDetalleHistorialClinicoMacho {
 
-    @Autowired
-    private DetalleHistorialClinicoMachoService detalleHistorialClinicoMachoService;
+    private final HistorialClinicioMachoService historialClinicioMachoService;
+
+    private final DetalleHistorialClinicoMachoService detalleHistorialClinicoMachoService;
 
     @Autowired
-    private HistorialClinicioMachoService historialClinicioMachoService;
-
-    @PersistenceContext
-    private EntityManager entityManager;
+    public ControladorDetalleHistorialClinicoMacho(HistorialClinicioMachoService historialClinicioMachoService, DetalleHistorialClinicoMachoService detalleHistorialClinicoMachoService) {
+        this.historialClinicioMachoService = historialClinicioMachoService;
+        this.detalleHistorialClinicoMachoService = detalleHistorialClinicoMachoService;
+    }
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/lista")
     public String obtenerListadoDetalleHistorialClinicoHembra(@RequestParam("idHistorialClinicoMacho") Long idHistorialClinicoMacho, @RequestParam(defaultValue = "0", required = false) int pagina, Model model) {
@@ -51,7 +50,7 @@ public class ControladorDetalleHistorialClinicoMacho {
     }
 
     @PostMapping("/modulo-ganado/detalle-historial-clinico-macho/guardar")
-    public String guardarDetalleHistorialClinicoMacho(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DetalleHistorialClinicoMacho detalleHistorialClinicoMacho, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarDetalleHistorialClinicoMacho(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DetalleHistorialClinicoMacho detalleHistorialClinicoMacho, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             String fieldName = fieldError.getField();

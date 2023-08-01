@@ -44,8 +44,7 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String jpqlQuery = "SELECT gh.nombreGanadoHembra AS nombreBecerra, a.fechaAlimentacionBecerra, " + "a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, " + "m.nombreGanadoHembra AS madreBecerra, " + "a.idAlimentacionBecerra " + "FROM AlimentacionBecerra AS a " + "INNER JOIN a.produccionDiariaLeche AS p " + "INNER JOIN a.ganadoHembra AS gh " + "INNER JOIN p.ganadoHembra AS m " + "WHERE p.idProduccionDiariaLeche = :idProduccionDiariaLeche " + "AND a.estadoAlimentacionBecerra = TRUE"; // Usamos TRUE para la propiedad booleana
-
+        String jpqlQuery = "SELECT gh.nombreGanadoHembra AS nombreBecerra, a.fechaAlimentacionBecerra, " + "a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, " + "m.nombreGanadoHembra AS madreBecerra, " + "a.idAlimentacionBecerra " + "FROM AlimentacionBecerra AS a " + "INNER JOIN a.produccionDiariaLeche AS p " + "INNER JOIN a.ganadoHembra AS gh " + "INNER JOIN p.ganadoHembra AS m " + "WHERE p.idProduccionDiariaLeche = :idProduccionDiariaLeche " + "AND a.estadoAlimentacionBecerra = TRUE";
         TypedQuery<Object[]> query = entityManager.createQuery(jpqlQuery, Object[].class);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
