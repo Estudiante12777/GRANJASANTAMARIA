@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -13,7 +13,7 @@
         <div class="col-md-6 col-sm-8 col-12">
             <div class="card bg-light text-dark">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Informacion de la preñes</h5>
+                    <h5 class="card-title text-center">Preñes ganado hembra</h5>
                     <form th:action="@{/modulo-ganado/prenies-ganado/guardar}" method="post"
                           th:object="${preniesGanadoHembra}" id="guardarFormulario">
                         <input type="hidden" name="idPreniesGanadoHembra"
@@ -22,7 +22,7 @@
                             <label class="form-label form-label-lg"
                                    for="ganadoHembra.nombreGanadoHembra">Nombre:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{ganadoHembra.idGanadoHembra}"
+                                <select id="ganadoHembra.nombreGanadoHembra" th:field="*{ganadoHembra.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
                                         class="form-select form-select-lg">
                                     <option th:each="ganadoHembra : ${ganadoHembras}"
@@ -36,7 +36,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaPrenies">Fecha preñes:</label>
-                            <input class=" form-control form-control-lg" type="date" required
+                            <input id="fechaPrenies" class=" form-control form-control-lg" type="date" required
                                    name="fechaPrenies" th:field="*{fechaPrenies}"/>
                             <span th:if="${#fields.hasErrors('fechaPrenies')}" class="text-danger"
                                   th:errors="*{fechaPrenies}">Error fecha de preñes</span>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaConcepcion">Fecha concepcion:</label>
-                            <input class=" form-control form-control-lg" type="date"
+                            <input id="fechaConcepcion" class=" form-control form-control-lg" type="date"
                                    name="fechaConcepcion" th:field="*{fechaConcepcion}"/>
                             <span th:if="${#fields.hasErrors('fechaConcepcion')}" class="text-danger"
                                   th:errors="*{fechaConcepcion}">Error fecha de preñes</span>
@@ -107,17 +107,17 @@
 <script th:inline="javascript">
     /* Generar ID único para el modal de guardar */
     // Obtén el botón de guardar
-    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
     // Obtén el atributo 'data-bs-target' del botón
-    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
     // Obtén el atributo 'id' del botón
-    var modalIdGuardar = guardarButton.getAttribute("id");
+    let modalIdGuardar = guardarButton.getAttribute("id");
     // Crea un identificador único para el modal de guardar
-    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
     // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-    var modalGuardar = document.querySelector(targetGuardarModalId);
+    let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
 </body>

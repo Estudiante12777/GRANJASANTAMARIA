@@ -23,11 +23,15 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorPreniesGanadoHembra {
 
-    @Autowired
-    private PreniesGanadoHembraService preniesGanadoHembraService;
+    private final GanadoHembraService ganadoHembraService;
+
+    private final PreniesGanadoHembraService preniesGanadoHembraService;
 
     @Autowired
-    private GanadoHembraService ganadoHembraService;
+    ControladorPreniesGanadoHembra(GanadoHembraService ganadoHembraService, PreniesGanadoHembraService preniesGanadoHembraService) {
+        this.ganadoHembraService = ganadoHembraService;
+        this.preniesGanadoHembraService = preniesGanadoHembraService;
+    }
 
     @GetMapping("/modulo-ganado/prenies-ganado/lista")
     public String obtenerListadoPreniesGanadoHembraPaginado(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -74,12 +78,6 @@ public class ControladorPreniesGanadoHembra {
         preniesGanadoHembra = preniesGanadoHembraService.encontrarPreniesGanadoHembra(preniesGanadoHembra);
         model.addAttribute("preniesGanadoHembra", preniesGanadoHembra);
         return "/pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
-    }
-
-    @GetMapping("/modulo-ganado/prenies-ganado/eliminar")
-    public String eliminarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra) {
-        preniesGanadoHembraService.eliminarPreniesGanadoHembra(preniesGanadoHembra);
-        return "redirect:/modulo-ganado/prenies-ganado/lista";
     }
 
     @GetMapping("/modulo-ganado/prenies-ganado/baja")

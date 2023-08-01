@@ -15,8 +15,6 @@ public interface PreniesGanadoHembraService {
 
     void guardarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
-    void eliminarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
-
     PreniesGanadoHembra encontrarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
     void darBajaPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);

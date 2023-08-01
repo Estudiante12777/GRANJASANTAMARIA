@@ -41,12 +41,6 @@ public class PreniesGanadoHembraServiceImpl implements PreniesGanadoHembraServic
     }
 
     @Override
-    @Transactional
-    public void eliminarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra) {
-        preniesGanadoHembraDao.delete(preniesGanadoHembra);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public PreniesGanadoHembra encontrarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra) {
         return preniesGanadoHembraDao.findById(preniesGanadoHembra.getIdPreniesGanadoHembra()).orElse(null);
