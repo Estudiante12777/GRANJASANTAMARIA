@@ -50,8 +50,8 @@ public class ControladorDetalleHistorialClinicoHembra {
 
     @PostMapping("/modulo-ganado/detalle-historial-clinico-hembra/guardar")
     public String guardarDetalleHistorialClinicoHembra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DetalleHistorialClinicoHembra detalleHistorialClinicoHembra, BindingResult bindingResult) throws Exception {
-        if (bindingResult.hasErrors()) {
-            FieldError fieldError = bindingResult.getFieldError();
+        FieldError fieldError = bindingResult.getFieldError();
+        if (fieldError != null) {
             String fieldName = fieldError.getField();
             throw new Exception("Error el campo, " + fieldName + " no puede estar vacío el campo");
         } else {
