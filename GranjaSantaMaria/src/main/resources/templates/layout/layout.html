@@ -131,29 +131,27 @@
             let cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
             let precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
             let descuento = parseFloat(document.getElementById('descuentoProducto').value);
-            let totalVenta = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
-            document.getElementById('totalPrecioProducto').value = totalVenta;
+            document.getElementById('totalPrecioProducto').value = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
         }
 
         function calcularTotalDiarioGasto() {
             let cantidad = parseFloat(document.getElementById('unidadesAdquiridas').value);
             let valorUnitario = parseFloat(document.getElementById('valorUnitario').value);
-            let valorTotal = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
-            document.getElementById('valorTotal').value = valorTotal;
+            document.getElementById('valorTotal').value = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
+
         }
 
         function calcularTotalAlimentacionBecerrasTerneras() {
             let alimentacionManianaBecerrasTerneras = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerraTernera').value);
             let alimentacionTardeBecerrasTerneras = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerraTernera').value);
-            let totalAlimentacionBecerrasTerneras = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
-            document.getElementById('totalAlimentacionBecerraTernera').value = totalAlimentacionBecerrasTerneras;
+            document.getElementById('totalAlimentacionBecerraTernera').value = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
         }
 
         function calcularTotalAlimentacionBecerrosTerneros() {
             let alimentacionManianaBecerrosTerneros = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerroTernero').value);
             let alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
-            let totalAlimentacionBecerrosTerneros = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
-            document.getElementById('totalAlimentacionBecerroTernero').value = totalAlimentacionBecerrosTerneros;
+            document.getElementById('totalAlimentacionBecerroTernero').value = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
+
         }
 
         function mostrarExistencia(idInventarioProducto) {

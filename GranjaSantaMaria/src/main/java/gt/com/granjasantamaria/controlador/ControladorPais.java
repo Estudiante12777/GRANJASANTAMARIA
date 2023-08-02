@@ -23,12 +23,12 @@ public class ControladorPais {
     public String listaPais(Model model) {
         var paises = paisService.listadoPais();
         model.addAttribute("paises", paises);
-        return "/pages/modulo-ubicacion/pais/pais";
+        return "pages/modulo-ubicacion/pais/pais";
     }
 
     @GetMapping("/modulo-ubicacion/pais/agregar")
     public String agregarPais(Pais pais) {
-        return "/pages/modulo-ubicacion/pais/modificar-pais";
+        return "pages/modulo-ubicacion/pais/modificar-pais";
     }
 
     @PostMapping("/modulo-ubicacion/pais/guardar")
@@ -45,7 +45,7 @@ public class ControladorPais {
     public String editarPais(Pais pais, Model model) {
         pais = paisService.encontrarPais(pais);
         model.addAttribute("pais", pais);
-        return "/pages/modulo-ubicacion/pais/modificar-pais";
+        return "pages/modulo-ubicacion/pais/modificar-pais";
     }
 
 

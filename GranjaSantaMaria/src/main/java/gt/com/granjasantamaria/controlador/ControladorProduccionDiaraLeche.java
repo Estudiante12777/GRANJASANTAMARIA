@@ -40,7 +40,7 @@ public class ControladorProduccionDiaraLeche {
     public String listaProduccionDiariaLeche(Model model) {
         var listaProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaProduccionDiariaLeche();
         model.addAttribute("listaProduccionDiariaLeche", listaProduccionDiariaLeche);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/produccion-diaria-leche";
+        return "pages/modulo-produccion-lacteos/produccion-diaria-leche/produccion-diaria-leche";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha")
@@ -53,7 +53,7 @@ public class ControladorProduccionDiaraLeche {
                         || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
                 .collect(Collectors.toList());
         model.addAttribute("listadoGanadoHembra", listaVacasNovillas);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
+        return "pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/encontrar-total-produccion-fecha")
@@ -76,7 +76,7 @@ public class ControladorProduccionDiaraLeche {
         List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLechePage.getContent(); // Obtener los elementos de la página actual
         model.addAttribute("totalProduccionesFecha", totalProduccionesFecha);
         model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
+        return "pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf")
@@ -136,7 +136,7 @@ public class ControladorProduccionDiaraLeche {
                         || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
                 .collect(Collectors.toList());
         model.addAttribute("listaGanados", listaVacasNovillas);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
+        return "pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
     }
 
     @GetMapping("/verificar-prenes/{idGanadoHembra}")
@@ -185,7 +185,7 @@ public class ControladorProduccionDiaraLeche {
         model.addAttribute("listaGanados", listaVacasNovillas);
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);
         model.addAttribute("produccionDiariaLeche", produccionDiariaLeche);
-        return "/pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
+        return "pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/eliminar")

@@ -32,12 +32,12 @@ public class ControladorDietaTerneraTernero {
         model.addAttribute("dietaTerneraTerneroPage", dietaTerneraTerneroPage);
         var dietaTerneraTernero = dietaTerneraTerneroPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("dietaTerneraTernero", dietaTerneraTernero);
-        return "/pages/modulo-ganado/dieta-ternera-ternero/dieta-ternera-ternero";
+        return "pages/modulo-ganado/dieta-ternera-ternero/dieta-ternera-ternero";
     }
 
     @GetMapping("/modulo-ganado/dieta-ternera-ternero/agregar")
     public String agregarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero) {
-        return "/pages/modulo-ganado/dieta-ternera-ternero/modificar-dieta-ternera-ternero";
+        return "pages/modulo-ganado/dieta-ternera-ternero/modificar-dieta-ternera-ternero";
     }
 
     @PostMapping("/modulo-ganado/dieta-ternera-ternero/guardar")
@@ -54,7 +54,7 @@ public class ControladorDietaTerneraTernero {
     public String editarDietaTerneraTernero(DietaTerneraTernero dietaTerneraTernero, Model model) {
         dietaTerneraTernero = dietaTerneraTerneroService.encontrarDietaTerneraTernero(dietaTerneraTernero);
         model.addAttribute("dietaTerneraTernero", dietaTerneraTernero);
-        return "/pages/modulo-ganado/dieta-ternera-ternero/modificar-dieta-ternera-ternero";
+        return "pages/modulo-ganado/dieta-ternera-ternero/modificar-dieta-ternera-ternero";
     }
 
     @GetMapping("/modulo-ganado/dieta-ternera-ternero/baja")

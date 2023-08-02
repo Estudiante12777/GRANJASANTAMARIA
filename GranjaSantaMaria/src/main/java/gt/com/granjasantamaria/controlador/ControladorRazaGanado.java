@@ -32,12 +32,12 @@ public class ControladorRazaGanado {
         model.addAttribute("razaGanadoPage", razaGanadoPage);
         var razaGanados = razaGanadoPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("razaGanados", razaGanados);
-        return "/pages/modulo-ganado/raza-ganado/raza-ganado";
+        return "pages/modulo-ganado/raza-ganado/raza-ganado";
     }
 
     @GetMapping("/modulo-ganado/raza-ganado/agregar")
     public String agregarRazaGanado(RazaGanado razaGanado) {
-        return "/pages/modulo-ganado/raza-ganado/modificar-raza-ganado";
+        return "pages/modulo-ganado/raza-ganado/modificar-raza-ganado";
     }
 
     @PostMapping("/modulo-ganado/raza-ganado/guardar")
@@ -54,7 +54,7 @@ public class ControladorRazaGanado {
     public String editarRazaGanado(RazaGanado razaGanado, Model model) {
         razaGanado = razaGanadoService.encontrarRazaGando(razaGanado);
         model.addAttribute("razaGanado", razaGanado);
-        return "/pages/modulo-ganado/raza-ganado/modificar-raza-ganado";
+        return "pages/modulo-ganado/raza-ganado/modificar-raza-ganado";
     }
 
     @GetMapping("/modulo-ganado/raza-ganado/baja")

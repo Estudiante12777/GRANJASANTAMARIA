@@ -41,7 +41,7 @@ public class ControladorInventarioProducto {
         model.addAttribute("inventarioProductoPage", inventarioProductoPage);
         List<InventarioProducto> inventarioProductos = inventarioProductoPage.getContent().stream().filter(inventarioProducto -> inventarioProducto.getCantidadIngresadaProducto() > inventarioProducto.getCantidadVendidaHastaHoy()).limit(10).collect(Collectors.toList());
         model.addAttribute("inventarioProductos", inventarioProductos);
-        return "/pages/modulo-inventario/inventario-producto/inventario-producto";
+        return "pages/modulo-inventario/inventario-producto/inventario-producto";
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/total-inventario-producto-fecha")
@@ -50,7 +50,7 @@ public class ControladorInventarioProducto {
         model.addAttribute("listaTotalInventarioProducto", listaTotalInventarioProducto);
         var obtenerListaProductoDetallado = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("obtenerListaProductoDetallado", obtenerListaProductoDetallado);
-        return "/pages/modulo-inventario/inventario-producto/total-inventario-producto-fecha";
+        return "pages/modulo-inventario/inventario-producto/total-inventario-producto-fecha";
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/encontrar-total-inventario-producto-fecha")
@@ -73,7 +73,7 @@ public class ControladorInventarioProducto {
         List<InventarioProducto> totalInventarioProductoFecha = inventarioProductoPage.getContent(); // Obtener los elementos de la página actual
         model.addAttribute("totalInventarioProductoFecha", totalInventarioProductoFecha);
         model.addAttribute("inventarioProductoPage", inventarioProductoPage);
-        return "/pages/modulo-inventario/inventario-producto/total-inventario-producto-fecha";
+        return "pages/modulo-inventario/inventario-producto/total-inventario-producto-fecha";
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/total-inventario-producto-fecha/pdf")
@@ -130,14 +130,14 @@ public class ControladorInventarioProducto {
     public String agregarInventarioProducto(InventarioProducto inventarioProducto, Model model) {
         List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
-        return "/pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
+        return "pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
     }
 
     @PostMapping("/modulo-inventario/inventario-producto/guardar")
     public String guardarInventarioProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) InventarioProducto inventarioProducto,
                                             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "/pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
+            return "pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
         } else {
             List<DetalleProducto> listaDetalleProductos = detalleProductoService.obtenerListadoDetalleProductos();
             model.addAttribute("listaDetalleProductos", listaDetalleProductos);
@@ -153,7 +153,7 @@ public class ControladorInventarioProducto {
         model.addAttribute("listaDetalleProductos", listaDetalleProductos);
         inventarioProducto = inventarioProductoService.encontrarInventarioProducto(inventarioProducto);
         model.addAttribute("inventarioProducto", inventarioProducto);
-        return "/pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
+        return "pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/eliminar")

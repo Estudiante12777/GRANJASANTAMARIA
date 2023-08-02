@@ -38,7 +38,7 @@ public class ControladorMunicipio {
         model.addAttribute("municipioPage", municipioPage);
         var municipios = municipioPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("municipios", municipios);
-        return "/pages/modulo-ubicacion/municipio/municipio";
+        return "pages/modulo-ubicacion/municipio/municipio";
     }
 
     @GetMapping("/modulo-ubicacion/municipio/agregar")
@@ -47,7 +47,7 @@ public class ControladorMunicipio {
         model.addAttribute("listadoDepartamentos", listadoDepartamentos);
         List<Pais> listadoPaises = paisService.listadoPais();
         model.addAttribute("listadoPaises", listadoPaises);
-        return "/pages/modulo-ubicacion/municipio/modificar-municipio";
+        return "pages/modulo-ubicacion/municipio/modificar-municipio";
     }
 
     @PostMapping("/modulo-ubicacion/municipio/guardar")
@@ -68,7 +68,7 @@ public class ControladorMunicipio {
         model.addAttribute("listadoPaises", listadoPaises);
         municipio = municipioService.encontrarMunicipio(municipio);
         model.addAttribute("municipio", municipio);
-        return "/pages/modulo-ubicacion/municipio/modificar-municipio";
+        return "pages/modulo-ubicacion/municipio/modificar-municipio";
     }
 
     @GetMapping("/modulo-ubicacion/municipio/baja")

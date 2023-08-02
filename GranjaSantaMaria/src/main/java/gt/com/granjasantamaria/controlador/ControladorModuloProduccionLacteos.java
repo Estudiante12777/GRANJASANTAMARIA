@@ -8,6 +8,6 @@ public class ControladorModuloProduccionLacteos {
 
     @GetMapping("/modulo-produccion-lacteos")
     public String produccionLacteos() {
-        return "/pages/modulo-produccion-lacteos/modulo-produccion-lacteos";
+        return "pages/modulo-produccion-lacteos/modulo-produccion-lacteos";
     }
 }

@@ -8,6 +8,6 @@ public class ControladorModuloGanado {
 
     @GetMapping("/modulo-ganado")
     public String ganado() {
-        return "/pages/modulo-ganado/modulo-ganado";
+        return "pages/modulo-ganado/modulo-ganado";
     }
 }

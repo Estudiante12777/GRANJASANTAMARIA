@@ -35,14 +35,14 @@ public class ControladorDepartamento {
         model.addAttribute("departamentoPage", departamentoPage);
         var departamentos = departamentoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("departamentos", departamentos);
-        return "/pages/modulo-ubicacion/departamento/departamento";
+        return "pages/modulo-ubicacion/departamento/departamento";
     }
 
     @GetMapping("/modulo-departamento/departamento/agregar")
     public String agregarDepartamento(Departamento departamento, Model model) {
         List<Pais> listadoPaises = paisService.listadoPais();
         model.addAttribute("listadoPaises", listadoPaises);
-        return "/pages/modulo-ubicacion/departamento/modificar-departamento";
+        return "pages/modulo-ubicacion/departamento/modificar-departamento";
     }
 
     @PostMapping("/modulo-ubicacion/departamento/guardar")
@@ -61,7 +61,7 @@ public class ControladorDepartamento {
         model.addAttribute("listadoPaises", listadoPaises);
         departamento = departamentoService.encontrarDepartamento(departamento);
         model.addAttribute("departamento", departamento);
-        return "/pages/modulo-ubicacion/departamento/modificar-departamento";
+        return "pages/modulo-ubicacion/departamento/modificar-departamento";
     }
 
     @GetMapping("/modulo-ubicacion/departamento/baja")

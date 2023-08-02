@@ -8,7 +8,7 @@ public class ControladorModuloInventario {
 
     @GetMapping("/modulo-inventario")
     public String moduloInventario() {
-        return "/pages/modulo-inventario/modulo-inventario";
+        return "pages/modulo-inventario/modulo-inventario";
     }
 
 }

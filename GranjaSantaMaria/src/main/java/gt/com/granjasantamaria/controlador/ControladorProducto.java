@@ -28,12 +28,12 @@ public class ControladorProducto {
         model.addAttribute("productoPage", productoPage);
         var productos = productoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("productos", productos);
-        return "/pages/modulo-producto/producto/producto";
+        return "pages/modulo-producto/producto/producto";
     }
 
     @GetMapping("/modulo-producto/producto/agregar")
     public String agregarProveedor(Producto producto, Model model) {
-        return "/pages/modulo-producto/producto/modificar-producto";
+        return "pages/modulo-producto/producto/modificar-producto";
     }
 
     @PostMapping("/modulo-producto/producto/guardar")
@@ -50,7 +50,7 @@ public class ControladorProducto {
     public String editarProducto(Producto producto, Model model) {
         producto = productoService.encontranProducto(producto);
         model.addAttribute("producto", producto);
-        return "/pages/modulo-producto/producto/modificar-producto";
+        return "pages/modulo-producto/producto/modificar-producto";
     }
 
     @GetMapping("/modulo-producto/producto/eliminar")

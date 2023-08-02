@@ -40,7 +40,7 @@ public class ControladorPreniesGanadoHembra {
         model.addAttribute("preniesGanadoHembraPage", preniesGanadoHembraPage);
         var preniesGanadoHembras = preniesGanadoHembraPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("preniesGanadoHembras", preniesGanadoHembras);
-        return "/pages/modulo-ganado/prenies-ganado/prenies-ganado";
+        return "pages/modulo-ganado/prenies-ganado/prenies-ganado";
     }
 
     @GetMapping("/modulo-ganado/prenies-ganado/agregar")
@@ -48,7 +48,7 @@ public class ControladorPreniesGanadoHembra {
         List<GanadoHembra> ganadoHembras = ganadoHembraService.obtenerListadoGanadosHembra();
         List<GanadoHembra> ganadoHembraList = ganadoHembras.stream().filter(ganadoHembra -> ganadoHembra.getTipoGanado().getNombreTipoGanado().equals("Novilla") || ganadoHembra.getTipoGanado().getNombreTipoGanado().equals("Vaca")).collect(Collectors.toList());
         model.addAttribute("ganadoHembras", ganadoHembraList);
-        return "/pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
+        return "pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
     }
 
     @PostMapping("/modulo-ganado/prenies-ganado/guardar")
@@ -56,7 +56,7 @@ public class ControladorPreniesGanadoHembra {
         if (bindingResult.hasErrors()) {
             List<GanadoHembra> ganadoHembras = ganadoHembraService.obtenerListadoGanadosHembra();
             model.addAttribute("ganadoHembras", ganadoHembras);
-            return "/pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
+            return "pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
         }
         try {
             preniesGanadoHembraService.guardarPreniesGanadoHembra(preniesGanadoHembra);
@@ -65,7 +65,7 @@ public class ControladorPreniesGanadoHembra {
             model.addAttribute("error", "Error al guardar el registro de preñes.");
             List<GanadoHembra> ganadoHembras = ganadoHembraService.obtenerListadoGanadosHembra();
             model.addAttribute("ganadoHembras", ganadoHembras);
-            return "/pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
+            return "pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
         }
     }
 
@@ -77,7 +77,7 @@ public class ControladorPreniesGanadoHembra {
         model.addAttribute("idPreniesGanadoHembra", idPreniesGanadoHembra);
         preniesGanadoHembra = preniesGanadoHembraService.encontrarPreniesGanadoHembra(preniesGanadoHembra);
         model.addAttribute("preniesGanadoHembra", preniesGanadoHembra);
-        return "/pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
+        return "pages/modulo-ganado/prenies-ganado/modificar-prenies-ganado";
     }
 
     @GetMapping("/modulo-ganado/prenies-ganado/baja")

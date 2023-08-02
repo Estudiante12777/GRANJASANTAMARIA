@@ -28,12 +28,12 @@ public class ControladorMedidaProducto {
         model.addAttribute("medidaProductoPage", medidaProductoPage);
         var medidaProductos = medidaProductoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("medidaProductos", medidaProductos);
-        return "/pages/modulo-producto/medida-producto/medida-producto";
+        return "pages/modulo-producto/medida-producto/medida-producto";
     }
 
     @GetMapping("/modulo-producto/medida-producto/agregar")
     public String agregarMedidaProducto(MedidaProducto medidaProducto, Model model) {
-        return "/pages/modulo-producto/medida-producto/modificar-medida-producto";
+        return "pages/modulo-producto/medida-producto/modificar-medida-producto";
     }
 
     @PostMapping("/modulo-producto/medida-producto/guardar")
@@ -50,7 +50,7 @@ public class ControladorMedidaProducto {
     public String editarMedidaProducto(MedidaProducto medidaProducto, Model model) {
         medidaProducto = medidaProductoService.encontrarMedidaProducto(medidaProducto);
         model.addAttribute("medidaProducto", medidaProducto);
-        return "/pages/modulo-producto/medida-producto/modificar-medida-producto";
+        return "pages/modulo-producto/medida-producto/modificar-medida-producto";
     }
 
     @GetMapping("/modulo-producto/medida-producto/eliminar")

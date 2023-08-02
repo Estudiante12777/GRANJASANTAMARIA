@@ -23,23 +23,27 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorVentaProducto {
 
-    @Autowired
-    private VentaProductoService ventaProductoService;
+    private final ClienteService clienteService;
+
+    private final DetalleProductoService detalleProductoService;
+
+    private final InventarioProductoService inventarioProductoService;
+
+    private final VentaProductoService ventaProductoService;
 
     @Autowired
-    private ClienteService clienteService;
-
-    @Autowired
-    private DetalleProductoService detalleProductoService;
-
-    @Autowired
-    private InventarioProductoService inventarioProductoService;
+    public ControladorVentaProducto(ClienteService clienteService, DetalleProductoService detalleProductoService, InventarioProductoService inventarioProductoService, VentaProductoService ventaProductoService) {
+        this.clienteService = clienteService;
+        this.detalleProductoService = detalleProductoService;
+        this.inventarioProductoService = inventarioProductoService;
+        this.ventaProductoService = ventaProductoService;
+    }
 
     @GetMapping("/modulo-venta/venta-producto/lista")
     public String listaVentaProducto(Model model) {
         var listadoVentasProducto = ventaProductoService.obtenerListadoVentaProducto();
         model.addAttribute("listadoVentasProducto", listadoVentasProducto);
-        return "/pages/modulo-venta/venta-producto/venta-producto";
+        return "pages/modulo-venta/venta-producto/venta-producto";
     }
 
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha")
@@ -48,14 +52,11 @@ public class ControladorVentaProducto {
         model.addAttribute("listaTotalVentaProducto", listaTotalVentaProducto);
         var obtenerListaProductoDetalle = detalleProductoService.obtenerListadoDetalleProductos();
         model.addAttribute("obtenerListaProductoDetalle", obtenerListaProductoDetalle);
-        return "/pages/modulo-venta/venta-producto/total-venta-producto-fecha";
+        return "pages/modulo-venta/venta-producto/total-venta-producto-fecha";
     }
 
     @GetMapping("/modulo-venta/venta-producto/encontrar-total-venta-producto-fecha")
-    public String encontrarTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio,
-                                              @RequestParam("fechaFin") String fechaFin,
-                                              @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto,
-                                              @RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String encontrarTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto, @RequestParam(defaultValue = "0") int pagina, Model model) {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
@@ -70,13 +71,11 @@ public class ControladorVentaProducto {
         List<VentaProducto> totalVentaProductoFecha = ventaProductoPage.getContent(); // Obtener los elementos de la página actual
         model.addAttribute("totalVentaProductoFecha", totalVentaProductoFecha);
         model.addAttribute("ventaProductoPage", ventaProductoPage);
-        return "/pages/modulo-venta/venta-producto/total-venta-producto-fecha";
+        return "pages/modulo-venta/venta-producto/total-venta-producto-fecha";
     }
 
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/pdf")
-    public ModelAndView generarPDFTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio,
-                                                     @RequestParam("fechaFin") String fechaFin,
-                                                     @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
+    public ModelAndView generarPDFTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
@@ -98,9 +97,7 @@ public class ControladorVentaProducto {
     }
 
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/excel")
-    public ModelAndView generarExcelTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio,
-                                                       @RequestParam("fechaFin") String fechaFin,
-                                                       @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
+    public ModelAndView generarExcelTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
@@ -139,12 +136,11 @@ public class ControladorVentaProducto {
             }
         }
         model.addAttribute("listadoInventarioProductos", productosDisponibles);
-        return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
+        return "pages/modulo-venta/venta-producto/modificar-venta-producto";
     }
 
     @PostMapping("/modulo-venta/venta-producto/guardar")
-    public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto,
-                                       BindingResult bindingResult, Model model) throws Exception {
+    public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
@@ -161,7 +157,7 @@ public class ControladorVentaProducto {
         model.addAttribute("listadoInventarioProductos", listadoInventarioProductos);
         ventaProducto = ventaProductoService.encontrarVentaProducto(ventaProducto);
         model.addAttribute("ventaProducto", ventaProducto);
-        return "/pages/modulo-venta/venta-producto/modificar-venta-producto";
+        return "pages/modulo-venta/venta-producto/modificar-venta-producto";
     }
 
     @GetMapping("/modulo-venta/venta-producto/eliminar")

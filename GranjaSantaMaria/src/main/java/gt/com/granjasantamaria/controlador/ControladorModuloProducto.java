@@ -9,7 +9,7 @@ public class ControladorModuloProducto {
 
     @GetMapping("/modulo-producto")
     public String moduloProducto() {
-        return "/pages/modulo-producto/modulo-producto";
+        return "pages/modulo-producto/modulo-producto";
     }
 
 }

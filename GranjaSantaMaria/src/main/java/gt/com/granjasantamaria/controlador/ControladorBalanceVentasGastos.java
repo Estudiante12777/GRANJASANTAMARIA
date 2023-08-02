@@ -34,7 +34,7 @@ public class ControladorBalanceVentasGastos {
             double balanceVentasGastos = totalVentas - totalGastos;
             model.addAttribute("balanceVentasGastos", balanceVentasGastos);
         }
-        return "/pages/modulo-balance/balance/balance";
+        return "pages/modulo-balance/balance/balance";
     }
 
 }

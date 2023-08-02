@@ -33,14 +33,14 @@ public class ControladorDiarioGastoGranja {
     public String listaDiarioGastosGranja(Model model) {
         var listaDiarioGastosGranja = diarioGastoGranjaService.obtenerListadoDiarioGastosGranja();
         model.addAttribute("listaDiarioGastosGranja", listaDiarioGastosGranja);
-        return "/pages/modulo-gasto/gasto-diario-granja/gasto-diario-granja";
+        return "pages/modulo-gasto/gasto-diario-granja/gasto-diario-granja";
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha")
     public String obtenerListaDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja, Model model) {
         var listaTotalDiarioGastoGranja = diarioGastoGranjaService.obtenerListaTotalDiarioGastoGranja();
         model.addAttribute("listaTotalDiarioGastoGranja", listaTotalDiarioGastoGranja);
-        return "/pages/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha";
+        return "pages/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha";
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/encontrar-total-gasto-diario-fecha")
@@ -56,7 +56,7 @@ public class ControladorDiarioGastoGranja {
         List<DiarioGastoGranja> totalDiarioGastoFecha = diarioGastoGranjaPage.getContent(); // Obtener los elementos de la página actual
         model.addAttribute("totalDiarioGastoFecha", totalDiarioGastoFecha);
         model.addAttribute("diarioGastoGranjaPage", diarioGastoGranjaPage);
-        return "/pages/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha";
+        return "pages/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha";
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf")
@@ -97,7 +97,7 @@ public class ControladorDiarioGastoGranja {
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/agregar")
     public String agregarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja, Model model) {
-        return "/pages/modulo-gasto/gasto-diario-granja/modificar-gasto-diario-granja";
+        return "pages/modulo-gasto/gasto-diario-granja/modificar-gasto-diario-granja";
     }
 
     @PostMapping("/modulo-gasto/gasto-diario-granja/guardar")
@@ -114,7 +114,7 @@ public class ControladorDiarioGastoGranja {
     public String editarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja, Model model) {
         diarioGastoGranja = diarioGastoGranjaService.encontrarDiarioGastoGranja(diarioGastoGranja);
         model.addAttribute("diarioGastoGranja", diarioGastoGranja);
-        return "/pages/modulo-gasto/gasto-diario-granja/modificar-gasto-diario-granja";
+        return "pages/modulo-gasto/gasto-diario-granja/modificar-gasto-diario-granja";
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/eliminar")

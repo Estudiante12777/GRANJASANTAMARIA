@@ -40,7 +40,7 @@ public class ControladorAlimentacionBecerro {
         model.addAttribute("alimentacionBecerroPage", alimentacionBecerroPage);
         var alimentacionBecerro = alimentacionBecerroPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("alimentacionBecerro", alimentacionBecerro);
-        return "/pages/modulo-ganado/alimentacion-becerro/alimentacion";
+        return "pages/modulo-ganado/alimentacion-becerro/alimentacion";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/lista")
@@ -50,14 +50,14 @@ public class ControladorAlimentacionBecerro {
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
         model.addAttribute("alimentacionBecerroList", results);
-        return "/pages/modulo-ganado/alimentacion-becerro/alimentacion-becerro";
+        return "pages/modulo-ganado/alimentacion-becerro/alimentacion-becerro";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/agregar")
     public String agregarAlimentacionBecerro(AlimentacionBecerro alimentacionBecerro, Model model) {
         List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos().stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternero") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerro")).collect(Collectors.toList());
         model.addAttribute("listaGanados", listaGanados);
-        return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
+        return "pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
     }
 
     @PostMapping("/modulo-ganado/alimentacion-becerro/guardar")
@@ -65,7 +65,7 @@ public class ControladorAlimentacionBecerro {
         if (bindingResult.hasErrors()) {
             List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
             model.addAttribute("listaGanados", listaGanados);
-            return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
+            return "pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
         }
         try {
             alimentacionBecerroService.guardarAlimentacionBecerro(alimentacionBecerro);
@@ -74,7 +74,7 @@ public class ControladorAlimentacionBecerro {
             model.addAttribute("error", "Error al guardar la producción diaria de leche.");
             List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
             model.addAttribute("listaGanados", listaGanados);
-            return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
+            return "pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
         }
     }
 
@@ -89,7 +89,7 @@ public class ControladorAlimentacionBecerro {
         model.addAttribute("idAlimentacionBecerro", idAlimentacionBecerro);
         alimentacionBecerro = alimentacionBecerroService.encontrarAlimentacionBecerro(alimentacionBecerro);
         model.addAttribute("alimentacionBecerro", alimentacionBecerro);
-        return "/pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
+        return "pages/modulo-ganado/alimentacion-becerro/modificar-alimentacion-becerro";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerro/baja/{idAlimentacionBecerro}")

@@ -27,12 +27,12 @@ public class ControladorContenedorProducto {
         model.addAttribute("contenedorProductoPage", contenedorProductoPage);
         var contenedorProductos = contenedorProductoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("contenedorProductos", contenedorProductos);
-        return "/pages/modulo-producto/contenedor-producto/contenedor-producto";
+        return "pages/modulo-producto/contenedor-producto/contenedor-producto";
     }
 
     @GetMapping("/modulo-producto/contenedor-producto/agregar")
     public String agregarContenedorProducto(ContenedorProducto contenedorProducto, Model model) {
-        return "/pages/modulo-producto/contenedor-producto/modificar-contenedor-producto";
+        return "pages/modulo-producto/contenedor-producto/modificar-contenedor-producto";
     }
 
     @PostMapping("/modulo-producto/contenedor-producto/guardar")
@@ -49,7 +49,7 @@ public class ControladorContenedorProducto {
     public String editarContenedorProducto(ContenedorProducto contenedorProducto, Model model) {
         contenedorProducto = contenedorProductoService.encontrarContenedorProducto(contenedorProducto);
         model.addAttribute("contenedorProducto", contenedorProducto);
-        return "/pages/modulo-producto/contenedor-producto/modificar-contenedor-producto";
+        return "pages/modulo-producto/contenedor-producto/modificar-contenedor-producto";
     }
 
     @GetMapping("/modulo-producto/contenedor-producto/eliminar")

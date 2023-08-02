@@ -12,7 +12,7 @@ public class ControladorModuloUbicaciones {
 
     @GetMapping("/modulo-ubicacion")
     public String moduloUbicacion() {
-        return "/pages/modulo-ubicacion/modulo-ubicacion";
+        return "pages/modulo-ubicacion/modulo-ubicacion";
     }
 
 }

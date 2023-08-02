@@ -8,6 +8,6 @@ public class ControladorModuloBalance {
 
     @GetMapping("/modulo-balance")
     public String balance() {
-        return "/pages/modulo-balance/modulo-balance";
+        return "pages/modulo-balance/modulo-balance";
     }
 }

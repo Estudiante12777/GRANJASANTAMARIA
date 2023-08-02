@@ -32,12 +32,12 @@ public class ControladorTipoGanado {
         model.addAttribute("tipoGanadoPage", tipoGanadoPage);
         var tipoDeGanados = tipoGanadoPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("tipoDeGanados", tipoDeGanados);
-        return "/pages/modulo-ganado/tipo-ganado/tipo-ganado";
+        return "pages/modulo-ganado/tipo-ganado/tipo-ganado";
     }
 
     @GetMapping("/modulo-ganado/tipo-ganado/agregar")
     public String agregarTipoGanado(TipoGanado tipoGanado) {
-        return "/pages/modulo-ganado/tipo-ganado/modificar-tipo-ganado";
+        return "pages/modulo-ganado/tipo-ganado/modificar-tipo-ganado";
     }
 
     @PostMapping("/modulo-ganado/tipo-ganado/guardar")
@@ -54,7 +54,7 @@ public class ControladorTipoGanado {
     public String editarTipoGando(TipoGanado tipoGanado, Model model) {
         tipoGanado = tipoGanadoService.encontrarTipoGanado(tipoGanado);
         model.addAttribute("tipoGanado", tipoGanado);
-        return "/pages/modulo-ganado/tipo-ganado/modificar-tipo-ganado";
+        return "pages/modulo-ganado/tipo-ganado/modificar-tipo-ganado";
     }
 
     @GetMapping("/modulo-ganado/tipo-ganado/baja")

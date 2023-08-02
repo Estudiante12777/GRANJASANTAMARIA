@@ -38,7 +38,7 @@ public class ControladorCliente {
         model.addAttribute("clientePage", clientePage);
         var clientes = clientePage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("clientes", clientes);
-        return "/pages/modulo-persona/cliente/cliente";
+        return "pages/modulo-persona/cliente/cliente";
     }
 
     @GetMapping("/modulo-persona/cliente/municipios/{idDepartamento}")
@@ -53,7 +53,7 @@ public class ControladorCliente {
         model.addAttribute("listadoMunicipios", listadoMunicipios);
         List<Departamento> listadoDepartamentos = departamentoService.listadoDepartamento();
         model.addAttribute("listadoDepartamentos", listadoDepartamentos);
-        return "/pages/modulo-persona/cliente/modificar-cliente";
+        return "pages/modulo-persona/cliente/modificar-cliente";
     }
 
     @PostMapping("/modulo-persona/cliente/guardar")
@@ -74,7 +74,7 @@ public class ControladorCliente {
         model.addAttribute("listadoDepartamentos", listadoDepartamentos);
         cliente = clienteService.encontrarCliente(cliente);
         model.addAttribute("cliente", cliente);
-        return "/pages/modulo-persona/cliente/modificar-cliente";
+        return "pages/modulo-persona/cliente/modificar-cliente";
     }
 
     @GetMapping("/modulo-persona/cliente/baja")

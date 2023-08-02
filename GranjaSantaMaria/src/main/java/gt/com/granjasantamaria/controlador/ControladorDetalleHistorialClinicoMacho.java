@@ -39,14 +39,14 @@ public class ControladorDetalleHistorialClinicoMacho {
         var detalleHistorialClinicoMachos = detalleHistorialClinicoMachoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("detalleHistorialClinicoMachos", detalleHistorialClinicoMachos);
         model.addAttribute("idHistorialClinicoMacho", idHistorialClinicoMacho);
-        return "/pages/modulo-ganado/detalle-historial-clinico-macho/detalle-historial-clinico-macho";
+        return "pages/modulo-ganado/detalle-historial-clinico-macho/detalle-historial-clinico-macho";
     }
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/agregar")
     public String agregarDetalleHistorialClinicoMacho(DetalleHistorialClinicoMacho detalleHistorialClinicoMacho, Model model) {
         List<HistorialClinicoMacho> listaGanados = historialClinicioMachoService.obtenerListadoHistorialClinicoMachos();
         model.addAttribute("listaGanados", listaGanados);
-        return "/pages/modulo-ganado/detalle-historial-clinico-macho/modificar-detalle-historial-clinico-macho";
+        return "pages/modulo-ganado/detalle-historial-clinico-macho/modificar-detalle-historial-clinico-macho";
     }
 
     @PostMapping("/modulo-ganado/detalle-historial-clinico-macho/guardar")
@@ -68,7 +68,7 @@ public class ControladorDetalleHistorialClinicoMacho {
         model.addAttribute("idDetalleHistorialClinicoMacho", idDetalleHistorialClinicoMacho);
         detalleHistorialClinicoMacho = detalleHistorialClinicoMachoService.encontrarDetalleHistorialClinicoMacho(detalleHistorialClinicoMacho);
         model.addAttribute("detalleHistorialClinicoMacho", detalleHistorialClinicoMacho);
-        return "/pages/modulo-ganado/detalle-historial-clinico-macho/modificar-detalle-historial-clinico-macho";
+        return "pages/modulo-ganado/detalle-historial-clinico-macho/modificar-detalle-historial-clinico-macho";
     }
 
     @GetMapping("/modulo-ganado/detalle-historial-clinico-macho/baja/{idDetalleHistorialClinicoMacho}")

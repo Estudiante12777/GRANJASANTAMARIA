@@ -40,7 +40,7 @@ public class ControladorDetalleProducto {
         model.addAttribute("detalleProductoPage", detalleProductoPage);
         var detalleProductos = detalleProductoPage.getContent().stream().limit(10).collect(Collectors.toList());
         model.addAttribute("detalleProductos", detalleProductos);
-        return "/pages/modulo-producto/detalle-producto/detalle-producto";
+        return "pages/modulo-producto/detalle-producto/detalle-producto";
     }
 
     @GetMapping("/modulo-producto/detalle-producto/agregar")
@@ -53,7 +53,7 @@ public class ControladorDetalleProducto {
         model.addAttribute("listadoContenedorProductos", listadoContenedorProductos);
         List<DescripcionProducto> listadoDescripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
         model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
-        return "/pages/modulo-producto/detalle-producto/modificar-detalle-producto";
+        return "pages/modulo-producto/detalle-producto/modificar-detalle-producto";
     }
 
     @PostMapping("/modulo-producto/detalle-producto/guardar")
@@ -78,7 +78,7 @@ public class ControladorDetalleProducto {
         model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
         detalleProducto = detalleProductoService.encontrarDetalleProducto(detalleProducto);
         model.addAttribute("detalleProducto", detalleProducto);
-        return "/pages/modulo-producto/detalle-producto/modificar-detalle-producto";
+        return "pages/modulo-producto/detalle-producto/modificar-detalle-producto";
     }
 
     @GetMapping("/modulo-producto/detalle-producto/eliminar")

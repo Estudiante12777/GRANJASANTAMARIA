@@ -44,7 +44,7 @@ public class ControladorGanadoMacho {
         model.addAttribute("ganadoMachoPage", ganadoMachoPage);
         var ganadosMacho = ganadoMachoPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("ganadosMacho", ganadosMacho);
-        return "/pages/modulo-ganado/ganado-macho/ganado-macho";
+        return "pages/modulo-ganado/ganado-macho/ganado-macho";
     }
 
     @GetMapping("/modulo-ganado/ganado-macho/agregar")
@@ -57,7 +57,7 @@ public class ControladorGanadoMacho {
         model.addAttribute("listaTiposGanado", listadoTiposGanadoMacho);
         List<RazaGanado> listaRazasGanado = razaGanadoService.listadoRazasGanado();
         model.addAttribute("listaRazasGanado", listaRazasGanado);
-        return "/pages/modulo-ganado/ganado-macho/modificar-ganado-macho";
+        return "pages/modulo-ganado/ganado-macho/modificar-ganado-macho";
     }
 
     @PostMapping("/modulo-ganado/ganado-macho/guardar")
@@ -84,7 +84,7 @@ public class ControladorGanadoMacho {
         model.addAttribute("listaRazasGanado", listaRazasGanado);
         ganadoMacho = ganadoMachoService.encontrarGanadoMacho(ganadoMacho);
         model.addAttribute("ganadoMacho", ganadoMacho);
-        return "/pages/modulo-ganado/ganado-macho/modificar-ganado-macho";
+        return "pages/modulo-ganado/ganado-macho/modificar-ganado-macho";
     }
 
     @GetMapping("/modulo-ganado/ganado-macho/baja")
