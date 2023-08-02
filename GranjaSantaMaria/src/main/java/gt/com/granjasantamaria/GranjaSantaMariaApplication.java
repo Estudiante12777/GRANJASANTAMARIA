@@ -5,8 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.awt.Desktop;
-import java.net.URI;
+import java.io.IOException;
 
 @SpringBootApplication
 public class GranjaSantaMariaApplication {
@@ -18,9 +17,9 @@ public class GranjaSantaMariaApplication {
 
         // ABRIR EL NAVEGADOR CON LA URI DE LA APLICACION
         try {
-            Desktop desktop = Desktop.getDesktop();
-            desktop.browse(new URI("http://localhost:8080"));
-        } catch (Exception e) {
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec("cmd /c start http://localhost:8080");
+        } catch (IOException e) {
             logger.error("An error occurred while opening the browser.", e);
         }
     }
