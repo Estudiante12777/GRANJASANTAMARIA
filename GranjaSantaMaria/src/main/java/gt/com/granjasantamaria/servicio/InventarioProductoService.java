@@ -19,8 +19,6 @@ public interface InventarioProductoService {
 
     void guardarInventarioProducto(InventarioProducto inventarioProducto);
 
-    void eliminarInventarioProducto(InventarioProducto inventarioProducto);
-
     InventarioProducto encontrarInventarioProducto(InventarioProducto inventarioProducto);
 
     int obtenerExistenciaProducto(Long idInventarioProducto);

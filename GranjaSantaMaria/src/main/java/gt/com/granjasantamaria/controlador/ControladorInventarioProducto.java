@@ -4,7 +4,6 @@ import gt.com.granjasantamaria.modelo.DetalleProducto;
 import gt.com.granjasantamaria.modelo.InventarioProducto;
 import gt.com.granjasantamaria.reportes.ReporteInventarioProductoFecha;
 import gt.com.granjasantamaria.reportes.ReporteInventarioProductoFechaExcel;
-import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.servicio.*;
 
 import java.time.LocalDate;
@@ -28,11 +27,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorInventarioProducto {
 
-    @Autowired
-    private InventarioProductoService inventarioProductoService;
+    private final DetalleProductoService detalleProductoService;
+
+    private final InventarioProductoService inventarioProductoService;
 
     @Autowired
-    private DetalleProductoService detalleProductoService;
+    public ControladorInventarioProducto(DetalleProductoService detalleProductoService, InventarioProductoService inventarioProductoService) {
+        this.detalleProductoService = detalleProductoService;
+        this.inventarioProductoService = inventarioProductoService;
+    }
 
     @GetMapping("/modulo-inventario/inventario-producto/lista")
     public String obtenerListadoInventarioProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -54,10 +57,7 @@ public class ControladorInventarioProducto {
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/encontrar-total-inventario-producto-fecha")
-    public String encontrarTotalDiarioGastoGranja(@RequestParam("fechaInicio") String fechaInicio,
-                                                  @RequestParam("fechaFin") String fechaFin,
-                                                  @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto,
-                                                  @RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String encontrarTotalDiarioGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto, @RequestParam(defaultValue = "0") int pagina, Model model) {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
@@ -76,21 +76,21 @@ public class ControladorInventarioProducto {
         return "pages/modulo-inventario/inventario-producto/total-inventario-producto-fecha";
     }
 
+    private List<InventarioProducto> obtenerInventarioProductoPorFechaYPorProducto(LocalDate fechaInicio, LocalDate fechaFin, Long idDetalleProducto) {
+        if (Objects.isNull(idDetalleProducto) || idDetalleProducto.equals(Long.valueOf("0"))) {
+            return inventarioProductoService.encontrarTotalInventarioProducto(fechaInicio, fechaFin);
+        } else {
+            return inventarioProductoService.encontrarTotalInventarioProductoAndIdDetalleProducto(fechaInicio, fechaFin, idDetalleProducto);
+        }
+    }
+
     @GetMapping("/modulo-inventario/inventario-producto/total-inventario-producto-fecha/pdf")
-    public ModelAndView generarPDFTotalInventarioProducto(@RequestParam("fechaInicio") String fechaInicio,
-                                                          @RequestParam("fechaFin") String fechaFin,
-                                                          @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
+    public ModelAndView generarPDFTotalInventarioProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<InventarioProducto> totalInventarioProductoFecha;
-        // Valida si se genera el reporte por producto o por productos
-        if (Objects.isNull(idDetalleProducto) || idDetalleProducto.equals(Long.valueOf("0"))) {
-            totalInventarioProductoFecha = inventarioProductoService.encontrarTotalInventarioProducto(inicio, fin);
-        } else {
-            totalInventarioProductoFecha = inventarioProductoService.encontrarTotalInventarioProductoAndIdDetalleProducto(inicio, fin, idDetalleProducto);
-        }
+        List<InventarioProducto> totalInventarioProductoFecha = obtenerInventarioProductoPorFechaYPorProducto(inicio, fin, idDetalleProducto);
         // Obtener el número total de registros
         long totalRegistros = totalInventarioProductoFecha.size();
         // Crear el modelo para el PDF
@@ -102,20 +102,12 @@ public class ControladorInventarioProducto {
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/total-inventario-producto-fecha/excel")
-    public ModelAndView generarExcelTotalInventarioProducto(@RequestParam("fechaInicio") String fechaInicio,
-                                                            @RequestParam("fechaFin") String fechaFin,
-                                                            @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
+    public ModelAndView generarExcelTotalInventarioProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<InventarioProducto> totalInventarioProductoFecha;
-        // Valida si se genera el reporte por producto o por productos
-        if (Objects.isNull(idDetalleProducto) || idDetalleProducto.equals(Long.valueOf("0"))) {
-            totalInventarioProductoFecha = inventarioProductoService.encontrarTotalInventarioProducto(inicio, fin);
-        } else {
-            totalInventarioProductoFecha = inventarioProductoService.encontrarTotalInventarioProductoAndIdDetalleProducto(inicio, fin, idDetalleProducto);
-        }
+        List<InventarioProducto> totalInventarioProductoFecha = obtenerInventarioProductoPorFechaYPorProducto(inicio, fin, idDetalleProducto);
         // Obtener el número total de registros
         long totalRegistros = totalInventarioProductoFecha.size();
         // Crear el modelo para el PDF
@@ -134,8 +126,7 @@ public class ControladorInventarioProducto {
     }
 
     @PostMapping("/modulo-inventario/inventario-producto/guardar")
-    public String guardarInventarioProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) InventarioProducto inventarioProducto,
-                                            BindingResult bindingResult, Model model) {
+    public String guardarInventarioProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) InventarioProducto inventarioProducto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
         } else {
@@ -154,12 +145,6 @@ public class ControladorInventarioProducto {
         inventarioProducto = inventarioProductoService.encontrarInventarioProducto(inventarioProducto);
         model.addAttribute("inventarioProducto", inventarioProducto);
         return "pages/modulo-inventario/inventario-producto/modificar-inventario-producto";
-    }
-
-    @GetMapping("/modulo-inventario/inventario-producto/eliminar")
-    public String eliminarInventarioProducto(InventarioProducto inventarioProducto) {
-        inventarioProductoService.eliminarInventarioProducto(inventarioProducto);
-        return "redirect:/modulo-inventario/inventario-producto/lista";
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/baja")

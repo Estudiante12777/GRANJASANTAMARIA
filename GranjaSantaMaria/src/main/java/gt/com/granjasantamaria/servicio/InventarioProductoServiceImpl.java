@@ -54,12 +54,6 @@ public class InventarioProductoServiceImpl implements InventarioProductoService 
     }
 
     @Override
-    @Transactional
-    public void eliminarInventarioProducto(InventarioProducto inventarioProducto) {
-        inventarioProductoDao.delete(inventarioProducto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public InventarioProducto encontrarInventarioProducto(InventarioProducto inventarioProducto) {
         return inventarioProductoDao.findById(inventarioProducto.getIdInventarioProducto()).orElse(null);
