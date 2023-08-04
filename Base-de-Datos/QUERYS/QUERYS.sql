@@ -12,3 +12,4 @@ SELECT * FROM detalle_historial_clinico_macho;
 SELECT * FROM detalle_historial_clinico_hembra;
 SELECT * FROM prenies_ganado_hembra;
 SELECT * FROM dieta_ternera_ternero;
+
