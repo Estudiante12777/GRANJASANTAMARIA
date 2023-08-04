@@ -7,17 +7,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.math.BigDecimal;
+
 @Controller
 public class ControladorHome {
 
+    private final ProduccionDiariaLecheService produccionDiariaLecheService;
+
     @Autowired
-    private ProduccionDiariaLecheService produccionDiariaLecheService;
+    public ControladorHome(ProduccionDiariaLecheService produccionDiariaLecheService) {
+        this.produccionDiariaLecheService = produccionDiariaLecheService;
+    }
 
     @GetMapping("/")
     public String inicio(Model model) {
-        double totalProduccionDiaria = produccionDiariaLecheService.obtenerListaTotalProduccionDiariaLeche().stream()
-                .mapToDouble(ProduccionDiariaLeche::getTotalProduccionLeche)
-                .sum();
+        BigDecimal totalProduccionDiaria = produccionDiariaLecheService.obtenerListaTotalProduccionDiariaLeche().stream()
+                .map(ProduccionDiariaLeche::getTotalProduccionLeche).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("totalProduccionDiaria", totalProduccionDiaria);
         return "inicio";
     }

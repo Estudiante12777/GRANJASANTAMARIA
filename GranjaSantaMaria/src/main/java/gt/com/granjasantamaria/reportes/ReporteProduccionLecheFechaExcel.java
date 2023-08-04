@@ -7,6 +7,7 @@ import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +56,9 @@ public class ReporteProduccionLecheFechaExcel extends AbstractXlsxView {
             row.createCell(0).setCellValue(produccionDiariaLeche.getIdProduccionDiariaLeche());
             row.createCell(1).setCellValue(produccionDiariaLeche.getFechaProduccionLeche().toString());
             row.createCell(2).setCellValue(produccionDiariaLeche.getGanadoHembra().getNombreGanadoHembra());
-            row.createCell(3).setCellValue(produccionDiariaLeche.getProduccionManianaLeche());
-            row.createCell(4).setCellValue(produccionDiariaLeche.getProduccionTardeLeche());
-            row.createCell(5).setCellValue(produccionDiariaLeche.getTotalProduccionLeche());
+            row.createCell(3).setCellValue(produccionDiariaLeche.getProduccionManianaLeche().doubleValue());
+            row.createCell(4).setCellValue(produccionDiariaLeche.getProduccionTardeLeche().doubleValue());
+            row.createCell(5).setCellValue(produccionDiariaLeche.getTotalProduccionLeche().doubleValue());
             for (Cell cell : row) {
                 cell.setCellStyle(dataStyle);
             }
@@ -69,9 +70,8 @@ public class ReporteProduccionLecheFechaExcel extends AbstractXlsxView {
         }
 
         // Calcular la suma total de la producción de leche
-        double sumaTotalProduccion = listaProduccionDiariaLeche.stream()
-                .mapToDouble(ProduccionDiariaLeche::getTotalProduccionLeche)
-                .sum();
+        BigDecimal sumaTotalProduccion = listaProduccionDiariaLeche.stream()
+                .map(ProduccionDiariaLeche::getTotalProduccionLeche).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // Crear la fila para el total
         Row totalRow = reporteProduccionLeche.createRow(rowNum);

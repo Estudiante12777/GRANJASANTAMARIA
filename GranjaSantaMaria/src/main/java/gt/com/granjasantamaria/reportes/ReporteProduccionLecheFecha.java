@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.document.AbstractPdfView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class ReporteProduccionLecheFecha extends AbstractPdfView {
         tablaProduccionLeche.addCell(cellHeaderTotalProduccion);
 
         // Antes de construir la tabla, calcula la suma total de la producción
-        double sumaTotalProduccion = listaProduccionDiariaLeche.stream().mapToDouble(ProduccionDiariaLeche::getTotalProduccionLeche).sum();
+        BigDecimal sumaTotalProduccion = listaProduccionDiariaLeche.stream().map(ProduccionDiariaLeche::getTotalProduccionLeche).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // Agrega los datos en cada fila como celdas
         listaProduccionDiariaLeche.forEach(produccionDiariaLeche -> {
