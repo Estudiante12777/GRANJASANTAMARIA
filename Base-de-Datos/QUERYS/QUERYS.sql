@@ -13,3 +13,9 @@ SELECT * FROM detalle_historial_clinico_hembra;
 SELECT * FROM prenies_ganado_hembra;
 SELECT * FROM dieta_ternera_ternero;
 
+SELECT * FROM producto;
+SELECT * FROM medida_producto;
+SELECT * FROM contenedor_producto;
+SELECT * FROM descripcion_producto;
+SELECT * FROM detalle_producto;
+
