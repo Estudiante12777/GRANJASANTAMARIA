@@ -41,12 +41,6 @@ public class DetalleProductoServiceImpl implements DetalleProductoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarDetalleProducto(DetalleProducto detalleProducto) {
-        detalleProductoDao.delete(detalleProducto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public DetalleProducto encontrarDetalleProducto(DetalleProducto detalleProducto) {
         return detalleProductoDao.findById(detalleProducto.getIdDetalleProducto()).orElse(null);

@@ -41,12 +41,6 @@ public class DescripcionProductoServiceImpl implements DescripcionProductoServic
     }
 
     @Override
-    @Transactional
-    public void eliminarDescripcionProducto(DescripcionProducto descripcionProducto) {
-        descripcionProductoDao.delete(descripcionProducto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public DescripcionProducto encontrarDescripcionProducto(DescripcionProducto descripcionProducto) {
         return descripcionProductoDao.findById(descripcionProducto.getIdDescripcionProducto()).orElse(null);

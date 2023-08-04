@@ -14,8 +14,6 @@ public interface MedidaProductoService {
 
     void guardarMedidaProducto(MedidaProducto medidaProducto);
 
-    void eliminarMedidaProducto(MedidaProducto medidaProducto);
-
     MedidaProducto encontrarMedidaProducto(MedidaProducto medidaProducto);
 
     void darBajaMedidaProducto(MedidaProducto medidaProducto);

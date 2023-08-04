@@ -18,20 +18,24 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class ControladorDetalleProducto {
 
-    @Autowired
-    private DetalleProductoService detalleProductoService;
+    private final ProductoService productoService;
+
+    private final MedidaProductoService medidaProductoService;
+
+    private final ContenedorProductoService contenedorProductoService;
+
+    private final DescripcionProductoService descripcionProductoService;
+
+    private final DetalleProductoService detalleProductoService;
 
     @Autowired
-    private ProductoService productoService;
-
-    @Autowired
-    private MedidaProductoService medidaProductoService;
-
-    @Autowired
-    private ContenedorProductoService contenedorProductoService;
-
-    @Autowired
-    private DescripcionProductoService descripcionProductoService;
+    public ControladorDetalleProducto(ProductoService productoService, MedidaProductoService medidaProductoService, ContenedorProductoService contenedorProductoService, DescripcionProductoService descripcionProductoService, DetalleProductoService detalleProductoService) {
+        this.productoService = productoService;
+        this.medidaProductoService = medidaProductoService;
+        this.contenedorProductoService = contenedorProductoService;
+        this.descripcionProductoService = descripcionProductoService;
+        this.detalleProductoService = detalleProductoService;
+    }
 
     @GetMapping("/modulo-producto/detalle-producto/lista")
     public String obtenerListadoDetalleProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -43,8 +47,7 @@ public class ControladorDetalleProducto {
         return "pages/modulo-producto/detalle-producto/detalle-producto";
     }
 
-    @GetMapping("/modulo-producto/detalle-producto/agregar")
-    public String agregarDetalleProducto(DetalleProducto detalleProducto, Model model) {
+    private void agregarListadosAlModelo(Model model) {
         List<Producto> listadoProductos = productoService.obtenerListadoProductos();
         model.addAttribute("listadoProductos", listadoProductos);
         List<MedidaProducto> listadoMedidaProductos = medidaProductoService.obtenerListadoMedidaProductos();
@@ -53,6 +56,11 @@ public class ControladorDetalleProducto {
         model.addAttribute("listadoContenedorProductos", listadoContenedorProductos);
         List<DescripcionProducto> listadoDescripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
         model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
+    }
+
+    @GetMapping("/modulo-producto/detalle-producto/agregar")
+    public String agregarDetalleProducto(DetalleProducto detalleProducto, Model model) {
+        agregarListadosAlModelo(model);
         return "pages/modulo-producto/detalle-producto/modificar-detalle-producto";
     }
 
@@ -68,23 +76,10 @@ public class ControladorDetalleProducto {
 
     @GetMapping("/modulo-producto/detalle-producto/editar/{idDetalleProducto}")
     public String editarDetalleProducto(DetalleProducto detalleProducto, Model model) {
-        List<Producto> listadoProductos = productoService.obtenerListadoProductos();
-        model.addAttribute("listadoProductos", listadoProductos);
-        List<MedidaProducto> listadoMedidaProductos = medidaProductoService.obtenerListadoMedidaProductos();
-        model.addAttribute("listadoMedidaProductos", listadoMedidaProductos);
-        List<ContenedorProducto> listadoContenedorProductos = contenedorProductoService.obtenerListadoContenedorProductos();
-        model.addAttribute("listadoContenedorProductos", listadoContenedorProductos);
-        List<DescripcionProducto> listadoDescripcionProductos = descripcionProductoService.obtenerListadoDescripcionProductos();
-        model.addAttribute("listadoDescripcionProductos", listadoDescripcionProductos);
+        agregarListadosAlModelo(model);
         detalleProducto = detalleProductoService.encontrarDetalleProducto(detalleProducto);
         model.addAttribute("detalleProducto", detalleProducto);
         return "pages/modulo-producto/detalle-producto/modificar-detalle-producto";
-    }
-
-    @GetMapping("/modulo-producto/detalle-producto/eliminar")
-    public String eliminarDetalleProducto(DetalleProducto detalleProducto) {
-        detalleProductoService.eliminarDetalleProducto(detalleProducto);
-        return "redirect:/modulo-producto/detalle-producto/lista";
     }
 
     @GetMapping("/modulo-producto/detalle-producto/baja")

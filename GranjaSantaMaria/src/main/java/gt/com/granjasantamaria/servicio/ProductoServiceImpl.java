@@ -41,12 +41,6 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarProducto(Producto producto) {
-        productoDao.delete(producto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public Producto encontranProducto(Producto producto) {
         return productoDao.findById(producto.getIdProducto()).orElse(null);

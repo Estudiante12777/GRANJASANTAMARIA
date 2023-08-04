@@ -40,12 +40,6 @@ public class MedidaProductoServiceImpl implements MedidaProductoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarMedidaProducto(MedidaProducto medidaProducto) {
-        medidaProductoDao.delete(medidaProducto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public MedidaProducto encontrarMedidaProducto(MedidaProducto medidaProducto) {
         return medidaProductoDao.findById(medidaProducto.getIdMedidaProducto()).orElse(null);

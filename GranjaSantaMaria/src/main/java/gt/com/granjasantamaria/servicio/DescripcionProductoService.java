@@ -14,8 +14,6 @@ public interface DescripcionProductoService {
 
     void guardarDescripcionProducto(DescripcionProducto descripcionProducto);
 
-    void eliminarDescripcionProducto(DescripcionProducto descripcionProducto);
-
     DescripcionProducto encontrarDescripcionProducto(DescripcionProducto descripcionProducto);
 
     void darBajaDescripcionProducto(DescripcionProducto descripcionProducto);

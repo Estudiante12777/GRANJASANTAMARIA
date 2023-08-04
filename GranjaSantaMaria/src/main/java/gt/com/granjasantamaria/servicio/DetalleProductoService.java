@@ -14,8 +14,6 @@ public interface DetalleProductoService {
 
     void guardarDetalleProducto(DetalleProducto detalleProducto);
 
-    void eliminarDetalleProducto(DetalleProducto detalleProducto);
-
     DetalleProducto encontrarDetalleProducto(DetalleProducto detalleProducto);
 
     void darBajaDetalleProducto(DetalleProducto detalleProducto);

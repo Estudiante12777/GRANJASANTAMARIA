@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorMedidaProducto {
 
+    private final MedidaProductoService medidaProductoService;
+
     @Autowired
-    private MedidaProductoService medidaProductoService;
+    public ControladorMedidaProducto(MedidaProductoService medidaProductoService) {
+        this.medidaProductoService = medidaProductoService;
+    }
 
     @GetMapping("/modulo-producto/medida-producto/lista")
     public String obtenerListadoMedidaProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -32,7 +36,7 @@ public class ControladorMedidaProducto {
     }
 
     @GetMapping("/modulo-producto/medida-producto/agregar")
-    public String agregarMedidaProducto(MedidaProducto medidaProducto, Model model) {
+    public String agregarMedidaProducto(MedidaProducto medidaProducto) {
         return "pages/modulo-producto/medida-producto/modificar-medida-producto";
     }
 
@@ -51,12 +55,6 @@ public class ControladorMedidaProducto {
         medidaProducto = medidaProductoService.encontrarMedidaProducto(medidaProducto);
         model.addAttribute("medidaProducto", medidaProducto);
         return "pages/modulo-producto/medida-producto/modificar-medida-producto";
-    }
-
-    @GetMapping("/modulo-producto/medida-producto/eliminar")
-    public String eliminarMedidaProducto(MedidaProducto medidaProducto) {
-        medidaProductoService.eliminarMedidaProducto(medidaProducto);
-        return "redirect:/modulo-producto/medida-producto/lista";
     }
 
     @GetMapping("/modulo-producto/medida-producto/baja")

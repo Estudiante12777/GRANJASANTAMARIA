@@ -14,8 +14,6 @@ public interface ContenedorProductoService {
 
     void guardarContenedorProducto(ContenedorProducto contenedorProducto);
 
-    void eliminarContenedorProducto(ContenedorProducto contenedorProducto);
-
     ContenedorProducto encontrarContenedorProducto(ContenedorProducto contenedorProducto);
 
     void darBajaContenedorProducto(ContenedorProducto contenedorProducto);

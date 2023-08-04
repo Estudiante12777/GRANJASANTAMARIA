@@ -14,8 +14,6 @@ public interface ProductoService {
 
     void guardarProducto(Producto producto);
 
-    void eliminarProducto(Producto producto);
-
     Producto encontranProducto(Producto producto);
 
     void darBajaProducto(Producto producto);

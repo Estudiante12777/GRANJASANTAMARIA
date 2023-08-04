@@ -41,12 +41,6 @@ public class ContenedorProductoServiceImpl implements ContenedorProductoService 
     }
 
     @Override
-    @Transactional
-    public void eliminarContenedorProducto(ContenedorProducto contenedorProducto) {
-        contenedorProductoDao.delete(contenedorProducto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public ContenedorProducto encontrarContenedorProducto(ContenedorProducto contenedorProducto) {
         return contenedorProductoDao.findById(contenedorProducto.getIdContenedorProducto()).orElse(null);

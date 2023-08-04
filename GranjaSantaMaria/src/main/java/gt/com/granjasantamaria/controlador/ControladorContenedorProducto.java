@@ -17,8 +17,12 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorContenedorProducto {
 
+    private final ContenedorProductoService contenedorProductoService;
+
     @Autowired
-    private ContenedorProductoService contenedorProductoService;
+    public ControladorContenedorProducto(ContenedorProductoService contenedorProductoService) {
+        this.contenedorProductoService = contenedorProductoService;
+    }
 
     @GetMapping("/modulo-producto/contenedor-producto/lista")
     public String obtenerListadContenedorProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -31,7 +35,7 @@ public class ControladorContenedorProducto {
     }
 
     @GetMapping("/modulo-producto/contenedor-producto/agregar")
-    public String agregarContenedorProducto(ContenedorProducto contenedorProducto, Model model) {
+    public String agregarContenedorProducto(ContenedorProducto contenedorProducto) {
         return "pages/modulo-producto/contenedor-producto/modificar-contenedor-producto";
     }
 
@@ -50,12 +54,6 @@ public class ControladorContenedorProducto {
         contenedorProducto = contenedorProductoService.encontrarContenedorProducto(contenedorProducto);
         model.addAttribute("contenedorProducto", contenedorProducto);
         return "pages/modulo-producto/contenedor-producto/modificar-contenedor-producto";
-    }
-
-    @GetMapping("/modulo-producto/contenedor-producto/eliminar")
-    public String eliminarContenedorProducto(ContenedorProducto contenedorProducto) {
-        contenedorProductoService.eliminarContenedorProducto(contenedorProducto);
-        return "redirect:/modulo-producto/contenedor-producto/lista";
     }
 
     @GetMapping("/modulo-producto/contenedor-producto/baja")

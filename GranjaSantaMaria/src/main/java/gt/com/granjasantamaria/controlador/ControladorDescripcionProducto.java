@@ -18,8 +18,12 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorDescripcionProducto {
 
+    private final DescripcionProductoService descripcionProductoService;
+
     @Autowired
-    private DescripcionProductoService descripcionProductoService;
+    public ControladorDescripcionProducto(DescripcionProductoService descripcionProductoService) {
+        this.descripcionProductoService = descripcionProductoService;
+    }
 
     @GetMapping("/modulo-producto/descripcion-producto/lista")
     public String obtenerListadoDescripcionProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -32,7 +36,7 @@ public class ControladorDescripcionProducto {
     }
 
     @GetMapping("/modulo-producto/descripcion-producto/agregar")
-    public String agregarDescripcionProducto(DescripcionProducto descripcionProducto, Model model) {
+    public String agregarDescripcionProducto(DescripcionProducto descripcionProducto) {
         return "pages/modulo-producto/descripcion-producto/modificar-descripcion-producto";
     }
 
@@ -51,12 +55,6 @@ public class ControladorDescripcionProducto {
         descripcionProducto = descripcionProductoService.encontrarDescripcionProducto(descripcionProducto);
         model.addAttribute("descripcionProducto", descripcionProducto);
         return "pages/modulo-producto/descripcion-producto/modificar-descripcion-producto";
-    }
-
-    @GetMapping("/modulo-producto/descripcion-producto/eliminar")
-    public String eliminarDescripcionProducto(DescripcionProducto descripcionProducto) {
-        descripcionProductoService.eliminarDescripcionProducto(descripcionProducto);
-        return "redirect:/modulo-producto/descripcion-producto/lista";
     }
 
     @GetMapping("/modulo-producto/descripcion-producto/baja")
