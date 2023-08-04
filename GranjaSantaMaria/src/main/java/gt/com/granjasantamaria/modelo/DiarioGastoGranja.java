@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -36,11 +37,11 @@ public class DiarioGastoGranja implements Serializable {
 
     @NotNull
     @Column(name = "valor_unitario", nullable = false)
-    private Double valorUnitario;
+    private BigDecimal valorUnitario;
 
     @NotNull
     @Column(name = "valor_total", nullable = false)
-    private Double valorTotal;
+    private BigDecimal valorTotal;
 
     @NotNull
     @Column(name = "estado_diario_gasto_ganja", nullable = false)

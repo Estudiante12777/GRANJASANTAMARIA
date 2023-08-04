@@ -50,12 +50,6 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
     }
 
     @Override
-    @Transactional
-    public void eliminarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja) {
-        diarioGastoGranjaDao.delete(diarioGastoGranja);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public DiarioGastoGranja encontrarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja) {
         return diarioGastoGranjaDao.findById(diarioGastoGranja.getIdDiarioGastoGranja()).orElse(null);

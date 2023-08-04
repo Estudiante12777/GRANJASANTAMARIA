@@ -17,8 +17,6 @@ public interface DiarioGastoGranjaService {
 
     void guardarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja);
 
-    void eliminarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja);
-
     DiarioGastoGranja encontrarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja);
 
     List<DiarioGastoGranja> encontrarTotalDiarioGastoGranja(LocalDate fechaInicio, LocalDate fechaFin);

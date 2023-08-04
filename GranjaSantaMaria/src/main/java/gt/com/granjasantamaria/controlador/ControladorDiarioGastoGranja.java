@@ -3,7 +3,6 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import gt.com.granjasantamaria.reportes.ReporteGastoGranjaFecha;
 import gt.com.granjasantamaria.reportes.ReporteGastoGranjaFechaExcel;
-import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.servicio.DiarioGastoGranjaService;
 
 import javax.validation.Valid;
@@ -26,8 +25,12 @@ import java.util.Map;
 @Controller
 public class ControladorDiarioGastoGranja {
 
+    private final DiarioGastoGranjaService diarioGastoGranjaService;
+
     @Autowired
-    private DiarioGastoGranjaService diarioGastoGranjaService;
+    public ControladorDiarioGastoGranja(DiarioGastoGranjaService diarioGastoGranjaService) {
+        this.diarioGastoGranjaService = diarioGastoGranjaService;
+    }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/lista")
     public String listaDiarioGastosGranja(Model model) {
@@ -44,9 +47,7 @@ public class ControladorDiarioGastoGranja {
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/encontrar-total-gasto-diario-fecha")
-    public String encontrarTotalDiarioGastoGranja(@RequestParam("fechaInicio") String fechaInicio,
-                                                  @RequestParam("fechaFin") String fechaFin,
-                                                  @RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String encontrarTotalDiarioGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(defaultValue = "0") int pagina, Model model) {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
@@ -60,8 +61,7 @@ public class ControladorDiarioGastoGranja {
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf")
-    public ModelAndView generarPDFTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio,
-                                                        @RequestParam("fechaFin") String fechaFin) {
+    public ModelAndView generarPDFTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
@@ -78,8 +78,7 @@ public class ControladorDiarioGastoGranja {
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/excel")
-    public ModelAndView generarExcelTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio,
-                                                        @RequestParam("fechaFin") String fechaFin) {
+    public ModelAndView generarExcelTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
@@ -96,12 +95,12 @@ public class ControladorDiarioGastoGranja {
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/agregar")
-    public String agregarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja, Model model) {
+    public String agregarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja) {
         return "pages/modulo-gasto/gasto-diario-granja/modificar-gasto-diario-granja";
     }
 
     @PostMapping("/modulo-gasto/gasto-diario-granja/guardar")
-    public String guardarDiarioGastoGranja(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DiarioGastoGranja diarioGastoGranja, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarDiarioGastoGranja(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) DiarioGastoGranja diarioGastoGranja, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
@@ -115,12 +114,6 @@ public class ControladorDiarioGastoGranja {
         diarioGastoGranja = diarioGastoGranjaService.encontrarDiarioGastoGranja(diarioGastoGranja);
         model.addAttribute("diarioGastoGranja", diarioGastoGranja);
         return "pages/modulo-gasto/gasto-diario-granja/modificar-gasto-diario-granja";
-    }
-
-    @GetMapping("/modulo-gasto/gasto-diario-granja/eliminar")
-    public String eliminarDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja) {
-        diarioGastoGranjaService.eliminarDiarioGastoGranja(diarioGastoGranja);
-        return "redirect:/modulo-gasto/gasto-diario-granja/lista";
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/baja")
