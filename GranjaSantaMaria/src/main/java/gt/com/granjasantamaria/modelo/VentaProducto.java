@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -40,15 +41,15 @@ public class VentaProducto implements Serializable {
 
     @NotNull
     @Column(name = "precio_por_unidad", nullable = false)
-    private Double precioPorUnidad;
+    private BigDecimal precioPorUnidad;
 
     @NotNull
     @Column(name = "total_precio_producto", nullable = false)
-    private Double totalPrecioProducto;
+    private BigDecimal totalPrecioProducto;
 
     @NotNull
     @Column(name = "descuento_producto", nullable = false)
-    private Double descuentoProducto;
+    private BigDecimal descuentoProducto;
 
     @NotNull
     @Column(name = "estado_venta_producto", nullable = false)

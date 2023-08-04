@@ -74,18 +74,21 @@ public class ControladorVentaProducto {
         return "pages/modulo-venta/venta-producto/total-venta-producto-fecha";
     }
 
+    private List<VentaProducto> encontrarTotalVentaPorFechaYPorProducto(LocalDate fechaInicio, LocalDate fechaFin, Long ideDetalleProucto) {
+        if (Objects.isNull(ideDetalleProucto) || ideDetalleProucto.equals(Long.valueOf("0"))) {
+            return ventaProductoService.encontrarTotalVentaProducto(fechaInicio, fechaFin);
+        } else {
+            return ventaProductoService.encontrarTotalVentaProductoAndIdDetalleProducto(fechaInicio, fechaFin, ideDetalleProucto);
+        }
+    }
+
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/pdf")
     public ModelAndView generarPDFTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<VentaProducto> totalVentaProductoFecha;
-        if (Objects.isNull(idDetalleProducto) || idDetalleProducto.equals(Long.valueOf("0"))) {
-            totalVentaProductoFecha = ventaProductoService.encontrarTotalVentaProducto(inicio, fin);
-        } else {
-            totalVentaProductoFecha = ventaProductoService.encontrarTotalVentaProductoAndIdDetalleProducto(inicio, fin, idDetalleProducto);
-        }
+        List<VentaProducto> totalVentaProductoFecha = encontrarTotalVentaPorFechaYPorProducto(inicio, fin, idDetalleProducto);
         // Obtener el número total de registros
         long totalRegistros = totalVentaProductoFecha.size();
         // Crear el modelo para el PDF
@@ -102,12 +105,7 @@ public class ControladorVentaProducto {
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
-        List<VentaProducto> totalVentaProductoFecha;
-        if (Objects.isNull(idDetalleProducto) || idDetalleProducto.equals(Long.valueOf("0"))) {
-            totalVentaProductoFecha = ventaProductoService.encontrarTotalVentaProducto(inicio, fin);
-        } else {
-            totalVentaProductoFecha = ventaProductoService.encontrarTotalVentaProductoAndIdDetalleProducto(inicio, fin, idDetalleProducto);
-        }
+        List<VentaProducto> totalVentaProductoFecha = encontrarTotalVentaPorFechaYPorProducto(inicio, fin, idDetalleProducto);
         // Obtener el número total de registros
         long totalRegistros = totalVentaProductoFecha.size();
         // Crear el modelo para el Excel
@@ -140,7 +138,7 @@ public class ControladorVentaProducto {
     }
 
     @PostMapping("/modulo-venta/venta-producto/guardar")
-    public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto, BindingResult bindingResult, Model model) throws Exception {
+    public String guardarVentaProducto(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) VentaProducto ventaProducto, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
@@ -158,12 +156,6 @@ public class ControladorVentaProducto {
         ventaProducto = ventaProductoService.encontrarVentaProducto(ventaProducto);
         model.addAttribute("ventaProducto", ventaProducto);
         return "pages/modulo-venta/venta-producto/modificar-venta-producto";
-    }
-
-    @GetMapping("/modulo-venta/venta-producto/eliminar")
-    public String eliminarVentaProducto(VentaProducto ventaProducto) {
-        ventaProductoService.eliminarVentaProducto(ventaProducto);
-        return "redirect:/modulo-venta/venta-producto/lista";
     }
 
     @GetMapping("/modulo-venta/venta-producto/baja")

@@ -70,12 +70,6 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     }
 
     @Override
-    @Transactional
-    public void eliminarVentaProducto(VentaProducto ventaProducto) {
-        ventaProductoDao.delete(ventaProducto);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public VentaProducto encontrarVentaProducto(VentaProducto ventaProducto) {
         return ventaProductoDao.findById(ventaProducto.getIdVentaProducto()).orElse(null);
