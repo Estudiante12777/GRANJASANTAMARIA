@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -20,7 +20,8 @@
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="producto.nombreProducto">Producto:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{producto.idProducto}" name="producto.nombreProducto" required
+                                <select id="producto.nombreProducto" th:field="*{producto.idProducto}"
+                                        name="producto.nombreProducto" required
                                         class="form-select form-select-lg">
                                     <option th:each="producto : ${listadoProductos}"
                                             th:value="${producto.idProducto}" th:text="${producto.nombreProducto}">
@@ -35,7 +36,8 @@
                             <label class="form-label form-label-lg"
                                    for="medidaProducto.idMedidaProducto">Medida:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{medidaProducto.idMedidaProducto}"
+                                <select id="medidaProducto.idMedidaProducto"
+                                        th:field="*{medidaProducto.idMedidaProducto}"
                                         name="medidaProducto.nombreMedidaProducto" required
                                         class="form-select form-select-lg">
                                     <option th:each="medidaProducto : ${listadoMedidaProductos}"
@@ -51,7 +53,8 @@
                             <label class="form-label form-label-lg"
                                    for="contenedorProducto.nombreContenedorProducto">Contenedor:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{contenedorProducto.idContenedorProducto}"
+                                <select id="contenedorProducto.nombreContenedorProducto"
+                                        th:field="*{contenedorProducto.idContenedorProducto}"
                                         name="contenedorProducto.nombreContenedorProducto" required
                                         class="form-select form-select-lg">
                                     <option th:each="contenedorProducto : ${listadoContenedorProductos}"
@@ -68,7 +71,8 @@
                             <label class="form-label form-label-lg"
                                    for="descripcionProducto.nombreDescripcionProducto">Descripcion:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{descripcionProducto.idDescripcionProducto}"
+                                <select id="descripcionProducto.nombreDescripcionProducto"
+                                        th:field="*{descripcionProducto.idDescripcionProducto}"
                                         name="descripcionProducto.nombreDescripcionProducto" required
                                         class="form-select form-select-lg">
                                     <option th:each="descripcionProducto : ${listadoDescripcionProductos}"
@@ -134,22 +138,22 @@
     /* Generar ID único para el modal de guardar */
 
     // Obtén el botón de guardar
-    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
 
     // Obtén el atributo 'data-bs-target' del botón
-    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
 
     // Obtén el atributo 'id' del botón
-    var modalIdGuardar = guardarButton.getAttribute("id");
+    let modalIdGuardar = guardarButton.getAttribute("id");
 
     // Crea un identificador único para el modal de guardar
-    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
 
     // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
 
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-    var modalGuardar = document.querySelector(targetGuardarModalId);
+    let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
 </body>
