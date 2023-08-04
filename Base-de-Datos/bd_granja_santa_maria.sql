@@ -137,7 +137,7 @@ CREATE TABLE prenies_ganado_hembra
     id_ganado_hembra             INT             NOT NULL,
     fecha_prenies                DATE            NOT NULL,
     promedio_gestacion           INT             NOT NULL,
-    fecha_concepcion             DATE,
+    fecha_concepcion             DATE            NOT NULL,
     estado_prenies_ganado_hembra TINYINT         NOT NULL,
     CONSTRAINT fk_preñes_ganado_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -147,9 +147,9 @@ CREATE TABLE produccion_diaria_leche
     id_produccion_diaria_leche     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     id_ganado_hembra               INT             NOT NULL,
     fecha_produccion_leche         DATE            NOT NUll,
-    produccion_maniana_leche       DOUBLE          NOT NULL,
-    produccion_tarde_leche         DOUBLE          NOT NULL,
-    total_produccion_leche         DOUBLE          NOT NULL,
+    produccion_maniana_leche       DECIMAL(10, 2)  NOT NULL,
+    produccion_tarde_leche         DECIMAL(10, 2)  NOT NULL,
+    total_produccion_leche         DECIMAL(10, 2)  NOT NULL,
     estado_produccion_diaria_leche TINYINT         NOT NULL,
     CONSTRAINT fk_produccion_diaria_leche_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -158,9 +158,9 @@ CREATE TABLE alimentacion_becerro
     id_alimentacion_becerro       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     id_ganado_macho               INT             NOT NULL,
     fecha_alimentacion_becerro    DATE            NOT NULL,
-    cantidad_maniana_alimentacion DOUBLE          NOT NULL,
-    cantidad_tarde_alimentacion   DOUBLE          NOT NULL,
-    total_alimentacion_becerro    DOUBLE          NOT NULL,
+    cantidad_maniana_alimentacion DECIMAL(10, 2)  NOT NULL,
+    cantidad_tarde_alimentacion   DECIMAL(10, 2)  NOT NULL,
+    total_alimentacion_becerro    DECIMAL(10, 2)  NOT NULL,
     id_produccion_diaria_leche    INT             NOT NULL,
     estado_alimentacion_becerro   TINYINT         NOT NULL,
     CONSTRAINT fk_alimentacion_becerro_ganado_macho FOREIGN KEY (id_ganado_macho) REFERENCES ganado_macho (id_ganado_macho) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -171,9 +171,9 @@ CREATE TABLE alimentacion_becerra
     id_alimentacion_becerra       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     id_ganado_hembra              INT             NOT NULL,
     fecha_alimentacion_becerra    DATE            NOT NULL,
-    cantidad_maniana_alimentacion DOUBLE          NOT NULL,
-    cantidad_tarde_alimentacion   DOUBLE          NOT NULL,
-    total_alimentacion_becerra    DOUBLE          NOT NULL,
+    cantidad_maniana_alimentacion DECIMAL(10, 2)  NOT NULL,
+    cantidad_tarde_alimentacion   DECIMAL(10, 2)  NOT NULL,
+    total_alimentacion_becerra    DECIMAL(10, 2)  NOT NULL,
     id_produccion_diaria_leche    INT             NOT NULL,
     estado_alimentacion_becerra   TINYINT         NOT NULL,
     CONSTRAINT fk_alimentacion_becerra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -191,8 +191,8 @@ CREATE TABLE diario_gasto_granja
     fecha_gasto               DATE            NOT NULL,
     unidades_adquiridas       INT             NOT NULL,
     detalle_inversion         VARCHAR(50)     NOT NULL,
-    valor_unitario            DOUBLE          NOT NULL,
-    valor_total               DOUBLE          NOT NULL,
+    valor_unitario            DECIMAL(10, 2)  NOT NULL,
+    valor_total               DECIMAL(10, 2)  NOT NULL,
     estado_diario_gasto_ganja TINYINT         NOT NULL
 );
 /*TABLAS PARA VENTAS*/
@@ -253,9 +253,9 @@ CREATE TABLE venta_producto
     id_inventario_producto INT             NOT NULL,
     fecha_venta_producto   DATE            NOT NULL,
     cantidad_producto      INT             NOT NULL,
-    precio_por_unidad      DOUBLE          NOT NULL,
-    total_precio_producto  DOUBLE          NOT NULL,
-    descuento_producto     DOUBLE          NOT NULL,
+    precio_por_unidad      DECIMAL(10, 2)  NOT NULL,
+    total_precio_producto  DECIMAL(10, 2)  NOT NULL,
+    descuento_producto     DECIMAL(10, 2)  NOT NULL,
     estado_venta_producto  TINYINT         NOT NULL,
     CONSTRAINT fk_venta_producto_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_venta_producto_inventario_producto FOREIGN KEY (id_inventario_producto) REFERENCES inventario_producto (id_inventario_producto) ON DELETE CASCADE ON UPDATE CASCADE

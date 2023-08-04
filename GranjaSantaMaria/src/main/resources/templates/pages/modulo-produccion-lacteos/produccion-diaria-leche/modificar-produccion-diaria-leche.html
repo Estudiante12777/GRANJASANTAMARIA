@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -21,7 +21,7 @@
                             <label class="form-label form-label-lg" for="ganadoHembra.nombreGanadoHembra">Nombre de la
                                 vaca:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{ganadoHembra.idGanadoHembra}"
+                                <select id="ganadoHembra.nombreGanadoHembra" th:field="*{ganadoHembra.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
                                         class="form-select form-select-lg" onchange="obtenerGandoHembra(this.value)"
                                         id="ganadoSelect">
@@ -39,7 +39,7 @@
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaProduccionLeche">Fecha de
                                 produccion:</label>
-                            <input class="form-control form-control-lg" type="date" required
+                            <input id="fechaProduccionLeche" class="form-control form-control-lg" type="date" required
                                    name="fechaProduccionLeche" th:field="*{fechaProduccionLeche}"/>
                             <span th:if="${#fields.hasErrors('fechaProduccionLeche')}" class="text-danger"
                                   th:errors="*{fechaProduccionLeche}">Error fecha de la produccion de leche</span>
@@ -125,24 +125,24 @@
 <script th:inline="javascript">
     /* Generar ID único para el modal de guardar */
     // Obtén el botón de guardar
-    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
     // Obtén el atributo 'data-bs-target' del botón
-    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
     // Obtén el atributo 'id' del botón
-    var modalIdGuardar = guardarButton.getAttribute("id");
+    let modalIdGuardar = guardarButton.getAttribute("id");
     // Crea un identificador único para el modal de guardar
-    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
     // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-    var modalGuardar = document.querySelector(targetGuardarModalId);
+    let modalGuardar = document.querySelector(targetGuardarModalId);
 </script>
 <th:block layout:fragment="page-scripts">
     <script>
         // Función para inicializar el formulario
         function inicializarFormularioProduccionDiariaLeche() {
             // Obtén el ID del ganado seleccionado inicialmente
-            var initialGanadoId = document.getElementById("ganadoSelect").value;
+            let initialGanadoId = document.getElementById("ganadoSelect").value;
             // Llama a la función para obtener el estado de preñez del ganado seleccionado inicialmente
             obtenerGandoHembra(initialGanadoId);
         }
@@ -157,11 +157,11 @@
                     url: '/verificar-prenes/' + idGanadoHembra,
                     type: 'GET',
                     success: function (response) {
-                        var prenado = response;
+                        let prenado = response;
                         // Actualizar el contenido del elemento 'estado-preniez' con la alerta correspondiente
-                        if (prenado == 189) {
+                        if (prenado === 189) {
                             $('#estado-preniez').html('<div class="alert alert-warning" role="alert">Hoy es el último día que se puede ordeñar al ganado en la tarde!.</div>');
-                        } else if (prenado == 210) {
+                        } else if (prenado === 210) {
                             $('#estado-preniez').html('<div class="alert alert-danger" role="alert">Hoy es el último día que se puede ordeñar al ganado en la mañana!.</div>');
                         } else {
                             $('#estado-preniez').html('<div class="alert alert-success" role="alert">No hay ningún aviso de ordeño.</div>');
@@ -177,11 +177,11 @@
         // Función para calcular el total de la producción de leche
         function calcularTotalProduccionLeche() {
             // Obtener los valores de producción de leche en la mañana y en la tarde
-            var produccionManiana = parseFloat(document.getElementById('produccionManianaLeche').value);
-            var produccionTarde = parseFloat(document.getElementById('produccionTardeLeche').value);
+            let produccionManiana = parseFloat(document.getElementById('produccionManianaLeche').value);
+            let produccionTarde = parseFloat(document.getElementById('produccionTardeLeche').value);
 
             // Calcular el total de producción de leche sumando las cantidades en la mañana y en la tarde
-            var total = (isNaN(produccionManiana) ? 0 : produccionManiana) + (isNaN(produccionTarde) ? 0 : produccionTarde);
+            let total = (isNaN(produccionManiana) ? 0 : produccionManiana) + (isNaN(produccionTarde) ? 0 : produccionTarde);
 
             // Mostrar el total de producción de leche en el campo correspondiente
             document.getElementById('totalProduccionLeche').value = total.toFixed(2);

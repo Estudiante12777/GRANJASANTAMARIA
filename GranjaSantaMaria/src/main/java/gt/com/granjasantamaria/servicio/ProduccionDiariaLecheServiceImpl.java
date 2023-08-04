@@ -58,14 +58,8 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     @Transactional
     public void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
         produccionDiariaLeche.setEstadoProduccionDiariaLeche(true);
-        produccionDiariaLeche.setTotalProduccionLeche(produccionDiariaLeche.getProduccionManianaLeche() + produccionDiariaLeche.getProduccionTardeLeche());
+        produccionDiariaLeche.setTotalProduccionLeche(produccionDiariaLeche.getProduccionManianaLeche().add(produccionDiariaLeche.getProduccionTardeLeche()));
         produccionDiariaLecheDao.save(produccionDiariaLeche);
-    }
-
-    @Override
-    @Transactional
-    public void eliminarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
-        produccionDiariaLecheDao.delete(produccionDiariaLeche);
     }
 
     @Override

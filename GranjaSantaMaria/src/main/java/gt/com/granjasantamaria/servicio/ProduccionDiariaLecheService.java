@@ -21,8 +21,6 @@ public interface ProduccionDiariaLecheService {
 
     void guardarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 
-    void eliminarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
-
     ProduccionDiariaLeche encontrarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
 
     List<ProduccionDiariaLeche> encontrarTotalProduccionFecha(LocalDate fechaInicio, LocalDate fechaFin);

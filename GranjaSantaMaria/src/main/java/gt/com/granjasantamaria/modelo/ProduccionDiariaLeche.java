@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -32,16 +33,16 @@ public class ProduccionDiariaLeche implements Serializable {
     @NotNull
     @Column(name = "produccion_maniana_leche", nullable = false)
     @DecimalMin(value = "0.0", message = "La producción de la maniana debe ser mayor o igual a cero")
-    private Double produccionManianaLeche;
+    private BigDecimal produccionManianaLeche;
 
     @NotNull
     @Column(name = "produccion_tarde_leche", nullable = false)
     @DecimalMin(value = "0.0", message = "La producción de la tarde debe ser mayor o igual a cero")
-    private Double produccionTardeLeche;
+    private BigDecimal produccionTardeLeche;
 
     @NotNull
     @Column(name = "total_produccion_leche", nullable = false)
-    private Double totalProduccionLeche;
+    private BigDecimal totalProduccionLeche;
 
     @NotNull
     @Column(name = "estado_produccion_diaria_leche", nullable = false)

@@ -27,14 +27,18 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControladorProduccionDiaraLeche {
 
-    @Autowired
-    private ProduccionDiariaLecheService produccionDiariaLecheService;
+    private final GanadoHembraService ganadoHembraService;
+
+    private final PreniesGanadoHembraService preniesGanadoHembraService;
+
+    private final ProduccionDiariaLecheService produccionDiariaLecheService;
 
     @Autowired
-    private GanadoHembraService ganadoHembraService;
-
-    @Autowired
-    private PreniesGanadoHembraService preniesGanadoHembraService;
+    public ControladorProduccionDiaraLeche(GanadoHembraService ganadoHembraService, PreniesGanadoHembraService preniesGanadoHembraService, ProduccionDiariaLecheService produccionDiariaLecheService) {
+        this.ganadoHembraService = ganadoHembraService;
+        this.preniesGanadoHembraService = preniesGanadoHembraService;
+        this.produccionDiariaLecheService = produccionDiariaLecheService;
+    }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/lista")
     public String listaProduccionDiariaLeche(Model model) {
@@ -48,20 +52,13 @@ public class ControladorProduccionDiaraLeche {
         var listaTotalProduccionFecha = produccionDiariaLecheService.obtenerListaTotalProduccionLeche();
         model.addAttribute("listaTotalProduccionFecha", listaTotalProduccionFecha);
         var listadoGanadoHembra = ganadoHembraService.obtenerListadoGanadosHembra();
-        List<GanadoHembra> listaVacasNovillas = listadoGanadoHembra.stream()
-                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
-                        || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
-                .collect(Collectors.toList());
+        List<GanadoHembra> listaVacasNovillas = listadoGanadoHembra.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca") || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla")).collect(Collectors.toList());
         model.addAttribute("listadoGanadoHembra", listaVacasNovillas);
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/encontrar-total-produccion-fecha")
-    public String encontrarTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio,
-                                                @RequestParam("fechaFin") String fechaFin,
-                                                @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra,
-                                                @RequestParam(defaultValue = "0") int pagina,
-                                                Model model) {
+    public String encontrarTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra, @RequestParam(defaultValue = "0") int pagina, Model model) {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
@@ -79,21 +76,21 @@ public class ControladorProduccionDiaraLeche {
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 
+    private List<ProduccionDiariaLeche> obtenerProduccionPorFechaYPorGanado(LocalDate fechaInicio, LocalDate fechaFin, Long idGanadoHembra) {
+        if (Objects.isNull(idGanadoHembra) || idGanadoHembra.equals(Long.valueOf("0"))) {
+            return produccionDiariaLecheService.encontrarTotalProduccionFecha(fechaInicio, fechaFin);
+        } else {
+            return produccionDiariaLecheService.encontrarTotalProduccionFechaAndIdGanadoHembra(fechaInicio, fechaFin, idGanadoHembra);
+        }
+    }
+
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf")
-    public ModelAndView generarPDFTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio,
-                                                       @RequestParam("fechaFin") String fechaFin,
-                                                       @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
+    public ModelAndView generarPDFTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
-        List<ProduccionDiariaLeche> totalProduccionesFecha;
-        if (Objects.isNull(idGanadoHembra) || idGanadoHembra.equals(Long.valueOf("0"))) {
-            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
-        } else {
-            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFechaAndIdGanadoHembra(inicio, fin, idGanadoHembra);
-        }
-        // Obtener el número total de registros
+        List<ProduccionDiariaLeche> totalProduccionesFecha = obtenerProduccionPorFechaYPorGanado(inicio, fin, idGanadoHembra);
         long totalRegistros = totalProduccionesFecha.size();
         // Crear el modelo para el PDF
         Map<String, Object> model = new HashMap<>();
@@ -104,20 +101,12 @@ public class ControladorProduccionDiaraLeche {
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/excel")
-    public ModelAndView generarExcelTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio,
-                                                         @RequestParam("fechaFin") String fechaFin,
-                                                         @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
+    public ModelAndView generarExcelTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
         // Convertir las fechas de String a LocalDate
         LocalDate inicio = LocalDate.parse(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
-        List<ProduccionDiariaLeche> totalProduccionesFecha;
-        if (Objects.isNull(idGanadoHembra) || idGanadoHembra.equals(Long.valueOf("0"))) {
-            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFecha(inicio, fin);
-        } else {
-            totalProduccionesFecha = produccionDiariaLecheService.encontrarTotalProduccionFechaAndIdGanadoHembra(inicio, fin, idGanadoHembra);
-        }
-        // Obtener el número total de registros
+        List<ProduccionDiariaLeche> totalProduccionesFecha = obtenerProduccionPorFechaYPorGanado(inicio, fin, idGanadoHembra);
         long totalRegistros = totalProduccionesFecha.size();
         // Crear el modelo para el Excel
         Map<String, Object> model = new HashMap<>();
@@ -129,13 +118,8 @@ public class ControladorProduccionDiaraLeche {
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/agregar")
     public String agregarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
-        // Filtrar la lista de ganado para mostrar solo vacas y novillas
-        List<GanadoHembra> listaVacasNovillas = listaGanados.stream()
-                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
-                        || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
-                .collect(Collectors.toList());
-        model.addAttribute("listaGanados", listaVacasNovillas);
+        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra().stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca") || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla")).collect(Collectors.toList());
+        model.addAttribute("listaGanados", listaGanados);
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
     }
 
@@ -164,8 +148,7 @@ public class ControladorProduccionDiaraLeche {
     }
 
     @PostMapping("/modulo-produccion-lacteos/produccion-diaria-leche/guardar")
-    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ProduccionDiariaLeche produccionDiariaLeche,
-                                               BindingResult bindingResult, Model model) throws Exception {
+    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) ProduccionDiariaLeche produccionDiariaLeche, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
@@ -178,20 +161,11 @@ public class ControladorProduccionDiaraLeche {
     public String editarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche, Model model) {
         List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
         // Filtrar la lista de ganado para mostrar solo vacas y novillas
-        List<GanadoHembra> listaVacasNovillas = listaGanados.stream()
-                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca")
-                        || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla"))
-                .collect(Collectors.toList());
+        List<GanadoHembra> listaVacasNovillas = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Vaca") || ganado.getTipoGanado().getNombreTipoGanado().equals("Novilla")).collect(Collectors.toList());
         model.addAttribute("listaGanados", listaVacasNovillas);
         produccionDiariaLeche = produccionDiariaLecheService.encontrarProduccionDiariaLeche(produccionDiariaLeche);
         model.addAttribute("produccionDiariaLeche", produccionDiariaLeche);
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/modificar-produccion-diaria-leche";
-    }
-
-    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/eliminar")
-    public String eliminarProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche) {
-        produccionDiariaLecheService.eliminarProduccionDiariaLeche(produccionDiariaLeche);
-        return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/baja")
