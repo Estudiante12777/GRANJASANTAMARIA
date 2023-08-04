@@ -7,6 +7,7 @@ import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -59,9 +60,9 @@ public class ReporteVentaProductoFechaExcel extends AbstractXlsxView {
             row.createCell(2).setCellValue(ventaProducto.getCliente().getNombreCliente() + " " + ventaProducto.getCliente().getApellidoCliente());
             row.createCell(3).setCellValue(ventaProducto.getInventarioProducto().getDetalleProducto().toString());
             row.createCell(4).setCellValue(ventaProducto.getCantidadProducto());
-            row.createCell(5).setCellValue(ventaProducto.getPrecioPorUnidad());
-            row.createCell(6).setCellValue(ventaProducto.getDescuentoProducto());
-            row.createCell(7).setCellValue(ventaProducto.getTotalPrecioProducto());
+            row.createCell(5).setCellValue(ventaProducto.getPrecioPorUnidad().doubleValue());
+            row.createCell(6).setCellValue(ventaProducto.getDescuentoProducto().doubleValue());
+            row.createCell(7).setCellValue(ventaProducto.getTotalPrecioProducto().doubleValue());
             for (Cell cell : row) {
                 cell.setCellStyle(dataStyle);
             }
@@ -73,9 +74,7 @@ public class ReporteVentaProductoFechaExcel extends AbstractXlsxView {
         }
 
         // Calcular la suma total de la venta de productos
-        double sumaTotalVentaProducto = listaVentaProducto.stream()
-                .mapToDouble(VentaProducto::getTotalPrecioProducto)
-                .sum();
+        BigDecimal sumaTotalVentaProducto = listaVentaProducto.stream().map(VentaProducto::getTotalPrecioProducto).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // Crear la fila para el total
         Row totalRow = reporteVentaProducto.createRow(rowNum);

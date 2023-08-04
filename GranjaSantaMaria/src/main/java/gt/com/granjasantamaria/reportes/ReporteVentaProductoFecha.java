@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.document.AbstractPdfView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +84,7 @@ public class ReporteVentaProductoFecha extends AbstractPdfView {
         tablaVentaProducto.addCell(cellHeaderTotal);
 
         //Antes de construir la tabla, calcula la suma total de la venta
-        double sumaTotalVentaProducto = listaVentaProducto.stream().mapToDouble(VentaProducto::getTotalPrecioProducto).sum();
+        BigDecimal sumaTotalVentaProducto = listaVentaProducto.stream().map(VentaProducto::getTotalPrecioProducto).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         //Agrega los datos en cada fila como celdas
         listaVentaProducto.forEach(ventaProducto -> {

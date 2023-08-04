@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.document.AbstractPdfView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class ReporteGastoGranjaFecha extends AbstractPdfView {
         tablaDiarioGastoGranja.addCell(cellHeaderCantidadFinal);
 
         // Calcular la suma de productos ingresados
-        double sumaGastoGranja = listaDiarioGastoGranja.stream().mapToDouble(DiarioGastoGranja::getValorTotal).sum();
+        BigDecimal sumaGastoGranja = listaDiarioGastoGranja.stream().map(DiarioGastoGranja::getValorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         listaDiarioGastoGranja.forEach(diarioGastoGranja -> {
             tablaDiarioGastoGranja.addCell(diarioGastoGranja.getIdDiarioGastoGranja().toString());

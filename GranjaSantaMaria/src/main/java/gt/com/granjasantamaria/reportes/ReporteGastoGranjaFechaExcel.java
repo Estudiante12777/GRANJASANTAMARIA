@@ -7,6 +7,7 @@ import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +57,8 @@ public class ReporteGastoGranjaFechaExcel extends AbstractXlsxView {
             row.createCell(1).setCellValue(diarioGastoGranja.getFechaGasto().toString());
             row.createCell(2).setCellValue(diarioGastoGranja.getUnidadesAdquiridas());
             row.createCell(3).setCellValue(diarioGastoGranja.getDetalleInversion());
-            row.createCell(4).setCellValue(diarioGastoGranja.getValorUnitario());
-            row.createCell(5).setCellValue(diarioGastoGranja.getValorTotal());
+            row.createCell(4).setCellValue(diarioGastoGranja.getValorUnitario().doubleValue());
+            row.createCell(5).setCellValue(diarioGastoGranja.getValorTotal().doubleValue());
             for (Cell cell : row) {
                 cell.setCellStyle(dataStyle);
             }
@@ -69,9 +70,7 @@ public class ReporteGastoGranjaFechaExcel extends AbstractXlsxView {
         }
 
         // Calcular la suma total gasto granja
-        double sumaTotalGastoGranja = listaDiarioGastoGranja.stream()
-                .mapToDouble(DiarioGastoGranja::getValorTotal)
-                .sum();
+        BigDecimal sumaTotalGastoGranja = listaDiarioGastoGranja.stream().map(DiarioGastoGranja::getValorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // Crear la fila para el total gasto granja
         Row totalRow = reporteGastoGranja.createRow(rowNum);
@@ -83,7 +82,7 @@ public class ReporteGastoGranjaFechaExcel extends AbstractXlsxView {
         totalRow.getCell(0).setCellStyle(totalLabelStyle);
         CellStyle totalValueStyle = workbook.createCellStyle();
         totalValueStyle.setAlignment(HorizontalAlignment.CENTER);
-        totalRow.createCell(6).setCellValue(sumaTotalGastoGranja);
+        totalRow.createCell(6).setCellValue("Q. " + sumaTotalGastoGranja);
         totalRow.getCell(6).setCellStyle(totalValueStyle);
 
     }
