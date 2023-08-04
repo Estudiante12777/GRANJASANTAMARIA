@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -19,7 +19,8 @@
                         <input type="hidden" name="idDiarioGastoGranja" th:field="*{idDiarioGastoGranja}"/>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaGasto">Fecha:</label>
-                            <input class="form-control form-control-lg" type="date" required name="fechaGasto"
+                            <input id="fechaGasto" class="form-control form-control-lg" type="date" required
+                                   name="fechaGasto"
                                    th:field="*{fechaGasto}"/>
                             <span th:if="${#fields.hasErrors('fechaGasto')}" class="text-danger"
                                   th:errors="*{fechaGasto}">Error fecha de la produccion de leche</span>
@@ -37,7 +38,7 @@
                             <label class="form-label form-label-lg" for="detalleInversion">Detalle de la inversion:
                             </label>
                             <input id="detalleInversion" type="text" class="form-control form-control-lg" required
-                                   name="detalleInversion" th:field="*{detalleInversion}" onblur="calcularTotal();">
+                                   name="detalleInversion" th:field="*{detalleInversion}">
                             <span th:if="${#fields.hasErrors('detalleInversion')}" class="text-danger"
                                   th:errors="*{detalleInversion}">Error produccion de leche en la Mañana</span>
                         </div>
@@ -110,17 +111,17 @@
 <script th:inline="javascript">
     /* Generar ID único para el modal de guardar */
     // Obtén el botón de guardar
-    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
     // Obtén el atributo 'data-bs-target' del botón
-    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
     // Obtén el atributo 'id' del botón
-    var modalIdGuardar = guardarButton.getAttribute("id");
+    let modalIdGuardar = guardarButton.getAttribute("id");
     // Crea un identificador único para el modal de guardar
-    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
     // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-    var modalGuardar = document.querySelector(targetGuardarModalId);
+    let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
 </body>

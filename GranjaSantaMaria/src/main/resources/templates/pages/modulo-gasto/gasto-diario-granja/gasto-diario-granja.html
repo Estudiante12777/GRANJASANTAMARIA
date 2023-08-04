@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -21,27 +21,26 @@
     <div th:if="${listaDiarioGastosGranja != null and !listaDiarioGastosGranja.empty}">
         <table class="table">
             <thead class="table-dark">
-            <th>Fecha</th>
-            <th>No.</th>
-            <th>Detalle inversion</th>
-            <th>Valor unitario</th>
-            <th>Valor total</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                Editar
-            </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
-                Dar baja
-            </th>
+            <tr>
+                <th>Fecha</th>
+                <th>No.</th>
+                <th>Detalle inversion</th>
+                <th>Valor unitario</th>
+                <th>Valor total</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    Editar
+                </th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                    Dar baja
+                </th>
+            </tr>
             </thead>
             <tr th:each="diarioGastoGranja : ${listaDiarioGastosGranja}">
                 <td th:text="${diarioGastoGranja.fechaGasto}">
-                    Mostrar fecha de gasto
                 </td>
                 <td th:text="${diarioGastoGranja.unidadesAdquiridas}">
-                    Mostrar unidades adquiridas
                 </td>
                 <td th:text="${diarioGastoGranja.detalleInversion}">
-                    Mostrar detalle de la inversion
                 </td>
                 <td th:text="${diarioGastoGranja.valorUnitario}">Mostrar valor unitario
                 </td>
@@ -142,21 +141,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de edición */
-    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de edición
-        var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+        let uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>
@@ -165,21 +164,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de dar baja */
-    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    let deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     deleteButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de dar baja
-        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+        let uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>
