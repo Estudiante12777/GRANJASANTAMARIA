@@ -19,3 +19,5 @@ SELECT * FROM contenedor_producto;
 SELECT * FROM descripcion_producto;
 SELECT * FROM detalle_producto;
 
+SELECT * FROM diario_gasto_granja;
+
