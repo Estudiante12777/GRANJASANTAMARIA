@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ControladorPersonas {
+public class ControladorModuloPersona {
 
     @GetMapping("/modulo-persona")
     public String moduloPersonas() {
