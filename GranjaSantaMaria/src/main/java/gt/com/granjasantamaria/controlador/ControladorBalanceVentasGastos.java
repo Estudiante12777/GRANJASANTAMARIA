@@ -33,7 +33,7 @@ public class ControladorBalanceVentasGastos {
         } else {
             model.addAttribute("totalVentas", totalVentas);
             model.addAttribute("totalGastos", totalGastos);
-            BigDecimal balanceVentasGastos = totalVentas - totalGastos;
+            BigDecimal balanceVentasGastos = totalVentas.subtract(totalGastos);
             model.addAttribute("balanceVentasGastos", balanceVentasGastos);
         }
         return "pages/modulo-balance/balance/balance";
