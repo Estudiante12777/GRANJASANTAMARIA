@@ -2,6 +2,7 @@ package gt.com.granjasantamaria.dao;
 
 import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,6 +20,6 @@ public interface DiarioGastoGranjaDao extends JpaRepository<DiarioGastoGranja, L
     Page<DiarioGastoGranja> findByFechaGastoBetween(LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
 
     @Query("SELECT SUM(d.valorTotal) FROM DiarioGastoGranja d WHERE d.fechaGasto = CURRENT_DATE")
-    Double obtenerTotalVentas();
+    BigDecimal obtenerTotalVentas();
 
 }

@@ -4,6 +4,7 @@ import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,6 +24,6 @@ public interface DiarioGastoGranjaService {
 
     void darBajaDiarioGastoGranja(DiarioGastoGranja diarioGastoGranja);
 
-    Double obtenerTotalGasto();
+    BigDecimal obtenerTotalGasto();
 
 }

@@ -3,6 +3,7 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.dao.DiarioGastoGranjaDao;
 import gt.com.granjasantamaria.modelo.DiarioGastoGranja;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class DiarioGastoGranjaServiceImpl implements DiarioGastoGranjaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Double obtenerTotalGasto() {
+    public BigDecimal obtenerTotalGasto() {
         return diarioGastoGranjaDao.obtenerTotalVentas();
     }
 

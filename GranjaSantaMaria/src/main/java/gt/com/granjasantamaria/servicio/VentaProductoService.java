@@ -4,6 +4,7 @@ import gt.com.granjasantamaria.modelo.VentaProducto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,6 +28,6 @@ public interface VentaProductoService {
 
     void darBajaVentaProducto(VentaProducto ventaProducto);
 
-    Double obtenerTotalVentas();
+    BigDecimal obtenerTotalVentas();
 
 }

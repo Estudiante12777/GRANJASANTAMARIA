@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -99,7 +100,7 @@ public class VentaProductoServiceImpl implements VentaProductoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Double obtenerTotalVentas() {
+    public BigDecimal obtenerTotalVentas() {
         return ventaProductoDao.obtenerTotalVentas();
     }
 

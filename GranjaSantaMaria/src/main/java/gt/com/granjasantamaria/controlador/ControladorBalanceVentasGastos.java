@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.math.BigDecimal;
+
 @Controller
 public class ControladorBalanceVentasGastos {
 
@@ -22,8 +24,8 @@ public class ControladorBalanceVentasGastos {
 
     @GetMapping("/modulo-balance/balance/balance-fecha-actual")
     public String mostrarBalanaceFechaActual(Model model) {
-        Double totalVentas = ventaProductoService.obtenerTotalVentas();
-        Double totalGastos = diarioGastoGranjaService.obtenerTotalGasto();
+        BigDecimal totalVentas = ventaProductoService.obtenerTotalVentas();
+        BigDecimal totalGastos = diarioGastoGranjaService.obtenerTotalGasto();
         if (totalVentas == null || totalGastos == null) {
             model.addAttribute("totalVentas", 0.00);
             model.addAttribute("totalGastos", 0.00);
@@ -31,7 +33,7 @@ public class ControladorBalanceVentasGastos {
         } else {
             model.addAttribute("totalVentas", totalVentas);
             model.addAttribute("totalGastos", totalGastos);
-            double balanceVentasGastos = totalVentas - totalGastos;
+            BigDecimal balanceVentasGastos = totalVentas - totalGastos;
             model.addAttribute("balanceVentasGastos", balanceVentasGastos);
         }
         return "pages/modulo-balance/balance/balance";

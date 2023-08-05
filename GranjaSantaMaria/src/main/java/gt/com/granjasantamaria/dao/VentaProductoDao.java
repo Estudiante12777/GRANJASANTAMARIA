@@ -2,6 +2,7 @@ package gt.com.granjasantamaria.dao;
 
 import gt.com.granjasantamaria.modelo.VentaProducto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -35,6 +36,6 @@ public interface VentaProductoDao extends JpaRepository<VentaProducto, Long> {
                                                                    @Param("idDetalleProducto") Long idDetalleProducto);
 
     @Query("SELECT SUM(v.totalPrecioProducto) FROM VentaProducto v WHERE v.fechaVentaProducto = CURRENT_DATE ")
-    Double obtenerTotalVentas();
+    BigDecimal obtenerTotalVentas();
 
 }
