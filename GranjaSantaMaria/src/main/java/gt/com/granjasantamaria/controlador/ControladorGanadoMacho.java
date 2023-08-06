@@ -3,6 +3,8 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ControladorGanadoMacho {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/images";
+    public static String UPLOAD_DIRECTORY = "static/images";
 
     private final RazaGanadoService razaGanadoService;
 
@@ -64,15 +66,31 @@ public class ControladorGanadoMacho {
     public String guardarGanadoMacho(@RequestParam("image") MultipartFile file, @Valid GanadoMacho ganadoMacho, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
-        } else {
-            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
-            Files.write(fileNameAndPath, file.getBytes());
+        }
+        // Obtener el flujo de entrada de la imagen desde los recursos dentro del JAR
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("static/images/" + file.getOriginalFilename());
+        if (inputStream != null) {
+            // Ruta donde se guardará la imagen en el sistema de archivos externo
+            Path targetPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+            // Verificar si la carpeta UPLOAD_DIRECTORY existe, si no, crearla
+            if (!Files.exists(targetPath.getParent())) {
+                try {
+                    Files.createDirectories(targetPath.getParent());
+                } catch (IOException e) {
+                    throw new IOException("No se pudo crear la carpeta para guardar la imagen.", e);
+                }
+            }
+            // Guardar la imagen en la ubicación deseada
+            Files.copy(inputStream, targetPath);
+            // Resto del código...
             ganadoMacho.setFotografia(file.getOriginalFilename());
             ganadoMachoService.guardarGanadoMacho(ganadoMacho);
             return "redirect:/modulo-ganado/ganado-macho/lista";
+        } else {
+            throw new IOException("No se pudo obtener el flujo de entrada de la imagen desde los recursos.");
         }
     }
-    
+
     @GetMapping("/modulo-ganado/ganado-macho/editar/{idGanadoMacho}")
     public String editarGanadoMacho(GanadoMacho ganadoMacho, Model model) {
         List<TipoGanado> listaTiposGanado = tipoGanadoService.listadoTiposGanado().stream().filter(ganado -> {
