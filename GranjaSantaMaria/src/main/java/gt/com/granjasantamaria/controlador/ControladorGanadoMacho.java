@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ControladorGanadoMacho {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/images";
+    public static String UPLOAD_DIRECTORY = "images";
 
     private final RazaGanadoService razaGanadoService;
 
