@@ -22,8 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ControladorGanadoMacho {
 
-    public static String UPLOAD_DIRECTORY = "images";
-
     private final RazaGanadoService razaGanadoService;
 
     private final TipoGanadoService tipoGanadoService;
@@ -65,7 +63,8 @@ public class ControladorGanadoMacho {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+            String absoluteUploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+            Path fileNameAndPath = Paths.get(absoluteUploadDirectory, file.getOriginalFilename());
             Files.write(fileNameAndPath, file.getBytes());
             ganadoMacho.setFotografia(file.getOriginalFilename());
             ganadoMachoService.guardarGanadoMacho(ganadoMacho);
