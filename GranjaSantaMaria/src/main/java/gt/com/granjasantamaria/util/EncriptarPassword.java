@@ -6,7 +6,7 @@ public class EncriptarPassword {
 
     public static void main(String[] args) {
 
-        var password = "W.i.l.m.e.r#granja";
+        var password = "administrador-granja-santa-maria";
         System.out.println("password: " + password);
         System.out.println("password encriptado: " + encriptarPassword(password));
     }

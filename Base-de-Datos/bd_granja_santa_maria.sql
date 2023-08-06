@@ -261,3 +261,14 @@ CREATE TABLE venta_producto
     CONSTRAINT fk_venta_producto_inventario_producto FOREIGN KEY (id_inventario_producto) REFERENCES inventario_producto (id_inventario_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+/*
+    USUARIO PREDETERMINADO
+
+    Usuario: Wilmer
+    Contraseña: administrador-granja-santa-maria
+    Rol: ROLE_ADMINISTRADOR
+*/
+
+INSERT INTO usuario (username, password) VALUES ('Wilmer', '$2a$10$MT26qZSAzg3u3TMEwhUy2eA2vp74mzdzOGPU2cm5QFYYZZF95k262');
+INSERT INTO rol (nombre, id_usuario) VALUES ('ROLE_ADMINISTRADOR', 1);
+
