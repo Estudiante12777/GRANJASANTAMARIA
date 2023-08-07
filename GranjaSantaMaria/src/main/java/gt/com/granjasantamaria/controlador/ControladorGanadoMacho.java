@@ -3,6 +3,7 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,9 +64,17 @@ public class ControladorGanadoMacho {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            String absoluteUploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/images/";
-            Path fileNameAndPath = Paths.get(absoluteUploadDirectory, file.getOriginalFilename());
+            File jarFile = new File(ControladorGanadoMacho.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            String jarDirectory = jarFile.getParentFile().getPath();
+            String imagesDirectory = jarDirectory + "/images/";
+            Path imagesPath = Paths.get(imagesDirectory);
+            if (!Files.exists(imagesPath)) {
+                Files.createDirectories(imagesPath);
+            }
+            // Utiliza la ruta imagesDirectory para guardar la imagen
+            Path fileNameAndPath = Paths.get(imagesDirectory, file.getOriginalFilename());
             Files.write(fileNameAndPath, file.getBytes());
+            // Guarda el nombre de la imagen en el objeto GanadoMacho
             ganadoMacho.setFotografia(file.getOriginalFilename());
             ganadoMachoService.guardarGanadoMacho(ganadoMacho);
             return "redirect:/modulo-ganado/ganado-macho/lista";
