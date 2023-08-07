@@ -71,8 +71,7 @@ public class ControladorGanadoMacho {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            File jarFile = new File(ControladorGanadoMacho.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-            String jarDirectory = jarFile.getParentFile().getPath();
+            String jarDirectory = System.getProperty("user.dir");
             String imagesDirectory = jarDirectory + "/images/";
             Path imagesPath = Paths.get(imagesDirectory);
             if (!Files.exists(imagesPath)) {
@@ -90,7 +89,7 @@ public class ControladorGanadoMacho {
 
     @GetMapping("/modulo-ganado/ganado-macho/mostrar-imagen/{nombreImagen:.+}")
     public ResponseEntity<Resource> mostrarImagen(@PathVariable String nombreImagen) {
-        String imagesDirectory = System.getProperty("user.dir") + "/target/images/";
+        String imagesDirectory = System.getProperty("user.dir") + "/images/";
         Resource resource = resourceLoader.getResource("file:" + imagesDirectory + nombreImagen);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
     }
