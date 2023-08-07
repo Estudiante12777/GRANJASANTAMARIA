@@ -12,8 +12,12 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,11 +33,14 @@ public class ControladorGanadoMacho {
 
     private final GanadoMachoService ganadoMachoService;
 
+    private final ResourceLoader resourceLoader;
+
     @Autowired
-    public ControladorGanadoMacho(RazaGanadoService razaGanadoService, TipoGanadoService tipoGanadoService, GanadoMachoService ganadoMachoService) {
+    public ControladorGanadoMacho(RazaGanadoService razaGanadoService, TipoGanadoService tipoGanadoService, GanadoMachoService ganadoMachoService, ResourceLoader resourceLoader) {
         this.razaGanadoService = razaGanadoService;
         this.tipoGanadoService = tipoGanadoService;
         this.ganadoMachoService = ganadoMachoService;
+        this.resourceLoader = resourceLoader;
     }
 
     @GetMapping("/modulo-ganado/ganado-macho/lista")
@@ -79,6 +86,13 @@ public class ControladorGanadoMacho {
             ganadoMachoService.guardarGanadoMacho(ganadoMacho);
             return "redirect:/modulo-ganado/ganado-macho/lista";
         }
+    }
+
+    @GetMapping("/modulo-ganado/ganado-macho/mostrar-imagen/{nombreImagen:.+}")
+    public ResponseEntity<Resource> mostrarImagen(@PathVariable String nombreImagen) {
+        String imagesDirectory = System.getProperty("user.dir") + "/target/images/";
+        Resource resource = resourceLoader.getResource("file:" + imagesDirectory + nombreImagen);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
     }
 
     @GetMapping("/modulo-ganado/ganado-macho/editar/{idGanadoMacho}")
