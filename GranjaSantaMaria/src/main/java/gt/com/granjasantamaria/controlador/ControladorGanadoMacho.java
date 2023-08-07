@@ -3,7 +3,6 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

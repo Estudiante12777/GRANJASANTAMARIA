@@ -11,8 +11,12 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,19 +26,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ControladorGanadoHembra {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/images";
-
     private final RazaGanadoService razaGanadoService;
 
     private final TipoGanadoService tipoGanadoService;
 
     private final GanadoHembraService ganadoHembraService;
 
+    private final ResourceLoader resourceLoader;
+
     @Autowired
-    public ControladorGanadoHembra(RazaGanadoService razaGanadoService, TipoGanadoService tipoGanadoService, GanadoHembraService ganadoHembraService) {
+    public ControladorGanadoHembra(RazaGanadoService razaGanadoService, TipoGanadoService tipoGanadoService, GanadoHembraService ganadoHembraService, ResourceLoader resourceLoader) {
         this.razaGanadoService = razaGanadoService;
         this.tipoGanadoService = tipoGanadoService;
         this.ganadoHembraService = ganadoHembraService;
+        this.resourceLoader = resourceLoader;
     }
 
     @GetMapping("/modulo-ganado/ganado-hembra/lista")
@@ -64,12 +69,27 @@ public class ControladorGanadoHembra {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+            String jarDirectory = System.getProperty("user.dir");
+            String imagesDirectory = jarDirectory + "/images/";
+            Path imagesPath = Paths.get(imagesDirectory);
+            if (!Files.exists(imagesPath)) {
+                Files.createDirectories(imagesPath);
+            }
+            // Utiliza la ruta imagesDirectory para guardar la imagen
+            Path fileNameAndPath = Paths.get(imagesDirectory, file.getOriginalFilename());
             Files.write(fileNameAndPath, file.getBytes());
+            // Guarda el nombre de la imagen en el objeto GanadoMacho
             ganadoHembra.setFotografia(file.getOriginalFilename());
             ganadoHembraService.guardarGanadoHembra(ganadoHembra);
             return "redirect:/modulo-ganado/ganado-hembra/lista";
         }
+    }
+
+    @GetMapping("/modulo-ganado/ganado-hembra/mostrar-imagen/{nombreImagen:.+}")
+    public ResponseEntity<Resource> mostrarImagen(@PathVariable String nombreImagen) {
+        String imagesDirectory = System.getProperty("user.dir") + "/images/";
+        Resource resource = resourceLoader.getResource("file:" + imagesDirectory + nombreImagen);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
     }
 
     @GetMapping("/modulo-ganado/ganado-hembra/editar/{idGanadoHembra}")

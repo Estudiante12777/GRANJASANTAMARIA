@@ -33,20 +33,16 @@
             </thead>
             <tr th:each="ganado, iterStat : ${ganadosHembra}">
                 <td>
-                    <img th:src="@{'/images/' + ${ganado.fotografia}}" alt="Fotografía del ganado" width="100"
-                         height="100">
+                    <img th:src="@{/modulo-ganado/ganado-hembra/mostrar-imagen/__${ganado.fotografia}__}"
+                         alt="Fotografía del ganado" width="100" height="100">
                 </td>
                 <td th:text="${ganado.nombreGanadoHembra}">
-                    Mostrar Nombre de ganado
                 </td>
                 <td th:text="${ganado.fechaNacimiento}">
-                    Mostrar fecha de nacimiento ganado hembra
                 </td>
                 <td th:text="${ganado.tipoGanado.nombreTipoGanado}">
-                    Mostrar Nombre de tipo de ganado
                 </td>
                 <td th:text="${ganado.razaGanado.nombreRazaGanado}">
-                    Mostrar Nombre de la raza de ganado
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
