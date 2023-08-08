@@ -25,7 +25,8 @@
                                         name="ganadoHembra.nombreGanadoHembra" required
                                         class="form-select form-select-lg" onchange="obtenerGandoHembra(this.value)"
                                         id="ganadoSelect">
-                                    <option id="ganadoHembra.nombreGanadoHembra" th:each="ganadoHembra : ${listaGanados}"
+                                    <option id="ganadoHembra.nombreGanadoHembra"
+                                            th:each="ganadoHembra : ${listaGanados}"
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"
                                             th:selected="${ganadoHembra.idGanadoHembra == produccionDiariaLeche.ganadoHembra.idGanadoHembra}">

@@ -12,7 +12,7 @@
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <a class="btn btn-outline-success"
            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/agregar}"><i class="fa-solid fa-plus"></i>
-            Crear nuevo registro</a>
+            Agregar produccion de leche</a>
         <a class="btn btn-outline-primary"
            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha}">
             Total produccion de leche por fecha</a>
@@ -21,11 +21,11 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
+                <th>Fecha produccion</th>
                 <th>Productora</th>
                 <th>Produccion mañana - litros</th>
                 <th>Produccion tarde - litros</th>
                 <th>Total produccion</th>
-                <th>Fecha produccion</th>
                 <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     Alimentar Becerro
                 </th>
@@ -38,6 +38,8 @@
             </tr>
             </thead>
             <tr th:each="produccionDiariaLeche : ${listaProduccionDiariaLeche}">
+                <td th:text="${#temporals.format(produccionDiariaLeche.getFechaProduccionLeche(), 'dd-MM-yyyy')}">
+                </td>
                 <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">
                 </td>
                 <td th:text="${produccionDiariaLeche.produccionManianaLeche + ' litros'}">
@@ -45,8 +47,6 @@
                 <td th:text="${produccionDiariaLeche.produccionTardeLeche + ' litros'}">
                 </td>
                 <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">
-                </td>
-                <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de alimentacion becerro -->

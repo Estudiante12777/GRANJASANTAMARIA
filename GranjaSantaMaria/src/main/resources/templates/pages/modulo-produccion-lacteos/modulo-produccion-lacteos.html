@@ -7,7 +7,8 @@
 </head>
 
 <body>
-<div class="container-fluid py-5 row" layout:fragment="page-content" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
+<div class="container-fluid py-5 row" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
     <div class="col-sm-3 mb-3">
         <div class="card">
             <div class="card-body">

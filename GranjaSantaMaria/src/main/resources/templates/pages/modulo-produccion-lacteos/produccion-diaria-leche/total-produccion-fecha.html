@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
-    <title>Título de la página</title>
+    <title></title>
 </head>
 
 <body>
@@ -38,11 +38,11 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
+                <th>Fecha de producción</th>
                 <th>Nombre de la vaca</th>
                 <th>Litros - Mañana</th>
                 <th>Litros - Tarde</th>
                 <th>Total diario vaca</th>
-                <th>Fecha de producción</th>
                 <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     Alimentar Becerro
                 </th>
@@ -50,21 +50,15 @@
             </thead>
             <tbody>
             <tr th:each="produccionDiariaLeche : ${totalProduccionesFecha}">
-                <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">Mostrar Nombre del ganado
+                <td th:text="${#temporals.format(produccionDiariaLeche.getFechaProduccionLeche(), 'dd-MM-yyyy')}">
                 </td>
-                <td th:text="${produccionDiariaLeche.produccionManianaLeche + ' litros'}">Mostrar Producción de leche
-                    por la
-                    mañana
+                <td th:text="${produccionDiariaLeche.ganadoHembra.nombreGanadoHembra}">
                 </td>
-                <td th:text="${produccionDiariaLeche.produccionTardeLeche + ' litros'}">Mostrar Producción de leche por
-                    la
-                    tarde
+                <td th:text="${produccionDiariaLeche.produccionManianaLeche + ' litros'}">
                 </td>
-                <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">Mostrar Producción de leche por
-                    la
-                    tarde
+                <td th:text="${produccionDiariaLeche.produccionTardeLeche + ' litros'}">
                 </td>
-                <td th:text="${produccionDiariaLeche.fechaProduccionLeche}">Mostrar fecha de producción de leche
+                <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de alimentacion becerro -->
