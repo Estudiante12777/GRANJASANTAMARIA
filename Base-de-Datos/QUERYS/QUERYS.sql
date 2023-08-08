@@ -1,10 +1,17 @@
 USE granja_santa_maria;
 
+/*
+    MODULO GANADO
+*/
 SELECT * FROM raza_ganado;
 SELECT * FROM tipo_ganado;
 SELECT * FROM ganado_macho;
 SELECT * FROM ganado_hembra;
 
-DELETE FROM ganado_macho WHERE id_ganado_macho = 1;
-ALTER TABLE ganado_macho AUTO_INCREMENT = 1;
+/*
+    MODULO PRODUCCION LACTEOS
+*/
+SELECT * FROM produccion_diaria_leche;
+
+SELECT g_h.nombre_ganado_hembra, p_d_l.produccion_maniana_leche, p_d_l.produccion_tarde_leche, p_d_l.total_produccion_leche, p_d_l.fecha_produccion_leche FROM produccion_diaria_leche AS p_d_l INNER JOIN ganado_hembra AS g_h ON p_d_l.id_ganado_hembra = g_h.id_ganado_hembra;
 

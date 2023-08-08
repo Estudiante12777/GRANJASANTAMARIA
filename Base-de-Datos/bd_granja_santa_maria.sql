@@ -271,3 +271,78 @@ CREATE TABLE venta_producto
 
 INSERT INTO usuario (username, password) VALUES ('Wilmer', '$2a$10$MT26qZSAzg3u3TMEwhUy2eA2vp74mzdzOGPU2cm5QFYYZZF95k262');
 INSERT INTO rol (nombre, id_usuario) VALUES ('ROLE_ADMINISTRADOR', 1);
+
+/*
+    DATOS PARA LAS UBICACIONES
+    1. PAIS.
+    2. DEPARTAMENTO.
+    3. MUNICIPIO.
+*/
+
+INSERT INTO pais (nombre_pais, estado_pais) VALUES ('Guatemala', 1);
+
+INSERT INTO departamento (nombre_departamento, id_pais, estado_departamento)
+VALUES ('Alta Verapaz', 1, 1), ('Baja Verapaz', 1, 1), ('Chimaltenango', 1, 1), ('Chiquimula', 1, 1), ('El Progreso', 1, 1), ('Escuintla', 1, 1),
+('Guatemala', 1, 1), ('Huehuetenango', 1, 1), ('Izabal', 1, 1), ('Jalapa', 1, 1), ('Jutiapa', 1, 1), ('Petén', 1, 1),
+('Quetzaltenango', 1, 1), ('Quiché', 1, 1), ('Retalhuleu', 1, 1), ('Sacatepéquez', 1, 1), ('San Marcos', 1, 1), ('Santa Rosa', 1, 1),
+('Sololá', 1, 1), ('Suchitepéquez', 1, 1), ('Totonicapán', 1, 1), ('Zacapa', 1, 1);
+
+INSERT INTO municipio (nombre_municipio, id_departamento, id_pais, estado_municipio)
+VALUES ('Cahabón', 1, 1, 1), ('Chahal', 1, 1, 1), ('Chisec', 1, 1, 1), ('Cobán', 1, 1, 1), ('Fray Bartolomé de las Casas', 1, 1, 1), ('Lanquín', 1, 1, 1),
+('Panzós', 1, 1, 1), ('Raxruha', 1, 1, 1), ('San Cristóbal Verapaz', 1, 1, 1), ('San Juan Chamelco', 1, 1, 1), ('San Pedro Carchá', 1, 1, 1), ('Santa Catalina La Tinta', 1, 1, 1),
+('Santa Cruz Verapaz', 1, 1, 1), ('Santa María Cahabón', 1, 1, 1), ('Senahú', 1, 1, 1), ('Tamahú', 1, 1, 1), ('Tucurú', 1, 1, 1), ('Cubulco', 2, 1, 1),
+('Granados', 2, 1, 1), ('Purulhá', 2, 1, 1), ('Rabinal', 2, 1, 1), ('Salamá', 2, 1, 1), ('San Jerónimo', 2, 1, 1), ('San Miguel Chicaj', 2, 1, 1),
+('Santa Cruz el Chol', 2, 1, 1), ('Acatenango', 3, 1, 1), ('Chimaltenango', 3, 1, 1), ('El Tejar', 3, 1, 1), ('Parramos', 3, 1, 1), ('Patzicía', 3, 1, 1),
+('Patzún', 3, 1, 1), ('Pochuta', 3, 1, 1), ('San Andrés Itzapa', 3, 1, 1), ('San Juan Comalapa', 3, 1, 1), ('San José Poaquíl', 3, 1, 1), ('San Martín Jilotepeque', 3, 1, 1),
+('San Pedro Yepocapa', 3, 1, 1), ('Santa Apolonia', 3, 1, 1), ('Santa Cruz Balanyá', 3, 1, 1), ('Tecpán Guatemala', 3, 1, 1), ('Zaragoza', 3, 1, 1), ('Camotán', 4, 1, 1),
+('Chiquimula', 4, 1, 1), ('Concepción Las Minas', 4, 1, 1), ('Esquipulas', 4, 1, 1), ('Ipala', 4, 1, 1), ('Jocotán', 4, 1, 1), ('Olopa', 4, 1, 1),
+('Quezaltepeque', 4, 1, 1), ('San Jacinto', 4, 1, 1), ('San José la Arada', 4, 1, 1), ('San Juan Ermita', 4, 1, 1), ('El Jícaro', 5, 1, 1), ('Guastatoya', 5, 1, 1),
+('Morazán', 5, 1, 1), ('San Agustín Acasaguastlán', 5, 1, 1), ('San Antonio La Paz', 5, 1, 1), ('San Cristóbal Acasaguastlán', 5, 1, 1), ('Sanarate', 5, 1, 1), ('Sansare', 5, 1, 1),
+('Escuintla', 6, 1, 1), ('Guanagazapa', 6, 1, 1), ('Iztapa', 6, 1, 1), ('La Democracia', 6, 1, 1), ('La Gomera', 6, 1, 1), ('Masagua', 6, 1, 1),
+('Nueva Concepción', 6, 1, 1), ('Palín', 6, 1, 1), ('San José', 6, 1, 1), ('San Vicente Pacaya', 6, 1, 1), ('Santa Lucía Cotzumalguapa', 6, 1, 1), ('Sipacate', 6, 1, 1),
+('Siquinalá', 6, 1, 1), ('Tiquisate', 6, 1, 1), ('Amatitlán', 7, 1, 1), ('Chinautla', 7, 1, 1), ('Chuarrancho', 7, 1, 1), ('Fraijanes', 7, 1, 1),
+('Guatemala', 7, 1, 1), ('Mixco', 7, 1, 1), ('Palencia', 7, 1, 1), ('San José del Golfo', 7, 1, 1), ('San José Pinula', 7, 1, 1), ('San Juan Sacatepéquez', 7, 1, 1),
+('San Miguel Petapa', 7, 1, 1), ('San Pedro Ayampuc', 7, 1, 1), ('San Pedro Sacatepéquez', 7, 1, 1), ('San Raymundo', 7, 1, 1), ('Santa Catarina Pinula', 7, 1, 1), ('Villa Canales', 7, 1, 1),
+('Villa Nueva', 7, 1, 1), ('Aguacatán', 8, 1, 1), ('Chahal', 8, 1, 1), ('Chiantla', 8, 1, 1), ('Colotenango', 8, 1, 1), ('Concepción Huista', 8, 1, 1),
+('Cuilco', 8, 1, 1), ('Fray Bartolomé de las Casas', 8, 1, 1), ('Huehuetenango', 8, 1, 1), ('Jacaltenango', 8, 1, 1), ('La Democracia', 8, 1, 1), ('La Libertad', 8, 1, 1),
+('Malacatancito', 8, 1, 1), ('Nentón', 8, 1, 1), ('San Antonio Huista', 8, 1, 1), ('San Gaspar Ixchil', 8, 1, 1), ('San Ildefonso Ixtahuacán', 8, 1, 1), ('San Juan Atitán', 8, 1, 1),
+('San Juan Ixcoy', 8, 1, 1), ('San Mateo Ixtatán', 8, 1, 1), ('San Miguel Acatán', 8, 1, 1), ('San Pedro Necta', 8, 1, 1), ('San Pedro Soloma', 8, 1, 1), ('San Rafael La Independencia', 8, 1, 1),
+('San Rafael Petzal', 8, 1, 1), ('San Sebastián Coatán', 8, 1, 1), ('San Sebastián Huehuetenango', 8, 1, 1), ('Santa Ana Huista', 8, 1, 1), ('Santa Bárbara', 8, 1, 1), ('Santa Cruz Barillas', 8, 1, 1),
+('Santa Eulalia', 8, 1, 1), ('Santiago Chimaltenango', 8, 1, 1), ('Tectitán', 8, 1, 1), ('Todos Santos Cuchumatán', 8, 1, 1), ('El Estor', 9, 1, 1), ('Livingston', 9, 1, 1),
+('Los Amates', 9, 1, 1), ('Morales', 9, 1, 1), ('Puerto Barrios', 9, 1, 1), ('Jalapa', 10, 1, 1), ('Mataquescuintla', 10, 1, 1), ('Monjas', 10, 1, 1),
+('San Carlos Alzatate', 10, 1, 1), ('San Luis Jilotepeque', 10, 1, 1), ('San Manuel Chaparrón', 10, 1, 1), ('San Pedro Pinula', 10, 1, 1), ('Agua Blanca', 11, 1, 1), ('Asunción Mita', 11, 1, 1),
+('Atescatempa', 11, 1, 1), ('Comapa', 11, 1, 1), ('Conguaco', 11, 1, 1), ('El Adelanto', 11, 1, 1), ('El Progreso', 11, 1, 1), ('Jalpatagua', 11, 1, 1),
+('Jerez', 11, 1, 1), ('Jutiapa', 11, 1, 1), ('Moyuta', 11, 1, 1), ('Pasaco', 11, 1, 1), ('Quesada', 11, 1, 1), ('San José Acatempa', 11, 1, 1),
+('Santa Catarina Mita', 11, 1, 1), ('Yupiltepeque', 11, 1, 1), ('Zapotitlán', 11, 1, 1), ('Dolores', 12, 1, 1), ('Flores', 12, 1, 1), ('La Libertad', 12, 1, 1),
+('Melchor de Mencos', 12, 1, 1), ('Poptún', 12, 1, 1), ('San Andrés', 12, 1, 1), ('San Benito', 12, 1, 1), ('San Francisco', 12, 1, 1), ('San José', 12, 1, 1),
+('San Luis', 12, 1, 1), ('Santa Ana', 12, 1, 1), ('Sayaxché', 12, 1, 1), ('Las Cruces', 12, 1, 1), ('Almolonga', 13, 1, 1), ('Cabricán', 13, 1, 1),
+('Cajolá', 13, 1, 1), ('Cantel', 13, 1, 1), ('Coatepeque', 13, 1, 1), ('Colomba Costa Cuca', 13, 1, 1), ('Concepción Chiquirichapa', 13, 1, 1), ('El Palmar', 13, 1, 1),
+('Flores Costa Cuca', 13, 1, 1), ('Génova', 13, 1, 1), ('Huitán', 13, 1, 1), ('La Esperanza', 13, 1, 1), ('Olintepeque', 13, 1, 1), ('Palestina de Los Altos', 13, 1, 1),
+('Quetzaltenango', 13, 1, 1), ('Salcajá', 13, 1, 1), ('San Carlos Sija', 13, 1, 1), ('San Francisco La Unión', 13, 1, 1), ('San Juan Ostuncalco', 13, 1, 1), ('San Martín Sacatepéquez', 13, 1, 1),
+('San Mateo', 13, 1, 1), ('San Miguel Sigüilá', 13, 1, 1), ('Sibilia', 13, 1, 1), ('Zunil', 13, 1, 1), ('Canillá', 14, 1, 1), ('Chajul', 14, 1, 1),
+('Chicamán', 14, 1, 1), ('Chiché', 14, 1, 1), ('Chichicastenango', 14, 1, 1), ('Chinique', 14, 1, 1), ('Cunén', 14, 1, 1), ('Ixcán', 14, 1, 1),
+('Joyabaj', 14, 1, 1), ('Nebaj', 14, 1, 1), ('Pachalum', 14, 1, 1), ('Patzité', 14, 1, 1), ('Sacapulas', 14, 1, 1), ('San Andrés Sajcabajá', 14, 1, 1),
+('San Antonio Ilotenango', 14, 1, 1), ('San Bartolomé Jocotenango', 14, 1, 1), ('San Juan Cotzal', 14, 1, 1), ('San Pedro Jocopilas', 14, 1, 1), ('Santa Cruz del Quiché', 14, 1, 1), ('Uspantán', 14, 1, 1),
+('Zacualpa', 14, 1, 1), ('Champerico', 15, 1, 1), ('El Asintal', 15, 1, 1), ('Nuevo San Carlos', 15, 1, 1), ('Retalhuleu', 15, 1, 1), ('San Andrés Villa Seca', 15, 1, 1),
+('San Felipe', 15, 1, 1), ('San Martín Zapotitlán', 15, 1, 1), ('San Sebastián', 15, 1, 1), ('Santa Cruz Muluá', 15, 1, 1), ('Alotenango', 16, 1, 1), ('Antigua Guatemala', 16, 1, 1),
+('Ciudad Vieja', 16, 1, 1), ('Jocotenango', 16, 1, 1), ('Magdalena Milpas Altas', 16, 1, 1), ('Pastores', 16, 1, 1), ('San Antonio Aguas Calientes', 16, 1, 1), ('San Bartolomé Milpas Altas', 16, 1, 1),
+('San Lucas Sacatepéquez', 16, 1, 1), ('San Miguel Dueñas', 16, 1, 1), ('Santa Catarina Barahona', 16, 1, 1), ('Santa Lucía Milpas Altas', 16, 1, 1), ('Santa María de Jesús', 16, 1, 1), ('Santiago Sacatepéquez', 16, 1, 1),
+('Santo Domingo Xenacoj', 16, 1, 1), ('Sumpango', 16, 1, 1), ('Ayutla', 17, 1, 1), ('Catarina', 17, 1, 1), ('Comitancillo', 17, 1, 1), ('Concepción Tutuapa', 17, 1, 1),
+('El Quetzal', 17, 1, 1), ('El Rodeo', 17, 1, 1), ('El Tumbador', 17, 1, 1), ('Esquipulas Palo Gordo', 17, 1, 1), ('Ixchiguán', 17, 1, 1), ('La Blanca', 17, 1, 1),
+('La Reforma', 17, 1, 1), ('Malacatán', 17, 1, 1), ('Nuevo Progreso', 17, 1, 1), ('Ocós', 17, 1, 1), ('Pajapita', 17, 1, 1), ('Río Blanco', 17, 1, 1),
+('San Antonio Sacatepéquez', 17, 1, 1), ('San Cristóbal Cucho', 17, 1, 1), ('San José Ojetenam', 17, 1, 1), ('San Lorenzo', 17, 1, 1), ('San Marcos', 17, 1, 1), ('San Miguel Ixtahuacán', 17, 1, 1),
+('San Pablo', 17, 1, 1), ('San Pedro Sacatepéquez', 17, 1, 1), ('San Rafael Pie de la Guesta', 17, 1, 1), ('Sibinal', 17, 1, 1), ('Sipacapa', 17, 1, 1), ('Tacaná', 17, 1, 1),
+('Tajumulco', 17, 1, 1), ('Tejutla', 17, 1, 1), ('Barberena', 18, 1, 1), ('Casillas', 18, 1, 1), ('Chiquimulilla', 18, 1, 1), ('Cuilapa', 18, 1, 1),
+('Guazacapán', 18, 1, 1), ('Nueva Santa Rosa', 18, 1, 1), ('Oratorio', 18, 1, 1), ('Pueblo Nuevo Viñas', 18, 1, 1), ('San Juan Tecuaco', 18, 1, 1), ('San Rafael Las Flores', 18, 1, 1),
+('Santa Cruz Naranjo', 18, 1, 1), ('Santa María Ixhuatán', 18, 1, 1), ('Santa Rosa de Lima', 18, 1, 1), ('Taxisco', 18, 1, 1), ('Concepción', 19, 1, 1), ('Nahualá', 19, 1, 1),
+('Panajachel', 19, 1, 1), ('San Andrés Semetabaj', 19, 1, 1), ('San Antonio Palopó', 19, 1, 1), ('San José Chacayá', 19, 1, 1), ('San Juan La Laguna', 19, 1, 1), ('San Lucas Tolimán', 19, 1, 1),
+('San Marcos La Laguna', 19, 1, 1), ('San Pablo La Laguna', 19, 1, 1), ('San Pedro La Laguna', 19, 1, 1), ('Santa Catarina Ixtahuacán', 19, 1, 1), ('Santa Catarina Palopó', 19, 1, 1), ('Santa Clara La Laguna', 19, 1, 1),
+('Santa Cruz La Laguna', 19, 1, 1), ('Santa Lucía Utatlán', 19, 1, 1), ('Santa María Visitación', 19, 1, 1), ('Santiago Atitlán', 19, 1, 1), ('Sololá', 19, 1, 1), ('Chicacao', 20, 1, 1),
+('Cuyotenango', 20, 1, 1), ('Mazatenango', 20, 1, 1), ('Patulul', 20, 1, 1), ('Pueblo Nuevo', 20, 1, 1), ('Río Bravo', 20, 1, 1), ('Samayac', 20, 1, 1),
+('San Antonio Suchitepéquez', 20, 1, 1), ('San Bernardino', 20, 1, 1), ('San Francisco Zapotitlán', 20, 1, 1), ('San Gabriel', 20, 1, 1), ('San José El Ídolo', 20, 1, 1), ('San José La Máquina', 20, 1, 1),
+('San Juan Bautista', 20, 1, 1), ('San Lorenzo', 20, 1, 1), ('San Miguel Panán', 20, 1, 1), ('San Pablo Jocopilas', 20, 1, 1), ('Santa Bárbara', 20, 1, 1), ('Santo Domingo Suchitepéquez', 20, 1, 1),
+('Santo Tomás La Unión', 20, 1, 1), ('Zunilito', 20, 1, 1), ('Momostenango', 21, 1, 1), ('San Andrés Xecul', 21, 1, 1), ('San Bartolo', 21, 1, 1), ('San Cristóbal Totonicapán', 21, 1, 1),
+('San Francisco El Alto', 21, 1, 1),  ('Santa Lucía La Reforma', 21, 1, 1), ('Santa María Chiquimula', 21, 1, 1), ('Totonicapán', 21, 1, 1), ('Cabañas', 22, 1, 1), ('Estanzuela', 22, 1, 1),
+('Gualán', 22, 1, 1), ('Huité', 22, 1, 1), ('La Unión', 22, 1, 1), ('Río Hondo', 22, 1, 1), ('San Diego', 22, 1, 1), ('San Jorge', 22, 1, 1),
+('Teculután', 22, 1, 1), ('Usumatlán', 22, 1, 1), ('Zacapa', 22, 1, 1);
+
