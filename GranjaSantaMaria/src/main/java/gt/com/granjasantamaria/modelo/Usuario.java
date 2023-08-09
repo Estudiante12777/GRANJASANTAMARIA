@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,10 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Null
+    @Column(name = "imagen_perfil")
+    private String imagenPerfil;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
