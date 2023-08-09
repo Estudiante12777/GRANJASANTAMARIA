@@ -69,11 +69,11 @@ public class ControladorAlimentacionBecerra {
         if (ganadoHembra != null) {
             LocalDate fechaNacimiento = ganadoHembra.getFechaNacimiento();
             LocalDate hoy = LocalDate.now();
-            long mesesDesdeNacimiento = ChronoUnit.MONTHS.between(fechaNacimiento, hoy);
-            if (mesesDesdeNacimiento <= 3) {
+            LocalDate fechaTresMeses = fechaNacimiento.plusMonths(3);
+            if (hoy.isBefore(fechaTresMeses)) {
                 mensaje = "Alimentar en la mañana y en la tarde";
-            } else if (mesesDesdeNacimiento <= 5) {
-                mensaje = "Reducir alimentación solo en la mañana";
+            } else if (hoy.isEqual(fechaTresMeses) || hoy.isBefore(fechaNacimiento.plusMonths(5))) {
+                mensaje = "Reducir alimentación en la mañana y en la tarde";
             } else {
                 mensaje = "No es necesario alimentar";
             }
