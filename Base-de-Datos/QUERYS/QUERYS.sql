@@ -31,5 +31,7 @@ SELECT nombre_ganado_hembra, TIMESTAMPDIFF(MONTH, fecha_nacimiento, CURDATE()) A
 SELECT nombre_ganado_hembra, TIMESTAMPDIFF(MONTH, fecha_nacimiento, CURDATE()) AS meses_transcurridos FROM ganado_hembra WHERE id_ganado_hembra = 10;
 SELECT nombre_ganado_hembra, TIMESTAMPDIFF(MONTH, fecha_nacimiento, CURDATE()) AS meses_transcurridos FROM ganado_hembra WHERE id_ganado_hembra = 11;
 
-2023-05-01
-2023-08-08
+SELECT nombre_ganado_hembra, fecha_nacimiento FROM ganado_hembra WHERE id_ganado_hembra = 9;
+
+UPDATE ganado_hembra SET fecha_nacimiento = '2023-05-08' WHERE id_ganado_hembra = 9;
+

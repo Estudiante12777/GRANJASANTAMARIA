@@ -72,7 +72,7 @@ public class ControladorAlimentacionBecerra {
             LocalDate fechaTresMeses = fechaNacimiento.plusMonths(3);
             if (hoy.isBefore(fechaTresMeses)) {
                 mensaje = "Alimentar en la mañana y en la tarde";
-            } else if (hoy.isEqual(fechaTresMeses) || hoy.isBefore(fechaNacimiento.plusMonths(5))) {
+            } else if (hoy.isEqual(fechaTresMeses.plusDays(1)) || hoy.isBefore(fechaNacimiento.plusMonths(5))) {
                 mensaje = "Reducir alimentación en la mañana y en la tarde";
             } else {
                 mensaje = "No es necesario alimentar";
