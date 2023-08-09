@@ -34,7 +34,7 @@ public class ControladorPerfilUsuario {
     public String cambiarContraseña(@RequestParam("contraseniaActual") String contraseniaActual, @RequestParam("contraseniaNueva") String contraseniaNueva, Principal principal) {
         String nombreUsuario = principal.getName();
         usuarioService.actualizarContraseña(nombreUsuario, contraseniaActual, contraseniaNueva);
-        return "redirect:/perfil?success";
+        return "redirect:/login";
     }
 
 }
