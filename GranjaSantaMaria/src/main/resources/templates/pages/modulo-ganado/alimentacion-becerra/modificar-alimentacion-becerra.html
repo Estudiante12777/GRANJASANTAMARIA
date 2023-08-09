@@ -21,10 +21,12 @@
                             <label class="form-label form-label-lg" for="ganadoHembra.nombreGanadoHembra">Nombre de la
                                 becerra:</label>
                             <div class="col-sm-8">
-                                <select id="ganadoHembra.nombreGanadoHembra" th:field="*{ganadoHembra.idGanadoHembra}"
+                                <select th:field="*{ganadoHembra.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
-                                        class="form-select form-select-lg">
-                                    <option th:each="ganadoHembra : ${listaGanados}"
+                                        class="form-select form-select-lg" onchange="obtenerBecerraTernera(this.value)"
+                                        id="ganadoHembraSelect">
+                                    <option id="ganadoHembra.nombreGanadoHembra"
+                                            th:each="ganadoHembra : ${listaGanados}"
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"></option>
                                 </select>
@@ -33,6 +35,7 @@
                                         ganado</span>
                             </div>
                         </div>
+                        <div id="alimentacion-becerra-ternera"></div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaAlimentacionBecerra">Fecha:</label>
                             <input id="fechaAlimentacionBecerra" class="form-control form-control-lg" type="date"
@@ -148,6 +151,49 @@
     let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
+<th:block layout:fragment="page-scripts">
+    <script>
+        // Función para inicializar el formulario
+        function inicializarFormulariAlimentacionBecerraTernera() {
+            // Obtén el ID del ganado seleccionado inicialmente
+            let initialGanadoId = document.getElementById("ganadoHembraSelect").value;
+            // Llama a la función para obtener el estado de preñez del ganado seleccionado inicialmente
+            obtenerBecerraTernera(initialGanadoId);
+        }
+
+        // Función para obtener el estado de preñez del ganado seleccionado
+        function obtenerBecerraTernera(idGanadoHembra) {
+            $('#alimentacion-becerra-ternera').empty(); // Vaciar el contenido antes de actualizarlo
+
+            if (idGanadoHembra !== null) {
+                // Realizar una llamada AJAX para obtener el estado de preñez del ganado
+                $.ajax({
+                    url: '/verificar-alimentacion-becerra/' + idGanadoHembra,
+                    type: 'GET',
+                    success: function (response) {
+                        let alimentacionBecerraTernera = response;
+                        // Actualizar el contenido del elemento 'estado-preniez' con la alerta correspondiente
+                        if (alimentacionBecerraTernera === "Alimentar en la mañana y en la tarde") {
+                            $('#alimentacion-becerra-ternera').html('<div class="alert alert-warning" role="alert">Alimentar con 2 litros en la mañana y 2 litros en la tarde!.</div>');
+                        } else if (alimentacionBecerraTernera === "Reducir alimentación solo en la mañana") {
+                            $('#alimentacion-becerra-ternera').html('<div class="alert alert-danger" role="alert">Alimentar con 1 litro en la mañana y 1 litro en la tarde!.</div>');
+                        } else {
+                            $('#alimentacion-becerra-ternera').html('<div class="alert alert-success" role="alert">Ya no se puede alimentar.</div>');
+                        }
+                    },
+                    error: function () {
+                        console.log('Error al realizar la petición AJAX');
+                    }
+                });
+            }
+        }
+
+        // Cuando se carga el formulario, inicializar y obtener el estado del ganado seleccionado
+        $(document).ready(function () {
+            inicializarFormulariAlimentacionBecerraTernera();
+        });
+    </script>
+</th:block>
 </body>
 
 </html>

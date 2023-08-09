@@ -23,3 +23,4 @@ SELECT * FROM pais;
 SELECT * FROM departamento;
 SELECT * FROM municipio;
 
+SELECT * FROM ganado_hembra;

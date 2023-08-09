@@ -1,5 +1,7 @@
 package gt.com.granjasantamaria.controlador;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.*;
@@ -57,6 +59,26 @@ public class ControladorAlimentacionBecerra {
         List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra().stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
         model.addAttribute("listaGanados", listaGanados);
         return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
+    }
+
+    @GetMapping("/verificar-alimentacion-becerra/{idGanadoHembra}")
+    @ResponseBody
+    public String verificarAlimentacionBecerra(@PathVariable("idGanadoHembra") Long idGanadoHembra) {
+        GanadoHembra ganadoHembra = ganadoHembraService.encontrarGanadoHembraPorId(idGanadoHembra);
+        String mensaje = ""; // Variable para almacenar el mensaje
+        if (ganadoHembra != null) {
+            LocalDate fechaNacimiento = ganadoHembra.getFechaNacimiento();
+            LocalDate hoy = LocalDate.now();
+            long mesesDesdeNacimiento = ChronoUnit.MONTHS.between(fechaNacimiento, hoy);
+            if (mesesDesdeNacimiento <= 3) {
+                mensaje = "Alimentar en la mañana y en la tarde";
+            } else if (mesesDesdeNacimiento <= 5) {
+                mensaje = "Reducir alimentación solo en la mañana";
+            } else {
+                mensaje = "No es necesario alimentar";
+            }
+        }
+        return mensaje;
     }
 
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
