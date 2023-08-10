@@ -14,7 +14,7 @@
         <a class="btn btn-outline-success" th:href="@{/modulo-ubicacion/pais/agregar}"><i
                 class="fa-solid fa-plus"></i> Agregar pais</a>
     </div>
-    <div th:if="${paises != null and !paises.empty}">
+    <div th:if="${not #lists.isEmpty(paises)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -49,7 +49,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ubicacion/pais/editar/} + ${pais.idPais}">Sí,
+                                       th:href="@{/modulo-ubicacion/pais/editar/__${pais.idPais}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
