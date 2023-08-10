@@ -12,12 +12,12 @@
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <h3 class="text-center">Ventas</h3>
         <a class="btn btn-outline-success" th:href="@{/modulo-venta/venta-producto/agregar}"><i
-                class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+                class="fa-solid fa-plus"></i> Realizar venta</a>
         <a class="btn btn-outline-primary"
            th:href="@{/modulo-venta/venta-producto/total-venta-producto-fecha}">
             Total venta producto por fecha</a>
     </div>
-    <div th:if="${listadoVentasProducto != null and !listadoVentasProducto.empty}">
+    <div th:if="${not #lists.isEmpty(listadoVentasProducto)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -35,7 +35,7 @@
             </tr>
             </thead>
             <tr th:each="ventaProducto : ${listadoVentasProducto}">
-                <td th:text="${ventaProducto.fechaVentaProducto}">
+                <td th:text="${#temporals.format(ventaProducto.getFechaVentaProducto(), 'dd-MM-yyyy')}">
                 </td>
                 <td th:text="${ventaProducto.cliente.nombreCliente + ' ' + ventaProducto.cliente.apellidoCliente}">
                 </td>
@@ -72,7 +72,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-venta/venta-producto/editar/} + ${ventaProducto.idVentaProducto}">Sí,
+                                       th:href="@{/modulo-venta/venta-producto/editar/__${ventaProducto.idVentaProducto}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -123,7 +123,7 @@
                 <td>Total:</td>
                 <td></td>
                 <td></td>
-                <td th:text="${#aggregates.sum(listadoVentasProducto.![totalPrecioProducto])}"></td>
+                <td th:text="${sumaTotalPrecioProducto}"></td>
                 <td></td>
             </tr>
             </tfoot>

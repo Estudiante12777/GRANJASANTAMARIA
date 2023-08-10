@@ -27,7 +27,7 @@
         </form>
     </div>
 
-    <div th:if="${totalVentaProductoFecha != null and !totalVentaProductoFecha.empty}" class="py-2">
+    <div th:if="${not #lists.isEmpty(totalVentaProductoFecha)}" class="py-2">
         <div style="text-align: right">
             <a th:href="@{/modulo-venta/venta-producto/total-venta-producto-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, detalleProducto=${#request.getParameter('detalleProducto')})}"
                target="_blank" class="btn btn-outline-info">Generar PDF</a>
@@ -49,7 +49,7 @@
             </thead>
             <tbody>
             <tr th:each="totalVentaProducto : ${totalVentaProductoFecha}">
-                <td th:text="${totalVentaProducto.fechaVentaProducto}">
+                <td th:text="${#temporals.format(totalVentaProducto.getFechaVentaProducto(), 'dd-MM-yyyy')}">
                 </td>
                 <td th:text="${totalVentaProducto.cliente.nombreCliente + ' ' + totalVentaProducto.cliente.apellidoCliente}">
                 </td>
@@ -70,7 +70,7 @@
                 <td>Total:</td>
                 <td></td>
                 <td></td>
-                <td th:text="${#aggregates.sum(totalVentaProductoFecha.![totalPrecioProducto])}"></td>
+                <td th:text="${sumarTotalPrecioProducto}"></td>
                 <td></td>
             </tr>
             </tfoot>

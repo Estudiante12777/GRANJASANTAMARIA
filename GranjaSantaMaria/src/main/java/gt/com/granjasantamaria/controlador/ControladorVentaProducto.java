@@ -5,6 +5,7 @@ import gt.com.granjasantamaria.reportes.ReporteVentaProductoFecha;
 import gt.com.granjasantamaria.reportes.ReporteVentaProductoFechaExcel;
 import gt.com.granjasantamaria.servicio.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import javax.validation.Valid;
@@ -42,7 +43,9 @@ public class ControladorVentaProducto {
     @GetMapping("/modulo-venta/venta-producto/lista")
     public String listaVentaProducto(Model model) {
         var listadoVentasProducto = ventaProductoService.obtenerListadoVentaProducto();
+        BigDecimal sumaTotalPrecioProducto = listadoVentasProducto.stream().map(VentaProducto::getTotalPrecioProducto).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("listadoVentasProducto", listadoVentasProducto);
+        model.addAttribute("sumaTotalPrecioProducto", sumaTotalPrecioProducto);
         return "pages/modulo-venta/venta-producto/venta-producto";
     }
 
@@ -69,8 +72,10 @@ public class ControladorVentaProducto {
             ventaProductoPage = ventaProductoService.obtenerListaTotalVentaProductoPaginadoPorFechaAndIdDetalleProducto(inicio, fin, idDetalleProducto, pageRequest);
         }
         List<VentaProducto> totalVentaProductoFecha = ventaProductoPage.getContent(); // Obtener los elementos de la página actual
+        BigDecimal sumarTotalPrecioProducto = totalVentaProductoFecha.stream().map(VentaProducto::getTotalPrecioProducto).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("totalVentaProductoFecha", totalVentaProductoFecha);
         model.addAttribute("ventaProductoPage", ventaProductoPage);
+        model.addAttribute("sumarTotalPrecioProducto", sumarTotalPrecioProducto);
         return "pages/modulo-venta/venta-producto/total-venta-producto-fecha";
     }
 
