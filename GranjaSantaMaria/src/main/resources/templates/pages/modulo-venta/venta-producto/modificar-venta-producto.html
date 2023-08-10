@@ -60,7 +60,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="cantidadProducto">Cantidad:</label>
-                    <input type="number" step="0" id="cantidadProducto" name="cantidadProducto" class="form-control"
+                    <input type="number" step="0" min="0" id="cantidadProducto" name="cantidadProducto"
+                           class="form-control"
                            th:field="*{cantidadProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
@@ -69,14 +70,15 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="precioPorUnidad">Precio por unidad:</label>
-                    <input type="number" step="0.01" id="precioPorUnidad" name="precioPorUnidad" class="form-control"
+                    <input type="number" step="0.00" min="0.00" id="precioPorUnidad" name="precioPorUnidad"
+                           class="form-control"
                            th:field="*{precioPorUnidad}" required onchange="calcularTotalVenta()"/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="descuentoProducto">Descuento:</label>
-                    <input type="number" step="0.01" id="descuentoProducto" name="descuentoProducto"
+                    <input type="number" step="0.00" min="0.00" id="descuentoProducto" name="descuentoProducto"
                            class="form-control"
                            th:field="*{descuentoProducto}" required onchange="calcularTotalVenta()"/>
                 </div>
@@ -86,7 +88,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="totalPrecioProducto">Total:</label>
-                    <input type="number" step="0.01" id="totalPrecioProducto" name="totalPrecioProducto"
+                    <input type="number" step="0.00" min="0.00" id="totalPrecioProducto" name="totalPrecioProducto"
                            class="form-control"
                            th:field="*{totalPrecioProducto}" required readonly/>
                 </div>
