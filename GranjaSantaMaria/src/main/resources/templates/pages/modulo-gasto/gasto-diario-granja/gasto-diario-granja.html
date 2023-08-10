@@ -13,7 +13,7 @@
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <a class="btn btn-outline-success" th:href="@{/modulo-gasto/gasto-diario-granja/agregar}"><i
                 class="fa-solid fa-plus"></i>
-            Crear nuevo registro</a>
+            Agregar gasto</a>
         <a class="btn btn-outline-primary"
            th:href="@{/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha}">
             Total Gasto diario por fecha</a>
@@ -36,7 +36,7 @@
             </tr>
             </thead>
             <tr th:each="diarioGastoGranja : ${listaDiarioGastosGranja}">
-                <td th:text="${diarioGastoGranja.fechaGasto}">
+                <td th:text="${#temporals.format(diarioGastoGranja.getFechaGasto(), 'dd-MM-yyyy')}">
                 </td>
                 <td th:text="${diarioGastoGranja.unidadesAdquiridas}">
                 </td>

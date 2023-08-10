@@ -25,9 +25,8 @@
                 </th>
             </tr>
             </thead>
-            <tr th:each="detalleHistorialClinicoHembra, iterStat : ${detalleHistorialClinicoHembras}"
-                th:if="${iterStat.index lt 10}">
-                <td th:text="${detalleHistorialClinicoHembra.fechaRegistroDetalleHistorialClinico}">
+            <tr th:each="detalleHistorialClinicoHembra : ${detalleHistorialClinicoHembras}">
+                <td th:text="${#temporals.format(detalleHistorialClinicoHembra.getFechaRegistroDetalleHistorialClinico(), 'dd-MM-yyyy')}">
                 </td>
                 <td th:text="${detalleHistorialClinicoHembra.historialClinicoHembra.ganadoHembra.nombreGanadoHembra}">
                 </td>

@@ -22,23 +22,16 @@
                 <th>Madre del Becerro</th>
             </tr>
             </thead>
-            <tr th:each="alimentacion, iterStat : ${alimentacionBecerro}"
-                th:if="${iterStat.index lt 8}">
-                <td th:text="${alimentacion.getFechaAlimentacionBecerro()}">Mostrar fecha de alimentacion</td>
-                <td th:text="${alimentacion.getGanadoMacho().getNombreGanadoMacho()}">Mostrar nombre del becerro</td>
-                <td th:text="${alimentacion.getCantidadManianaAlimentacion() + ' litros'}">Mostrar la cantidad de
-                    alimentacion en la
-                    mañana
+            <tr th:each="alimentacion : ${alimentacionBecerro}">
+                <td th:text="${#temporals.format(alimentacion.getFechaAlimentacionBecerro(), 'dd-MM-yyyy')}"></td>
+                <td th:text="${alimentacion.getGanadoMacho().getNombreGanadoMacho()}"></td>
+                <td th:text="${alimentacion.getCantidadManianaAlimentacion() + ' litros'}">
                 </td>
-                <td th:text="${alimentacion.getCantidadTardeAlimentacion() + ' litros'}">Mostrar la cantidad de
-                    alimentacion en la
-                    tarde
+                <td th:text="${alimentacion.getCantidadTardeAlimentacion() + ' litros'}">
                 </td>
-                <td th:text="${alimentacion.getTotalAlimentacionBecerro() + ' litros'}">Mostrar la cantidad total de
-                    alimentacion
+                <td th:text="${alimentacion.getTotalAlimentacionBecerro() + ' litros'}">
                 </td>
                 <td th:text="${alimentacion.getProduccionDiariaLeche().getGanadoHembra().getNombreGanadoHembra()}">
-                    Mostrar nombre de la madre
                 </td>
             </tr>
         </table>

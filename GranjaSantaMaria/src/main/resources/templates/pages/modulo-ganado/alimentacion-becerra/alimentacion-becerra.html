@@ -25,12 +25,12 @@
             </tr>
             </thead>
             <tr th:each="alimentacionBecerra : ${alimentacionBecerraList}">
-                <td th:text="${alimentacionBecerra[1]}">Mostrar Fecha</td>
-                <td th:text="${alimentacionBecerra[0]}">Mostrar Nombre del becerralimentacion-becerra</td>
-                <td th:text="${alimentacionBecerra[2] + ' litros'}">Mostrar Cantidad alimentacion mañana</td>
-                <td th:text="${alimentacionBecerra[3] + ' litros'}">Mostrar Cantidad alimentacion tarde</td>
-                <td th:text="${alimentacionBecerra[4] + ' litros'}">Mostrar total cantidad alimentacion</td>
-                <td th:text="${alimentacionBecerra[5]}">Mostrar nombre de la madre</td>
+                <td th:text="${#temporals.format(alimentacionBecerra[1], 'dd-MM-yyyy')}"></td>
+                <td th:text="${alimentacionBecerra[0]}"></td>
+                <td th:text="${alimentacionBecerra[2] + ' litros'}"></td>
+                <td th:text="${alimentacionBecerra[3] + ' litros'}"></td>
+                <td th:text="${alimentacionBecerra[4] + ' litros'}"></td>
+                <td th:text="${alimentacionBecerra[5]}"></td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"

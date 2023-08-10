@@ -29,7 +29,7 @@
             </tr>
             </thead>
             <tr th:each="alimentacionBecerro : ${alimentacionBecerroList}">
-                <td th:text="${alimentacionBecerro[1]}">Mostrar Fecha</td>
+                <td th:text="${#temporals.format(alimentacionBecerro[1], 'dd-MM-yyyy')}">Mostrar Fecha</td>
                 <td th:text="${alimentacionBecerro[0]}">Mostrar Nombre del becerro</td>
                 <td th:text="${alimentacionBecerro[2] + ' litros'}">Mostrar Cantidad alimentacion mañana</td>
                 <td th:text="${alimentacionBecerro[3] + ' litros'}">Mostrar Cantidad alimentacion tarde</td>

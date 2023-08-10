@@ -23,21 +23,12 @@
             </tr>
             </thead>
             <tr th:each="alimentacion : ${alimentacionBecerra}">
-                <td th:text="${alimentacion.getFechaAlimentacionBecerra()}">Mostrar Fecha de Alimentación</td>
-                <td th:text="${alimentacion.getGanadoHembra().getNombreGanadoHembra()}">Mostrar Nombre de la Becerra
-                </td>
-                <td th:text="${alimentacion.getCantidadManianaAlimentacion() + ' litros'}">Mostrar Cantidad de
-                    Alimentación en la mañana
-                </td>
-                <td th:text="${alimentacion.getCantidadTardeAlimentacion() + ' litros'}">Mostrar Cantidad de
-                    Alimentación en la tarde
-                </td>
-                <td th:text="${alimentacion.getTotalAlimentacionBecerra() + ' litros'}">Mostrar total cantidad
-                    alimentacion
-                </td>
-                <td th:text="${alimentacion.getProduccionDiariaLeche().getGanadoHembra().getNombreGanadoHembra()}">
-                    Mostrar Madre de la Becerra
-                </td>
+                <td th:text="${#temporals.format(alimentacion.getFechaAlimentacionBecerra(), 'dd-MM-yyyy')}"></td>
+                <td th:text="${alimentacion.getGanadoHembra().getNombreGanadoHembra()}"></td>
+                <td th:text="${alimentacion.getCantidadManianaAlimentacion() + ' litros'}"></td>
+                <td th:text="${alimentacion.getCantidadTardeAlimentacion() + ' litros'}"></td>
+                <td th:text="${alimentacion.getTotalAlimentacionBecerra() + ' litros'}"></td>
+                <td th:text="${alimentacion.getProduccionDiariaLeche().getGanadoHembra().getNombreGanadoHembra()}"></td>
             </tr>
         </table>
         <nav aria-label="Page navigation">

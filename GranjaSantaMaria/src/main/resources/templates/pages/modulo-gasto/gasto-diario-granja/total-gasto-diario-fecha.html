@@ -41,13 +41,11 @@
             </thead>
             <tbody>
             <tr th:each="totalDiarioGasto : ${totalDiarioGastoFecha}">
-                <td th:text="${totalDiarioGasto.fechaGasto}">Mostrar Nombre del ganado</td>
-                <td th:text="${totalDiarioGasto.unidadesAdquiridas}">Mostrar Producción de leche por la mañana</td>
-                <td th:text="${totalDiarioGasto.detalleInversion}">Mostrar Producción de leche por la tarde</td>
-                <td th:text="${totalDiarioGasto.valorTotal}">Mostrar fecha de producción
-                    de leche
-                </td>
-                <td th:text="${totalDiarioGasto.valorTotal}">Mostrar fecha de producción de leche</td>
+                <td th:text="${#temporals.format(totalDiarioGasto.getFechaGasto(), 'dd-MM-yyyy')}"></td>
+                <td th:text="${totalDiarioGasto.unidadesAdquiridas}"></td>
+                <td th:text="${totalDiarioGasto.detalleInversion}"></td>
+                <td th:text="${totalDiarioGasto.valorTotal}"></td>
+                <td th:text="${totalDiarioGasto.valorTotal}"></td>
             </tr>
             </tbody>
             <tfoot>

@@ -35,7 +35,7 @@
             </tr>
             </thead>
             <tr th:each="historialClinicoMacho : ${historialClinicoMachos}">
-                <td th:text="${historialClinicoMacho.fechaIngresoGranja}">
+                <td th:text="${#temporals.format(historialClinicoMacho.getFechaIngresoGranja(), 'dd-MM-yyyy')}">
                 </td>
                 <td th:text="${historialClinicoMacho.ganadoMacho.nombreGanadoMacho}">
                 </td>

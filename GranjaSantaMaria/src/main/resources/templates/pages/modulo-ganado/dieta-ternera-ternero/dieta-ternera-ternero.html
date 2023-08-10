@@ -28,7 +28,7 @@
                 </th>
             </tr>
             </thead>
-            <tr th:each="dieta, iterStat : ${dietaTerneraTernero}" th:if="${iterStat.index lt 8}">
+            <tr th:each="dieta : ${dietaTerneraTernero}">
                 <td class="col-sm-9" th:text="${dieta.descripcionDieta}">
                 </td>
                 <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">

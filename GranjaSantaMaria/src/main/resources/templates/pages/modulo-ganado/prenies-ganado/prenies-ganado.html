@@ -18,8 +18,8 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th>Hembra</th>
                 <th>Fecha de preñes</th>
+                <th>Hembra</th>
                 <th>Promedio de gestacion</th>
                 <th>Fecha de concepcion</th>
                 <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
@@ -31,13 +31,13 @@
             </tr>
             </thead>
             <tr th:each="preniesHembra : ${preniesGanadoHembras}">
-                <td th:text="${preniesHembra.ganadoHembra.nombreGanadoHembra}">
+                <td th:text="${#temporals.format(preniesHembra.getFechaPrenies(), 'dd-MM-yyyy')}">
                 </td>
-                <td th:text="${preniesHembra.fechaPrenies}">
+                <td th:text="${preniesHembra.ganadoHembra.nombreGanadoHembra}">
                 </td>
                 <td th:text="${preniesHembra.promedioGestacion}">
                 </td>
-                <td th:text="${preniesHembra.fechaConcepcion}">
+                <td th:text="${#temporals.format(preniesHembra.getFechaConcepcion(), 'dd-MM-yyyy')}">
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
