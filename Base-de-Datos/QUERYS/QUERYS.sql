@@ -60,5 +60,6 @@ UPDATE ganado_hembra
 SET fecha_nacimiento = '2023-05-08'
 WHERE id_ganado_hembra = 9;
 
-SELECT * FROM usuario;
+SELECT *
+FROM usuario;
 
