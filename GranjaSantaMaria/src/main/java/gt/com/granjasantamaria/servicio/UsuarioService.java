@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import gt.com.granjasantamaria.dao.*;
 import gt.com.granjasantamaria.modelo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
@@ -44,7 +43,7 @@ public class UsuarioService implements UserDetailsService {
 
     // Metodos para el manejo del perfil de usuario
     @Transactional
-    public void actualizarContraseña(String nombreUsuario, String contraseniaActual, String contraseniaNueva) {
+    public void cambiarContrasenia(String nombreUsuario, String contraseniaActual, String contraseniaNueva) {
         Usuario usuario = usuarioDao.findByUsername(nombreUsuario);
         if (usuario == null) {
             throw new UsernameNotFoundException(nombreUsuario);
@@ -56,6 +55,22 @@ public class UsuarioService implements UserDetailsService {
         // Actualizar la contraseña
         String encriptarNuevaContraenia = passwordEncoder.encode(contraseniaNueva);
         usuario.setPassword(encriptarNuevaContraenia);
+        usuarioDao.save(usuario);
+    }
+
+    @Transactional
+    public void cambiarNombreUsuario(String nombreUsuario, String contraseniaActual, String nuevoNombreUsuario) {
+        Usuario usuario = usuarioDao.findByUsername(nombreUsuario);
+        if (usuario == null) {
+            throw new UsernameNotFoundException(nombreUsuario);
+        }
+        if (!passwordEncoder.matches(contraseniaActual, usuario.getPassword())) {
+            throw new IllegalArgumentException("Contraseña incorrecta");
+        }
+        if (nuevoNombreUsuario.equals(usuario.getUsername())) {
+            throw new IllegalArgumentException("El nuevo nombre de usuario debe ser diferente al actual");
+        }
+        usuario.setUsername(nuevoNombreUsuario);
         usuarioDao.save(usuario);
     }
 

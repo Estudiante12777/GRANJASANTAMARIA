@@ -11,20 +11,20 @@
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
     <div class="card">
         <div class="card-header">
-            <h3>Actualizar datos</h3>
+            <h3 class="card-title text-center">Actualizar nombre de usuario</h3>
         </div>
         <div class="card-body">
-            <form th:action="@{/cambiar-contrasena}" method="post">
+            <form th:action="@{/cambiar-nombre-usuario}" method="post">
+                <div class="form-group">
+                    <label for="nuevoNombreUsuario">Nuevo Nombre de Usuario:</label>
+                    <input type="text" id="nuevoNombreUsuario" name="nuevoNombreUsuario" class="form-control" required/>
+                </div>
                 <div class="form-group">
                     <label for="contraseniaActual">Contraseña Actual:</label>
                     <input type="password" id="contraseniaActual" name="contraseniaActual" class="form-control"
                            required/>
                 </div>
-                <div class="form-group">
-                    <label for="contraseniaNueva">Nueva Contraseña:</label>
-                    <input type="password" id="contraseniaNueva" name="contraseniaNueva" class="form-control" required/>
-                </div>
-                <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                <button type="submit" class="btn btn-primary">Cambiar Nombre de Usuario</button>
             </form>
         </div>
     </div>

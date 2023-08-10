@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
 <head th:replace="layout/layout :: head">
     <title>Title</title>
 </head>
+
 <body>
 <div class="container-fluid py-5" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
@@ -19,7 +21,11 @@
                 </div>
             </div>
             <div class="card-footer">
-                <form method="get" th:action="@{/modulo-perfil-usuario/actualizar}">
+                <form method="get" th:action="@{/modulo-perfil-usuario/cambiar-nombre-usuario}">
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();">Cambiar
+                        nombre de usuario</a>
+                </form>
+                <form method="get" th:action="@{/modulo-perfil-usuario/cambiar-contrasena}">
                     <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();">Cambiar
                         contraseña</a>
                 </form>
