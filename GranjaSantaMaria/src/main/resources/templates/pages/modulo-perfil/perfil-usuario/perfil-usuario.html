@@ -7,25 +7,38 @@
 </head>
 
 <body>
-<div class="container-fluid py-5" layout:fragment="page-content"
+<div class="container py-5" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
-    <div class="card col-md-6">
-        <div class="card-header">
-            <h3 class="card-title text-center">Informacion del usuario</h3>
-            <div class="card-body">
-                <div>
-                    <label>Bienvenido [[${#httpServletRequest.remoteUser}]]</label>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-12">
+            <div class="card rounded shadow">
+                <div class="card-header bg-white">
+                    <h3 class="card-title text-center text-dark">Información del usuario</h3>
                 </div>
-            </div>
-            <div class="card-footer">
-                <form method="get" th:action="@{/modulo-perfil-usuario/cambiar-nombre-usuario}">
-                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();">Cambiar
-                        nombre de usuario</a>
-                </form>
-                <form method="get" th:action="@{/modulo-perfil-usuario/cambiar-contrasena}">
-                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();">Cambiar
-                        contraseña</a>
-                </form>
+                <div class="card-body">
+                    <div class="text-center mt-4">
+                        <h1>Bienvenido [[${#httpServletRequest.remoteUser}]]</h1>
+                    </div>
+                    <div class="mt-4 row">
+                        <div class="col-sm-2">
+                            <a class="btn btn-outline-primary btn-block" th:href="@{/}">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-5 mt-2 mt-md-0">
+                            <a class="btn btn-outline-primary btn-block"
+                               th:href="@{/modulo-perfil-usuario/cambiar-nombre-usuario}">
+                                Cambiar nombre de usuario
+                            </a>
+                        </div>
+                        <div class="col-md-5 mt-2 mt-md-0">
+                            <a class="btn btn-outline-primary btn-block"
+                               th:href="@{/modulo-perfil-usuario/cambiar-contrasena}">
+                                Cambiar contraseña
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

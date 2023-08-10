@@ -9,23 +9,37 @@
 <body>
 <div class="container-fluid py-5" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
-    <div class="card">
-        <div class="card-header">
-            <h3>Actualizar contraseña</h3>
-        </div>
-        <div class="card-body">
-            <form th:action="@{/cambiar-contrasena}" method="post">
-                <div class="form-group">
-                    <label for="contraseniaActual">Contraseña Actual:</label>
-                    <input type="password" id="contraseniaActual" name="contraseniaActual" class="form-control"
-                           required/>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Actualizar contraseña</h3>
                 </div>
-                <div class="form-group">
-                    <label for="contraseniaNueva">Nueva Contraseña:</label>
-                    <input type="password" id="contraseniaNueva" name="contraseniaNueva" class="form-control" required/>
+                <div class="card-body">
+                    <form th:action="@{/cambiar-contrasena}" method="post">
+                        <div class="form-group">
+                            <label for="contraseniaActual">Contraseña Actual:</label>
+                            <input type="password" id="contraseniaActual" name="contraseniaActual" class="form-control"
+                                   required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="contraseniaNueva">Nueva Contraseña:</label>
+                            <input type="password" id="contraseniaNueva" name="contraseniaNueva" class="form-control"
+                                   required/>
+                        </div>
+                        <div class="mt-4 row">
+                            <div class="col-sm-2">
+                                <a class="btn btn-outline-primary btn-block" th:href="@{/modulo-perfil-usuario}">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </a>
+                            </div>
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-outline-primary">Cambiar Contraseña</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
