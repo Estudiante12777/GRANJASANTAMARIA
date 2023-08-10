@@ -13,7 +13,7 @@
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <a class="btn btn-outline-success" th:href="@{/modulo-ganado/raza-ganado/agregar}">+ Agregar raza de ganado</a>
     </div>
-    <div th:if="${razaGanados != null and !razaGanados.empty}">
+    <div th:if="${not #lists.isEmpty(razaGanados)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -23,9 +23,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="razaGanado, iterStat : ${razaGanados}">
+            <tr th:each="razaGanado : ${razaGanados}">
                 <td class="col-sm-9" th:text="${razaGanado.nombreRazaGanado}">
-                    Mostrar Nombre de la raza de ganado
                 </td>
                 <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
@@ -50,7 +49,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/raza-ganado/editar/} + ${razaGanado.idRazaGanado}">Sí,
+                                       th:href="@{/modulo-ganado/raza-ganado/editar/__${razaGanado.idRazaGanado}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
