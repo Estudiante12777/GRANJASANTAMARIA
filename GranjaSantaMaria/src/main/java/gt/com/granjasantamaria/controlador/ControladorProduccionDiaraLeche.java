@@ -40,6 +40,10 @@ public class ControladorProduccionDiaraLeche {
         this.produccionDiariaLecheService = produccionDiariaLecheService;
     }
 
+    private LocalDate parseFecha(String fecha) {
+        return LocalDate.parse(fecha);
+    }
+
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/lista")
     public String listaProduccionDiariaLeche(Model model) {
         var listaProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaProduccionDiariaLeche();
@@ -84,35 +88,26 @@ public class ControladorProduccionDiaraLeche {
         }
     }
 
-    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf")
-    public ModelAndView generarPDFTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
+    private Map<String, Object> produccionLecheReportes(String fechaInicio, String fechaFin, Long idGanadoHembra) {
+        LocalDate inicio = parseFecha(fechaInicio);
+        LocalDate fin = parseFecha(fechaFin);
         List<ProduccionDiariaLeche> totalProduccionesFecha = obtenerProduccionPorFechaYPorGanado(inicio, fin, idGanadoHembra);
         long totalRegistros = totalProduccionesFecha.size();
-        // Crear el modelo para el PDF
         Map<String, Object> model = new HashMap<>();
-        model.put("totalRegistros", totalRegistros);
         model.put("totalProduccionesFecha", totalProduccionesFecha);
-        // Devolver la vista PDF y el modelo
+        model.put("totalRegistros", totalRegistros);
+        return model;
+    }
+
+    @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf")
+    public ModelAndView generarPDFTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
+        Map<String, Object> model = produccionLecheReportes(fechaInicio, fechaFin, idGanadoHembra);
         return new ModelAndView(new ReporteProduccionLecheFecha(), model);
     }
 
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/excel")
     public ModelAndView generarExcelTotalProduccionFecha(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "ganadoHembra", required = false) Long idGanadoHembra) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
-        List<ProduccionDiariaLeche> totalProduccionesFecha = obtenerProduccionPorFechaYPorGanado(inicio, fin, idGanadoHembra);
-        long totalRegistros = totalProduccionesFecha.size();
-        // Crear el modelo para el Excel
-        Map<String, Object> model = new HashMap<>();
-        model.put("totalRegistros", totalRegistros);
-        model.put("totalProduccionesFecha", totalProduccionesFecha);
-        // Devolver la vista Excel y el modelo
+        Map<String, Object> model = produccionLecheReportes(fechaInicio, fechaFin, idGanadoHembra);
         return new ModelAndView(new ReporteProduccionLecheFechaExcel(), model);
     }
 

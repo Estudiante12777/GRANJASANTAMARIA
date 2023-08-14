@@ -10,4 +10,5 @@ public class ControladorModuloGanado {
     public String ganado() {
         return "pages/modulo-ganado/modulo-ganado";
     }
+
 }

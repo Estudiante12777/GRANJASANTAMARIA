@@ -10,4 +10,5 @@ public class ControladorModuloBalance {
     public String balance() {
         return "pages/modulo-balance/modulo-balance";
     }
+
 }

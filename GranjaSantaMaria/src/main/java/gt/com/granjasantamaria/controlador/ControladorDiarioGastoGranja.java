@@ -32,6 +32,10 @@ public class ControladorDiarioGastoGranja {
         this.diarioGastoGranjaService = diarioGastoGranjaService;
     }
 
+    private LocalDate parseFecha(String fecha) {
+        return LocalDate.parse(fecha);
+    }
+
     @GetMapping("/modulo-gasto/gasto-diario-granja/lista")
     public String listaDiarioGastosGranja(Model model) {
         var listaDiarioGastosGranja = diarioGastoGranjaService.obtenerListadoDiarioGastosGranja();
@@ -60,37 +64,26 @@ public class ControladorDiarioGastoGranja {
         return "pages/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha";
     }
 
-    @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf")
-    public ModelAndView generarPDFTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas dado
+    private Map<String, Object> gastoDiarioReportes(String fechaInicio, String fechaFin) {
+        LocalDate inicio = parseFecha(fechaInicio);
+        LocalDate fin = parseFecha(fechaFin);
         List<DiarioGastoGranja> totalDiarioGastoFecha = diarioGastoGranjaService.encontrarTotalDiarioGastoGranja(inicio, fin);
-        // Obtener el número total de registros
         long totalRegistros = totalDiarioGastoFecha.size();
-        // Crear el modelo para el PDF
         Map<String, Object> model = new HashMap<>();
         model.put("totalRegistros", totalRegistros);
         model.put("totalDiarioGastoFecha", totalDiarioGastoFecha);
-        // Devolver la vista PDF y el modelo
+        return model;
+    }
+
+    @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf")
+    public ModelAndView generarPDFTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
+        Map<String, Object> model = gastoDiarioReportes(fechaInicio, fechaFin);
         return new ModelAndView(new ReporteGastoGranjaFecha(), model);
     }
 
     @GetMapping("/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/excel")
     public ModelAndView generarExcelTotalDiaroGastoGranja(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<DiarioGastoGranja> totalDiarioGastoFecha = diarioGastoGranjaService.encontrarTotalDiarioGastoGranja(inicio, fin);
-        // Obtener el número total de registros
-        long totalRegistros = totalDiarioGastoFecha.size();
-        // Crear el modelo para el PDF
-        Map<String, Object> model = new HashMap<>();
-        model.put("totalRegistros", totalRegistros);
-        model.put("totalDiarioGastoFecha", totalDiarioGastoFecha);
-        // Devolver la vista PDF y el modelo
+        Map<String, Object> model = gastoDiarioReportes(fechaInicio, fechaFin);
         return new ModelAndView(new ReporteGastoGranjaFechaExcel(), model);
     }
 

@@ -24,14 +24,14 @@ public class ControladorAlimentacionBecerra {
 
     private final GanadoHembraService ganadoHembraService;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @Autowired
     public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, GanadoHembraService ganadoHembraService) {
         this.alimentacionBecerraService = alimentacionBecerraService;
         this.ganadoHembraService = ganadoHembraService;
     }
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @GetMapping("/modulo-ganado/alimentacion-becerra")
     public String obtenerListadoAlimentacionBecerras(@RequestParam(defaultValue = "0") int pagina, Model model) {

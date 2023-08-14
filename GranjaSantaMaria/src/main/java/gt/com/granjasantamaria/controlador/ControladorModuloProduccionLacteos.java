@@ -10,4 +10,5 @@ public class ControladorModuloProduccionLacteos {
     public String produccionLacteos() {
         return "pages/modulo-produccion-lacteos/modulo-produccion-lacteos";
     }
+
 }

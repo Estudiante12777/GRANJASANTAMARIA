@@ -10,4 +10,5 @@ public class ControladorModuloPersona {
     public String moduloPersonas() {
         return "pages/modulo-persona/modulo-persona";
     }
+
 }

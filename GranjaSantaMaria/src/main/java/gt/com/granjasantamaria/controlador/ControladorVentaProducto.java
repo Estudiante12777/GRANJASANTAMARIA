@@ -91,27 +91,27 @@ public class ControladorVentaProducto {
         }
     }
 
-    private Map<String, Object> modeloReportes(String fechaInicio, String fechaFin, Long idDetalleProducto) {
+    private Map<String, Object> ventaReportes(String fechaInicio, String fechaFin, Long idDetalleProducto) {
         LocalDate inicio = parseFecha(fechaInicio);
         LocalDate fin = parseFecha(fechaFin);
         List<VentaProducto> totalVentaProductoFecha = encontrarTotalVentaPorFechaYPorProducto(inicio, fin, idDetalleProducto);
         long totalRegistros = totalVentaProductoFecha.size();
-        Map<String, Object> modelo = new HashMap<>();
-        modelo.put("totalRegistros", totalRegistros);
-        modelo.put("totalVentaProductoFecha", totalVentaProductoFecha);
-        return modelo;
+        Map<String, Object> model = new HashMap<>();
+        model.put("totalRegistros", totalRegistros);
+        model.put("totalVentaProductoFecha", totalVentaProductoFecha);
+        return model;
     }
 
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/pdf")
     public ModelAndView generarPDFTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
-        Map<String, Object> modelo = modeloReportes(fechaInicio, fechaFin, idDetalleProducto);
-        return new ModelAndView(new ReporteVentaProductoFecha(), modelo);
+        Map<String, Object> model = ventaReportes(fechaInicio, fechaFin, idDetalleProducto);
+        return new ModelAndView(new ReporteVentaProductoFecha(), model);
     }
 
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/excel")
     public ModelAndView generarExcelTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
-        Map<String, Object> modelo = modeloReportes(fechaInicio, fechaFin, idDetalleProducto);
-        return new ModelAndView(new ReporteVentaProductoFechaExcel(), modelo);
+        Map<String, Object> model = ventaReportes(fechaInicio, fechaFin, idDetalleProducto);
+        return new ModelAndView(new ReporteVentaProductoFechaExcel(), model);
     }
 
     @GetMapping("/modulo-venta/venta-producto/existencia/{idInventarioProducto}")

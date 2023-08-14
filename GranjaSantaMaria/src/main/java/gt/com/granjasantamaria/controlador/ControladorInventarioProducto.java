@@ -37,6 +37,10 @@ public class ControladorInventarioProducto {
         this.inventarioProductoService = inventarioProductoService;
     }
 
+    private LocalDate parseFecha(String fecha) {
+        return LocalDate.parse(fecha);
+    }
+
     @GetMapping("/modulo-inventario/inventario-producto/lista")
     public String obtenerListadoInventarioProductos(@RequestParam(defaultValue = "0") int pagina, Model model) {
         PageRequest pageRequest = PageRequest.of(pagina, 10);
@@ -84,37 +88,26 @@ public class ControladorInventarioProducto {
         }
     }
 
+    private Map<String, Object> inventarioProductoReportes(String fechaInicio, String fechaFin, Long idDetalleProducto) {
+        LocalDate inicio = parseFecha(fechaInicio);
+        LocalDate fin = parseFecha(fechaFin);
+        List<InventarioProducto> totalInventarioProductoFecha = obtenerInventarioProductoPorFechaYPorProducto(inicio, fin, idDetalleProducto);
+        long totalRegistros = totalInventarioProductoFecha.size();
+        Map<String, Object> model = new HashMap<>();
+        model.put("totalInventarioProductoFecha", totalInventarioProductoFecha);
+        model.put("totalRegistros", totalRegistros);
+        return model;
+    }
+
     @GetMapping("/modulo-inventario/inventario-producto/total-inventario-producto-fecha/pdf")
     public ModelAndView generarPDFTotalInventarioProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<InventarioProducto> totalInventarioProductoFecha = obtenerInventarioProductoPorFechaYPorProducto(inicio, fin, idDetalleProducto);
-        // Obtener el número total de registros
-        long totalRegistros = totalInventarioProductoFecha.size();
-        // Crear el modelo para el PDF
-        Map<String, Object> model = new HashMap<>();
-        model.put("totalRegistros", totalRegistros);
-        model.put("totalInventarioProductoFecha", totalInventarioProductoFecha);
-        // Devolver la vista PDF y el modelo
+        Map<String, Object> model = inventarioProductoReportes(fechaInicio, fechaFin, idDetalleProducto);
         return new ModelAndView(new ReporteInventarioProductoFecha(), model);
     }
 
     @GetMapping("/modulo-inventario/inventario-producto/total-inventario-producto-fecha/excel")
     public ModelAndView generarExcelTotalInventarioProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<InventarioProducto> totalInventarioProductoFecha = obtenerInventarioProductoPorFechaYPorProducto(inicio, fin, idDetalleProducto);
-        // Obtener el número total de registros
-        long totalRegistros = totalInventarioProductoFecha.size();
-        // Crear el modelo para el PDF
-        Map<String, Object> model = new HashMap<>();
-        model.put("totalRegistros", totalRegistros);
-        model.put("totalInventarioProductoFecha", totalInventarioProductoFecha);
-        // Devolver la vista PDF y el modelo
+        Map<String, Object> model = inventarioProductoReportes(fechaInicio, fechaFin, idDetalleProducto);
         return new ModelAndView(new ReporteInventarioProductoFechaExcel(), model);
     }
 

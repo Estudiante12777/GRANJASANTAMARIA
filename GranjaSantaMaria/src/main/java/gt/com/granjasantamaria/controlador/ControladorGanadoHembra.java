@@ -3,13 +3,11 @@ package gt.com.granjasantamaria.controlador;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 
+import gt.com.granjasantamaria.util.ImagenGanado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -69,17 +67,7 @@ public class ControladorGanadoHembra {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            String jarDirectory = System.getProperty("user.dir");
-            String imagesDirectory = jarDirectory + "/images/";
-            Path imagesPath = Paths.get(imagesDirectory);
-            if (!Files.exists(imagesPath)) {
-                Files.createDirectories(imagesPath);
-            }
-            // Utiliza la ruta imagesDirectory para guardar la imagen
-            Path fileNameAndPath = Paths.get(imagesDirectory, file.getOriginalFilename());
-            Files.write(fileNameAndPath, file.getBytes());
-            // Guarda el nombre de la imagen en el objeto GanadoMacho
-            ganadoHembra.setFotografia(file.getOriginalFilename());
+            ImagenGanado.guardarImagenAndActualizarObjetos(file, ganadoHembra);
             ganadoHembraService.guardarGanadoHembra(ganadoHembra);
             return "redirect:/modulo-ganado/ganado-hembra/lista";
         }
