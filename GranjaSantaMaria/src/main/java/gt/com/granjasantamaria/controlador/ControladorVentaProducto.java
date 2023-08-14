@@ -140,7 +140,11 @@ public class ControladorVentaProducto {
         if (bindingResult.hasErrors()) {
             throw new Exception("Error, no puede estar vacío el campo");
         } else {
-            ventaProductoService.guardarVentaProducto(ventaProducto);
+            if (ventaProducto.getIdVentaProducto() != null) {
+                ventaProductoService.editarVentaProducto(ventaProducto);
+            } else {
+                ventaProductoService.guardarVentaProducto(ventaProducto);
+            }
             return "redirect:/modulo-venta/venta-producto/lista";
         }
     }
