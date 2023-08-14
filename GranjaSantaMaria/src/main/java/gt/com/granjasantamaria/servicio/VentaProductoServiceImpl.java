@@ -71,6 +71,35 @@ public class VentaProductoServiceImpl implements VentaProductoService {
     }
 
     @Override
+    @Transactional
+    public void editarVentaProducto(VentaProducto editarVenta) {
+        VentaProducto ventaOriginal = ventaProductoDao.findById(editarVenta.getIdVentaProducto()).orElse(null);
+        if (ventaOriginal != null) {
+            int cantidadVendidaOriginal = ventaOriginal.getCantidadProducto();
+            int cantidadVendidaNueva = editarVenta.getCantidadProducto();
+
+            // Realiza las modificaciones en la venta editada
+            ventaOriginal.setPrecioPorUnidad(editarVenta.getPrecioPorUnidad());
+
+            if (cantidadVendidaNueva != cantidadVendidaOriginal) {
+                // Calcula la diferencia de cantidad vendida
+                int diferenciaCantidadVendida = cantidadVendidaNueva - cantidadVendidaOriginal;
+                InventarioProducto inventarioProducto = inventarioProductoDao.findById(editarVenta.getInventarioProducto().getIdInventarioProducto()).orElse(null);
+                if (inventarioProducto != null) {
+                    // Actualiza el inventario segun la diferencia
+                    int nuevaCantidadVendida = inventarioProducto.getCantidadVendidaHastaHoy() + diferenciaCantidadVendida;
+                    int nuevaCantidadFinal = inventarioProducto.getCantidadIngresadaProducto() - nuevaCantidadVendida;
+                    inventarioProducto.setCantidadSalidaProducto(inventarioProducto.getCantidadSalidaProducto() + diferenciaCantidadVendida);
+                    inventarioProducto.setCantidadVendidaHastaHoy(nuevaCantidadVendida);
+                    inventarioProducto.setCantidadFinalProducto(nuevaCantidadFinal);
+                    inventarioProductoDao.save(inventarioProducto);
+                }
+            }
+            ventaProductoDao.save(ventaOriginal);
+        }
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public VentaProducto encontrarVentaProducto(VentaProducto ventaProducto) {
         return ventaProductoDao.findById(ventaProducto.getIdVentaProducto()).orElse(null);

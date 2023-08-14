@@ -20,6 +20,8 @@ public interface VentaProductoService {
 
     void guardarVentaProducto(VentaProducto ventaProducto);
 
+    void editarVentaProducto(VentaProducto ventaProducto);
+
     VentaProducto encontrarVentaProducto(VentaProducto ventaProducto);
 
     List<VentaProducto> encontrarTotalVentaProducto(LocalDate fechaInicio, LocalDate fechaFin);
