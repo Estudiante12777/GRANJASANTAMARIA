@@ -2,7 +2,9 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.HistorialClinicoMachoDao;
 import gt.com.granjasantamaria.modelo.HistorialClinicoMacho;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

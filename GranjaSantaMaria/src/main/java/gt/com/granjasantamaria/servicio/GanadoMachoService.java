@@ -15,7 +15,7 @@ public interface GanadoMachoService {
     void guardarGanadoMacho(GanadoMacho ganadoMacho);
 
     GanadoMacho encontrarGanadoMacho(GanadoMacho ganadoMacho);
-    
+
     void darBajaGanadoMacho(GanadoMacho ganadoMacho);
 
 }

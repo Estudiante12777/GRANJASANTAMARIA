@@ -1,6 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.modelo.HistorialClinicoMacho;
+
 import java.util.List;
 
 public interface HistorialClinicioMachoService {

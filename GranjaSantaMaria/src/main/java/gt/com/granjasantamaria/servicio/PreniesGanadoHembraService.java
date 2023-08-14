@@ -11,8 +11,6 @@ public interface PreniesGanadoHembraService {
 
     Page<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembraPaginado(Pageable pageable);
 
-    List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembra();
-
     void guardarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);
 
     PreniesGanadoHembra encontrarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra);

@@ -28,12 +28,6 @@ public class PreniesGanadoHembraServiceImpl implements PreniesGanadoHembraServic
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<PreniesGanadoHembra> obtenerListadoPreniesGanadoHembra() {
-        return preniesGanadoHembraDao.findByEstadoPreniesGanadoHembraIsTrue();
-    }
-
-    @Override
     @Transactional
     public void guardarPreniesGanadoHembra(PreniesGanadoHembra preniesGanadoHembra) {
         preniesGanadoHembra.setEstadoPreniesGanadoHembra(true);
