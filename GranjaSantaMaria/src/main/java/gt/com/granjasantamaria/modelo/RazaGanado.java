@@ -3,6 +3,7 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class RazaGanado implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_raza_ganado", nullable = false)
     private Long idRazaGanado;
 
     @NotNull

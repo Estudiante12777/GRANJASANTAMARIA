@@ -17,6 +17,7 @@ public class DetalleProducto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_detalle_producto", nullable = false)
     private Long idDetalleProducto;
 
     @ManyToOne(fetch = FetchType.LAZY)

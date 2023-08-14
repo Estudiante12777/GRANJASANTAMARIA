@@ -17,6 +17,7 @@ public class Departamento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_departamento", nullable = false)
     private Long idDepartamento;
 
     @NotNull

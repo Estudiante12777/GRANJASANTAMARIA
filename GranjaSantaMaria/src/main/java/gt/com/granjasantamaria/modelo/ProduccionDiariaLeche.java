@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +20,7 @@ public class ProduccionDiariaLeche implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_produccion_diaria_leche", nullable = false)
     private Long idProduccionDiariaLeche;
 
     @ManyToOne(fetch = FetchType.LAZY)

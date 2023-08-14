@@ -17,6 +17,7 @@ public class DietaTerneraTernero implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_dieta_ternera_ternero", nullable = false)
     private Long idDietaTerneraTernero;
 
     @NotNull

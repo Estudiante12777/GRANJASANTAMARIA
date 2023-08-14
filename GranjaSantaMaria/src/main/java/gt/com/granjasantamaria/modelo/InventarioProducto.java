@@ -19,6 +19,7 @@ public class InventarioProducto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_inventario_producto", nullable = false)
     private Long idInventarioProducto;
 
     @ManyToOne

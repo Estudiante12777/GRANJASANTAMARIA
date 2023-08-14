@@ -19,6 +19,7 @@ public class GanadoMacho implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ganado_macho", nullable = false)
     private Long idGanadoMacho;
 
     @Column(name = "fotografia", nullable = false)

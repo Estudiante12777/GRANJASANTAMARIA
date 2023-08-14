@@ -17,6 +17,7 @@ public class MedidaProducto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_medida_producto", nullable = false)
     private Long idMedidaProducto;
 
     @NotNull

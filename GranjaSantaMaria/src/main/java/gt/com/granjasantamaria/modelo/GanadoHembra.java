@@ -20,6 +20,7 @@ public class GanadoHembra implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ganado_hembra", nullable = false)
     private Long idGanadoHembra;
 
     @Column(name = "fotografia", nullable = false)

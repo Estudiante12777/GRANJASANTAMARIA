@@ -20,6 +20,7 @@ public class DiarioGastoGranja implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_diario_gasto_granja", nullable = false)
     private Long idDiarioGastoGranja;
 
     @NotNull

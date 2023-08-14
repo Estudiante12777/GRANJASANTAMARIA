@@ -17,6 +17,7 @@ public class Pais implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pais", nullable = false)
     private Long idPais;
 
     @NotNull

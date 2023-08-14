@@ -19,6 +19,7 @@ public class PreniesGanadoHembra implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_prenies_ganado_hembra", nullable = false)
     private Long idPreniesGanadoHembra;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -20,6 +20,7 @@ public class AlimentacionBecerro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_alimentacion_becerro", nullable = false)
     private Long idAlimentacionBecerro;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -17,6 +17,7 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente", nullable = false)
     private Long idCliente;
 
     @NotNull

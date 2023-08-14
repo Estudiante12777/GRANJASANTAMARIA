@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +19,7 @@ public class HistorialClinicoMacho implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_historial_clinico_macho", nullable = false)
     private Long idHistorialClinicoMacho;
 
     @ManyToOne(fetch = FetchType.LAZY)

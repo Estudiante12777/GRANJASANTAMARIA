@@ -19,6 +19,7 @@ public class DetalleHistorialClinicoHembra implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_detalle_historial_clinico_hembra", nullable = false)
     private Long idDetalleHistorialClinicoHembra;
 
     @NotNull

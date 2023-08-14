@@ -19,6 +19,7 @@ public class HistorialClinicoHembra implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_historial_clinico_hembra", nullable = false)
     private Long idHistorialClinicoHembra;
 
     @ManyToOne(fetch = FetchType.LAZY)
