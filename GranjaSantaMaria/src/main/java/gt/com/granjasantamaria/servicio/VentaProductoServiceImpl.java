@@ -79,7 +79,10 @@ public class VentaProductoServiceImpl implements VentaProductoService {
             int cantidadVendidaNueva = editarVenta.getCantidadProducto();
 
             // Realiza las modificaciones en la venta editada
+            ventaOriginal.setCantidadProducto(editarVenta.getCantidadProducto());
             ventaOriginal.setPrecioPorUnidad(editarVenta.getPrecioPorUnidad());
+            ventaOriginal.setDescuentoProducto(editarVenta.getDescuentoProducto());
+            ventaOriginal.setTotalPrecioProducto(editarVenta.getTotalPrecioProducto());
 
             if (cantidadVendidaNueva != cantidadVendidaOriginal) {
                 // Calcula la diferencia de cantidad vendida

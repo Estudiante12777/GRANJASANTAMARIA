@@ -36,3 +36,8 @@ SELECT *
 FROM departamento;
 SELECT *
 FROM municipio;
+
+
+DROP TABLE venta_producto;
+DROP TABLE inventario_producto;
+
