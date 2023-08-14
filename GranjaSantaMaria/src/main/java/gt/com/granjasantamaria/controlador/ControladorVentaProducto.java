@@ -40,6 +40,10 @@ public class ControladorVentaProducto {
         this.ventaProductoService = ventaProductoService;
     }
 
+    private LocalDate parseFecha(String fecha) {
+        return LocalDate.parse(fecha);
+    }
+
     @GetMapping("/modulo-venta/venta-producto/lista")
     public String listaVentaProducto(Model model) {
         var listadoVentasProducto = ventaProductoService.obtenerListadoVentaProducto();
@@ -87,38 +91,27 @@ public class ControladorVentaProducto {
         }
     }
 
+    private Map<String, Object> modeloReportes(String fechaInicio, String fechaFin, Long idDetalleProducto) {
+        LocalDate inicio = parseFecha(fechaInicio);
+        LocalDate fin = parseFecha(fechaFin);
+        List<VentaProducto> totalVentaProductoFecha = encontrarTotalVentaPorFechaYPorProducto(inicio, fin, idDetalleProducto);
+        long totalRegistros = totalVentaProductoFecha.size();
+        Map<String, Object> modelo = new HashMap<>();
+        modelo.put("totalRegistros", totalRegistros);
+        modelo.put("totalVentaProductoFecha", totalVentaProductoFecha);
+        return modelo;
+    }
+
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/pdf")
     public ModelAndView generarPDFTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas dado
-        List<VentaProducto> totalVentaProductoFecha = encontrarTotalVentaPorFechaYPorProducto(inicio, fin, idDetalleProducto);
-        // Obtener el número total de registros
-        long totalRegistros = totalVentaProductoFecha.size();
-        // Crear el modelo para el PDF
-        Map<String, Object> model = new HashMap<>();
-        model.put("totalRegistros", totalRegistros);
-        model.put("totalVentaProductoFecha", totalVentaProductoFecha);
-        // Devolver la vista PDF y el modelo
-        return new ModelAndView(new ReporteVentaProductoFecha(), model);
+        Map<String, Object> modelo = modeloReportes(fechaInicio, fechaFin, idDetalleProducto);
+        return new ModelAndView(new ReporteVentaProductoFecha(), modelo);
     }
 
     @GetMapping("/modulo-venta/venta-producto/total-venta-producto-fecha/excel")
     public ModelAndView generarExcelTotalVentaProducto(@RequestParam("fechaInicio") String fechaInicio, @RequestParam("fechaFin") String fechaFin, @RequestParam(value = "detalleProducto", required = false) Long idDetalleProducto) {
-        // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
-        LocalDate fin = LocalDate.parse(fechaFin);
-        // Obtener todos los registros de producción de leche para el rango de fechas y el ganado hembra dado
-        List<VentaProducto> totalVentaProductoFecha = encontrarTotalVentaPorFechaYPorProducto(inicio, fin, idDetalleProducto);
-        // Obtener el número total de registros
-        long totalRegistros = totalVentaProductoFecha.size();
-        // Crear el modelo para el Excel
-        Map<String, Object> model = new HashMap<>();
-        model.put("totalRegistros", totalRegistros);
-        model.put("totalVentaProductoFecha", totalVentaProductoFecha);
-        // Devolver la vista Excel y el modelo
-        return new ModelAndView(new ReporteVentaProductoFechaExcel(), model);
+        Map<String, Object> modelo = modeloReportes(fechaInicio, fechaFin, idDetalleProducto);
+        return new ModelAndView(new ReporteVentaProductoFechaExcel(), modelo);
     }
 
     @GetMapping("/modulo-venta/venta-producto/existencia/{idInventarioProducto}")
