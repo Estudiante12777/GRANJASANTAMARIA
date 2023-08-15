@@ -167,7 +167,6 @@
         function obtenerMunicipios() {
             let municipioSelector = $('select[name="municipio.idMunicipio"]');
             let departamentoId = $('select[name="departamento.idDepartamento"]').val();
-            console.log(departamentoId);
             $.ajax({
                 url: '/modulo-persona/cliente/municipios/' + departamentoId,
                 type: 'GET',
