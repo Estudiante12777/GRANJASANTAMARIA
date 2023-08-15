@@ -10,7 +10,7 @@
 <div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Detalle historial clinico hembra</h5>
-    <div th:if="${detalleHistorialClinicoHembras != null and !detalleHistorialClinicoHembras.empty}">
+    <div th:if="${not #lists.isEmpty(detalleHistorialClinicoHembras)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -57,7 +57,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/editar/} + ${detalleHistorialClinicoHembra.idDetalleHistorialClinicoHembra}">Sí,
+                                       th:href="@{/modulo-ganado/detalle-historial-clinico-hembra/editar/__${detalleHistorialClinicoHembra.idDetalleHistorialClinicoHembra}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

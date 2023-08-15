@@ -52,7 +52,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg"
-                                   for="departamento.nombreDepartamento">Departamento:</label>
+                                   for="departamentoSelect">Departamento:</label>
                             <div class="col-sm-8">
                                 <select th:field="*{departamento.idDepartamento}"
                                         name="departamento.nombreDepartamento" required
@@ -62,7 +62,6 @@
                                             th:each="departamento : ${listadoDepartamentos}"
                                             th:value="${departamento.idDepartamento}"
                                             th:text="${departamento.nombreDepartamento}">
-                                    </option>
                                     </option>
                                 </select>
                                 <span th:if="${#fields.hasErrors('departamento.nombreDepartamento')}"
@@ -74,11 +73,11 @@
                             <label class="form-label form-label-lg"
                                    for="municipio.nombreMunicipio">Municipio:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{municipio.idMunicipio}" name="municipio.nombreMunicipio"
+                                <select id="municipio.nombreMunicipio" th:field="*{municipio.idMunicipio}"
+                                        name="municipio.nombreMunicipio"
                                         required class="form-select form-select-lg">
-                                    <option id="municipio.nombreMunicipio" th:each="municipio : ${listadoMunicipios}"
+                                    <option th:each="municipio : ${listadoMunicipios}"
                                             th:value="${municipio.idMunicipio}" th:text="${municipio.nombreMunicipio}">
-                                    </option>
                                     </option>
                                 </select>
                                 <span th:if="${#fields.hasErrors('municipio.nombreMunicipio')}" class="text-danger"
@@ -137,22 +136,22 @@
     /* Generar ID único para el modal de guardar */
 
     // Obtén el botón de guardar
-    var guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
 
     // Obtén el atributo 'data-bs-target' del botón
-    var targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
 
     // Obtén el atributo 'id' del botón
-    var modalIdGuardar = guardarButton.getAttribute("id");
+    let modalIdGuardar = guardarButton.getAttribute("id");
 
     // Crea un identificador único para el modal de guardar
-    var uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
 
     // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
 
     // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-    var modalGuardar = document.querySelector(targetGuardarModalId);
+    let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
 <th:block layout:fragment="page-scripts">
@@ -160,25 +159,26 @@
         // Funcion para inicializar el formulario
         function inicializarFormularioCliente() {
             // Obtener el ID departamento seleccionado inicialmente
-            var initialDepartamentoId = document.getElementById("departamentoSelect").value;
+            let initialDepartamentoId = document.getElementById("departamentoSelect").value;
             // Llama a la función para obtener el estado de preñez del ganado seleccionado inicialmente
             obtenerMunicipios(initialDepartamentoId);
         }
 
         function obtenerMunicipios() {
-            var departamentoId = $('select[name="departamento.idDepartamento"]').val();
+            let municipioSelector = $('select[name="municipio.idMunicipio"]');
+            let departamentoId = $('select[name="departamento.idDepartamento"]').val();
             console.log(departamentoId);
             $.ajax({
                 url: '/modulo-persona/cliente/municipios/' + departamentoId,
                 type: 'GET',
                 success: function (data) {
-                    var municipioIdActual = $('select[name="municipio.idMunicipio"]').val(); // Obtener el municipio actual del cliente
-                    $('select[name="municipio.idMunicipio"]').empty();
+                    let municipioIdActual = municipioSelector.val(); // Obtener el municipio actual del cliente
+                    municipioSelector.empty();
                     $.each(data, function (index, municipio) {
                         // Agregar opciones al campo de selección de municipios
-                        $('select[name="municipio.idMunicipio"]').append('<option value="' + municipio.idMunicipio + '">' + municipio.nombreMunicipio + '</option>');
+                        municipioSelector.append('<option value="' + municipio.idMunicipio + '">' + municipio.nombreMunicipio + '</option>');
                     });
-                    $('select[name="municipio.idMunicipio"]').val(municipioIdActual); // Seleccionar automáticamente el municipio actual
+                    municipioSelector.val(municipioIdActual); // Seleccionar automáticamente el municipio actual
                 },
                 error: function () {
                 }

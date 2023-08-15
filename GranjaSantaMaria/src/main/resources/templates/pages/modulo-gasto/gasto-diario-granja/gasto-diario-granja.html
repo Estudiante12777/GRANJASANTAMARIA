@@ -18,7 +18,7 @@
            th:href="@{/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha}">
             Total Gasto diario por fecha</a>
     </div>
-    <div th:if="${listaDiarioGastosGranja != null and !listaDiarioGastosGranja.empty}">
+    <div th:if="${not #lists.isEmpty(listaDiarioGastosGranja)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -70,7 +70,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-gasto/gasto-diario-granja/editar/} + ${diarioGastoGranja.idDiarioGastoGranja}">Sí,
+                                       th:href="@{/modulo-gasto/gasto-diario-granja/editar/__${diarioGastoGranja.idDiarioGastoGranja}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -123,7 +123,7 @@
                 <td></td>
                 <td></td>
                 <td
-                        th:text="${#aggregates.sum(listaDiarioGastosGranja.![valorTotal]) + ' Quetzales'}">
+                        th:text="${sumaTotalDiarioGasto}">
                 </td>
                 <td></td>
             </tr>

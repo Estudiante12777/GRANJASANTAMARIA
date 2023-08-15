@@ -7,7 +7,6 @@
 </head>
 
 <body>
-<!-- Sección para agregar nuevo registro (solo visible para usuarios con rol "ROLE_ADMINISTRADOR") -->
 <div class="container-fluid py-2" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div class="form-control">
@@ -21,7 +20,7 @@
         </form>
     </div>
 
-    <div th:if="${totalDiarioGastoFecha != null and !totalDiarioGastoFecha.empty}" class="py-2">
+    <div th:if="${not #lists.isEmpty(totalDiarioGastoFecha)}" class="py-2">
         <div style="text-align: right">
             <a th:href="@{/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
                target="_blank" class="btn btn-outline-info">Generar PDF</a>
@@ -53,7 +52,7 @@
                 <td>Total:</td>
                 <td></td>
                 <td></td>
-                <td th:text="${#aggregates.sum(totalDiarioGastoFecha.![valorTotal])}"></td>
+                <td th:text="${sumaTotalGasto}"></td>
                 <td></td>
             </tr>
             </tfoot>

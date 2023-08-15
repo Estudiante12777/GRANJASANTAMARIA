@@ -15,7 +15,7 @@
                 class="fa-solid fa-plus"></i>
             Agregar tipo de ganado</a>
     </div>
-    <div th:if="${tipoDeGanados != null and !tipoDeGanados.empty}">
+    <div th:if="${not #lists.isEmpty(tipoDeGanados)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -30,7 +30,6 @@
             </thead>
             <tr th:each="tipoDeGanado : ${tipoDeGanados}">
                 <td class="col-sm-9" th:text="${tipoDeGanado.nombreTipoGanado}">
-                    Mostrar Nombre del tipo de ganado
                 </td>
                 <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
@@ -55,7 +54,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/tipo-ganado/editar/} + ${tipoDeGanado.idTipoGanado}">Sí,
+                                       th:href="@{/modulo-ganado/tipo-ganado/editar/__${tipoDeGanado.idTipoGanado}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

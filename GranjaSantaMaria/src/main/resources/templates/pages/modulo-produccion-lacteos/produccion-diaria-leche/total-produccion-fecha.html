@@ -27,7 +27,7 @@
         </form>
     </div>
 
-    <div th:if="${totalProduccionesFecha != null and !totalProduccionesFecha.empty}" class="py-2">
+    <div th:if="${not #lists.isEmpty(totalProduccionesFecha)}" class="py-2">
         <div style="text-align: right">
             <a th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, ganadoHembra=${#request.getParameter('ganadoHembra')})}"
                target="_blank" class="btn btn-outline-info">Generar PDF</a>
@@ -150,7 +150,7 @@
                 <td></td>
                 <td></td>
                 <td
-                        th:text="${#aggregates.sum(totalProduccionesFecha.![produccionManianaLeche + produccionTardeLeche]) + ' litros'}">
+                        th:text="${sumaTotalProduccionDiariaLeche + ' litros'}">
                 </td>
                 <td></td>
             </tr>

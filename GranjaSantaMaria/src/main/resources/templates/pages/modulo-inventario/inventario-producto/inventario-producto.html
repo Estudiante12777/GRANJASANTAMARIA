@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
     <title></title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -13,44 +12,41 @@
     <h3 class="text-center">Inventario de productos</h3>
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <a class="btn btn-outline-success" th:href="@{/modulo-inventario/inventario-producto/agregar}"><i
-                class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+                class="fa-solid fa-plus"></i> Agregar producto al inventario</a>
         <a class="btn btn-outline-primary"
            th:href="@{/modulo-inventario/inventario-producto/total-inventario-producto-fecha}">
             Total inventario producto por fecha</a>
     </div>
-    <div th:if="${inventarioProductos != null and !inventarioProductos.empty}">
+    <div th:if="${not #lists.isEmpty(inventarioProductos)}">
         <table class="table">
             <thead class="table-dark">
-            <th>Fecha inventario</th>
-            <th>Producto</th>
-            <th>Cantidad ingresada</th>
-            <th>Cantidad salida</th>
-            <th>Cantidad final</th>
-            <th>Vendido hasta hoy</th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                Editar
-            </th>
-            <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
+            <tr>
+                <th>Fecha inventario</th>
+                <th>Producto</th>
+                <th>Cantidad ingresada</th>
+                <th>Cantidad salida</th>
+                <th>Cantidad final</th>
+                <th>Vendido hasta hoy</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    Editar
+                </th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
+            </tr>
             </thead>
-            <tr th:each="inventarioProducto, iterStat : ${inventarioProductos}" th:if="${iterStat.index lt 10}">
+            <tr th:each="inventarioProducto : ${inventarioProductos}">
                 <td th:text="${inventarioProducto.fechaInventarioProducto}">
-                    Mostrar fecha del inventario
                 </td>
                 <td>
                         <span
                                 th:text="${inventarioProducto.detalleProducto.producto.nombreProducto + ' (' + inventarioProducto.detalleProducto.medidaProducto.nombreMedidaProducto + ') - ' + inventarioProducto.detalleProducto.contenedorProducto.nombreContenedorProducto + ' - ' + inventarioProducto.detalleProducto.descripcionProducto.nombreDescripcionProducto}"></span>
                 </td>
                 <td th:text="${inventarioProducto.cantidadIngresadaProducto}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${inventarioProducto.cantidadSalidaProducto}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${inventarioProducto.cantidadFinalProducto}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${inventarioProducto.cantidadVendidaHastaHoy}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
@@ -76,7 +72,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-inventario/inventario-producto/editar/} + ${inventarioProducto.idInventarioProducto}">Sí,
+                                       th:href="@{/modulo-inventario/inventario-producto/editar/__${inventarioProducto.idInventarioProducto}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -161,21 +157,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de edición */
-    var editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     editButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de edición
-        var uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+        let uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>
@@ -184,21 +180,21 @@
     /* Inserta este código antes de cerrar la etiqueta </body> */
 
     /* Obtén todos los botones de dar baja */
-    var deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+    let deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
 
     /* Recorre los botones y asigna un ID único a cada modal correspondiente */
     deleteButtons.forEach(function (button) {
-        var targetModalId = button.getAttribute("data-bs-target");
-        var modalId = button.getAttribute("th:data-bs-target");
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
 
         // Crea un identificador único para el modal de dar baja
-        var uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+        let uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
 
         // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
         button.setAttribute("data-bs-target", "#" + uniqueModalId);
 
         // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
-        var modal = document.querySelector(targetModalId);
+        let modal = document.querySelector(targetModalId);
         modal.setAttribute("id", uniqueModalId);
     });
 </script>

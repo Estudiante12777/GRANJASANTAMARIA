@@ -10,7 +10,7 @@
 <div class="container-fluid py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Alimentacion de becerros y terneros</h5>
-    <div th:if="${alimentacionBecerroList != null and !alimentacionBecerroList.empty}">
+    <div th:if="${not #lists.isEmpty(alimentacionBecerroList)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -29,12 +29,12 @@
             </tr>
             </thead>
             <tr th:each="alimentacionBecerro : ${alimentacionBecerroList}">
-                <td th:text="${#temporals.format(alimentacionBecerro[1], 'dd-MM-yyyy')}">Mostrar Fecha</td>
-                <td th:text="${alimentacionBecerro[0]}">Mostrar Nombre del becerro</td>
-                <td th:text="${alimentacionBecerro[2] + ' litros'}">Mostrar Cantidad alimentacion mañana</td>
-                <td th:text="${alimentacionBecerro[3] + ' litros'}">Mostrar Cantidad alimentacion tarde</td>
-                <td th:text="${alimentacionBecerro[4] + ' litros'}">Mostrar Total cantidad alimentacion</td>
-                <td th:text="${alimentacionBecerro[5]}">Mostrar Nombre de la madre del becerro</td>
+                <td th:text="${#temporals.format(alimentacionBecerro[1], 'dd-MM-yyyy')}"></td>
+                <td th:text="${alimentacionBecerro[0]}"></td>
+                <td th:text="${alimentacionBecerro[2] + ' litros'}"></td>
+                <td th:text="${alimentacionBecerro[3] + ' litros'}"></td>
+                <td th:text="${alimentacionBecerro[4] + ' litros'}"></td>
+                <td th:text="${alimentacionBecerro[5]}"></td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"

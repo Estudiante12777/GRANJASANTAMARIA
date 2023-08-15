@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +40,9 @@ public class ControladorDiarioGastoGranja {
     @GetMapping("/modulo-gasto/gasto-diario-granja/lista")
     public String listaDiarioGastosGranja(Model model) {
         var listaDiarioGastosGranja = diarioGastoGranjaService.obtenerListadoDiarioGastosGranja();
+        BigDecimal sumaTotalDiarioGasto = listaDiarioGastosGranja.stream().map(DiarioGastoGranja :: getValorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("listaDiarioGastosGranja", listaDiarioGastosGranja);
+        model.addAttribute("sumaTotalDiarioGasto", sumaTotalDiarioGasto);
         return "pages/modulo-gasto/gasto-diario-granja/gasto-diario-granja";
     }
 
@@ -55,12 +58,14 @@ public class ControladorDiarioGastoGranja {
         int pageSize = 10; // Tamaño de cada página
         PageRequest pageRequest = PageRequest.of(pagina, pageSize);
         // Convertir las fechas de String a LocalDate
-        LocalDate inicio = LocalDate.parse(fechaInicio);
+        LocalDate inicio = parseFecha(fechaInicio);
         LocalDate fin = LocalDate.parse(fechaFin);
         Page<DiarioGastoGranja> diarioGastoGranjaPage = diarioGastoGranjaService.obtenerListaTotalDiarioGastoGranjaPaginadoPorFecha(inicio, fin, pageRequest);
         List<DiarioGastoGranja> totalDiarioGastoFecha = diarioGastoGranjaPage.getContent(); // Obtener los elementos de la página actual
+        BigDecimal sumaTotalDiarioGasto = totalDiarioGastoFecha.stream().map(DiarioGastoGranja::getValorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("totalDiarioGastoFecha", totalDiarioGastoFecha);
         model.addAttribute("diarioGastoGranjaPage", diarioGastoGranjaPage);
+        model.addAttribute("sumaTotalGasto", sumaTotalDiarioGasto);
         return "pages/modulo-gasto/gasto-diario-granja/total-gasto-diario-fecha";
     }
 

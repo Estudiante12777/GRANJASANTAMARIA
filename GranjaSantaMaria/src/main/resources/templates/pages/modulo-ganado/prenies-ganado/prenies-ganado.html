@@ -14,7 +14,7 @@
            th:href="@{/modulo-ganado/prenies-ganado/agregar}"><i class="fa-solid fa-plus"></i>
             Agregar ganado hembra preñada</a>
     </div>
-    <div th:if="${preniesGanadoHembras != null and !preniesGanadoHembras.empty}">
+    <div th:if="${not #lists.isEmpty(preniesGanadoHembras)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -63,7 +63,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/prenies-ganado/editar/} + ${preniesHembra.idPreniesGanadoHembra}">Sí,
+                                       th:href="@{/modulo-ganado/prenies-ganado/editar/__${preniesHembra.idPreniesGanadoHembra}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

@@ -15,7 +15,7 @@
                 class="fa-solid fa-plus"></i>
             Agregar historial clinico ganado hembra</a>
     </div>
-    <div th:if="${historialClinicoHembras != null and !historialClinicoHembras.empty}">
+    <div th:if="${not #lists.isEmpty(historialClinicoHembras)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -146,7 +146,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/historial-clinico-hembra/editar/} + ${historialClinicoHembra.idHistorialClinicoHembra}">Sí,
+                                       th:href="@{/modulo-ganado/historial-clinico-hembra/editar/__${historialClinicoHembra.idHistorialClinicoHembra}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

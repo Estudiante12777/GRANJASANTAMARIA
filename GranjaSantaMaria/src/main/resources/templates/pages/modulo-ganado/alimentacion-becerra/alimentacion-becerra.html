@@ -10,7 +10,7 @@
 <div class="container-fluid py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Alimentacion de becerras y terneras</h5>
-    <div th:if="${alimentacionBecerraList != null and !alimentacionBecerraList.empty}">
+    <div th:if="${not #lists.isEmpty(alimentacionBecerraList)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -20,8 +20,8 @@
                 <th>Cantidad tarde</th>
                 <th>Total cantidad</th>
                 <th>Madre de la becerra</th>
-                <th>Editar</th>
-                <th>Dar baja</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">Editar</th>
+                <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Dar baja</th>
             </tr>
             </thead>
             <tr th:each="alimentacionBecerra : ${alimentacionBecerraList}">

@@ -17,7 +17,7 @@
            th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha}">
             Total produccion de leche por fecha</a>
     </div>
-    <div th:if="${listaProduccionDiariaLeche != null and !listaProduccionDiariaLeche.empty}">
+    <div th:if="${not #lists.isEmpty(listaProduccionDiariaLeche)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -155,7 +155,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/editar/} + ${produccionDiariaLeche.idProduccionDiariaLeche}">Sí,
+                                       th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/editar/__${produccionDiariaLeche.idProduccionDiariaLeche}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
@@ -209,7 +209,7 @@
                 <td></td>
                 <td></td>
                 <td
-                        th:text="${#aggregates.sum(listaProduccionDiariaLeche.![produccionManianaLeche + produccionTardeLeche]) + ' litros'}">
+                        th:text="${sumaTotalProduccionDiariaLeche + ' litros'}">
                 </td>
                 <td></td>
             </tr>

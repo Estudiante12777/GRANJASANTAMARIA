@@ -10,7 +10,7 @@
 <div class="container-fluid py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Alimentación de becerros y terneros</h5>
-    <div th:if="${alimentacionBecerro != null and !alimentacionBecerro.empty}">
+    <div th:if="${not #lists.isEmpty(alimentacionBecerro)}">
         <table class="table">
             <thead class="table-dark">
             <tr>

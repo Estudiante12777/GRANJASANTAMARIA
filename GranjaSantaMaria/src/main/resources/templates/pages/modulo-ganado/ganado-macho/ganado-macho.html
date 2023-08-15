@@ -14,7 +14,7 @@
         <a class="btn btn-outline-success" th:href="@{/modulo-ganado/ganado-macho/agregar}"><i
                 class="fa-solid fa-plus"></i> Agregar ganado macho</a>
     </div>
-    <div th:if="${ganadosMacho != null and !ganadosMacho.empty}">
+    <div th:if="${not #lists.isEmpty(ganadosMacho)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -31,7 +31,7 @@
                 </th>
             </tr>
             </thead>
-            <tr th:each="ganado, iterStat : ${ganadosMacho}">
+            <tr th:each="ganado : ${ganadosMacho}">
                 <td>
                     <img th:src="@{/modulo-ganado/ganado-macho/mostrar-imagen/__${ganado.fotografia}__}"
                          alt="Fotografía del ganado" width="100" height="100">
@@ -65,7 +65,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/ganado-macho/editar/} + ${ganado.idGanadoMacho}">Sí,
+                                       th:href="@{/modulo-ganado/ganado-macho/editar/__${ganado.idGanadoMacho}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

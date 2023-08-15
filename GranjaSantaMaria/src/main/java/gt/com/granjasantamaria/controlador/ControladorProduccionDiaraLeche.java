@@ -5,6 +5,7 @@ import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFecha;
 import gt.com.granjasantamaria.reportes.ReporteProduccionLecheFechaExcel;
 import gt.com.granjasantamaria.servicio.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -47,7 +48,9 @@ public class ControladorProduccionDiaraLeche {
     @GetMapping("/modulo-produccion-lacteos/produccion-diaria-leche/lista")
     public String listaProduccionDiariaLeche(Model model) {
         var listaProduccionDiariaLeche = produccionDiariaLecheService.obtenerListaProduccionDiariaLeche();
+        BigDecimal sumaTotalProduccionDiariaLeche = listaProduccionDiariaLeche.stream().map(ProduccionDiariaLeche::getTotalProduccionLeche).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("listaProduccionDiariaLeche", listaProduccionDiariaLeche);
+        model.addAttribute("sumaTotalProduccionDiariaLeche", sumaTotalProduccionDiariaLeche);
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/produccion-diaria-leche";
     }
 
@@ -75,8 +78,10 @@ public class ControladorProduccionDiaraLeche {
             produccionDiariaLechePage = produccionDiariaLecheService.obtenerProduccionDiaraLechePaginadoPorFechaAndIdGanadoHembra(inicio, fin, idGanadoHembra, pageRequest);
         }
         List<ProduccionDiariaLeche> totalProduccionesFecha = produccionDiariaLechePage.getContent(); // Obtener los elementos de la página actual
+        BigDecimal sumaTotalProduccionDiariaLeche = totalProduccionesFecha.stream().map(ProduccionDiariaLeche::getTotalProduccionLeche).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("totalProduccionesFecha", totalProduccionesFecha);
         model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
+        model.addAttribute("sumaTotalProduccionDiariaLeche", sumaTotalProduccionDiariaLeche);
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 

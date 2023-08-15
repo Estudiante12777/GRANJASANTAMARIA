@@ -19,7 +19,8 @@
                         <input type="hidden" name="idGanadoHembra" th:field="*{idGanadoHembra}"/>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="image">Imagen:</label>
-                            <input id="image" type="file" name="image" accept="image/*" th:value="${ganadoHembra.fotografia}" class="form-control-file" required>
+                            <input id="image" type="file" name="image" accept="image/*"
+                                   th:value="${ganadoHembra.fotografia}" class="form-control-file" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="nombreGanadoHembra">Nombre:</label>
@@ -38,7 +39,8 @@
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="tipoGanado.nombreTipoGanado">Tipo:</label>
                             <div class="col-sm-8">
-                                <select id="tipoGanado.nombreTipoGanado" th:field="*{tipoGanado.idTipoGanado}" name="tipoGanado.nombreTipoGanado"
+                                <select id="tipoGanado.nombreTipoGanado" th:field="*{tipoGanado.idTipoGanado}"
+                                        name="tipoGanado.nombreTipoGanado"
                                         required class="form-select form-select-lg">
                                     <option th:each="tipoGanado : ${listaTiposGanado}"
                                             th:value="${tipoGanado.idTipoGanado}"
@@ -52,7 +54,8 @@
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="razaGanado.nombreRazaGanado">Raza:</label>
                             <div class="col-sm-8">
-                                <select id="razaGanado.nombreRazaGanado" th:field="*{razaGanado.idRazaGanado}" name="razaGanado.nombreRazaGanado"
+                                <select id="razaGanado.nombreRazaGanado" th:field="*{razaGanado.idRazaGanado}"
+                                        name="razaGanado.nombreRazaGanado"
                                         required class="form-select form-select-lg">
                                     <option th:each="razaGanado : ${listaRazasGanado}"
                                             th:value="${razaGanado.idRazaGanado}"
@@ -81,7 +84,8 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="guardarModalLabel">Guardar ganado hembra</h5>
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar ganado
+                                                    hembra</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>

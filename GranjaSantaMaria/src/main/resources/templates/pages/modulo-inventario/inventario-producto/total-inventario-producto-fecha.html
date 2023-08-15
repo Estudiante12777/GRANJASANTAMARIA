@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
 <head th:replace="layout/layout :: head">
@@ -27,7 +27,7 @@
         </form>
     </div>
 
-    <div th:if="${totalInventarioProductoFecha != null and !totalInventarioProductoFecha.empty}" class="py-2">
+    <div th:if="${not #lists.isEmpty(totalInventarioProductoFecha)}" class="py-2">
         <div style="text-align: right">
             <a th:href="@{/modulo-inventario/inventario-producto/total-inventario-producto-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, detalleProducto=${#request.getParameter('detalleProducto')})}"
                target="_blank" class="btn btn-outline-info">Generar PDF</a>
@@ -37,33 +37,30 @@
         <div class="py-2"></div>
         <table class="table">
             <thead class="table-dark">
-            <th>Fecha inventario</th>
-            <th>Producto</th>
-            <th>Cantidad ingresada</th>
-            <th>Cantidad salida</th>
-            <th>Cantidad final</th>
-            <th>Vendido hasta hoy</th>
+            <tr>
+                <th>Fecha inventario</th>
+                <th>Producto</th>
+                <th>Cantidad ingresada</th>
+                <th>Cantidad salida</th>
+                <th>Cantidad final</th>
+                <th>Vendido hasta hoy</th>
+            </tr>
             </thead>
             <tbody>
             <tr th:each="totalInventarioProducto : ${totalInventarioProductoFecha}">
                 <td th:text="${totalInventarioProducto.fechaInventarioProducto}">
-                    Mostrar fecha del inventario
                 </td>
                 <td>
                         <span
                                 th:text="${totalInventarioProducto.detalleProducto.producto.nombreProducto + ' (' + totalInventarioProducto.detalleProducto.medidaProducto.nombreMedidaProducto + ') - ' + totalInventarioProducto.detalleProducto.contenedorProducto.nombreContenedorProducto + ' - ' + totalInventarioProducto.detalleProducto.descripcionProducto.nombreDescripcionProducto}"></span>
                 </td>
                 <td th:text="${totalInventarioProducto.cantidadIngresadaProducto}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${totalInventarioProducto.cantidadSalidaProducto}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${totalInventarioProducto.cantidadFinalProducto}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
                 <td th:text="${totalInventarioProducto.cantidadVendidaHastaHoy}">
-                    Mostrar Nombre de la descripcion de producto
                 </td>
             </tr>
             </tbody>
