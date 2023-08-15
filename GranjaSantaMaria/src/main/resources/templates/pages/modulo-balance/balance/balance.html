@@ -16,7 +16,7 @@
                 <h3 class="card-title">Total Ventas</h3>
                 <!-- FORMATO PARA MONEDA -->
                 <p class="card-text">
-                    <span th:text="${#numbers.formatDecimal(totalVentas, 0, 'COMMA', 2, 'POINT' )}"> Q</span>
+                    <span th:text="${'Q. ' + #numbers.formatDecimal(totalVentas, 0, 'COMMA', 2, 'POINT' )}"> Q</span>
                 </p>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="card-body">
                 <h3 class="card-title">Total Gastos</h3>
                 <p class="card-text">
-                    <span th:text="${#numbers.formatDecimal(totalGastos, 0, 'COMMA', 2, 'POINT')}"> Q</span>
+                    <span th:text="${'Q. ' + #numbers.formatDecimal(totalGastos, 0, 'COMMA', 2, 'POINT')}"> Q</span>
                 </p>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <div class="card-body">
                 <h3 class="card-title">Balance</h3>
                 <p class="card-text">
-                    <span th:text="${#numbers.formatDecimal(balanceVentasGastos, 0, 'COMMA', 2, 'POINT')}"> Q</span>
+                    <span th:text="${'Q. ' + #numbers.formatDecimal(balanceVentasGastos, 0, 'COMMA', 2, 'POINT')}"> Q</span>
                 </p>
             </div>
         </div>
