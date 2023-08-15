@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div class="container-fluid py-3" layout:fragment="page-content"
+<div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Alimentación de becerras y terneras</h5>
     <div th:if="${not #lists.isEmpty(alimentacionBecerra)}">

@@ -14,7 +14,7 @@
         <a class="btn btn-outline-success" th:href="@{/modulo-ubicacion/municipio/agregar}"><i
                 class="fa-solid fa-plus"></i> Agregar municipio</a>
     </div>
-    <div th:if="${municipios != null and !municipios.empty}">
+    <div th:if="${not #lists.isEmpty(municipios)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -57,7 +57,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ubicacion/municipio/editar/} + ${municipio.idMunicipio}">Sí,
+                                       th:href="@{/modulo-ubicacion/municipio/editar/__${municipio.idMunicipio}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

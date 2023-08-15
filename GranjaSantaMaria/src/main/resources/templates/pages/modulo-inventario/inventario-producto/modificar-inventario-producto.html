@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div class="container py-5" layout:fragment="page-content"
+<div class="container-fluid py-5" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div class="row justify-content-center">
         <div class="col-md-6 col-sm-8 col-12">
@@ -19,7 +19,7 @@
                         <input type="hidden" name="idInventarioProducto" th:field="*{idInventarioProducto}"/>
                         <div class="mb-3">
                             <label class="form-label form-label-lg"
-                                   for="detalleProducto.idDetalleProducto">Producto</label>
+                                   for="detalleProducto">Producto</label>
                             <div class="col-sm-8">
                                 <select id="detalleProducto" name="detalleProducto.idDetalleProducto"
                                         class="form-control" th:field="*{detalleProducto.idDetalleProducto}" required>

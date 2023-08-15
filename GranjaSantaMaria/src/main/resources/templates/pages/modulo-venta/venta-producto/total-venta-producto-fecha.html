@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div class="container-fluid py-2" layout:fragment="page-content"
+<div class="container py-2" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div class="form-control">
         <form th:action="@{encontrar-total-venta-producto-fecha(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')})}"
@@ -70,7 +70,9 @@
                 <td>Total:</td>
                 <td></td>
                 <td></td>
-                <td th:text="${sumarTotalPrecioProducto}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${sumarTotalPrecioProducto} + ' Quetzales'"></td>
                 <td></td>
             </tr>
             </tfoot>

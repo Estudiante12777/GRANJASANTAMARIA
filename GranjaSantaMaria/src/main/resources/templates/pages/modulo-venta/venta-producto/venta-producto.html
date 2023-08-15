@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div class="container-fluid py-3" layout:fragment="page-content"
+<div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <h3 class="text-center">Ventas</h3>
@@ -123,7 +123,11 @@
                 <td>Total:</td>
                 <td></td>
                 <td></td>
-                <td th:text="${sumaTotalPrecioProducto}"></td>
+                <td></td>
+                <td></td>
+                <td th:text="${sumaTotalPrecioProducto} + ' Quetzales'"></td>
+                <td></td>
+                <td></td>
                 <td></td>
             </tr>
             </tfoot>
