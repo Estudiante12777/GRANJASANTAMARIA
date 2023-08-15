@@ -7,14 +7,14 @@
 </head>
 
 <body>
-<div class="container-fluid py-3" layout:fragment="page-content"
+<div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <h3 class="text-center">Detalle productos</h3>
         <a class="btn btn-outline-success" th:href="@{/modulo-producto/detalle-producto/agregar}"><i
-                class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+                class="fa-solid fa-plus"></i> Agregar detalle del producto</a>
     </div>
-    <div th:if="${detalleProductos != null and !detalleProductos.empty}">
+    <div th:if="${not #lists.isEmpty(detalleProductos)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -30,16 +30,12 @@
             </thead>
             <tr th:each="detalleProducto, iterStat : ${detalleProductos}" th:if="${iterStat.index lt 10}">
                 <td th:text="${detalleProducto.producto.nombreProducto}">
-                    Mostrar Nombre de tipo de ganado
                 </td>
                 <td th:text="${detalleProducto.medidaProducto.nombreMedidaProducto}">
-                    Mostrar Nombre de tipo de ganado
                 </td>
                 <td th:text="${detalleProducto.contenedorProducto.nombreContenedorProducto}">
-                    Mostrar Nombre de tipo de ganado
                 </td>
                 <td th:text="${detalleProducto.descripcionProducto.nombreDescripcionProducto}">
-                    Mostrar Nombre de tipo de ganado
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
@@ -65,7 +61,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-producto/detalle-producto/editar/} + ${detalleProducto.idDetalleProducto}">Sí,
+                                       th:href="@{/modulo-producto/detalle-producto/editar/__${detalleProducto.idDetalleProducto}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

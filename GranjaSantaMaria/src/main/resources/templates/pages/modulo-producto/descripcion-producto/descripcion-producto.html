@@ -7,14 +7,14 @@
 </head>
 
 <body>
-<div class="container-fluid py-3" layout:fragment="page-content"
+<div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <h3 class="text-center">Descripcion de productos</h3>
         <a class="btn btn-outline-success" th:href="@{/modulo-producto/descripcion-producto/agregar}"><i
-                class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+                class="fa-solid fa-plus"></i> Agregar descripcion del producto</a>
     </div>
-    <div th:if="${descripcionProductos != null and !descripcionProductos.empty}">
+    <div th:if="${not #lists.isEmpty(descripcionProductos)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -25,7 +25,7 @@
                 <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
             </tr>
             </thead>
-            <tr th:each="descripcionProducto, iterStat : ${descripcionProductos}" th:if="${iterStat.index lt 10}">
+            <tr th:each="descripcionProducto : ${descripcionProductos}">
                 <td th:text="${descripcionProducto.nombreDescripcionProducto}">
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
@@ -52,7 +52,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-producto/descripcion-producto/editar/} + ${descripcionProducto.idDescripcionProducto}">Sí,
+                                       th:href="@{/modulo-producto/descripcion-producto/editar/__${descripcionProducto.idDescripcionProducto}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

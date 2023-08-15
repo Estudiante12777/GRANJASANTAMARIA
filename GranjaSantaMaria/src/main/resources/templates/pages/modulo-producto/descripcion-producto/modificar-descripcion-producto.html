@@ -20,7 +20,8 @@
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="nombreDescripcionProducto">Descripcion
                                 producto:</label>
-                            <input id="nombreDescripcionProducto" class="form-control form-control-lg" type="text" required
+                            <input id="nombreDescripcionProducto" class="form-control form-control-lg" type="text"
+                                   required
                                    name="nombreDescripcionProducto" th:field="*{nombreDescripcionProducto}"/>
                             <span th:if="${#fields.hasErrors('nombreDescripcionProducto')}" class="text-danger"
                                   th:errors="*{nombreDescripcionProducto}">Error nombre medida de producto</span>

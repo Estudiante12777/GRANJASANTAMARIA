@@ -7,14 +7,14 @@
 </head>
 
 <body>
-<div class="container-fluid py-3" layout:fragment="page-content"
+<div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')" class="mb-3">
         <h3 class="text-center">Productos</h3>
         <a class="btn btn-outline-success" th:href="@{/modulo-producto/producto/agregar}"><i
-                class="fa-solid fa-plus"></i> Crear nuevo registro</a>
+                class="fa-solid fa-plus"></i> Agregar producto</a>
     </div>
-    <div th:if="${productos != null and !productos.empty}">
+    <div th:if="${not #lists.isEmpty(productos)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -52,7 +52,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-producto/producto/editar/} + ${producto.idProducto}">Sí,
+                                       th:href="@{/modulo-producto/producto/editar/__${producto.idProducto}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
