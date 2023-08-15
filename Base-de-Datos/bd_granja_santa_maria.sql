@@ -138,7 +138,7 @@ CREATE TABLE prenies_ganado_hembra
     id_ganado_hembra             INT             NOT NULL,
     fecha_prenies                DATE            NOT NULL,
     promedio_gestacion           INT             NOT NULL,
-    fecha_concepcion             DATE            NOT NULL,
+    fecha_concepcion             DATE,
     estado_prenies_ganado_hembra TINYINT         NOT NULL,
     CONSTRAINT fk_preñes_ganado_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );

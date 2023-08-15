@@ -35,7 +35,7 @@ public class PreniesGanadoHembra implements Serializable {
     @Column(name = "promedio_gestacion", nullable = false)
     private Integer promedioGestacion;
 
-    @Column(name = "fecha_concepcion", nullable = false)
+    @Column(name = "fecha_concepcion")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaConcepcion;
 
