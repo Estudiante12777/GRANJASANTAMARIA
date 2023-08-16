@@ -49,7 +49,7 @@
                 <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">
                 </td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                    <div th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche)) or not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerro(produccionDiariaLeche))}">
+                    <div th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche)) and not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerro(produccionDiariaLeche))}">
                         <i class="fa-solid fa-xmark"></i>
                     </div>
                     <div th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche)) or not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerro(produccionDiariaLeche))}">
