@@ -20,7 +20,6 @@
             <tr>
                 <th>Fotografia</th>
                 <th>Nombre</th>
-                <th>Fecha nacimiento</th>
                 <th>Tipo de ganado</th>
                 <th>Categoria de ganado</th>
                 <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
@@ -37,8 +36,6 @@
                          alt="Fotografía del ganado" width="100" height="100">
                 </td>
                 <td th:text="${ganado.nombreGanadoHembra}">
-                </td>
-                <td th:text="${#temporals.format(ganado.getFechaNacimiento(), 'dd-MM-yyyy')}">
                 </td>
                 <td th:text="${ganado.tipoGanado.nombreTipoGanado}">
                 </td>

@@ -30,13 +30,6 @@
                                   th:errors="*{nombreGanadoHembra}">Error nombre del ganado</span>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="fechaNacimiento">Fecha nacimiento:</label>
-                            <input id="fechaNacimiento" class="form-control form-control-lg" type="date" required
-                                   name="fechaNacimiento" th:field="*{fechaNacimiento}"/>
-                            <span th:if="${#fields.hasErrors('fechaNacimiento')}" class="text-danger"
-                                  th:errors="*{fechaNacimiento}">Error fecha de la produccion de leche</span>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label form-label-lg" for="tipoGanado.nombreTipoGanado">Tipo:</label>
                             <div class="col-sm-8">
                                 <select id="tipoGanado.nombreTipoGanado" th:field="*{tipoGanado.idTipoGanado}"
