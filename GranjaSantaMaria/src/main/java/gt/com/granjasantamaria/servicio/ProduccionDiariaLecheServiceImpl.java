@@ -15,10 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheService {
 
+    private final BecerraDao becerraDao;
+
+    private final BecerroDao becerroDao;
+
     private final ProduccionDiariaLecheDao produccionDiariaLecheDao;
 
     @Autowired
-    public ProduccionDiariaLecheServiceImpl(ProduccionDiariaLecheDao produccionDiariaLecheDao) {
+    public ProduccionDiariaLecheServiceImpl(BecerraDao becerraDao, BecerroDao becerroDao, ProduccionDiariaLecheDao produccionDiariaLecheDao) {
+        this.becerraDao = becerraDao;
+        this.becerroDao = becerroDao;
         this.produccionDiariaLecheDao = produccionDiariaLecheDao;
     }
 
@@ -88,6 +94,22 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
             produccionDiariaLecheExistente.setEstadoProduccionDiariaLeche(false);
             produccionDiariaLecheDao.save(produccionDiariaLecheExistente);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Becerra> obtenerRelacionMadreBecerra(ProduccionDiariaLeche produccionDiariaLeche) {
+        // Obtener la vaca desde la produccion
+        GanadoHembra vaca = produccionDiariaLeche.getGanadoHembra();
+        // Buscar en la base de datos si existe alguna relacion de alguna baca con alguna becerra
+        return becerraDao.findByMadre(vaca);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Becerro> obtenerRelacionMadreBecerro(ProduccionDiariaLeche produccionDiariaLeche) {
+        GanadoHembra vaca = produccionDiariaLeche.getGanadoHembra();
+        return becerroDao.findByGanadoHembra(vaca);
     }
 
 }

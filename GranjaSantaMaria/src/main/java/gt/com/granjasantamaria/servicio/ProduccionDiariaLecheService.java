@@ -1,5 +1,7 @@
 package gt.com.granjasantamaria.servicio;
 
+import gt.com.granjasantamaria.modelo.Becerra;
+import gt.com.granjasantamaria.modelo.Becerro;
 import gt.com.granjasantamaria.modelo.ProduccionDiariaLeche;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +30,9 @@ public interface ProduccionDiariaLecheService {
     List<ProduccionDiariaLeche> encontrarTotalProduccionFechaAndIdGanadoHembra(LocalDate fechaInicio, LocalDate fechaFin, Long idGanadoHembra);
 
     void darDeBajaProduccionDiariaLeche(ProduccionDiariaLeche produccionDiariaLeche);
+
+    List<Becerra> obtenerRelacionMadreBecerra(ProduccionDiariaLeche produccionDiariaLeche);
+
+    List<Becerro> obtenerRelacionMadreBecerro(ProduccionDiariaLeche produccionDiariaLeche);
 
 }

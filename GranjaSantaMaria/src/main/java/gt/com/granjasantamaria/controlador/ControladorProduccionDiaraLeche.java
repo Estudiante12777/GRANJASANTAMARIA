@@ -51,6 +51,7 @@ public class ControladorProduccionDiaraLeche {
         BigDecimal sumaTotalProduccionDiariaLeche = listaProduccionDiariaLeche.stream().map(ProduccionDiariaLeche::getTotalProduccionLeche).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("listaProduccionDiariaLeche", listaProduccionDiariaLeche);
         model.addAttribute("sumaTotalProduccionDiariaLeche", sumaTotalProduccionDiariaLeche);
+        model.addAttribute("produccionDiariaLecheService", produccionDiariaLecheService);
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/produccion-diaria-leche";
     }
 

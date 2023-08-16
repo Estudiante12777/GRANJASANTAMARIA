@@ -2,7 +2,6 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.BecerraDao;
 import gt.com.granjasantamaria.modelo.Becerra;
-import gt.com.granjasantamaria.modelo.GanadoHembra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,8 +58,9 @@ public class BecerraServiceImpl implements BecerraService {
 
     @Override
     @Transactional(readOnly = true)
-    public Becerra encontrarBecerraPorId(Long id) {
-        Optional<Becerra> becerraOptional = becerraDao.findById(id);
+    public Becerra encontrarBecerraPorId(Long idBecerra) {
+        Optional<Becerra> becerraOptional = becerraDao.findByBecerraIdGanadoHembra(idBecerra);
+        System.out.println(becerraOptional);
         return becerraOptional.orElse(null);
     }
 
