@@ -18,4 +18,6 @@ public interface BecerraService {
 
     void darBajaBecerra(Becerra becerra);
 
+    Becerra encontrarBecerraPorId(Long id);
+
 }

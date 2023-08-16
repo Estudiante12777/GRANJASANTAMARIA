@@ -65,10 +65,14 @@ public class ControladorBecerra {
         }
     }
 
-    @GetMapping("/modulo-ganado/becerra/editar{idRelacionMadreBecerra}")
+    @GetMapping("/modulo-ganado/becerra/editar/{idRelacionMadreBecerra}")
     public String editarBecerra(Becerra becerra, Model model) {
         becerra = becerraService.encontrarBecerra(becerra);
+        List<GanadoHembra> madres = ganadoHembraService.obtenerListadoGanadosHembra().stream().filter(ganadoHembra -> ganadoHembra.getTipoGanado().getNombreTipoGanado().equals("Vaca")).collect(Collectors.toList());
+        List<GanadoHembra> becerras = ganadoHembraService.obtenerListadoGanadosHembra().stream().filter(ganadoHembra -> ganadoHembra.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
         model.addAttribute("becerra", becerra);
+        model.addAttribute("madres", madres);
+        model.addAttribute("becerras", becerras);
         return "pages/modulo-ganado/becerra/modificar-becerra";
     }
 

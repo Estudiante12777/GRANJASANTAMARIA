@@ -2,6 +2,7 @@ package gt.com.granjasantamaria.servicio;
 
 import gt.com.granjasantamaria.dao.BecerraDao;
 import gt.com.granjasantamaria.modelo.Becerra;
+import gt.com.granjasantamaria.modelo.GanadoHembra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BecerraServiceImpl implements BecerraService {
@@ -53,6 +55,13 @@ public class BecerraServiceImpl implements BecerraService {
             becerraExistente.setEstadoRelacionMadreBecerra(false);
             becerraDao.save(becerraExistente);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Becerra encontrarBecerraPorId(Long id) {
+        Optional<Becerra> becerraOptional = becerraDao.findById(id);
+        return becerraOptional.orElse(null);
     }
 
 }

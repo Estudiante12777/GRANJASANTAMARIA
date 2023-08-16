@@ -70,7 +70,7 @@ public class ControladorBecerro {
         }
     }
 
-    @GetMapping("/modulo-ganado/becerro/editar{idRelacionMadreBecerro}")
+    @GetMapping("/modulo-ganado/becerro/editar/{idRelacionMadreBecerro}")
     public String editarBecerro(Becerro becerro, Model model) {
         becerro = becerroService.encontrarBecerro(becerro);
         model.addAttribute("becerro", becerro);

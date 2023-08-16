@@ -24,17 +24,20 @@ public class ControladorAlimentacionBecerra {
 
     private final GanadoHembraService ganadoHembraService;
 
+    private final BecerraService becerraService;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, GanadoHembraService ganadoHembraService) {
+    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, GanadoHembraService ganadoHembraService, BecerraService becerraService) {
         this.alimentacionBecerraService = alimentacionBecerraService;
         this.ganadoHembraService = ganadoHembraService;
+        this.becerraService = becerraService;
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra")
-    public String obtenerListadoAlimentacionBecerras(@RequestParam(defaultValue = "0") int pagina, Model model) {
+    public String obtenerListadoAlimentacionBecerrasPaginado(@RequestParam(defaultValue = "0") int pagina, Model model) {
         PageRequest pageRequest = PageRequest.of(pagina, 8);
         Page<AlimentacionBecerra> alimentacionBecerraPage = alimentacionBecerraService.obtenerAlimentacionBecerraPaginado(pageRequest);
         model.addAttribute("alimentacionBecerraPage", alimentacionBecerraPage);
@@ -54,19 +57,19 @@ public class ControladorAlimentacionBecerra {
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/agregar")
-    public String agregarAlimentacionBecerro(AlimentacionBecerra alimentacionBecerra, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra().stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
-        model.addAttribute("listaGanados", listaGanados);
+    public String agregarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra, Model model) {
+        List<Becerra> listadoBecerras = becerraService.listadoBecerras();
+        model.addAttribute("listadoBecerras", listadoBecerras);
         return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
     }
 
-    @GetMapping("/verificar-alimentacion-becerra/{idGanadoHembra}")
+    @GetMapping("/verificar-alimentacion-becerra/{idBecerra}")
     @ResponseBody
-    public String verificarAlimentacionBecerra(@PathVariable("idGanadoHembra") Long idGanadoHembra) {
-        GanadoHembra ganadoHembra = ganadoHembraService.encontrarGanadoHembraPorId(idGanadoHembra);
+    public String verificarAlimentacionBecerra(@PathVariable("idBecerra") Long idBecerra) {
+        Becerra becerra = becerraService.encontrarBecerraPorId(idBecerra);
         String mensaje = ""; // Variable para almacenar el mensaje
-        if (ganadoHembra != null) {
-            LocalDate fechaNacimiento = ganadoHembra.getFechaNacimiento();
+        if (becerra != null) {
+            LocalDate fechaNacimiento = becerra.getFechaNacimiento();
             LocalDate hoy = LocalDate.now();
             LocalDate fechaTresMeses = fechaNacimiento.plusMonths(3);
             if (hoy.isBefore(fechaTresMeses)) {
@@ -81,7 +84,7 @@ public class ControladorAlimentacionBecerra {
     }
 
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
-    public String guardarProduccionDiariaLeche(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, BindingResult bindingResult, Model model) {
+    public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
             model.addAttribute("listaGanados", listaGanados);
@@ -113,7 +116,7 @@ public class ControladorAlimentacionBecerra {
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}")
-    public String darDeBajaAlimentacionBecerro(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra) {
+    public String darDeBajaAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra) {
         AlimentacionBecerra alimentacionBecerra = new AlimentacionBecerra();
         alimentacionBecerra.setIdAlimentacionBecerra(idAlimentacionBecerra);
         alimentacionBecerraService.darDeBajaAlimentacionBecerra(alimentacionBecerra);

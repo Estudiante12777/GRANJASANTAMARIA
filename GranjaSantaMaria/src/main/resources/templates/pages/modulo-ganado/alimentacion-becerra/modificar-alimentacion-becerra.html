@@ -26,9 +26,9 @@
                                         class="form-select form-select-lg" onchange="obtenerBecerraTernera(this.value)"
                                         id="ganadoHembraSelect">
                                     <option id="ganadoHembra.nombreGanadoHembra"
-                                            th:each="ganadoHembra : ${listaGanados}"
-                                            th:value="${ganadoHembra.idGanadoHembra}"
-                                            th:text="${ganadoHembra.nombreGanadoHembra}"></option>
+                                            th:each="ganadoHembra : ${listadoBecerras}"
+                                            th:value="${ganadoHembra.becerra.idGanadoHembra}"
+                                            th:text="${ganadoHembra.becerra.nombreGanadoHembra}"></option>
                                 </select>
                                 <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
                                       class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error
@@ -162,13 +162,13 @@
         }
 
         // Función para obtener el estado de preñez del ganado seleccionado
-        function obtenerBecerraTernera(idGanadoHembra) {
+        function obtenerBecerraTernera(idBecerra) {
             $('#alimentacion-becerra-ternera').empty(); // Vaciar el contenido antes de actualizarlo
 
-            if (idGanadoHembra !== null) {
+            if (idBecerra !== null) {
                 // Realizar una llamada AJAX para obtener el estado de preñez del ganado
                 $.ajax({
-                    url: '/verificar-alimentacion-becerra/' + idGanadoHembra,
+                    url: '/verificar-alimentacion-becerra/' + idBecerra,
                     type: 'GET',
                     success: function (response) {
                         let alimentacionBecerraTernera = response;
