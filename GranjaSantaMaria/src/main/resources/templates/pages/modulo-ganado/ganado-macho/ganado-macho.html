@@ -18,14 +18,14 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th>Fotografia</th>
-                <th>Nombre</th>
-                <th>Tipo de ganado</th>
-                <th>Categoria de ganado</th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                <th class="col-sm-3">Fotografia</th>
+                <th class="col-sm-3">Nombre</th>
+                <th class="col-sm-2">Tipo de ganado</th>
+                <th class="col-sm-2">Categoria de ganado</th>
+                <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     Editar
                 </th>
-                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
+                <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">
                     Dar baja
                 </th>
             </tr>
