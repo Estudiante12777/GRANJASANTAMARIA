@@ -37,6 +37,6 @@ public class Becerra implements Serializable {
 
     @NotNull
     @Column(name = "estado_relacion_madre_becerra", nullable = false)
-    private Boolean estadoRelacionMadreBecerra;
+    private boolean estadoRelacionMadreBecerra;
 
 }

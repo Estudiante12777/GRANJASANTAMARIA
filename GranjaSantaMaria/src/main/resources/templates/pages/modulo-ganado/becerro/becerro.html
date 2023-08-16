@@ -45,7 +45,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title"
                                         th:id="'editModalLabel_' + ${becerro.idRelacionMadreBecerro}">
-                                        ¿Estás seguro de que deseas editar este ganado macho?
+                                        ¿Estás seguro de que deseas editar este becerro?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -79,7 +79,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title"
                                         th:id="'bajaModalLabel_' + ${becerro.idRelacionMadreBecerro}">
-                                        ¿Estás seguro de que deseas dar de baja este ganado macho?
+                                        ¿Estás seguro de que deseas dar de baja este becerro?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -87,7 +87,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para dar de baja el ganado -->
                                     <a class="btn btn-danger"
-                                       th:href="@{/modulo-ganado/becerro/baja(idGanadoMacho=${becerro.idRelacionMadreBecerro})}">Sí,
+                                       th:href="@{/modulo-ganado/becerro/baja(idRelacionMadreBecerro=${becerro.idRelacionMadreBecerro})}">Sí,
                                         dar de baja</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary"

@@ -28,7 +28,7 @@
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"></option>
                                 </select>
-                                <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
+                                <span th:if="${#fields.hasErrors('madre.nombreGanadoHembra')}"
                                       class="text-danger" th:errors="*{madre.nombreGanadoHembra}">Error
                                         nombre ganado</span>
                             </div>
@@ -44,7 +44,7 @@
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"></option>
                                 </select>
-                                <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoMacho')}"
+                                <span th:if="${#fields.hasErrors('becerra.nombreGanadoHembra')}"
                                       class="text-danger" th:errors="*{becerra.nombreGanadoHembra}">Error
                                         nombre ganado</span>
                             </div>
@@ -74,12 +74,12 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="guardarModalLabel">Guardar ganado</h5>
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar becerra</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>¿Estás seguro de que deseas guardar este ganado macho?</p>
+                                                <p>¿Estás seguro de que deseas guardar esta becerra?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <!-- Este es el botón que realiza la acción de guardar -->
@@ -127,4 +127,3 @@
 </script>
 </body>
 </html>
-W
