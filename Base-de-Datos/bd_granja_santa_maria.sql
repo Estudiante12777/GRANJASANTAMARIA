@@ -142,6 +142,32 @@ CREATE TABLE prenies_ganado_hembra
     estado_prenies_ganado_hembra TINYINT         NOT NULL,
     CONSTRAINT fk_preñes_ganado_hembra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE dieta_ternera_ternero
+(
+    id_dieta_ternera_ternero     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    descripcion_dieta            TEXT            NOT NULL,
+    estado_dieta_ternera_ternero TINYINT         NOT NULL
+);
+CREATE TABLE relacion_madre_becerro
+(
+    id_relacion_madre_becerro     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_madre                      INT             NOT NULL,
+    id_becerro                    INT             NOT NULL,
+    fecha_nacimiento              DATE            NOT NULL,
+    estado_relacion_madre_becerro TINYINT         NOT NULL,
+    CONSTRAINT fk_becerro_ganado_hembra FOREIGN KEY (id_madre) REFERENCES ganado_hembra (id_ganado_hembra),
+    CONSTRAINT fk_becerro_ganado_macho FOREIGN KEY (id_becerro) REFERENCES ganado_macho (id_ganado_macho)
+);
+CREATE TABLE relacion_madre_becerra
+(
+    id_relacion_madre_becerra     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_madre                      INT             NOT NULL,
+    id_becerra                    INT             NOT NULL,
+    fecha_nacimiento              DATE            NOT NULL,
+    estado_relacion_madre_becerra TINYINT         NOT NULL,
+    CONSTRAINT fk_becerra_ganado_hembra FOREIGN KEY (id_madre) REFERENCES ganado_hembra (id_ganado_hembra),
+    CONSTRAINT fk_becerra FOREIGN KEY (id_becerra) REFERENCES ganado_hembra (id_ganado_hembra)
+);
 /* TABLAS PARA PRODUCCION DE LACTEOS */
 CREATE TABLE produccion_diaria_leche
 (
@@ -180,12 +206,7 @@ CREATE TABLE alimentacion_becerra
     CONSTRAINT fk_alimentacion_becerra_ganado_hembra FOREIGN KEY (id_ganado_hembra) REFERENCES ganado_hembra (id_ganado_hembra) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_alimentacion_becerra_produccion_diaria_leche FOREIGN KEY (id_produccion_diaria_leche) REFERENCES produccion_diaria_leche (id_produccion_diaria_leche) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE TABLE dieta_ternera_ternero
-(
-    id_dieta_ternera_ternero     INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    descripcion_dieta            TEXT            NOT NULL,
-    estado_dieta_ternera_ternero TINYINT         NOT NULL
-);
+/* TABLA PARA EL CONTROL DE GASTOS */
 CREATE TABLE diario_gasto_granja
 (
     id_diario_gasto_granja    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -274,4 +295,3 @@ INSERT INTO usuario (username, password)
 VALUES ('Wilmer', '$2a$10$MT26qZSAzg3u3TMEwhUy2eA2vp74mzdzOGPU2cm5QFYYZZF95k262');
 INSERT INTO rol (nombre, id_usuario)
 VALUES ('ROLE_ADMINISTRADOR', 1);
-

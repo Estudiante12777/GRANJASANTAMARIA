@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title>Title</title>
+</head>
+
+<body>
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
+    <h5 class="text-center">Becerros</h5>
+    <div class="mb-3" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
+        <a class="btn btn-outline-success" th:href="@{/modulo-ganado/becerro/agregar}">
+            <i class="fa-solid fa-plus"></i> Agregar becerro
+        </a>
+    </div>
+    <div th:if="${not #lists.isEmpty(becerros)}">
+        <table class="table">
+            <thead class="table-dark">
+            <tr>
+                <td>Madre</td>
+                <td>Becerro</td>
+                <td>Fecha nacimiento</td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">Editar</td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Dar baja</td>
+            </tr>
+            </thead>
+            <tr th:each="becerro : ${becerros}">
+                <td th:text="${becerro.ganadoHembra.nombreGanadoHembra}"></td>
+                <td th:text="${becerro.ganadoMacho.nombreGanadoMacho}"></td>
+                <td th:text="${#temporals.format(becerro.fechaNacimiento, 'dd-MM-yyyy')}"></td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de edición -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#editModal_' + ${becerro.idRelacionMadreBecerro}">
+                        <i class="fa-sharp fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- Modal de edición -->
+                    <div class="modal fade" th:id="'editModal_' + ${becerro.idRelacionMadreBecerro}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${becerro.idRelacionMadreBecerro}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'editModalLabel_' + ${becerro.idRelacionMadreBecerro}">
+                                        ¿Estás seguro de que deseas editar este ganado macho?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/becerro/editar/__${becerro.idRelacionMadreBecerro}__}">Sí,
+                                        quiero editar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de dar baja -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#bajaModal_' + ${becerro.idRelacionMadreBecerro}">
+                        <i class="fa-sharp fa-solid fa-ban"></i>
+                    </button>
+                    <!-- Modal de dar baja -->
+                    <div class="modal fade" th:id="'bajaModal_' + ${becerro.idRelacionMadreBecerro}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${becerro.idRelacionMadreBecerro}"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"
+                                        th:id="'bajaModalLabel_' + ${becerro.idRelacionMadreBecerro}">
+                                        ¿Estás seguro de que deseas dar de baja este ganado macho?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para dar de baja el ganado -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-ganado/becerro/baja(idGanadoMacho=${becerro.idRelacionMadreBecerro})}">Sí,
+                                        dar de baja</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tfoot></tfoot>
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <!-- Si hay una página anterior, mostrar el enlace -->
+                <li th:if="${becerroPage.hasPrevious()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ganado/becerro/lista(pagina=${becerroPage.getNumber()-1})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+                <!-- Mostrar el número de la página actual -->
+                <li class="page-item active"><a class="page-link" th:text="${becerroPage.getNumber()+1}"></a>
+                </li>
+                <!-- Si hay una página siguiente, mostrar el enlace -->
+                <li th:if="${becerroPage.hasNext()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ganado/becerro/lista(pagina=${becerroPage.getNumber()+1})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="py-3">
+        <a class="btn btn-outline-primary btn-lg btn-block"
+           th:href="@{/modulo-ganado}"><i
+                class="fa-solid fa-arrow-left"></i></a>
+    </div>
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
+
+    /* Obtén todos los botones de edición */
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
+
+        // Crea un identificador único para el modal de edición
+        let uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        let modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
+
+    /* Obtén todos los botones de dar baja */
+    let deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    deleteButtons.forEach(function (button) {
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target");
+
+        // Crea un identificador único para el modal de dar baja
+        let uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        let modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+</body>
+</html>

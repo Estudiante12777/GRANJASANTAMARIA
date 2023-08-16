@@ -60,6 +60,30 @@
     <div class="col-sm-3 mb-3">
         <div class="card">
             <div class="card-body">
+                <h5 class="card-title">Becerros</h5>
+                <form method="get" th:action="@{/modulo-ganado/becerro/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Becerras</h5>
+                <form method="get" th:action="@{/modulo-ganado/becerra/lista}">
+                    <div class="py-2"></div>
+                    <a class="btn btn-outline-primary" href="#" onclick="this.parentNode.submit();"><i
+                            class="fa-solid fa-arrow-right"></i> Entrar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 mb-3">
+        <div class="card">
+            <div class="card-body">
                 <h5 class="card-title">Alimentacion becerros y terneros</h5>
                 <form method="get" th:action="@{/modulo-ganado/alimentacion-becerro}">
                     <div class="py-2"></div>

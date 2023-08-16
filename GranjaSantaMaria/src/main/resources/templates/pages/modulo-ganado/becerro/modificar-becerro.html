@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head th:replace="layout/layout :: head">
+    <title>Title</title>
+</head>
+
+<body>
+<div class="container-fluid py-3" layout:fragment="page-content"
+     sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8 col-12">
+            <div class="card bg-light text-dark">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Becerro</h5>
+                    <form th:action="@{/modulo-ganado/becerro/guardar}" method="post"
+                          th:object="${becerro}" id="guardarFormulario">
+                        <input type="hidden" name="idRelacionMadreBecerro" th:field="*{idRelacionMadreBecerro}"/>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
+                                   for="ganadoHembra.nombreGanadoHembra">Madre:</label>
+                            <div class="col-sm-8">
+                                <select id="ganadoHembra.nombreGanadoHembra" th:field="*{ganadoHembra.idGanadoHembra}"
+                                        name="ganadoHembra.nombreGanadoHembra" required
+                                        class="form-select form-select-lg">
+                                    <option th:each="ganadoHembra : ${madres}"
+                                            th:value="${ganadoHembra.idGanadoHembra}"
+                                            th:text="${ganadoHembra.nombreGanadoHembra}"></option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
+                                      class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error
+                                        nombre ganado</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg"
+                                   for="ganadoMacho.nombreGanadoMacho">Becerro:</label>
+                            <div class="col-sm-8">
+                                <select id="ganadoMacho.nombreGanadoMacho" th:field="*{ganadoMacho.idGanadoMacho}"
+                                        name="ganadoMacho.nombreGanadoMacho" required
+                                        class="form-select form-select-lg">
+                                    <option th:each="ganadoMacho : ${becerros}"
+                                            th:value="${ganadoMacho.idGanadoMacho}"
+                                            th:text="${ganadoMacho.nombreGanadoMacho}"></option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('ganadoMacho.nombreGanadoMacho')}"
+                                      class="text-danger" th:errors="*{ganadoMacho.nombreGanadoMacho}">Error
+                                        nombre ganado</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-lg" for="fechaNacimiento">Fecha nacimiento:</label>
+                            <input id="fechaNacimiento" class="form-control form-control-lg" type="date" required
+                                   name="fechaNacimiento" th:field="*{fechaNacimiento}"/>
+                            <span th:if="${#fields.hasErrors('fechaNacimiento')}" class="text-danger"
+                                  th:errors="*{fechaNacimiento}">Error fecha de la produccion de leche</span>
+                        </div>
+                        <input type="hidden" name="estadoRelacionMadreBecerro" th:field="*{estadoRelacionMadreBecerro}">
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <a class="btn btn-outline-primary btn-lg btn-block"
+                                   th:href="@{/modulo-ganado/becerro/lista}"><i
+                                        class="fa-solid fa-arrow-left"></i></a>
+                            </div>
+                            <div sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                                 class="col-sm-6 mb-3">
+                                <button type="button" class="btn btn-outline-success btn-lg btn-block"
+                                        data-bs-toggle="modal" data-bs-target="#guardarModal">
+                                    <i class="fa-solid fa-floppy-disk"></i> Guardar
+                                </button>
+                                <div class="modal fade" id="guardarModal" tabindex="-1"
+                                     aria-labelledby="guardarModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="guardarModalLabel">Guardar ganado</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro de que deseas guardar este ganado macho?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- Este es el botón que realiza la acción de guardar -->
+                                                <button type="submit" class="btn btn-success" name="guardar">
+                                                    Guardar
+                                                </button>
+                                                <!-- Este es el botón que cierra el modal -->
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /* Generar ID único para el modal de guardar */
+
+    // Obtén el botón de guardar
+    let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
+
+    // Obtén el atributo 'data-bs-target' del botón
+    let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
+
+    // Obtén el atributo 'id' del botón
+    let modalIdGuardar = guardarButton.getAttribute("id");
+
+    // Crea un identificador único para el modal de guardar
+    let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
+
+    // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+    guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
+
+    // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+    let modalGuardar = document.querySelector(targetGuardarModalId);
+    modalGuardar.setAttribute("id", uniqueModalIdGuardar);
+</script>
+</body>
+</html>
