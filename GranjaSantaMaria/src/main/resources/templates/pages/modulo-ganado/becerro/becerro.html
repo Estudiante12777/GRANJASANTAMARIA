@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div class="container-fluid py-3" layout:fragment="page-content"
+<div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
     <h5 class="text-center">Becerros</h5>
     <div class="mb-3" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
@@ -19,11 +19,11 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <td>Madre</td>
-                <td>Becerro</td>
-                <td>Fecha nacimiento</td>
-                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">Editar</td>
-                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Dar baja</td>
+                <td class="col-sm-4">Madre</td>
+                <td class="col-sm-4">Becerro</td>
+                <td class="col-sm-2">Fecha nacimiento</td>
+                <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">Editar</td>
+                <td class="col-sm-1" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Dar baja</td>
             </tr>
             </thead>
             <tr th:each="becerro : ${becerros}">
