@@ -83,6 +83,7 @@ public class ControladorProduccionDiaraLeche {
         model.addAttribute("totalProduccionesFecha", totalProduccionesFecha);
         model.addAttribute("produccionDiariaLechePage", produccionDiariaLechePage);
         model.addAttribute("sumaTotalProduccionDiariaLeche", sumaTotalProduccionDiariaLeche);
+        model.addAttribute("produccionDiariaLecheService", produccionDiariaLecheService);
         return "pages/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha";
     }
 

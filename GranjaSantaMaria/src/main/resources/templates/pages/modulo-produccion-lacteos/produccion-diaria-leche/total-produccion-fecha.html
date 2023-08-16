@@ -26,7 +26,6 @@
             <button type="submit">Buscar</button>
         </form>
     </div>
-
     <div th:if="${not #lists.isEmpty(totalProduccionesFecha)}" class="py-2">
         <div style="text-align: right">
             <a th:href="@{/modulo-produccion-lacteos/produccion-diaria-leche/total-produccion-fecha/pdf(fechaInicio=${#request.getParameter('fechaInicio')}, fechaFin=${#request.getParameter('fechaFin')}, ganadoHembra=${#request.getParameter('ganadoHembra')})}"
@@ -60,7 +59,8 @@
                 </td>
                 <td th:text="${produccionDiariaLeche.totalProduccionLeche + ' litros'}">
                 </td>
-                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')"
+                    th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche)) or not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerro(produccionDiariaLeche))}">
                     <!-- Botón para abrir el modal de alimentacion becerro -->
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                             th:data-bs-target="'#alimentacionModal_' + ${produccionDiariaLeche.idProduccionDiariaLeche}"
