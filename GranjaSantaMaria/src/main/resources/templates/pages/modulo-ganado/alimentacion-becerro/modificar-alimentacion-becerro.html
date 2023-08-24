@@ -148,6 +148,16 @@
     let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
+<th:block layout:fragment="page-scripts">
+    <script>
+        function calcularTotalAlimentacionBecerrosTerneros() {
+            let alimentacionManianaBecerrosTerneros = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerroTernero').value);
+            let alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
+            document.getElementById('totalAlimentacionBecerroTernero').value = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
+
+        }
+    </script>
+</th:block>
 </body>
 
 </html>

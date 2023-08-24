@@ -191,6 +191,12 @@
         $(document).ready(function () {
             inicializarFormulariAlimentacionBecerraTernera();
         });
+
+        function calcularTotalAlimentacionBecerrasTerneras() {
+            let alimentacionManianaBecerrasTerneras = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerraTernera').value);
+            let alimentacionTardeBecerrasTerneras = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerraTernera').value);
+            document.getElementById('totalAlimentacionBecerraTernera').value = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
+        }
     </script>
 </th:block>
 </body>

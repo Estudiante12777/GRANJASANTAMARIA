@@ -77,14 +77,18 @@
                                     </div>
                                     <div class="modal-footer">
                                         <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                           th:href="@{/modulo-ganado/alimentacion-becerro/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
-                                            Becerro
-                                        </a>
-                                        <a class="btn btn-primary"
-                                           th:href="@{/modulo-ganado/alimentacion-becerra/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
-                                            Becerra
-                                        </a>
+                                        <div th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerro(produccionDiariaLeche))}">
+                                            <a class="btn btn-primary"
+                                               th:href="@{/modulo-ganado/alimentacion-becerro/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                Becerro
+                                            </a>
+                                        </div>
+                                        <div th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche))}">
+                                            <a class="btn btn-primary"
+                                               th:href="@{/modulo-ganado/alimentacion-becerra/agregar(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                Becerra
+                                            </a>
+                                        </div>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
                                             cancelar
@@ -116,15 +120,19 @@
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-footer">
-                                        <!-- Enlace para ir al formulario de edición -->
-                                        <a class="btn btn-primary"
-                                           th:href="@{/modulo-ganado/alimentacion-becerro/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
-                                            becerro
-                                        </a>
-                                        <a class="btn btn-primary"
-                                           th:href="@{/modulo-ganado/alimentacion-becerra/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
-                                            becerra
-                                        </a>
+                                        <!-- Enlace para ir a los registros de alimentacion -->
+                                        <div th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerro(produccionDiariaLeche))}">
+                                            <a class="btn btn-primary"
+                                               th:href="@{/modulo-ganado/alimentacion-becerro/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                becerro
+                                            </a>
+                                        </div>
+                                        <div th:if="${not #lists.isEmpty(produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche))}">
+                                            <a class="btn btn-primary"
+                                               th:href="@{/modulo-ganado/alimentacion-becerra/lista(idProduccionDiariaLeche=${produccionDiariaLeche.idProduccionDiariaLeche})}">
+                                                becerra
+                                            </a>
+                                        </div>
                                         <!-- Botón para cerrar el modal -->
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
                                             cancelar

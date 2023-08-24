@@ -114,6 +114,29 @@
         </div>
     </div>
 </div>
+<th:block layout:fragment="page-scripts">
+    <script>
+        function mostrarExistencia(idInventarioProducto) {
+            $.ajax({
+                url: "/modulo-venta/venta-producto/existencia/" + idInventarioProducto,
+                type: "GET",
+                success: function (data) {
+                    $("#existencia").html("<div class='alert alert-primary' role='alert'>Hay " + data + " unidades disponibles</div>");
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function calcularTotalVenta() {
+            let cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
+            let precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
+            let descuento = parseFloat(document.getElementById('descuentoProducto').value);
+            document.getElementById('totalPrecioProducto').value = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
+        }
+    </script>
+</th:block>
 </body>
 
 </html>

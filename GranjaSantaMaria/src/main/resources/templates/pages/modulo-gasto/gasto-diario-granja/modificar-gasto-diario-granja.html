@@ -124,6 +124,16 @@
     let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
+<th:block layout:fragment="page-scripts">
+    <script>
+        function calcularTotalDiarioGasto() {
+            let cantidad = parseFloat(document.getElementById('unidadesAdquiridas').value);
+            let valorUnitario = parseFloat(document.getElementById('valorUnitario').value);
+            document.getElementById('valorTotal').value = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
+
+        }
+    </script>
+</th:block>
 </body>
 
 </html>

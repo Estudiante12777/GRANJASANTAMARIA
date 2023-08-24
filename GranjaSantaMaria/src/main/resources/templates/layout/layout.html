@@ -129,47 +129,6 @@
 <script th:src="@{/js/scripts.js}"></script>
 <!--OTRO SCRIPTS PARA PAGINAS-->
 <th:block layout:fragment="page-scripts">
-    <script>
-        function calcularTotalVenta() {
-            let cantidadProducto = parseFloat(document.getElementById('cantidadProducto').value);
-            let precioUnidad = parseFloat(document.getElementById('precioPorUnidad').value);
-            let descuento = parseFloat(document.getElementById('descuentoProducto').value);
-            document.getElementById('totalPrecioProducto').value = ((isNaN(cantidadProducto) ? 0 : cantidadProducto) * (isNaN(precioUnidad) ? 0 : precioUnidad)) - (isNaN(descuento) ? 0 : descuento);
-        }
-
-        function calcularTotalDiarioGasto() {
-            let cantidad = parseFloat(document.getElementById('unidadesAdquiridas').value);
-            let valorUnitario = parseFloat(document.getElementById('valorUnitario').value);
-            document.getElementById('valorTotal').value = (isNaN(cantidad) ? 0 : cantidad) * (isNaN(valorUnitario) ? 0 : valorUnitario);
-
-        }
-
-        function calcularTotalAlimentacionBecerrasTerneras() {
-            let alimentacionManianaBecerrasTerneras = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerraTernera').value);
-            let alimentacionTardeBecerrasTerneras = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerraTernera').value);
-            document.getElementById('totalAlimentacionBecerraTernera').value = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
-        }
-
-        function calcularTotalAlimentacionBecerrosTerneros() {
-            let alimentacionManianaBecerrosTerneros = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerroTernero').value);
-            let alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
-            document.getElementById('totalAlimentacionBecerroTernero').value = (isNaN(alimentacionManianaBecerrosTerneros) ? 0 : alimentacionManianaBecerrosTerneros) + (isNaN(alimentacionTardeBecerrosTerneros) ? 0 : alimentacionTardeBecerrosTerneros);
-
-        }
-
-        function mostrarExistencia(idInventarioProducto) {
-            $.ajax({
-                url: "/modulo-venta/venta-producto/existencia/" + idInventarioProducto,
-                type: "GET",
-                success: function (data) {
-                    $("#existencia").html("<div class='alert alert-primary' role='alert'>Hay " + data + " unidades disponibles</div>");
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
-    </script>
 </th:block>
 </body>
 
