@@ -34,7 +34,7 @@ LEFT JOIN
 LEFT JOIN
     ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra
 WHERE
-    p.id_produccion_diaria_leche = 26
+    p.id_produccion_diaria_leche = 34
     AND a.estado_alimentacion_becerra = TRUE;
 
 

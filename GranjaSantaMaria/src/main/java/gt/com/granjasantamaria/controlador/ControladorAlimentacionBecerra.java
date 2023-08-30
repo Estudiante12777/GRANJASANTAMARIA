@@ -51,19 +51,24 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String jpqlQuery = "SELECT gh.becerra AS nombreBecerra, " +
-                "a.fechaAlimentacionBecerra, a.cantidadManianaAlimentacion, " +
-                "a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, " +
-                "m.nombreGanadoHembra AS madreBecerra, a.idAlimentacionBecerra " +
-                "FROM AlimentacionBecerra AS a " +
-                "INNER JOIN a.produccionDiariaLeche AS p " +
-                "INNER JOIN a.becerra AS gh " +
-                "LEFT JOIN gh.madre AS m " +
-                "WHERE p.idProduccionDiariaLeche = :idProduccionDiariaLeche " +
-                "AND a.estadoAlimentacionBecerra = TRUE";
-        TypedQuery<Object[]> query = entityManager.createQuery(jpqlQuery, Object[].class);
+        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, " +
+                "a.fecha_alimentacion_becerra, " +
+                "a.cantidad_maniana_alimentacion, " +
+                "a.cantidad_tarde_alimentacion, " +
+                "a.total_alimentacion_becerra, " +
+                "m.nombre_ganado_hembra AS madreBecerra, " +
+                "a.id_alimentacion_becerra " +
+                "FROM alimentacion_becerra a " +
+                "INNER JOIN produccion_diaria_leche p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " +
+                "INNER JOIN ganado_hembra gh ON a.id_becerra = gh.id_ganado_hembra " +
+                "LEFT JOIN relacion_madre_becerra rmb ON gh.id_ganado_hembra = rmb.id_becerra " +
+                "LEFT JOIN ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra " +
+                "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " +
+                "AND a.estado_alimentacion_becerra = TRUE";
+        System.out.println("SQL Query: " + sqlQuery);
+        Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
-        List<Object[]> results = query.getResultList();
+        List<?> results = query.getResultList();
         model.addAttribute("alimentacionBecerraList", results);
         return "pages/modulo-ganado/alimentacion-becerra/alimentacion-becerra";
     }
