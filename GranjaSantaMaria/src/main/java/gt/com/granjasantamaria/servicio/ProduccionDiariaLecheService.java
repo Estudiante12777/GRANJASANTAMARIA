@@ -35,4 +35,6 @@ public interface ProduccionDiariaLecheService {
 
     List<Becerro> obtenerRelacionMadreBecerro(ProduccionDiariaLeche produccionDiariaLeche);
 
+    ProduccionDiariaLeche obtenerProduccionDiariaLechePorId(Long idProduccionDiariaLeche);
+
 }

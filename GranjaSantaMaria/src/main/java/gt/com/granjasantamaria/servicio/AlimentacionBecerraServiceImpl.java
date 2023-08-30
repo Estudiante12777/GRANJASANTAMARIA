@@ -21,8 +21,8 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
 
     @Override
     @Transactional(readOnly = true)
-    public Page<AlimentacionBecerra> obtenerAlimentacionBecerraPaginado(Pageable pageable) {
-        return alimentacionBecerraDao.findAllByEstadoAlimentacionBecerraIsTrue(pageable);
+    public Page<Object[]> obtenerAlimentacionBecerraPaginado(Pageable pageable) {
+        return alimentacionBecerraDao.obtenerDatosAlimentacionConRelaciones(pageable);
     }
 
     @Override

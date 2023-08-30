@@ -23,9 +23,9 @@ public class AlimentacionBecerra implements Serializable {
     @Column(name = "id_alimentacion_becerra", nullable = false)
     private Long idAlimentacionBecerra;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_ganado_hembra")
-    private GanadoHembra ganadoHembra;
+    @ManyToOne()
+    @JoinColumn(name = "id_becerra")
+    private Becerra becerra;
 
     @NotNull
     @Column(name = "fecha_alimentacion_becerra", nullable = false)

@@ -26,20 +26,23 @@ public class ControladorAlimentacionBecerra {
 
     private final BecerraService becerraService;
 
+    private final ProduccionDiariaLecheService produccionDiariaLecheService;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, GanadoHembraService ganadoHembraService, BecerraService becerraService) {
+    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, GanadoHembraService ganadoHembraService, BecerraService becerraService, ProduccionDiariaLecheService produccionDiariaLecheService) {
         this.alimentacionBecerraService = alimentacionBecerraService;
         this.ganadoHembraService = ganadoHembraService;
         this.becerraService = becerraService;
+        this.produccionDiariaLecheService = produccionDiariaLecheService;
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra")
     public String obtenerListadoAlimentacionBecerrasPaginado(@RequestParam(defaultValue = "0") int pagina, Model model) {
         PageRequest pageRequest = PageRequest.of(pagina, 8);
-        Page<AlimentacionBecerra> alimentacionBecerraPage = alimentacionBecerraService.obtenerAlimentacionBecerraPaginado(pageRequest);
+        Page<Object[]> alimentacionBecerraPage = alimentacionBecerraService.obtenerAlimentacionBecerraPaginado(pageRequest);
         model.addAttribute("alimentacionBecerraPage", alimentacionBecerraPage);
         var alimentacionBecerra = alimentacionBecerraPage.getContent().stream().limit(8).collect(Collectors.toList());
         model.addAttribute("alimentacionBecerra", alimentacionBecerra);
@@ -48,7 +51,16 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String jpqlQuery = "SELECT gh.nombreGanadoHembra AS nombreBecerra, a.fechaAlimentacionBecerra, " + "a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, " + "m.nombreGanadoHembra AS madreBecerra, " + "a.idAlimentacionBecerra " + "FROM AlimentacionBecerra AS a " + "INNER JOIN a.produccionDiariaLeche AS p " + "INNER JOIN a.ganadoHembra AS gh " + "INNER JOIN p.ganadoHembra AS m " + "WHERE p.idProduccionDiariaLeche = :idProduccionDiariaLeche " + "AND a.estadoAlimentacionBecerra = TRUE";
+        String jpqlQuery = "SELECT gh.becerra AS nombreBecerra, " +
+                "a.fechaAlimentacionBecerra, a.cantidadManianaAlimentacion, " +
+                "a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, " +
+                "m.nombreGanadoHembra AS madreBecerra, a.idAlimentacionBecerra " +
+                "FROM AlimentacionBecerra AS a " +
+                "INNER JOIN a.produccionDiariaLeche AS p " +
+                "INNER JOIN a.becerra AS gh " +
+                "LEFT JOIN gh.madre AS m " +
+                "WHERE p.idProduccionDiariaLeche = :idProduccionDiariaLeche " +
+                "AND a.estadoAlimentacionBecerra = TRUE";
         TypedQuery<Object[]> query = entityManager.createQuery(jpqlQuery, Object[].class);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<Object[]> results = query.getResultList();
@@ -57,8 +69,9 @@ public class ControladorAlimentacionBecerra {
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/agregar")
-    public String agregarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra, Model model) {
-        List<Becerra> listadoBecerras = becerraService.listadoBecerras();
+    public String agregarAlimentacionBecerra(@RequestParam Long idProduccionDiariaLeche, AlimentacionBecerra alimentacionBecerra, Model model) {
+        ProduccionDiariaLeche produccionDiariaLeche = produccionDiariaLecheService.obtenerProduccionDiariaLechePorId(idProduccionDiariaLeche);
+        List<Becerra> listadoBecerras = produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche);
         model.addAttribute("listadoBecerras", listadoBecerras);
         return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
     }

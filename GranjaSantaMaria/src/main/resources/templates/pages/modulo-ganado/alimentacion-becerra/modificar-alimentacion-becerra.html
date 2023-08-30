@@ -21,17 +21,17 @@
                             <label class="form-label form-label-lg" for="ganadoHembraSelect">Nombre de la
                                 becerra:</label>
                             <div class="col-sm-8">
-                                <select th:field="*{ganadoHembra.idGanadoHembra}"
+                                <select th:field="*{becerra.idRelacionMadreBecerra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
                                         class="form-select form-select-lg" onchange="obtenerBecerraTernera(this.value)"
                                         id="ganadoHembraSelect">
                                     <option id="ganadoHembra.nombreGanadoHembra"
-                                            th:each="ganadoHembra : ${listadoBecerras}"
-                                            th:value="${ganadoHembra.becerra.idGanadoHembra}"
-                                            th:text="${ganadoHembra.becerra.nombreGanadoHembra}"></option>
+                                            th:each="becerras : ${listadoBecerras}"
+                                            th:value="${becerras.becerra.idGanadoHembra}"
+                                            th:text="${becerras.becerra.nombreGanadoHembra}"></option>
                                 </select>
-                                <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
-                                      class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error
+                                <span th:if="${#fields.hasErrors('becerra.becerra.nombreGanadoHembra')}"
+                                      class="text-danger" th:errors="*{becerra.becerra.nombreGanadoHembra}">Error
                                         ganado</span>
                             </div>
                         </div>

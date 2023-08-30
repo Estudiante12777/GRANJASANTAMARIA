@@ -112,4 +112,9 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
         return becerroDao.findByGanadoHembra(vaca);
     }
 
+    @Override
+    public ProduccionDiariaLeche obtenerProduccionDiariaLechePorId(Long idProduccionDiariaLeche) {
+        return produccionDiariaLecheDao.findById(idProduccionDiariaLeche).orElse(null);
+    }
+
 }
