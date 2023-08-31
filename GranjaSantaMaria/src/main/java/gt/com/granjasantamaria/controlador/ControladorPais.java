@@ -50,7 +50,6 @@ public class ControladorPais {
         return "pages/modulo-ubicacion/pais/modificar-pais";
     }
 
-
     @GetMapping("/modulo-ubicacion/pais/baja")
     public String darBajaPais(Pais pais) {
         paisService.darBajaPais(pais);

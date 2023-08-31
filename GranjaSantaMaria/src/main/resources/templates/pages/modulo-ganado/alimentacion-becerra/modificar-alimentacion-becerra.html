@@ -61,7 +61,7 @@
                                 Cantidad alimentacion en la tarde:
                             </label>
                             <input id="cantidadTardeAlimentacionBecerraTernera" type="number" step="0.01"
-                                   class="form-control form-control-lg" required
+                                   class="form-control form-control-lg"
                                    name="cantidadTardeAlimentacion" th:field="*{cantidadTardeAlimentacion}"
                                    onchange="calcularTotalAlimentacionBecerrasTerneras()">
                             <span th:if="${#fields.hasErrors('cantidadTardeAlimentacion')}" class="text-danger"

@@ -86,6 +86,7 @@
                                     <a class="btn btn-danger"
                                        th:href="@{/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacionBecerra[6]})}">Sí,
                                         dar de baja</a>
+                                    <p>Valor de ID:<span th:text="${alimentacionBecerra[6]}"></span></p>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar
@@ -108,4 +109,3 @@
 </body>
 
 </html>
-

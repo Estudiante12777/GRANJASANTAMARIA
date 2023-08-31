@@ -3,6 +3,7 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.modelo.AlimentacionBecerra;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.yaml.snakeyaml.events.AliasEvent;
 
 public interface AlimentacionBecerraService {
 
@@ -12,6 +13,8 @@ public interface AlimentacionBecerraService {
 
     AlimentacionBecerra encontrarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra);
 
-    void darDeBajaAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra);
+    void darDeBajaAlimentacionBecerra(Long idAlimentacionBecerra);
+
+    AlimentacionBecerra encontrarAlimentacionBecerraPorId(Long idAlimentacionBecerra);
 
 }

@@ -59,4 +59,21 @@ public class AlimentacionBecerra implements Serializable {
     @Column(name = "estado_alimentacion_becerra", nullable = false)
     private boolean estadoAlimentacionBecerra;
 
+    public AlimentacionBecerra() {
+    }
+
+    public AlimentacionBecerra(Long idAlimentacionBecerra, LocalDate fechaAlimentacionBecerra, BigDecimal cantidadManianaAlimentacion, BigDecimal cantidadTardeAlimentacion, BigDecimal totalAlimentacionBecerra, boolean estadoAlimentacionBecerra) {
+        this.idAlimentacionBecerra = idAlimentacionBecerra;
+        this.fechaAlimentacionBecerra = fechaAlimentacionBecerra;
+        this.cantidadManianaAlimentacion = cantidadManianaAlimentacion;
+        this.cantidadTardeAlimentacion = cantidadTardeAlimentacion;
+        this.totalAlimentacionBecerra = totalAlimentacionBecerra;
+        this.estadoAlimentacionBecerra = estadoAlimentacionBecerra;
+    }
+
+    @Override
+    public String toString() {
+        return "IdAlimetacionBecerra: " + idAlimentacionBecerra+ " -->";
+    }
+
 }

@@ -9,14 +9,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+
 @Service
 public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraService {
 
     private final AlimentacionBecerraDao alimentacionBecerraDao;
 
+    private final EntityManager entityManager;
+
     @Autowired
-    public AlimentacionBecerraServiceImpl(AlimentacionBecerraDao alimentacionBecerraDao) {
+    public AlimentacionBecerraServiceImpl(AlimentacionBecerraDao alimentacionBecerraDao, EntityManager entityManager) {
         this.alimentacionBecerraDao = alimentacionBecerraDao;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -40,11 +47,23 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
 
     @Override
     @Transactional
-    public void darDeBajaAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra) {
-        AlimentacionBecerra alimentacionBecerraExistente = alimentacionBecerraDao.findById(alimentacionBecerra.getIdAlimentacionBecerra()).orElse(null);
-        if (alimentacionBecerraExistente != null) {
-            alimentacionBecerraExistente.setEstadoAlimentacionBecerra(false);
-            alimentacionBecerraDao.save(alimentacionBecerraExistente);
+    public void darDeBajaAlimentacionBecerra(Long idAlimentacionBecerra) {
+        alimentacionBecerraDao.darDeBajaPorId(idAlimentacionBecerra);
+        entityManager.flush();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AlimentacionBecerra encontrarAlimentacionBecerraPorId(Long idAlimentacionBecerra) {
+        String jpql = "SELECT NEW AlimentacionBecerra(a.idAlimentacionBecerra, a.fechaAlimentacionBecerra, a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, a.estadoAlimentacionBecerra) " +
+                "FROM AlimentacionBecerra a " +
+                "WHERE a.idAlimentacionBecerra = :idAlimentacionBecerra";
+        TypedQuery<AlimentacionBecerra> query = entityManager.createQuery(jpql, AlimentacionBecerra.class);
+        query.setParameter("idAlimentacionBecerra", idAlimentacionBecerra);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
         }
     }
 

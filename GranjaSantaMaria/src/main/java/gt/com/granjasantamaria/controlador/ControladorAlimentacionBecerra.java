@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import javax.persistence.*;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +29,8 @@ public class ControladorAlimentacionBecerra {
     private final BecerraService becerraService;
 
     private final ProduccionDiariaLecheService produccionDiariaLecheService;
+
+    private final Logger logger = LoggerFactory.getLogger(ControladorAlimentacionBecerra.class);
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -65,7 +69,6 @@ public class ControladorAlimentacionBecerra {
                 "LEFT JOIN ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra " +
                 "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " +
                 "AND a.estado_alimentacion_becerra = TRUE";
-        System.out.println("SQL Query: " + sqlQuery);
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<?> results = query.getResultList();
@@ -121,23 +124,32 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}")
     public String editarAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra, AlimentacionBecerra alimentacionBecerra, Model model) {
+        alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
         List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
         // Filtrar la lista de ganado para mostrar solo terneras y becerras
-        List<GanadoHembra> listaTernerasBecerras = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra")).collect(Collectors.toList());
-        System.out.println("Lista de ganados: " + listaGanados);
-        System.out.println("Lista de Terneras y Becerras: " + listaTernerasBecerras);
+        List<GanadoHembra> listaTernerasBecerras = listaGanados.stream()
+                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") ||
+                        ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra"))
+                .collect(Collectors.toList());
         model.addAttribute("listaGanados", listaTernerasBecerras);
         model.addAttribute("idAlimentacionBecerra", idAlimentacionBecerra);
-        alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerra(alimentacionBecerra);
-        model.addAttribute("alimentacionBecerra", alimentacionBecerra);
+        model.addAttribute("alimentacionBecerra", alimentacionBecerra); // Agregar esta línea
         return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}")
     public String darDeBajaAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra) {
-        AlimentacionBecerra alimentacionBecerra = new AlimentacionBecerra();
-        alimentacionBecerra.setIdAlimentacionBecerra(idAlimentacionBecerra);
-        alimentacionBecerraService.darDeBajaAlimentacionBecerra(alimentacionBecerra);
+        logger.info("ID de AlimentacionBecerra a dar de baja: {}", idAlimentacionBecerra);
+        // Encontrar la alimentación de becerra por el ID
+        AlimentacionBecerra alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
+        if (alimentacionBecerra != null) {
+            logger.info("AlimentacionBecerra encontrada: {}", alimentacionBecerra);
+            // Cambiar el estado y actualizar en la base de datos
+            alimentacionBecerraService.darDeBajaAlimentacionBecerra(idAlimentacionBecerra);
+            logger.info("AlimentacionBecerra actualizada con estado de baja");
+        } else {
+            logger.warn("AlimentacionBecerra no encontrada para ID: {}", idAlimentacionBecerra);
+        }
         return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
     }
 
