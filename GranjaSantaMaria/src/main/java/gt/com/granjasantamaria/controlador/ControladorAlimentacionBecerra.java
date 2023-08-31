@@ -124,7 +124,6 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}")
     public String editarAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra, AlimentacionBecerra alimentacionBecerra, Model model) {
-        alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
         List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
         // Filtrar la lista de ganado para mostrar solo terneras y becerras
         List<GanadoHembra> listaTernerasBecerras = listaGanados.stream()
@@ -133,6 +132,7 @@ public class ControladorAlimentacionBecerra {
                 .collect(Collectors.toList());
         model.addAttribute("listaGanados", listaTernerasBecerras);
         model.addAttribute("idAlimentacionBecerra", idAlimentacionBecerra);
+        alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
         model.addAttribute("alimentacionBecerra", alimentacionBecerra); // Agregar esta línea
         return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
     }
