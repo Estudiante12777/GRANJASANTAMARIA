@@ -45,30 +45,17 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra")
     public String obtenerListadoAlimentacionBecerrasPaginado(@RequestParam(defaultValue = "0") int pagina, Model model) {
-        PageRequest pageRequest = PageRequest.of(pagina, 8);
+        PageRequest pageRequest = PageRequest.of(pagina, 20);
         Page<Object[]> alimentacionBecerraPage = alimentacionBecerraService.obtenerAlimentacionBecerraPaginado(pageRequest);
         model.addAttribute("alimentacionBecerraPage", alimentacionBecerraPage);
-        var alimentacionBecerra = alimentacionBecerraPage.getContent().stream().limit(8).collect(Collectors.toList());
+        var alimentacionBecerra = alimentacionBecerraPage.getContent().stream().limit(20).collect(Collectors.toList());
         model.addAttribute("alimentacionBecerra", alimentacionBecerra);
         return "pages/modulo-ganado/alimentacion-becerra/alimentacion";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, " +
-                "a.fecha_alimentacion_becerra, " +
-                "a.cantidad_maniana_alimentacion, " +
-                "a.cantidad_tarde_alimentacion, " +
-                "a.total_alimentacion_becerra, " +
-                "m.nombre_ganado_hembra AS madreBecerra, " +
-                "a.id_alimentacion_becerra " +
-                "FROM alimentacion_becerra a " +
-                "INNER JOIN produccion_diaria_leche p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " +
-                "INNER JOIN ganado_hembra gh ON a.id_becerra = gh.id_ganado_hembra " +
-                "LEFT JOIN relacion_madre_becerra rmb ON gh.id_ganado_hembra = rmb.id_becerra " +
-                "LEFT JOIN ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra " +
-                "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " +
-                "AND a.estado_alimentacion_becerra = TRUE";
+        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, " + "a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, " + "a.cantidad_tarde_alimentacion, " + "a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra a " + "INNER JOIN produccion_diaria_leche p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra gh ON a.id_becerra = gh.id_ganado_hembra " + "LEFT JOIN relacion_madre_becerra rmb ON gh.id_ganado_hembra = rmb.id_becerra " + "LEFT JOIN ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = TRUE";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<?> results = query.getResultList();
@@ -81,7 +68,7 @@ public class ControladorAlimentacionBecerra {
         ProduccionDiariaLeche produccionDiariaLeche = produccionDiariaLecheService.obtenerProduccionDiariaLechePorId(idProduccionDiariaLeche);
         List<Becerra> listadoBecerras = produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche);
         model.addAttribute("listadoBecerras", listadoBecerras);
-        return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
+        return "pages/modulo-ganado/alimentacion-becerra/agregar-alimentacion-becerra";
     }
 
     @GetMapping("/verificar-alimentacion-becerra/{idBecerra}")
@@ -109,7 +96,7 @@ public class ControladorAlimentacionBecerra {
         if (bindingResult.hasErrors()) {
             List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
             model.addAttribute("listaGanados", listaGanados);
-            return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
+            return "redirect:/modulo-ganado/alimentacion-becerra";
         }
         try {
             alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
@@ -118,23 +105,17 @@ public class ControladorAlimentacionBecerra {
             model.addAttribute("error", "Error al guardar la producción diaria de leche.");
             List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
             model.addAttribute("listaGanados", listaGanados);
-            return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
+            return "redirect:/modulo-ganado/alimentacion-becerra/agregar";
         }
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}")
-    public String editarAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra, AlimentacionBecerra alimentacionBecerra, Model model) {
-        List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
-        // Filtrar la lista de ganado para mostrar solo terneras y becerras
-        List<GanadoHembra> listaTernerasBecerras = listaGanados.stream()
-                .filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternera") ||
-                        ganado.getTipoGanado().getNombreTipoGanado().equals("Becerra"))
-                .collect(Collectors.toList());
-        model.addAttribute("listaGanados", listaTernerasBecerras);
-        model.addAttribute("idAlimentacionBecerra", idAlimentacionBecerra);
-        alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
-        model.addAttribute("alimentacionBecerra", alimentacionBecerra); // Agregar esta línea
-        return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becerra";
+    public String editarAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra, Model model) {
+        AlimentacionBecerra alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
+        String becerra = alimentacionBecerraService.encontrarNombreBecerraPorIdAlimentacionBecerra(idAlimentacionBecerra);
+        model.addAttribute("becerra", becerra);
+        model.addAttribute("alimentacionBecerra", alimentacionBecerra);
+        return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becera";
     }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}")

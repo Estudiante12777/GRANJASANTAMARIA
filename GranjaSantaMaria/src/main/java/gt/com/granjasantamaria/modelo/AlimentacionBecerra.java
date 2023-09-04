@@ -3,6 +3,7 @@ package gt.com.granjasantamaria.modelo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -62,18 +63,19 @@ public class AlimentacionBecerra implements Serializable {
     public AlimentacionBecerra() {
     }
 
-    public AlimentacionBecerra(Long idAlimentacionBecerra, LocalDate fechaAlimentacionBecerra, BigDecimal cantidadManianaAlimentacion, BigDecimal cantidadTardeAlimentacion, BigDecimal totalAlimentacionBecerra, boolean estadoAlimentacionBecerra) {
+    public AlimentacionBecerra(Long idAlimentacionBecerra, LocalDate fechaAlimentacionBecerra, BigDecimal cantidadManianaAlimentacion, BigDecimal cantidadTardeAlimentacion, BigDecimal totalAlimentacionBecerra, boolean estadoAlimentacionBecerra, Becerra becerra) {
         this.idAlimentacionBecerra = idAlimentacionBecerra;
         this.fechaAlimentacionBecerra = fechaAlimentacionBecerra;
         this.cantidadManianaAlimentacion = cantidadManianaAlimentacion;
         this.cantidadTardeAlimentacion = cantidadTardeAlimentacion;
         this.totalAlimentacionBecerra = totalAlimentacionBecerra;
         this.estadoAlimentacionBecerra = estadoAlimentacionBecerra;
+        this.becerra = becerra;
     }
 
     @Override
     public String toString() {
-        return "IdAlimetacionBecerra: " + idAlimentacionBecerra+ " -->";
+        return "IdAlimetacionBecerra: " + idAlimentacionBecerra + " -->";
     }
 
 }
