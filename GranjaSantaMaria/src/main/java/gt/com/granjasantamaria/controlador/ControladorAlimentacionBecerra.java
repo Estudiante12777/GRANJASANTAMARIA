@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.persistence.*;
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
 
 @Controller
+@RequiredArgsConstructor
 public class ControladorAlimentacionBecerra {
 
     private final AlimentacionBecerraService alimentacionBecerraService;
@@ -31,13 +33,6 @@ public class ControladorAlimentacionBecerra {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Autowired
-    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, BecerraService becerraService, ProduccionDiariaLecheService produccionDiariaLecheService) {
-        this.alimentacionBecerraService = alimentacionBecerraService;
-        this.becerraService = becerraService;
-        this.produccionDiariaLecheService = produccionDiariaLecheService;
-    }
 
     @GetMapping("/modulo-ganado/alimentacion-becerra")
     public String obtenerListadoAlimentacionBecerrasPaginado(@RequestParam(defaultValue = "0") int pagina, Model model) {
@@ -67,26 +62,6 @@ public class ControladorAlimentacionBecerra {
         return "pages/modulo-ganado/alimentacion-becerra/agregar-alimentacion-becerra";
     }
 
-    @GetMapping("/verificar-alimentacion-becerra/{idBecerra}")
-    @ResponseBody
-    public String verificarAlimentacionBecerra(@PathVariable("idBecerra") Long idBecerra) {
-        Becerra becerra = becerraService.encontrarBecerraPorId(idBecerra);
-        String mensaje = ""; // Variable para almacenar el mensaje
-        if (becerra != null) {
-            LocalDate fechaNacimiento = becerra.getFechaNacimiento();
-            LocalDate hoy = LocalDate.now();
-            LocalDate fechaTresMeses = fechaNacimiento.plusMonths(3);
-            if (hoy.isBefore(fechaTresMeses)) {
-                mensaje = "Alimentar en la mañana y en la tarde";
-            } else if (hoy.isEqual(fechaTresMeses) || hoy.isBefore(fechaNacimiento.plusMonths(5))) {
-                mensaje = "Reducir alimentación en la mañana y en la tarde";
-            } else {
-                mensaje = "No es necesario alimentar";
-            }
-        }
-        return mensaje;
-    }
-
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
     public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, Model model) {
         try {
@@ -109,18 +84,29 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}")
     public String darDeBajaAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra) {
-        logger.info("ID de AlimentacionBecerra a dar de baja: {}", idAlimentacionBecerra);
-        // Encontrar la alimentación de becerra por el ID
         AlimentacionBecerra alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
-        if (alimentacionBecerra != null) {
-            logger.info("AlimentacionBecerra encontrada: {}", alimentacionBecerra);
-            // Cambiar el estado y actualizar en la base de datos
-            alimentacionBecerraService.darDeBajaAlimentacionBecerra(idAlimentacionBecerra);
-            logger.info("AlimentacionBecerra actualizada con estado de baja");
-        } else {
-            logger.warn("AlimentacionBecerra no encontrada para ID: {}", idAlimentacionBecerra);
-        }
+        alimentacionBecerraService.darDeBajaAlimentacionBecerra(idAlimentacionBecerra);
         return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
+    }
+
+    @GetMapping("/verificar-alimentacion-becerra/{idBecerra}")
+    @ResponseBody
+    public String verificarAlimentacionBecerra(@PathVariable("idBecerra") Long idBecerra) {
+        Becerra becerra = becerraService.encontrarBecerraPorId(idBecerra);
+        String mensaje = ""; // Variable para almacenar el mensaje
+        if (becerra != null) {
+            LocalDate fechaNacimiento = becerra.getFechaNacimiento();
+            LocalDate hoy = LocalDate.now();
+            LocalDate fechaTresMeses = fechaNacimiento.plusMonths(3);
+            if (hoy.isBefore(fechaTresMeses)) {
+                mensaje = "Alimentar en la mañana y en la tarde";
+            } else if (hoy.isEqual(fechaTresMeses) || hoy.isBefore(fechaNacimiento.plusMonths(5))) {
+                mensaje = "Reducir alimentación en la mañana y en la tarde";
+            } else {
+                mensaje = "No es necesario alimentar";
+            }
+        }
+        return mensaje;
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BecerroDao extends JpaRepository<Becerro, Long> {
 
@@ -14,6 +15,8 @@ public interface BecerroDao extends JpaRepository<Becerro, Long> {
 
     Page<Becerro> findAllByEstadoRelacionMadreBecerroIsTrue(Pageable pageable);
 
-    List<Becerro> findByGanadoHembra(GanadoHembra ganadoHembra);
+    List<Becerro> findByMadre(GanadoHembra ganadoHembra);
+
+    Optional<Becerro> findByBecerroIdGanadoMacho(Long idBecerro);
 
 }

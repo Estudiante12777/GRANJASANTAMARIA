@@ -22,13 +22,13 @@ public class Becerro implements Serializable {
     @Column(name = "id_relacion_madre_becerro", nullable = false)
     private Long idRelacionMadreBecerro;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_madre")
-    private GanadoHembra ganadoHembra;
+    private GanadoHembra madre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_becerro")
-    private GanadoMacho ganadoMacho;
+    private GanadoMacho becerro;
 
     @NotNull
     @Column(name = "fecha_nacimiento", nullable = false)

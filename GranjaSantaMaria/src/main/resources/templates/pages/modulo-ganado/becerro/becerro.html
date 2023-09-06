@@ -19,17 +19,17 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <td class="col-sm-4">Madre</td>
                 <td class="col-sm-4">Becerro</td>
-                <td class="col-sm-2">Fecha nacimiento</td>
+                <td class="col-sm-4">Fecha nacimiento</td>
+                <td class="col-sm-2">Madre</td>
                 <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">Editar</td>
                 <td class="col-sm-1" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Dar baja</td>
             </tr>
             </thead>
             <tr th:each="becerro : ${becerros}">
-                <td th:text="${becerro.ganadoHembra.nombreGanadoHembra}"></td>
                 <td th:text="${becerro.ganadoMacho.nombreGanadoMacho}"></td>
                 <td th:text="${#temporals.format(becerro.fechaNacimiento, 'dd-MM-yyyy')}"></td>
+                <td th:text="${becerro.ganadoHembra.nombreGanadoHembra}"></td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"

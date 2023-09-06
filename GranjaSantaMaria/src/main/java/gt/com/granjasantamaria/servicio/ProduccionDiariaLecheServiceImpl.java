@@ -109,10 +109,11 @@ public class ProduccionDiariaLecheServiceImpl implements ProduccionDiariaLecheSe
     @Transactional(readOnly = true)
     public List<Becerro> obtenerRelacionMadreBecerro(ProduccionDiariaLeche produccionDiariaLeche) {
         GanadoHembra vaca = produccionDiariaLeche.getGanadoHembra();
-        return becerroDao.findByGanadoHembra(vaca);
+        return becerroDao.findByMadre(vaca);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProduccionDiariaLeche obtenerProduccionDiariaLechePorId(Long idProduccionDiariaLeche) {
         return produccionDiariaLecheDao.findById(idProduccionDiariaLeche).orElse(null);
     }

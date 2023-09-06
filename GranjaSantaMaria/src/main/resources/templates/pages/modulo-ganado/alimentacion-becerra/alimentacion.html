@@ -14,7 +14,6 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th>ID</th>
                 <th>Fecha</th>
                 <th>Becerra</th>
                 <th>Cantidad mañana</th>
@@ -26,7 +25,6 @@
             </tr>
             </thead>
             <tr th:each="alimentacion : ${alimentacionBecerra}">
-                <td th:text="${alimentacion[0]}"></td>
                 <td th:text="${#dates.format(alimentacion[1], 'dd-MM-yyyy')}"></td>
                 <td th:text="${alimentacion[2]}"></td>
                 <td th:text="${alimentacion[3] + ' litros'}"></td>

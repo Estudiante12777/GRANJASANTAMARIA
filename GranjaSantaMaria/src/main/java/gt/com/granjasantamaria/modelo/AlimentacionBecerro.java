@@ -51,10 +51,6 @@ public class AlimentacionBecerro implements Serializable {
     @Column(name = "id_produccion_diaria_leche", nullable = false)
     private Long idProduccionDiariaLeche;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_produccion_diaria_leche", insertable = false, updatable = false)
-    private ProduccionDiariaLeche produccionDiariaLeche;
-
     @NotNull
     @Column(name = "estado_alimentacion_becerro", nullable = false)
     private boolean estadoAlimentacionBecerro;

@@ -18,21 +18,24 @@
                           th:object="${alimentacionBecerro}" id="guardarFormulario">
                         <input type="hidden" name="idAlimentacionBecerro" th:field="*{idAlimentacionBecerro}"/>
                         <div class="mb-3">
-                            <label class="form-label form-label-lg" for="ganadoMacho.nombreGanadoMacho">Nombre del
+                            <label class="form-label form-label-lg" for="ganadoMachoSelect">Nombre del
                                 becerro:</label>
                             <div class="col-sm-8">
-                                <select id="ganadoMacho.nombreGanadoMacho" th:field="*{ganadoMacho.idGanadoMacho}"
+                                <select th:field="*{becerro.idRelacionMadreBecerro}"
                                         name="ganadoMacho.nombreGanadoMacho"
-                                        required class="form-select form-select-lg">
-                                    <option th:each="ganadoMacho : ${listaGanados}"
-                                            th:value="${ganadoMacho.idGanadoMacho}"
-                                            th:text="${ganadoMacho.nombreGanadoMacho}"></option>
+                                        required class="form-select form-select-lg"
+                                        onchange="obtenerBecerroTernero(this.value)"
+                                        id="ganadoMachoSelect">
+                                    <option th:each="becerro : ${listadoBecerros}"
+                                            th:value="${becerro.becerro.idGanadoMacho}"
+                                            th:text="${becerro.becerro.nombreGanadoMacho}"></option>
                                 </select>
-                                <span th:if="${#fields.hasErrors('ganadoMacho.nombreGanadoMacho')}"
-                                      class="text-danger" th:errors="*{ganadoMacho.nombreGanadoMacho}">Error
+                                <span th:if="${#fields.hasErrors('becerro.becerro.nombreGanadoMacho')}"
+                                      class="text-danger" th:errors="*{becerro.becerro.nombreGanadoMacho}">Error
                                         ganado</span>
                             </div>
                         </div>
+                        <div id="alimentacion-becerro-ternero"></div>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="fechaAlimentacionBecerro">Fecha:</label>
                             <input id="fechaAlimentacionBecerro" class="form-control form-control-lg" type="date"
@@ -150,6 +153,46 @@
 </script>
 <th:block layout:fragment="page-scripts">
     <script>
+        // Función para inicializar el formulario
+        function inicializarFormulariAlimentacionBecerroTernero() {
+            // Obtén el ID del ganado seleccionado inicialmente
+            let initialGanadoId = document.getElementById("ganadoMachoSelect").value;
+            // Llama a la función para obtener el estado de preñez del ganado seleccionado inicialmente
+            obtenerBecerroTernero(initialGanadoId);
+            console.log("IdBecerro: " + initialGanadoId)
+        }
+
+        // Función para obtener el estado de preñez del ganado seleccionado
+        function obtenerBecerroTernero(idBecerro) {
+            $('#alimentacion-becerro-ternero').empty(); // Vaciar el contenido antes de actualizarlo
+            if (idBecerro !== null) {
+                // Realizar una llamada AJAX para obtener el estado de preñez del ganado
+                $.ajax({
+                    url: '/verificar-alimentacion-becerro/' + idBecerro,
+                    type: 'GET',
+                    success: function (response) {
+                        let alimentacionBecerro = response;
+                        // Actualizar el contenido del elemento 'estado-preniez' con la alerta correspondiente
+                        if (alimentacionBecerro === "Alimentar en la mañana y en la tarde") {
+                            $('#alimentacion-becerro-ternero').html('<div class="alert alert-warning" role="alert">Alimentar con 2 litros en la mañana y 2 litros en la tarde!.</div>');
+                        } else if (alimentacionBecerro === "Reducir alimentación en la mañana y en la tarde") {
+                            $('#alimentacion-becerro-ternero').html('<div class="alert alert-danger" role="alert">Alimentar con 1 litro en la mañana y 1 litro en la tarde!.</div>');
+                        } else {
+                            $('#alimentacion-becerro-ternero').html('<div class="alert alert-success" role="alert">Ya no se puede alimentar.</div>');
+                        }
+                    },
+                    error: function (error) {
+                        console.log('Error al realizar la petición AJAX: ', error);
+                    }
+                });
+            }
+        }
+
+        // Cuando se carga el formulario, inicializar y obtener el estado del ganado seleccionado
+        $(document).ready(function () {
+            inicializarFormulariAlimentacionBecerroTernero();
+        });
+
         function calcularTotalAlimentacionBecerrosTerneros() {
             let alimentacionManianaBecerrosTerneros = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerroTernero').value);
             let alimentacionTardeBecerrosTerneros = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerroTernero').value);
