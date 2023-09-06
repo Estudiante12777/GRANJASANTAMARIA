@@ -14,21 +14,90 @@
         <table class="table">
             <thead class="table-dark">
             <tr>
+                <th>ID</th>
                 <th>Fecha</th>
                 <th>Becerra</th>
                 <th>Cantidad mañana</th>
                 <th>Cantidad tarde</th>
                 <th>Total cantidad</th>
                 <th>Madre de la Becerra</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">Editar</th>
+                <th sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR')">Dar baja</th>
             </tr>
             </thead>
             <tr th:each="alimentacion : ${alimentacionBecerra}">
+                <td th:text="${alimentacion[0]}"></td>
                 <td th:text="${#dates.format(alimentacion[1], 'dd-MM-yyyy')}"></td>
                 <td th:text="${alimentacion[2]}"></td>
                 <td th:text="${alimentacion[3] + ' litros'}"></td>
                 <td th:text="${alimentacion[4] + ' litros'}"></td>
                 <td th:text="${alimentacion[5] + ' litros'}"></td>
                 <td th:text="${alimentacion[6]}"></td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
+                    <!-- Botón para abrir el modal de edición -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#editModal_' + ${alimentacion[0]}">
+                        <i class="fa-sharp fa-solid fa-pencil"></i>
+                    </button>
+                    <!-- Modal de edición -->
+                    <div class="modal fade" th:id="'editModal_' + ${alimentacion[0]}" tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${alimentacion[0]}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" th:id="'editModalLabel_' + ${alimentacion[0]}">
+                                        ¿Estás seguro de que deseas editar este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para ir al formulario de edición -->
+                                    <a class="btn btn-primary"
+                                       th:href="@{/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacion[0]})}">Sí,
+                                        quiero editar</a>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
+                                        cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                    <!-- Botón para abrir el modal de dar baja -->
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#bajaModal_' + ${alimentacion[0]}">
+                        <i class="fa-sharp fa-solid fa-ban"></i>
+                    </button>
+                    <!-- Modal de dar baja -->
+                    <div class="modal fade" th:id="'bajaModal_' + ${alimentacion[0]}" tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${alimentacion[0]}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" th:id="'bajaModalLabel_' + ${alimentacion[0]}">
+                                        ¿Estás seguro de que deseas dar de baja este registro?
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Enlace para dar de baja el registro -->
+                                    <a class="btn btn-danger"
+                                       th:href="@{/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacion[0]})}">Sí,
+                                        dar de baja</a>
+                                    <p>Valor de ID:<span th:text="${alimentacion[6]}"></span></p>
+                                    <!-- Botón para cerrar el modal -->
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
         </table>
         <nav aria-label="Page navigation">
@@ -62,6 +131,52 @@
                 class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
+
+    /* Obtén todos los botones de edición */
+    let editButtons = document.querySelectorAll('.btn-outline-warning[data-bs-toggle="modal"]');
+
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    editButtons.forEach(function (button) {
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target").replace(/['"]+/g, '');
+
+        // Crea un identificador único para el modal de edición
+        let uniqueModalId = "editModal_" + modalId.replace("#editModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        let modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
+<script th:inline="javascript">
+    /* Generar ID único para cada modal */
+    /* Inserta este código antes de cerrar la etiqueta </body> */
+
+    /* Obtén todos los botones de dar baja */
+    let deleteButtons = document.querySelectorAll('.btn-outline-danger[data-bs-toggle="modal"]');
+
+    /* Recorre los botones y asigna un ID único a cada modal correspondiente */
+    deleteButtons.forEach(function (button) {
+        let targetModalId = button.getAttribute("data-bs-target");
+        let modalId = button.getAttribute("th:data-bs-target").replace(/['"]+/g, '');
+
+        // Crea un identificador único para el modal de dar baja
+        let uniqueModalId = "bajaModal_" + modalId.replace("#bajaModal_", "");
+
+        // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
+        button.setAttribute("data-bs-target", "#" + uniqueModalId);
+
+        // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
+        let modal = document.querySelector(targetModalId);
+        modal.setAttribute("id", uniqueModalId);
+    });
+</script>
 </body>
 
 </html>

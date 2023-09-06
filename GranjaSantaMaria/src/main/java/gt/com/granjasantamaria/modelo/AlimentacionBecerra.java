@@ -52,10 +52,6 @@ public class AlimentacionBecerra implements Serializable {
     @Column(name = "id_produccion_diaria_leche", nullable = false)
     private Long idProduccionDiariaLeche;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_produccion_diaria_leche", insertable = false, updatable = false)
-    private ProduccionDiariaLeche produccionDiariaLeche;
-
     @NotNull
     @Column(name = "estado_alimentacion_becerra", nullable = false)
     private boolean estadoAlimentacionBecerra;
@@ -63,7 +59,7 @@ public class AlimentacionBecerra implements Serializable {
     public AlimentacionBecerra() {
     }
 
-    public AlimentacionBecerra(Long idAlimentacionBecerra, LocalDate fechaAlimentacionBecerra, BigDecimal cantidadManianaAlimentacion, BigDecimal cantidadTardeAlimentacion, BigDecimal totalAlimentacionBecerra, boolean estadoAlimentacionBecerra, Becerra becerra) {
+    public AlimentacionBecerra(Long idAlimentacionBecerra, LocalDate fechaAlimentacionBecerra, BigDecimal cantidadManianaAlimentacion, BigDecimal cantidadTardeAlimentacion, BigDecimal totalAlimentacionBecerra, boolean estadoAlimentacionBecerra, Becerra becerra, Long idProduccionDiariaLeche) {
         this.idAlimentacionBecerra = idAlimentacionBecerra;
         this.fechaAlimentacionBecerra = fechaAlimentacionBecerra;
         this.cantidadManianaAlimentacion = cantidadManianaAlimentacion;
@@ -71,6 +67,7 @@ public class AlimentacionBecerra implements Serializable {
         this.totalAlimentacionBecerra = totalAlimentacionBecerra;
         this.estadoAlimentacionBecerra = estadoAlimentacionBecerra;
         this.becerra = becerra;
+        this.idProduccionDiariaLeche = idProduccionDiariaLeche;
     }
 
     @Override

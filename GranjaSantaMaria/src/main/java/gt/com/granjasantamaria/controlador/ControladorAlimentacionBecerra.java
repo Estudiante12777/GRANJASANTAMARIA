@@ -17,14 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import gt.com.granjasantamaria.modelo.*;
 import gt.com.granjasantamaria.servicio.*;
-import org.springframework.validation.BindingResult;
 
 @Controller
 public class ControladorAlimentacionBecerra {
 
     private final AlimentacionBecerraService alimentacionBecerraService;
-
-    private final GanadoHembraService ganadoHembraService;
 
     private final BecerraService becerraService;
 
@@ -36,9 +33,8 @@ public class ControladorAlimentacionBecerra {
     private EntityManager entityManager;
 
     @Autowired
-    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, GanadoHembraService ganadoHembraService, BecerraService becerraService, ProduccionDiariaLecheService produccionDiariaLecheService) {
+    public ControladorAlimentacionBecerra(AlimentacionBecerraService alimentacionBecerraService, BecerraService becerraService, ProduccionDiariaLecheService produccionDiariaLecheService) {
         this.alimentacionBecerraService = alimentacionBecerraService;
-        this.ganadoHembraService = ganadoHembraService;
         this.becerraService = becerraService;
         this.produccionDiariaLecheService = produccionDiariaLecheService;
     }
@@ -92,20 +88,13 @@ public class ControladorAlimentacionBecerra {
     }
 
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
-    public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
-            model.addAttribute("listaGanados", listaGanados);
-            return "redirect:/modulo-ganado/alimentacion-becerra";
-        }
+    public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, Model model) {
         try {
             alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         } catch (Exception e) {
             model.addAttribute("error", "Error al guardar la producción diaria de leche.");
-            List<GanadoHembra> listaGanados = ganadoHembraService.obtenerListadoGanadosHembra();
-            model.addAttribute("listaGanados", listaGanados);
-            return "redirect:/modulo-ganado/alimentacion-becerra/agregar";
+            return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         }
     }
 

@@ -3,7 +3,6 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.dao.AlimentacionBecerraDao;
 import gt.com.granjasantamaria.modelo.AlimentacionBecerra;
 
-import gt.com.granjasantamaria.modelo.Becerra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import java.util.List;
 
 @Service
 public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraService {
@@ -57,7 +55,7 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
     @Override
     @Transactional(readOnly = true)
     public AlimentacionBecerra encontrarAlimentacionBecerraPorId(Long idAlimentacionBecerra) {
-        String jpql = "SELECT NEW AlimentacionBecerra(a.idAlimentacionBecerra, a.fechaAlimentacionBecerra, a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, a.estadoAlimentacionBecerra, b) " +
+        String jpql = "SELECT NEW AlimentacionBecerra(a.idAlimentacionBecerra, a.fechaAlimentacionBecerra, a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, a.estadoAlimentacionBecerra, b, a.idProduccionDiariaLeche) " +
                 "FROM AlimentacionBecerra a " +
                 "LEFT JOIN a.becerra b " +
                 "WHERE a.idAlimentacionBecerra = :idAlimentacionBecerra";
