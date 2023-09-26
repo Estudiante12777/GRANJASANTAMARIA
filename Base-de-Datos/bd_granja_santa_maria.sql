@@ -5,10 +5,9 @@ USE granja_santa_maria;
 /** TABLAS PARA USUARIOS **/
 CREATE TABLE usuario
 (
-    id_usuario    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    username      VARCHAR(50)     NOT NULL UNIQUE,
-    password      VARCHAR(255)    NOT NULL,
-    imagen_perfil VARCHAR(100)    NULL
+    id_usuario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    username   VARCHAR(50)     NOT NULL UNIQUE,
+    password   VARCHAR(255)    NOT NULL
 );
 CREATE TABLE rol
 (
