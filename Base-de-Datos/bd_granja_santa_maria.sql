@@ -291,11 +291,11 @@ CREATE TABLE venta_producto
     USUARIO PREDETERMINADO
 
     Usuario: Wilmer
-    Contraseña: administrador-granja-santa-maria
+    Contraseña: administrador12345
     Rol: ROLE_ADMINISTRADOR
 */
 
 INSERT INTO usuario (username, password)
-VALUES ('Wilmer', '$2a$10$MT26qZSAzg3u3TMEwhUy2eA2vp74mzdzOGPU2cm5QFYYZZF95k262');
+VALUES ('Wilmer', '$2a$10$WkYRorUeBeRtkMYs20uV0esK0eTpjmp5N3tM2B005CIISdx6v7GKC');
 INSERT INTO rol (nombre, id_usuario)
 VALUES ('ROLE_ADMINISTRADOR', 1);

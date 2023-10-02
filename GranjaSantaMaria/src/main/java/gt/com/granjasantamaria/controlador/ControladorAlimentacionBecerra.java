@@ -7,9 +7,6 @@ import javax.persistence.*;
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,8 +25,6 @@ public class ControladorAlimentacionBecerra {
     private final BecerraService becerraService;
 
     private final ProduccionDiariaLecheService produccionDiariaLecheService;
-
-    private final Logger logger = LoggerFactory.getLogger(ControladorAlimentacionBecerra.class);
 
     @PersistenceContext
     private EntityManager entityManager;
