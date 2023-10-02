@@ -16,6 +16,7 @@ CREATE TABLE rol
     id_usuario INT             NOT NULL,
     CONSTRAINT fk_rol_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario)
 );
+
 /* TABLAS PARA UBICACIONES */
 CREATE TABLE pais
 (
@@ -41,7 +42,9 @@ CREATE TABLE municipio
     CONSTRAINT fk_municipio_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_municipio_pais FOREIGN KEY (id_pais) REFERENCES pais (id_pais) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 /* TABLAS PARA PERSONAS */
+
 CREATE TABLE cliente
 (
     id_cliente        INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -55,6 +58,7 @@ CREATE TABLE cliente
     CONSTRAINT fk_cliente_municipio FOREIGN KEY (id_municipio) REFERENCES municipio (id_municipio) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_cliente_departamento FOREIGN KEY (id_departamento) REFERENCES departamento (id_departamento) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 /*TABLAS PARA GANADO*/
 CREATE TABLE raza_ganado
 (
@@ -165,6 +169,7 @@ CREATE TABLE relacion_madre_becerra
     CONSTRAINT fk_becerra_ganado_hembra FOREIGN KEY (id_madre) REFERENCES ganado_hembra (id_ganado_hembra),
     CONSTRAINT fk_becerra FOREIGN KEY (id_becerra) REFERENCES ganado_hembra (id_ganado_hembra)
 );
+
 /* TABLAS PARA PRODUCCION DE LACTEOS */
 CREATE TABLE produccion_diaria_leche
 (
@@ -203,6 +208,7 @@ CREATE TABLE alimentacion_becerra
     CONSTRAINT fk_alimentacion_becerra_relacion_madre_becerra FOREIGN KEY (id_becerra) REFERENCES relacion_madre_becerra (id_becerra) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_alimentacion_becerra_produccion_diaria_leche FOREIGN KEY (id_produccion_diaria_leche) REFERENCES produccion_diaria_leche (id_produccion_diaria_leche) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 /* TABLA PARA EL CONTROL DE GASTOS */
 CREATE TABLE diario_gasto_granja
 (
@@ -214,6 +220,7 @@ CREATE TABLE diario_gasto_granja
     valor_total               DECIMAL(10, 2)  NOT NULL,
     estado_diario_gasto_ganja TINYINT         NOT NULL
 );
+
 /*TABLAS PARA VENTAS*/
 CREATE TABLE producto
 (
