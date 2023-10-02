@@ -27,9 +27,9 @@
             </tr>
             </thead>
             <tr th:each="becerro : ${becerros}">
-                <td th:text="${becerro.ganadoMacho.nombreGanadoMacho}"></td>
+                <td th:text="${becerro.becerro.nombreGanadoMacho}"></td>
                 <td th:text="${#temporals.format(becerro.fechaNacimiento, 'dd-MM-yyyy')}"></td>
-                <td th:text="${becerro.ganadoHembra.nombreGanadoHembra}"></td>
+                <td th:text="${becerro.madre.nombreGanadoHembra}"></td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"

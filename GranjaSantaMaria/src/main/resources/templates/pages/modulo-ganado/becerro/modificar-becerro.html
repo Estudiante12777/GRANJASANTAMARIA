@@ -21,15 +21,15 @@
                             <label class="form-label form-label-lg"
                                    for="ganadoHembra.nombreGanadoHembra">Madre:</label>
                             <div class="col-sm-8">
-                                <select id="ganadoHembra.nombreGanadoHembra" th:field="*{ganadoHembra.idGanadoHembra}"
+                                <select id="ganadoHembra.nombreGanadoHembra" th:field="*{madre.idGanadoHembra}"
                                         name="ganadoHembra.nombreGanadoHembra" required
                                         class="form-select form-select-lg">
                                     <option th:each="ganadoHembra : ${madres}"
                                             th:value="${ganadoHembra.idGanadoHembra}"
                                             th:text="${ganadoHembra.nombreGanadoHembra}"></option>
                                 </select>
-                                <span th:if="${#fields.hasErrors('ganadoHembra.nombreGanadoHembra')}"
-                                      class="text-danger" th:errors="*{ganadoHembra.nombreGanadoHembra}">Error
+                                <span th:if="${#fields.hasErrors('madre.nombreGanadoHembra')}"
+                                      class="text-danger" th:errors="*{madre.nombreGanadoHembra}">Error
                                         nombre ganado</span>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                             <label class="form-label form-label-lg"
                                    for="ganadoMacho.nombreGanadoMacho">Becerro:</label>
                             <div class="col-sm-8">
-                                <select id="ganadoMacho.nombreGanadoMacho" th:field="*{ganadoMacho.idGanadoMacho}"
+                                <select id="ganadoMacho.nombreGanadoMacho" th:field="*{becerro.idGanadoMacho}"
                                         name="ganadoMacho.nombreGanadoMacho" required
                                         class="form-select form-select-lg">
                                     <option th:each="ganadoMacho : ${becerros}"
@@ -45,7 +45,7 @@
                                             th:text="${ganadoMacho.nombreGanadoMacho}"></option>
                                 </select>
                                 <span th:if="${#fields.hasErrors('ganadoMacho.nombreGanadoMacho')}"
-                                      class="text-danger" th:errors="*{ganadoMacho.nombreGanadoMacho}">Error
+                                      class="text-danger" th:errors="*{becerro.nombreGanadoMacho}">Error
                                         nombre ganado</span>
                             </div>
                         </div>
