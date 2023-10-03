@@ -60,10 +60,16 @@ public class ControladorAlimentacionBecerra {
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
     public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, Model model) {
         try {
-            alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
+            if (alimentacionBecerra.getIdAlimentacionBecerra() != null) {
+                // Si el id existe, es una actualización
+                alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
+            } else {
+                // Si el id es nulo, es una creación
+                alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
+            }
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         } catch (Exception e) {
-            model.addAttribute("error", "Error al guardar la producción diaria de leche.");
+            model.addAttribute("error", "Error al guardar la alimentación de la becerra.");
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         }
     }
