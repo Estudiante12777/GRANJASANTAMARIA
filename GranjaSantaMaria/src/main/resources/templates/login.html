@@ -13,31 +13,41 @@
 </head>
 
 <body>
-<div class="container-fluid py-5">
-    <h3 class="text-center">Granja Santa Maria</h3>
+<div class="container-fluid py-1">
     <div class="row justify-content-center container-fluid py-5">
-        <div class="col-md-6 col-sm-8 col-12">
-            <div class="card bg-light text-dark">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Inicio de sesion</h5>
-                    <form method="post" th:action="@{/login}">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuario:</label>
-                            <input type="text" name="username" id="username"
-                                   placeholder="Ingrese su nombre de usuario" class="form-control form-control-lg"
-                                   required/>
+        <div class="col-sm-8 col-12">
+            <div class="mx-auto card bg-light text-dark">
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="text-center">
+                            <img src="/img/logo-granja-santa-maria.jpg" alt="Logo de Granja Santa Maria" width="400">
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña:</label>
-                            <input type="password" name="password" id="password" placeholder="Ingrese su contraseña"
-                                   class="form-control form-control-lg" required/>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h5 class="card-title text-center py-3">Inicio de sesión</h5>
+                            <form method="post" th:action="@{/login}">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Usuario:</label>
+                                    <input type="text" name="username" id="username"
+                                           placeholder="Ingrese su nombre de usuario"
+                                           class="form-control form-control-lg"
+                                           required/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Contraseña:</label>
+                                    <input type="password" name="password" id="password"
+                                           placeholder="Ingrese su contraseña"
+                                           class="form-control form-control-lg" required/>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-outline-primary btn-lg btn-block mx-auto">
+                                        Iniciar Sesión
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-outline-primary btn-lg btn-block mx-auto">
-                                Iniciar Sesion
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
