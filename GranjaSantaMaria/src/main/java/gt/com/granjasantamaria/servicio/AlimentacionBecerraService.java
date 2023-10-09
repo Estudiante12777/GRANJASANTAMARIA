@@ -10,8 +10,6 @@ public interface AlimentacionBecerraService {
 
     void guardarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra);
 
-    AlimentacionBecerra encontrarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra);
-
     void darDeBajaAlimentacionBecerra(Long idAlimentacionBecerra);
 
     AlimentacionBecerra encontrarAlimentacionBecerraPorId(Long idAlimentacionBecerra);

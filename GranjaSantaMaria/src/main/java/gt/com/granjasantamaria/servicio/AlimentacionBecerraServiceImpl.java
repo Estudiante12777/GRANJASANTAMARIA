@@ -40,12 +40,6 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public AlimentacionBecerra encontrarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra) {
-        return alimentacionBecerraDao.findById(alimentacionBecerra.getIdAlimentacionBecerra()).orElse(null);
-    }
-
-    @Override
     @Transactional
     public void darDeBajaAlimentacionBecerra(Long idAlimentacionBecerra) {
         alimentacionBecerraDao.darDeBajaPorId(idAlimentacionBecerra);

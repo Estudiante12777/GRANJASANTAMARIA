@@ -77,9 +77,8 @@ public class ControladorAlimentacionBecerra {
     @GetMapping("/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}")
     public String editarAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra, Model model) {
         AlimentacionBecerra alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
-        String becerra = alimentacionBecerraService.encontrarNombreBecerraPorIdAlimentacionBecerra(idAlimentacionBecerra);
-        model.addAttribute("becerra", becerra);
         model.addAttribute("alimentacionBecerra", alimentacionBecerra);
+        System.out.println("Estado de AlimentacionBecerra: " + alimentacionBecerra);
         return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becera";
     }
 

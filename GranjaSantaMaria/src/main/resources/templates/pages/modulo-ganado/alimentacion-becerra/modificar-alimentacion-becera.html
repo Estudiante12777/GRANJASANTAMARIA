@@ -18,10 +18,8 @@
                           th:object="${alimentacionBecerra}" id="guardarFormulario">
                         <input type="hidden" name="idAlimentacionBecerra" th:field="*{idAlimentacionBecerra}"/>
                         <div class="mb-3">
-                            Nombre de la becerra:
-                            <div>
-                                <h2 th:text="${becerra}"></h2>
-                            </div>
+                            <h1>Becerra:</h1>
+                            <h3><span th:field="*{becerra.becerra.nombreGanadoHembra}"></span></h3>
                         </div>
                         <div id="alimentacion-becerra-ternera"></div>
                         <div class="mb-3">

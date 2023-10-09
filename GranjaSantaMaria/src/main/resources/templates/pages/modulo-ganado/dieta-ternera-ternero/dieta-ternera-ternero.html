@@ -15,11 +15,12 @@
                 class="fa-solid fa-plus"></i>
             Agregar dieta para terneros y terneras</a>
     </div>
-    <div th:if="${dietaTerneraTernero != null and !dietaTerneraTernero.empty}">
+    <div th:if="${not #lists.isEmpty(dietaTerneraTernero)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
-                <th class="col-sm-10">Dieta</th>
+                <th class="col-sm-1">No.</th>
+                <th class="col-sm-9">Dieta</th>
                 <th class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     Editar
                 </th>
@@ -29,8 +30,8 @@
             </tr>
             </thead>
             <tr th:each="dieta : ${dietaTerneraTernero}">
-                <td class="col-sm-9" th:text="${dieta.descripcionDieta}">
-                </td>
+                <td class="col.sm-1" th:text="${dieta.idDietaTerneraTernero}"></td>
+                <td class="col-sm-9" th:text="${dieta.descripcionDieta}"></td>
                 <td class="col-sm-1" sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
                     <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
@@ -54,7 +55,7 @@
                                 <div class="modal-footer">
                                     <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/dieta-ternera-ternero/editar/} + ${dieta.idDietaTerneraTernero}">Sí,
+                                       th:href="@{/modulo-ganado/dieta-ternera-ternero/editar/__${dieta.idDietaTerneraTernero}__}">Sí,
                                         quiero editar</a>
                                     <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,

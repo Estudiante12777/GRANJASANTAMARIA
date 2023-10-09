@@ -9,7 +9,15 @@
 <body>
 <div class="container-fluid py-5 row" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_USUARIO')">
-    <div class="col-sm-4 mb-3">
+    <div class="col-6 mb-6 py-5">
+        <div class="card" style="border: none;">
+            <div class="text-center">
+                <img src="/img/logo-granja-santa-maria.jpg" alt="Logo Granja Santa Maria"
+                     style="max-width: 100%; max-height: 100%;">
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mb-6 py-5">
         <div class="card">
             <div class="card-body">
                 <div class="card-title text-center"><h3><b>Producción de leche</b></h3></div>
