@@ -54,6 +54,7 @@ public class ControladorAlimentacionBecerra {
         ProduccionDiariaLeche produccionDiariaLeche = produccionDiariaLecheService.obtenerProduccionDiariaLechePorId(idProduccionDiariaLeche);
         List<Becerra> listadoBecerras = produccionDiariaLecheService.obtenerRelacionMadreBecerra(produccionDiariaLeche);
         model.addAttribute("listadoBecerras", listadoBecerras);
+        model.addAttribute("alimentacionBecerra", alimentacionBecerra);
         return "pages/modulo-ganado/alimentacion-becerra/agregar-alimentacion-becerra";
     }
 
