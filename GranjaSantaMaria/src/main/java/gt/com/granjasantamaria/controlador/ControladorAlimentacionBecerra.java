@@ -71,8 +71,8 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/verificar-alimentacion-becerra/{id_relacion_madre_becerra}")
     @ResponseBody
-    public String verificarAlimentacionBecerra(@PathVariable("id_relacion_madre_becerra") Long idBecerra) {
-        Becerra becerra = becerraService.encontrarBecerraPorId(idBecerra);
+    public String verificarAlimentacionBecerra(@PathVariable("id_relacion_madre_becerra") Long id_relacion_madre_becerra) {
+        Becerra becerra = becerraService.encontrarBecerraPorId(id_relacion_madre_becerra);
         String mensaje = ""; // Variable para almacenar el mensaje
         if (becerra != null) {
             LocalDate fechaNacimiento = becerra.getFechaNacimiento();
