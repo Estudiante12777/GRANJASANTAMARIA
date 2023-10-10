@@ -59,8 +59,7 @@ public class BecerraServiceImpl implements BecerraService {
     @Override
     @Transactional(readOnly = true)
     public Becerra encontrarBecerraPorId(Long id_relacion_madre_becerra) {
-        Optional<Becerra> becerraOptional = becerraDao.findByBecerraIdGanadoHembra(id_relacion_madre_becerra);
-        System.out.println(becerraOptional);
+        Optional<Becerra> becerraOptional = becerraDao.findById(id_relacion_madre_becerra);
         return becerraOptional.orElse(null);
     }
 

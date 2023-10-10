@@ -6,10 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface AlimentacionBecerraService {
 
-    Page<Object[]> obtenerAlimentacionBecerraPaginado(Pageable pageable);
-
     void guardarAlimentacionBecerra(AlimentacionBecerra alimentacionBecerra);
-
-    void darDeBajaAlimentacionBecerra(Long idAlimentacionBecerra);
 
 }

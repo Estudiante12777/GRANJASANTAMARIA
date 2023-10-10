@@ -2,13 +2,11 @@ package gt.com.granjasantamaria.controlador;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.*;
 import javax.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,28 +24,7 @@ public class ControladorAlimentacionBecerra {
 
     private final ProduccionDiariaLecheService produccionDiariaLecheService;
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    @GetMapping("/modulo-ganado/alimentacion-becerra")
-    public String obtenerListadoAlimentacionBecerrasPaginado(@RequestParam(defaultValue = "0") int pagina, Model model) {
-        PageRequest pageRequest = PageRequest.of(pagina, 20);
-        Page<Object[]> alimentacionBecerraPage = alimentacionBecerraService.obtenerAlimentacionBecerraPaginado(pageRequest);
-        model.addAttribute("alimentacionBecerraPage", alimentacionBecerraPage);
-        var alimentacionBecerra = alimentacionBecerraPage.getContent().stream().limit(20).collect(Collectors.toList());
-        model.addAttribute("alimentacionBecerra", alimentacionBecerra);
-        return "pages/modulo-ganado/alimentacion-becerra/alimentacion";
-    }
-
-    @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
-    public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, " + "a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, " + "a.cantidad_tarde_alimentacion, " + "a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra a " + "INNER JOIN produccion_diaria_leche p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra gh ON a.id_relacion_madre_becerra = gh.id_ganado_hembra " + "LEFT JOIN relacion_madre_becerra rmb ON gh.id_ganado_hembra = rmb.id_becerra " + "LEFT JOIN ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = TRUE";
-        Query query = entityManager.createNativeQuery(sqlQuery);
-        query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
-        List<?> results = query.getResultList();
-        model.addAttribute("alimentacionBecerraList", results);
-        return "pages/modulo-ganado/alimentacion-becerra/alimentacion-becerra";
-    }
+    private static final Logger logger = LoggerFactory.getLogger(ControladorAlimentacionBecerra.class);
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/agregar")
     public String agregarAlimentacionBecerra(@RequestParam Long idProduccionDiariaLeche, AlimentacionBecerra alimentacionBecerra, Model model) {
@@ -61,9 +38,13 @@ public class ControladorAlimentacionBecerra {
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
     public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, Model model) {
         try {
+            logger.debug("Iniciando el proceso de guardarAlimentacionBecerra...");
+            logger.debug("ID de AlimentacionBecerra: " + alimentacionBecerra.getIdAlimentacionBecerra());
             alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
+            logger.debug("AlimentacionBecerra guardada con éxito.");
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         } catch (Exception e) {
+            logger.debug("Error al guardar la alimentación de la becerra: " + e.getMessage(), e);
             model.addAttribute("error", "Error al guardar la alimentación de la becerra.");
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         }
