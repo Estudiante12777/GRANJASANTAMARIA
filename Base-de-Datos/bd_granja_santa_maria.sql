@@ -299,4 +299,3 @@ INSERT INTO usuario (username, password)
 VALUES ('Wilmer', '$2a$10$WkYRorUeBeRtkMYs20uV0esK0eTpjmp5N3tM2B005CIISdx6v7GKC');
 INSERT INTO rol (nombre, id_usuario)
 VALUES ('ROLE_ADMINISTRADOR', 1);
-
