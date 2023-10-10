@@ -17,7 +17,7 @@ public interface AlimentacionBecerraDao extends JpaRepository<AlimentacionBecerr
             "rm.nombre_ganado_hembra AS nombre_madre, ab.estado_alimentacion_becerra " +
             "FROM alimentacion_becerra ab " +
             "INNER JOIN produccion_diaria_leche pdl ON ab.id_produccion_diaria_leche = pdl.id_produccion_diaria_leche " +
-            "INNER JOIN ganado_hembra gh ON ab.id_becerra = gh.id_ganado_hembra " +
+            "INNER JOIN ganado_hembra gh ON ab.id_relacion_becerra = gh.id_ganado_hembra " +
             "LEFT JOIN relacion_madre_becerra rmb ON gh.id_ganado_hembra = rmb.id_becerra " +
             "LEFT JOIN ganado_hembra rm ON rmb.id_madre = rm.id_ganado_hembra " +
             "WHERE ab.estado_alimentacion_becerra = true " +

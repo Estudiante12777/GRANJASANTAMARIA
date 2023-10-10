@@ -51,13 +51,22 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
     public AlimentacionBecerra encontrarAlimentacionBecerraPorId(Long idAlimentacionBecerra) {
         String jpql = "SELECT NEW AlimentacionBecerra(a.idAlimentacionBecerra, a.fechaAlimentacionBecerra, a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, a.estadoAlimentacionBecerra, b, a.idProduccionDiariaLeche) " +
                 "FROM AlimentacionBecerra a " +
-                "LEFT JOIN a.becerra b " +
+                "LEFT JOIN a.idRelacionBecerra rmb " +
+                "LEFT JOIN rmb.idBecerra b " +
                 "WHERE a.idAlimentacionBecerra = :idAlimentacionBecerra";
         System.out.println("SQL: " + jpql);
         TypedQuery<AlimentacionBecerra> query = entityManager.createQuery(jpql, AlimentacionBecerra.class);
         query.setParameter("idAlimentacionBecerra", idAlimentacionBecerra);
         try {
-            return query.getSingleResult();
+            AlimentacionBecerra alimentacionBecerra = query.getSingleResult();
+            System.out.println("IdAlimentacionBecerra: " + alimentacionBecerra.getIdAlimentacionBecerra());
+            System.out.println("Becerra: " + alimentacionBecerra.getBecerra());
+            System.out.println("Fecha alimentacion: " + alimentacionBecerra.getFechaAlimentacionBecerra());
+            System.out.println("Cantidad maniana: " + alimentacionBecerra.getCantidadManianaAlimentacion());
+            System.out.println("Cantidad tarde: " + alimentacionBecerra.getCantidadTardeAlimentacion());
+            System.out.println("Total cantidad: " + alimentacionBecerra.getTotalAlimentacionBecerra());
+            System.out.println("IdProduccionLeche: " + alimentacionBecerra.getIdProduccionDiariaLeche());
+            return alimentacionBecerra;
         } catch (NoResultException ex) {
             return null;
         }

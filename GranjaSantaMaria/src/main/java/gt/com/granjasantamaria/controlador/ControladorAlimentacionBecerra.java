@@ -41,7 +41,7 @@ public class ControladorAlimentacionBecerra {
 
     @GetMapping("/modulo-ganado/alimentacion-becerra/lista")
     public String obtenerListadoAlimentacionBecerras(@RequestParam("idProduccionDiariaLeche") Long idProduccionDiariaLeche, Model model) {
-        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, " + "a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, " + "a.cantidad_tarde_alimentacion, " + "a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra a " + "INNER JOIN produccion_diaria_leche p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra gh ON a.id_becerra = gh.id_ganado_hembra " + "LEFT JOIN relacion_madre_becerra rmb ON gh.id_ganado_hembra = rmb.id_becerra " + "LEFT JOIN ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = TRUE";
+        String sqlQuery = "SELECT gh.nombre_ganado_hembra AS nombreBecerra, " + "a.fecha_alimentacion_becerra, " + "a.cantidad_maniana_alimentacion, " + "a.cantidad_tarde_alimentacion, " + "a.total_alimentacion_becerra, " + "m.nombre_ganado_hembra AS madreBecerra, " + "a.id_alimentacion_becerra " + "FROM alimentacion_becerra a " + "INNER JOIN produccion_diaria_leche p ON a.id_produccion_diaria_leche = p.id_produccion_diaria_leche " + "INNER JOIN ganado_hembra gh ON a.id_relacion_becerra = gh.id_ganado_hembra " + "LEFT JOIN relacion_madre_becerra rmb ON gh.id_ganado_hembra = rmb.id_becerra " + "LEFT JOIN ganado_hembra m ON rmb.id_madre = m.id_ganado_hembra " + "WHERE p.id_produccion_diaria_leche = :idProduccionDiariaLeche " + "AND a.estado_alimentacion_becerra = TRUE";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("idProduccionDiariaLeche", idProduccionDiariaLeche);
         List<?> results = query.getResultList();
@@ -61,10 +61,8 @@ public class ControladorAlimentacionBecerra {
     public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, Model model) {
         try {
             if (alimentacionBecerra.getIdAlimentacionBecerra() != null) {
-                // Si el id existe, es una actualización
                 alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
             } else {
-                // Si el id es nulo, es una creación
                 alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
             }
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";

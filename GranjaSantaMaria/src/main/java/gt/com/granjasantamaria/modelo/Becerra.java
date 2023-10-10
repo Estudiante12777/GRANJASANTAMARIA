@@ -22,11 +22,11 @@ public class Becerra implements Serializable {
     @Column(name = "id_relacion_madre_becerra")
     private Long idRelacionMadreBecerra;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_madre")
     private GanadoHembra madre;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_becerra")
     private GanadoHembra becerra;
 

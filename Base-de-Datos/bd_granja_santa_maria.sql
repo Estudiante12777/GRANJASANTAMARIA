@@ -185,27 +185,27 @@ CREATE TABLE produccion_diaria_leche
 CREATE TABLE alimentacion_becerro
 (
     id_alimentacion_becerro       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    id_becerro                    INT             NOT NULL,
+    id_relacion_madre_becerro     INT             NOT NULL,
     fecha_alimentacion_becerro    DATE            NOT NULL,
     cantidad_maniana_alimentacion DECIMAL(10, 2)  NOT NULL,
     cantidad_tarde_alimentacion   DECIMAL(10, 2)  NOT NULL,
     total_alimentacion_becerro    DECIMAL(10, 2)  NOT NULL,
     id_produccion_diaria_leche    INT             NOT NULL,
     estado_alimentacion_becerro   TINYINT         NOT NULL,
-    CONSTRAINT fk_alimentacion_becerro_relacion_madre_becerro FOREIGN KEY (id_becerro) REFERENCES relacion_madre_becerro (id_becerro) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_alimentacion_becerro_relacion_madre_becerro FOREIGN KEY (id_relacion_madre_becerro) REFERENCES relacion_madre_becerro (id_relacion_madre_becerro) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_alimentacion_becerro_produccion_diaria_leche FOREIGN KEY (id_produccion_diaria_leche) REFERENCES produccion_diaria_leche (id_produccion_diaria_leche) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE alimentacion_becerra
 (
     id_alimentacion_becerra       INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    id_becerra                    INT             NOT NULL,
+    id_relacion_madre_becerra     INT             NOT NULL,
     fecha_alimentacion_becerra    DATE            NOT NULL,
     cantidad_maniana_alimentacion DECIMAL(10, 2)  NOT NULL,
     cantidad_tarde_alimentacion   DECIMAL(10, 2)  NOT NULL,
     total_alimentacion_becerra    DECIMAL(10, 2)  NOT NULL,
     id_produccion_diaria_leche    INT             NOT NULL,
     estado_alimentacion_becerra   TINYINT         NOT NULL,
-    CONSTRAINT fk_alimentacion_becerra_relacion_madre_becerra FOREIGN KEY (id_becerra) REFERENCES relacion_madre_becerra (id_becerra) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_alimentacion_becerra_relacion_madre_becerra FOREIGN KEY (id_relacion_madre_becerra) REFERENCES relacion_madre_becerra (id_relacion_madre_becerra) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_alimentacion_becerra_produccion_diaria_leche FOREIGN KEY (id_produccion_diaria_leche) REFERENCES produccion_diaria_leche (id_produccion_diaria_leche) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -299,3 +299,4 @@ INSERT INTO usuario (username, password)
 VALUES ('Wilmer', '$2a$10$WkYRorUeBeRtkMYs20uV0esK0eTpjmp5N3tM2B005CIISdx6v7GKC');
 INSERT INTO rol (nombre, id_usuario)
 VALUES ('ROLE_ADMINISTRADOR', 1);
+
