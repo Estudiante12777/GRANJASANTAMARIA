@@ -12,8 +12,4 @@ public interface AlimentacionBecerraService {
 
     void darDeBajaAlimentacionBecerra(Long idAlimentacionBecerra);
 
-    AlimentacionBecerra encontrarAlimentacionBecerraPorId(Long idAlimentacionBecerra);
-
-    String encontrarNombreBecerraPorIdAlimentacionBecerra(Long idAlimentacionBecerra);
-
 }

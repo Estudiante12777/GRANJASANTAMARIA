@@ -15,7 +15,7 @@ public interface BecerraDao extends JpaRepository<Becerra, Long> {
 
     Page<Becerra> findAllByEstadoRelacionMadreBecerraIsTrue(Pageable pageable);
 
-    Optional<Becerra> findByBecerraIdGanadoHembra(Long idBecerra);
+    Optional<Becerra> findByBecerraIdGanadoHembra(Long id_relacion_madre_becerra);
 
     List<Becerra> findByMadre(GanadoHembra madre);
 

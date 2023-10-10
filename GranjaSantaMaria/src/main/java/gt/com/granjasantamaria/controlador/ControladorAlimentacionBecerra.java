@@ -61,11 +61,7 @@ public class ControladorAlimentacionBecerra {
     @PostMapping("/modulo-ganado/alimentacion-becerra/guardar")
     public String guardarAlimentacionBecerra(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) AlimentacionBecerra alimentacionBecerra, Model model) {
         try {
-            if (alimentacionBecerra.getIdAlimentacionBecerra() != null) {
-                alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
-            } else {
-                alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
-            }
+            alimentacionBecerraService.guardarAlimentacionBecerra(alimentacionBecerra);
             return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
         } catch (Exception e) {
             model.addAttribute("error", "Error al guardar la alimentación de la becerra.");
@@ -73,24 +69,9 @@ public class ControladorAlimentacionBecerra {
         }
     }
 
-    @GetMapping("/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}")
-    public String editarAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra, Model model) {
-        AlimentacionBecerra alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
-        model.addAttribute("alimentacionBecerra", alimentacionBecerra);
-        System.out.println("Estado de AlimentacionBecerra: " + alimentacionBecerra);
-        return "pages/modulo-ganado/alimentacion-becerra/modificar-alimentacion-becera";
-    }
-
-    @GetMapping("/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}")
-    public String darDeBajaAlimentacionBecerra(@PathVariable("idAlimentacionBecerra") Long idAlimentacionBecerra) {
-        AlimentacionBecerra alimentacionBecerra = alimentacionBecerraService.encontrarAlimentacionBecerraPorId(idAlimentacionBecerra);
-        alimentacionBecerraService.darDeBajaAlimentacionBecerra(idAlimentacionBecerra);
-        return "redirect:/modulo-produccion-lacteos/produccion-diaria-leche/lista";
-    }
-
-    @GetMapping("/verificar-alimentacion-becerra/{idBecerra}")
+    @GetMapping("/verificar-alimentacion-becerra/{id_relacion_madre_becerra}")
     @ResponseBody
-    public String verificarAlimentacionBecerra(@PathVariable("idBecerra") Long idBecerra) {
+    public String verificarAlimentacionBecerra(@PathVariable("id_relacion_madre_becerra") Long idBecerra) {
         Becerra becerra = becerraService.encontrarBecerraPorId(idBecerra);
         String mensaje = ""; // Variable para almacenar el mensaje
         if (becerra != null) {

@@ -3,28 +3,21 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.dao.AlimentacionBecerraDao;
 import gt.com.granjasantamaria.modelo.AlimentacionBecerra;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 
 @Service
+@RequiredArgsConstructor
 public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraService {
 
     private final AlimentacionBecerraDao alimentacionBecerraDao;
 
     private final EntityManager entityManager;
-
-    @Autowired
-    public AlimentacionBecerraServiceImpl(AlimentacionBecerraDao alimentacionBecerraDao, EntityManager entityManager) {
-        this.alimentacionBecerraDao = alimentacionBecerraDao;
-        this.entityManager = entityManager;
-    }
 
     @Override
     @Transactional(readOnly = true)
@@ -44,34 +37,6 @@ public class AlimentacionBecerraServiceImpl implements AlimentacionBecerraServic
     public void darDeBajaAlimentacionBecerra(Long idAlimentacionBecerra) {
         alimentacionBecerraDao.darDeBajaPorId(idAlimentacionBecerra);
         entityManager.flush();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public AlimentacionBecerra encontrarAlimentacionBecerraPorId(Long idAlimentacionBecerra) {
-//        String jpql = "SELECT NEW AlimentacionBecerra(a.idAlimentacionBecerra, a.fechaAlimentacionBecerra, a.cantidadManianaAlimentacion, a.cantidadTardeAlimentacion, a.totalAlimentacionBecerra, a.estadoAlimentacionBecerra, b, a.idProduccionDiariaLeche) " + "FROM AlimentacionBecerra a " + "LEFT JOIN a.idRelacionBecerra rmb " + "LEFT JOIN rmb.idBecerra b " + "
-//        WHERE a.idAlimentacionBecerra = :idAlimentacionBecerra ";
-//        System.out.println("SQL: " + jpql);
-//        TypedQuery<AlimentacionBecerra> query = entityManager.createQuery(jpql, AlimentacionBecerra.class);
-//        query.setParameter(“idAlimentacionBecerra”, idAlimentacionBecerra); try {
-//            AlimentacionBecerra alimentacionBecerra = query.getSingleResult();
-//            System.out.println("IdAlimentacionBecerra: " + alimentacionBecerra.getIdAlimentacionBecerra());
-//            System.out.println("Becerra: " + alimentacionBecerra.getBecerra());
-//            System.out.println("Fecha alimentacion: " + alimentacionBecerra.getFechaAlimentacionBecerra());
-//            System.out.println("Cantidad maniana: " + alimentacionBecerra.getCantidadManianaAlimentacion());
-//            System.out.println("Cantidad tarde: " + alimentacionBecerra.getCantidadTardeAlimentacion());
-//            System.out.println("Total cantidad: " + alimentacionBecerra.getTotalAlimentacionBecerra());
-//            System.out.println("IdProduccionLeche: " + alimentacionBecerra.getIdProduccionDiariaLeche());
-//            return alimentacionBecerra;
-//        } catch (NoResultException ex) {
-        return null;
-//        }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public String encontrarNombreBecerraPorIdAlimentacionBecerra(Long idAlimentacionBecerra) {
-        return alimentacionBecerraDao.findNombreBecerraByIdAlimentacionBecerra(idAlimentacionBecerra);
     }
 
 }

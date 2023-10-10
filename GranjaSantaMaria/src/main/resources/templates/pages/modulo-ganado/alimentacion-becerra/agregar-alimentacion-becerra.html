@@ -163,12 +163,12 @@
         }
 
         // Función para obtener el estado de preñez del ganado seleccionado
-        function obtenerBecerraTernera(idBecerra) {
+        function obtenerBecerraTernera(id_relacion_madre_becerra) {
             $('#alimentacion-becerra-ternera').empty(); // Vaciar el contenido antes de actualizarlo
-            if (idBecerra !== null) {
+            if (id_relacion_madre_becerra !== null) {
                 // Realizar una llamada AJAX para obtener el estado de preñez del ganado
                 $.ajax({
-                    url: '/verificar-alimentacion-becerra/' + idBecerra,
+                    url: '/verificar-alimentacion-becerra/' + id_relacion_madre_becerra,
                     type: 'GET',
                     success: function (response) {
                         let alimentacionBecerraTernera = response;
