@@ -16,7 +16,8 @@
                     <h5 class="card-title text-center">Alimentacion para becerra y terneras</h5>
                     <form th:action="@{/modulo-ganado/alimentacion-becerra/guardar}" method="post"
                           th:object="${alimentacionBecerra}" id="guardarFormulario">
-                        <input type="hidden" name="idAlimentacionBecerra" th:field="*{idAlimentacionBecerra}"/>
+                        <input type="hidden" name="idAlimentacionBecerra" th:field="*{idAlimentacionBecerra}"
+                               th:value="${alimentacionBecerra.idAlimentacionBecerra}"/>
                         <div class="mb-3">
                             <label class="form-label form-label-lg" for="ganadoHembraSelect">Nombre de la
                                 becerra:</label>
