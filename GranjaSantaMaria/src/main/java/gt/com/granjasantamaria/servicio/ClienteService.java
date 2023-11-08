@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ClienteService {
-
     List<Cliente> listadoClientes();
 
     Page<Cliente> obtenerClientePaginado(Pageable pageable);
@@ -17,5 +16,4 @@ public interface ClienteService {
     Cliente encontrarCliente(Cliente cliente);
 
     void darBajaCliente(Cliente cliente);
-
 }

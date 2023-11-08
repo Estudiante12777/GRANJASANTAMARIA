@@ -3,6 +3,7 @@ package gt.com.granjasantamaria.servicio;
 import gt.com.granjasantamaria.dao.AlimentacionBecerroDao;
 import gt.com.granjasantamaria.modelo.AlimentacionBecerro;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,14 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class AlimentacionBecerroServiceImpl implements AlimentacionBecerroService {
 
     private final AlimentacionBecerroDao alimentacionBecerroDao;
-
-    @Autowired
-    public AlimentacionBecerroServiceImpl(AlimentacionBecerroDao alimentacionBecerroDao) {
-        this.alimentacionBecerroDao = alimentacionBecerroDao;
-    }
 
     @Override
     @Transactional(readOnly = true)

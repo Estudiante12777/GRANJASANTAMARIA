@@ -24,7 +24,7 @@ public class AlimentacionBecerro implements Serializable {
     private Long idAlimentacionBecerro;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_becerro")
+    @JoinColumn(name = "id_relacion_madre_becerro")
     private Becerro becerro;
 
     @NotNull

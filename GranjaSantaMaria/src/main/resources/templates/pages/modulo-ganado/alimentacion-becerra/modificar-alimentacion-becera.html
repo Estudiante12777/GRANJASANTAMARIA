@@ -16,10 +16,24 @@
                     <h5 class="card-title text-center">Alimentacion para becerra y terneras</h5>
                     <form th:action="@{/modulo-ganado/alimentacion-becerra/guardar}" method="post"
                           th:object="${alimentacionBecerra}" id="guardarFormulario">
-                        <input type="hidden" name="idAlimentacionBecerra" th:field="*{idAlimentacionBecerra}"/>
+                        <input type="hidden" name="idAlimentacionBecerra" th:field="*{idAlimentacionBecerra}">
                         <div class="mb-3">
-                            <h1>Becerra:</h1>
-                            <h3><span th:field="*{becerra}"></span></h3>
+                            <label class="form-label form-label-lg" for="ganadoHembraSelect">Nombre de la
+                                becerra:</label>
+                            <div class="col-sm-8">
+                                <select th:field="*{becerra.idRelacionMadreBecerra}"
+                                        name="ganadoHembra.nombreGanadoHembra" required
+                                        class="form-select form-select-lg" onchange="obtenerBecerraTernera(this.value)"
+                                        id="ganadoHembraSelect">
+                                    <option id="ganadoHembra.nombreGanadoHembra"
+                                            th:each="becerras : ${listadoBecerras}"
+                                            th:value="${becerras.idRelacionMadreBecerra}"
+                                            th:text="${becerras.becerra.nombreGanadoHembra}"></option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('becerra.becerra.nombreGanadoHembra')}"
+                                      class="text-danger" th:errors="*{becerra.becerra.nombreGanadoHembra}">Error
+                                        ganado</span>
+                            </div>
                         </div>
                         <div id="alimentacion-becerra-ternera"></div>
                         <div class="mb-3">
@@ -116,36 +130,58 @@
     </div>
 </div>
 <script th:inline="javascript">
-    /* Generar ID único para el modal de guardar */
-
-    // Obtén el botón de guardar
     let guardarButton = document.querySelector('.btn-outline-success[data-bs-toggle="modal"]');
 
-    // Obtén el atributo 'data-bs-target' del botón
     let targetGuardarModalId = guardarButton.getAttribute("data-bs-target");
 
-    // Obtén el atributo 'id' del botón
     let modalIdGuardar = guardarButton.getAttribute("id");
 
-    // Crea un identificador único para el modal de guardar
     let uniqueModalIdGuardar = "guardarModal_" + modalIdGuardar.replace("#guardarModal_", "");
 
-    // Actualiza el atributo 'data-bs-target' del botón con el nuevo ID único
     guardarButton.setAttribute("data-bs-target", "#" + uniqueModalIdGuardar);
 
-    // Obtén el modal correspondiente y actualiza su atributo 'id' con el nuevo ID único
     let modalGuardar = document.querySelector(targetGuardarModalId);
     modalGuardar.setAttribute("id", uniqueModalIdGuardar);
 </script>
 <th:block layout:fragment="page-scripts">
     <script>
+        function inicializarFormulariAlimentacionBecerraTernera() {
+            let initialGanadoId = document.getElementById("ganadoHembraSelect").value;
+            obtenerBecerraTernera(initialGanadoId);
+        }
+
+        function obtenerBecerraTernera(id_relacion_madre_becerra) {
+            $('#alimentacion-becerra-ternera').empty();
+            if (id_relacion_madre_becerra !== null) {
+                $.ajax({
+                    url: '/verificar-alimentacion-becerra/' + id_relacion_madre_becerra,
+                    type: 'GET',
+                    success: function (response) {
+                        let alimentacionBecerraTernera = response;
+                        if (alimentacionBecerraTernera === "Alimentar en la mañana y en la tarde") {
+                            $('#alimentacion-becerra-ternera').html('<div class="alert alert-warning" role="alert">Alimentar con 2 litros en la mañana y 2 litros en la tarde!.</div>');
+                        } else if (alimentacionBecerraTernera === "Reducir alimentación en la mañana y en la tarde") {
+                            $('#alimentacion-becerra-ternera').html('<div class="alert alert-danger" role="alert">Alimentar con 1 litro en la mañana y 1 litro en la tarde!.</div>');
+                        } else {
+                            $('#alimentacion-becerra-ternera').html('<div class="alert alert-success" role="alert">Ya no se puede alimentar.</div>');
+                        }
+                    },
+                    error: function (error) {
+                        console.log('Error al realizar la petición AJAX: ', error);
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            inicializarFormulariAlimentacionBecerraTernera();
+        });
+
         function calcularTotalAlimentacionBecerrasTerneras() {
             let alimentacionManianaBecerrasTerneras = parseFloat(document.getElementById('cantidadManianaAlimentacionBecerraTernera').value);
             let alimentacionTardeBecerrasTerneras = parseFloat(document.getElementById('cantidadTardeAlimentacionBecerraTernera').value);
             document.getElementById('totalAlimentacionBecerraTernera').value = (isNaN(alimentacionManianaBecerrasTerneras) ? 0 : alimentacionManianaBecerrasTerneras) + (isNaN(alimentacionTardeBecerrasTerneras) ? 0 : alimentacionTardeBecerrasTerneras);
         }
-
-        console.log("HOLA DESDE MODIFICAR");
     </script>
 </th:block>
 </body>

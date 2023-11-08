@@ -85,8 +85,6 @@ public class ControladorAlimentacionBecerro {
         List<GanadoMacho> listaGanados = ganadoMachoService.obtenerListadoGanadoMachos();
         // Filtrar la lista de ganado para mostrar solo vacas y novillas
         List<GanadoMacho> listaTernerosBecerros = listaGanados.stream().filter(ganado -> ganado.getTipoGanado().getNombreTipoGanado().equals("Ternero") || ganado.getTipoGanado().getNombreTipoGanado().equals("Becerro")).collect(Collectors.toList());
-        System.out.println("Lista de ganados: " + listaGanados);
-        System.out.println("Lista de Terneras y Becerras: " + listaTernerosBecerros);
         model.addAttribute("listaGanados", listaTernerosBecerros);
         model.addAttribute("idAlimentacionBecerro", idAlimentacionBecerro);
         alimentacionBecerro = alimentacionBecerroService.encontrarAlimentacionBecerro(alimentacionBecerro);

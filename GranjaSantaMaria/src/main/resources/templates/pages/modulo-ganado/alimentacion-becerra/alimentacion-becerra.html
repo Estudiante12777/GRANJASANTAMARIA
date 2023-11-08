@@ -10,7 +10,7 @@
 <div class="container py-3" layout:fragment="page-content"
      sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
     <h5 class="text-center">Alimentacion de becerras y terneras</h5>
-    <div th:if="${not #lists.isEmpty(alimentacionBecerraList)}">
+    <div th:if="${not #lists.isEmpty(alimentacionBecerra)}">
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -24,37 +24,36 @@
                 <th sec:authorize="hasRole('ROLE_ADMINISTRADOR')">Dar baja</th>
             </tr>
             </thead>
-            <tr th:each="alimentacionBecerra : ${alimentacionBecerraList}">
-                <td th:text="${#dates.format(alimentacionBecerra[1], 'dd-MM-yyyy')}"></td>
-                <td th:text="${alimentacionBecerra[0]}"></td>
-                <td th:text="${alimentacionBecerra[2] + ' litros'}"></td>
-                <td th:text="${alimentacionBecerra[3] + ' litros'}"></td>
-                <td th:text="${alimentacionBecerra[4] + ' litros'}"></td>
-                <td th:text="${alimentacionBecerra[5]}"></td>
+            <tr th:each="alimentacionBecerra : ${alimentacionBecerra}">
+                <td th:text="${#temporals.format(alimentacionBecerra.fechaAlimentacionBecerra, 'dd-MM-yyyy')}"></td>
+                <td th:text="${alimentacionBecerra.becerra.becerra.nombreGanadoHembra}"></td>
+                <td th:text="${alimentacionBecerra.cantidadManianaAlimentacion + ' litros'}"></td>
+                <td th:text="${alimentacionBecerra.cantidadTardeAlimentacion + ' litros'}"></td>
+                <td th:text="${alimentacionBecerra.totalAlimentacionBecerra + ' litros'}"></td>
+                <td th:text="${alimentacionBecerra.becerra.madre.nombreGanadoHembra}"></td>
                 <td sec:authorize="hasAnyRole('ROLE_ADMINISTRADOR','ROLE_USUARIO')">
-                    <!-- Botón para abrir el modal de edición -->
                     <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal"
-                            th:data-bs-target="'#editModal_' + ${alimentacionBecerra[6]}">
+                            th:data-bs-target="'#editModal_' + ${alimentacionBecerra.idAlimentacionBecerra}">
                         <i class="fa-sharp fa-solid fa-pencil"></i>
                     </button>
-                    <!-- Modal de edición -->
-                    <div class="modal fade" th:id="'editModal_' + ${alimentacionBecerra[6]}" tabindex="-1"
-                         th:attr="aria-labelledby='editModalLabel_' + ${alimentacionBecerra[6]}" aria-hidden="true">
+                    <div class="modal fade" th:id="'editModal_' + ${alimentacionBecerra.idAlimentacionBecerra}"
+                         tabindex="-1"
+                         th:attr="aria-labelledby='editModalLabel_' + ${alimentacionBecerra.idAlimentacionBecerra}"
+                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" th:id="'editModalLabel_' + ${alimentacionBecerra[6]}">
-                                        ¿Estás seguro de que deseas editar este registro?
+                                    <h5 class="modal-title"
+                                        th:id="'editModalLabel_' + ${alimentacionBecerra.idAlimentacionBecerra}">
+                                        ¿Estás seguro de que deseas editar esta alimentacion de becerra?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-footer">
-                                    <!-- Enlace para ir al formulario de edición -->
                                     <a class="btn btn-primary"
-                                       th:href="@{/modulo-ganado/alimentacion-becerra/editar/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacionBecerra[6]})}">Sí,
+                                       th:href="@{/modulo-ganado/alimentacion-becerra/editar/__${alimentacionBecerra.idAlimentacionBecerra}__}">Sí,
                                         quiero editar</a>
-                                    <!-- Botón para cerrar el modal -->
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No,
                                         cancelar
                                     </button>
@@ -64,30 +63,28 @@
                     </div>
                 </td>
                 <td sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
-                    <!-- Botón para abrir el modal de dar baja -->
                     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                            th:data-bs-target="'#bajaModal_' + ${alimentacionBecerra[6]}">
+                            th:data-bs-target="'#bajaModal_' + ${alimentacionBecerra.idAlimentacionBecerra}">
                         <i class="fa-sharp fa-solid fa-ban"></i>
                     </button>
-                    <!-- Modal de dar baja -->
-                    <div class="modal fade" th:id="'bajaModal_' + ${alimentacionBecerra[6]}" tabindex="-1"
-                         th:attr="aria-labelledby='bajaModalLabel_' + ${alimentacionBecerra[6]}" aria-hidden="true">
+                    <div class="modal fade" th:id="'bajaModal_' + ${alimentacionBecerra.idAlimentacionBecerra}"
+                         tabindex="-1"
+                         th:attr="aria-labelledby='bajaModalLabel_' + ${alimentacionBecerra.idAlimentacionBecerra}"
+                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" th:id="'bajaModalLabel_' + ${alimentacionBecerra[6]}">
-                                        ¿Estás seguro de que deseas dar de baja este registro?
+                                    <h5 class="modal-title"
+                                        th:id="'bajaModalLabel_' + ${alimentacionBecerra.idAlimentacionBecerra}">
+                                        ¿Estás seguro de que deseas dar de baja esta alimentacion del becerro?
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-footer">
-                                    <!-- Enlace para dar de baja el registro -->
                                     <a class="btn btn-danger"
-                                       th:href="@{/modulo-ganado/alimentacion-becerra/baja/{idAlimentacionBecerra}(idAlimentacionBecerra=${alimentacionBecerra[6]})}">
-                                        Sí, dar de baja
-                                    </a>
-                                    <!-- Botón para cerrar el modal -->
+                                       th:href="@{/modulo-ganado/alimentacion-becerra/baja(idAlimentacionBecerra=${alimentacionBecerra.idAlimentacionBecerra})}">Sí,
+                                        dar de baja</a>
                                     <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cancelar
                                     </button>
@@ -99,6 +96,27 @@
             </tr>
             <tfoot></tfoot>
         </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li th:if="${alimentacionBecerraPage.hasPrevious()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ubicacion/municipio/lista(pagina=${alimentacionBecerraPage.getNumber()-1})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link"
+                                                th:text="${alimentacionBecerraPage.getNumber()+1}"></a>
+                </li>
+                <li th:if="${alimentacionBecerraPage.hasNext()}" class="page-item">
+                    <a class="page-link"
+                       th:href="@{/modulo-ubicacion/municipio/lista(pagina=${alimentacionBecerraPage.getNumber()+1})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div class="py-3">
         <a class="btn btn-outline-primary btn-lg btn-block"
